@@ -1,14 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logica;
 
-/**
- *
- * @author Kopxe
- */
+import java.util.ArrayList;
+
 class DtGenero {
     
+    private String nombre;
+    private ArrayList<DtGenero> subGeneros;
+
+    public DtGenero(String nombre, ArrayList<DtGenero> subGeneros) {
+        this.nombre = nombre;
+        this.subGeneros = subGeneros;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public ArrayList<DtGenero> getSubGeneros() {
+        return subGeneros;
+    }
 }

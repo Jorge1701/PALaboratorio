@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logica;
 
-/**
- *
- * @author Kopxe
- */
-class DtCliente {
+class DtCliente extends DtUsuario {
     
+    public DtCliente(String nickname, String nombre, String apellido, String email, DtFecha fechaNac) {
+        super(nickname, nombre, apellido, email, fechaNac);
+    }
 }

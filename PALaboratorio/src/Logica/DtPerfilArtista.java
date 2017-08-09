@@ -1,14 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logica;
 
-/**
- *
- * @author Kopxe
- */
-class DtPerfilArtista {
+import java.util.ArrayList;
+
+class DtPerfilArtista extends DtPerfilUsuario {
     
+    private ArrayList<DtAlbum> albumes;
+
+    public DtPerfilArtista(ArrayList<DtAlbum> albumes, DtUsuario info, ArrayList<DtCliente> seguidores) {
+        super(info, seguidores);
+        this.albumes = albumes;
+    }
+
+    public ArrayList<DtAlbum> getAlbumes() {
+        return albumes;
+    }
 }
