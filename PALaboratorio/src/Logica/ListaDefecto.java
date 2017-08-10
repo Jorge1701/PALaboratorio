@@ -10,6 +10,11 @@ public class ListaDefecto extends Lista {
         super(nombre, temas, imagen);
         this.genero = genero;
     }
+    
+    @Override
+    public DtLista getData() {
+        return new DtListaDefecto(genero.getData(), getNombre(), getTemas(), getImagen());
+    }
 
     public Genero getGenero() {
         return genero;
