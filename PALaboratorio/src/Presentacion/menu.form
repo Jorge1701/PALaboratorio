@@ -16,27 +16,27 @@
             <Property name="text" type="java.lang.String" value="Registros"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="altaPerfil">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alta de Perfil"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+            <MenuItem class="javax.swing.JMenuItem" name="altaAlbum">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alta Album"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+            <MenuItem class="javax.swing.JMenuItem" name="altaGenero">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alta de Genero"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+            <MenuItem class="javax.swing.JMenuItem" name="crearListaRep">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Crear Lista de Reproduccion"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
+            <MenuItem class="javax.swing.JMenuItem" name="publicarLista">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Publicar Lista"/>
               </Properties>
@@ -48,22 +48,25 @@
             <Property name="text" type="java.lang.String" value="Consultas"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+            <MenuItem class="javax.swing.JMenuItem" name="consultaPerfilCliente">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consulta de Perfil de Cliente"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="consultaPerfilClienteActionPerformed"/>
+              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
+            <MenuItem class="javax.swing.JMenuItem" name="consultaPerfilArtista">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consulta de Perfil de Artista"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem8">
+            <MenuItem class="javax.swing.JMenuItem" name="consultaAlbum">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consulta de Album"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
+            <MenuItem class="javax.swing.JMenuItem" name="consultaListaRep">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consulta de Lista de Reproduccion"/>
               </Properties>
@@ -75,22 +78,25 @@
             <Property name="text" type="java.lang.String" value="Relaciones"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
+            <MenuItem class="javax.swing.JMenuItem" name="seguirUsuario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Seguir Usuario"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem11">
+            <MenuItem class="javax.swing.JMenuItem" name="dejarSeguirUsuario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Dejar de Seguir Usuario"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dejarSeguirUsuarioActionPerformed"/>
+              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem12">
+            <MenuItem class="javax.swing.JMenuItem" name="agregarTemaLista">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Agregar Tema a Lista"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem13">
+            <MenuItem class="javax.swing.JMenuItem" name="quitarTemaLista">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Quitar Tema de Lista"/>
               </Properties>
@@ -102,12 +108,12 @@
             <Property name="text" type="java.lang.String" value="Favoritos"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem14">
+            <MenuItem class="javax.swing.JMenuItem" name="guardarTLA">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Guardar Tema/Lista/Album"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem15">
+            <MenuItem class="javax.swing.JMenuItem" name="eliminarTLA">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar Tema/Lista/Album"/>
               </Properties>
@@ -119,7 +125,7 @@
             <Property name="text" type="java.lang.String" value="Datos de Prueba"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem16">
+            <MenuItem class="javax.swing.JMenuItem" name="cargarDatos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cargar"/>
               </Properties>

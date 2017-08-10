@@ -25,7 +25,7 @@ public class ControladorUsuario implements IUsuario {
         //this.personas=new ArrayList<Persona>();
         this.usuarios=new HashMap();
         
-        usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
+        //usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
         //this.dbPersona=new DBPersona();
     }
     
