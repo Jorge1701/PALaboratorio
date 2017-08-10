@@ -1,5 +1,6 @@
 package Logica;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 class Genero {
@@ -7,7 +8,7 @@ class Genero {
     private String nombre;
     private HashMap<String, Genero> subgeneros;
     private HashMap<String, Album> albumes;
-    private HashMap<String, ListaDefecto> listasDefecto; 
+    private HashMap<String, ListaDefecto> listasDefecto;
 
     public Genero(String nombre, HashMap<String, Genero> subgeneros, HashMap<String, Album> albumes, HashMap<String, ListaDefecto> listasDefecto) {
         this.nombre = nombre;
@@ -15,8 +16,6 @@ class Genero {
         this.albumes = albumes;
         this.listasDefecto = listasDefecto;
     }
-
-   
 
     public void setAlbumes(HashMap<String, Album> albumes) {
         this.albumes = albumes;
@@ -49,7 +48,17 @@ class Genero {
     public HashMap<String, Genero> getSubgeneros() {
         return subgeneros;
     }
-    
-    
+
+    public DtGenero getData() {
+        return null;
+    }
+
+    public Genero obtener(String nombre) {
+        return null;
+    }
+
+    public ArrayList<DtAlbum> obtenerAlbumes() {
+        return null;
+    }
 
 }
