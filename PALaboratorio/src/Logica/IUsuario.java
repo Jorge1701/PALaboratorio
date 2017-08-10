@@ -14,4 +14,6 @@ public interface IUsuario {
     public void seguirUsuario(String nickC, String nickU);
     public void dejarSeguirUsuario(String nickC, String nickU);
     public void cargarUsuarios();
+    public ArrayList<DtAlbum> listarAlbumesArtista(String nickArtista);
+    public DtAlbumContenido obtenerAlbumContenido(String nickArt, String nomAlbum);
 }

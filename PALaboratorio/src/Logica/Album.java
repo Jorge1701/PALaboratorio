@@ -1,6 +1,8 @@
 package Logica;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 class Album {
 
@@ -9,6 +11,7 @@ class Album {
     public Imagen imagen;
     public ArrayList<Tema> temas;
     public ArrayList<Genero> generos;
+    public Artista artista;
 
     public Album(String nombre, int anio, Imagen imagen, ArrayList<Tema> temas, ArrayList<Genero> generos) {
         this.nombre = nombre;
@@ -38,6 +41,10 @@ class Album {
         return generos;
     }
 
+    public Artista getArtista() {
+        return artista;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -58,12 +65,31 @@ class Album {
         this.generos = generos;
     }
 
+    public void setArtista(Artista artista) {
+        this.artista = artista;
+    }
+
     public DtAlbum getData() {
-     return null;
+        return null;
     }
 
     public DtAlbumContenido obtenerAlbumContenido() {
-     return null;
+        ArrayList<String> nomGeneros = new ArrayList<>();
+        ArrayList<DtTema> dtTemas = new ArrayList<>();
+        
+        Iterator it = generos.iterator();
+        while (it.hasNext()) {
+            Genero genero = (Genero) ((Map.Entry) it.next()).getValue();
+            nomGeneros.add(genero.getNombre());
+        }
+
+        Iterator it1 = temas.iterator();
+        while (it1.hasNext()) {
+            Tema tema = (Tema) ((Map.Entry) it1.next()).getValue();
+            dtTemas.add(tema.getData());
+        }
+
+        return new DtAlbumContenido(this.getData(), nomGeneros, dtTemas);
     }
 
 }
