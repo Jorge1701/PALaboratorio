@@ -14,13 +14,26 @@ public class menu extends javax.swing.JFrame {
         PanelMenu = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        usuario = new javax.swing.JMenuItem();
-        genero = new javax.swing.JMenuItem();
-        album = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        dejarSeguirUsuario = new javax.swing.JMenuItem();
-        consultaPerfilCliente = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem16 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -34,63 +47,78 @@ public class menu extends javax.swing.JFrame {
         );
         PanelMenuLayout.setVerticalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
+            .addGap(0, 394, Short.MAX_VALUE)
         );
 
         jMenuBar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jMenu1.setBackground(new java.awt.Color(204, 204, 255));
-        jMenu1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu1.setText("Registros");
 
-        usuario.setText("Registrar Usuario");
-        usuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usuarioActionPerformed(evt);
-            }
-        });
-        jMenu1.add(usuario);
+        jMenuItem1.setText("Alta de Perfil");
+        jMenu1.add(jMenuItem1);
 
-        genero.setText("Registrar Género");
-        genero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generoActionPerformed(evt);
-            }
-        });
-        jMenu1.add(genero);
+        jMenuItem2.setText("Alta Album");
+        jMenu1.add(jMenuItem2);
 
-        album.setText("Registrar Álbum");
-        album.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                albumActionPerformed(evt);
-            }
-        });
-        jMenu1.add(album);
+        jMenuItem3.setText("Alta de Genero");
+        jMenu1.add(jMenuItem3);
+
+        jMenuItem4.setText("Crear Lista de Reproduccion");
+        jMenu1.add(jMenuItem4);
+
+        jMenuItem5.setText("Publicar Lista");
+        jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Consultas");
+
+        jMenuItem6.setText("Consulta de Perfil de Cliente");
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem7.setText("Consulta de Perfil de Artista");
+        jMenu2.add(jMenuItem7);
+
+        jMenuItem8.setText("Consulta de Album");
+        jMenu2.add(jMenuItem8);
+
+        jMenuItem9.setText("Consulta de Lista de Reproduccion");
+        jMenu2.add(jMenuItem9);
+
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Usuario");
+        jMenu3.setText("Relaciones");
 
-        dejarSeguirUsuario.setText("Dejar de Seguir Usuario");
-        dejarSeguirUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dejarSeguirUsuarioActionPerformed(evt);
-            }
-        });
-        jMenu3.add(dejarSeguirUsuario);
+        jMenuItem10.setText("Seguir Usuario");
+        jMenu3.add(jMenuItem10);
 
-        consultaPerfilCliente.setText("Consulta Perfil Cliente");
-        consultaPerfilCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                consultaPerfilClienteActionPerformed(evt);
-            }
-        });
-        jMenu3.add(consultaPerfilCliente);
+        jMenuItem11.setText("Dejar de Seguir Usuario");
+        jMenu3.add(jMenuItem11);
+
+        jMenuItem12.setText("Agregar Tema a Lista");
+        jMenu3.add(jMenuItem12);
+
+        jMenuItem13.setText("Quitar Tema de Lista");
+        jMenu3.add(jMenuItem13);
 
         jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Favoritos");
+
+        jMenuItem14.setText("Guardar Tema/Lista/Album");
+        jMenu4.add(jMenuItem14);
+
+        jMenuItem15.setText("Eliminar Tema/Lista/Album");
+        jMenu4.add(jMenuItem15);
+
+        jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("Datos de Prueba");
+
+        jMenuItem16.setText("Cargar");
+        jMenu5.add(jMenuItem16);
+
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -107,35 +135,6 @@ public class menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioActionPerformed
-        AltarUsuario user = new AltarUsuario();
-        this.PanelMenu.add(user);
-        user.show();
-    }//GEN-LAST:event_usuarioActionPerformed
-
-    private void generoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generoActionPerformed
-       AltaArtista  art = new AltaArtista();
-       this.PanelMenu.add(art);
-       art.show();
-    }//GEN-LAST:event_generoActionPerformed
-
-    private void albumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_albumActionPerformed
-        AltaAlbum alb = new AltaAlbum();
-        this.PanelMenu.add(alb);
-        alb.show();
-    }//GEN-LAST:event_albumActionPerformed
-
-    private void dejarSeguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dejarSeguirUsuarioActionPerformed
-        DejarSeguirUsuario dsu = new DejarSeguirUsuario();
-        this.PanelMenu.add(dsu);
-        dsu.show();
-    }//GEN-LAST:event_dejarSeguirUsuarioActionPerformed
-
-    private void consultaPerfilClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaPerfilClienteActionPerformed
-        ConsultaPerfilCliente cpc = new ConsultaPerfilCliente();
-        this.PanelMenu.add(cpc);
-        cpc.show();
-    }//GEN-LAST:event_consultaPerfilClienteActionPerformed
 
 
     public static void main(String args[]) {
@@ -173,14 +172,27 @@ public class menu extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane PanelMenu;
-    private javax.swing.JMenuItem album;
-    private javax.swing.JMenuItem consultaPerfilCliente;
-    private javax.swing.JMenuItem dejarSeguirUsuario;
-    private javax.swing.JMenuItem genero;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem usuario;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }
