@@ -1,9 +1,10 @@
 package Logica;
 
 public class DtFecha {
-    int dia;
-    int mes;
-    int anio;
+    
+    private final int dia;
+    private final int mes;
+    private final int anio;
     
     public DtFecha(int dia, int mes, int anio){
         this.dia = dia;
@@ -21,5 +22,10 @@ public class DtFecha {
     
     public int getAnio(){
         return this.anio;
+    }
+    
+    @Override
+    public String toString() {
+        return dia + "/" + mes + "/" + anio;
     }
 }

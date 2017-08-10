@@ -1,6 +1,6 @@
 package Logica;
 
-class DtUsuario {
+public class DtUsuario {
     
     private String nickname;
     private String nombre;

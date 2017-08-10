@@ -20,6 +20,7 @@ public class menu extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         dejarSeguirUsuario = new javax.swing.JMenuItem();
+        consultaPerfilCliente = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,6 +82,14 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu3.add(dejarSeguirUsuario);
 
+        consultaPerfilCliente.setText("Consulta Perfil Cliente");
+        consultaPerfilCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultaPerfilClienteActionPerformed(evt);
+            }
+        });
+        jMenu3.add(consultaPerfilCliente);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -122,6 +131,12 @@ public class menu extends javax.swing.JFrame {
         dsu.show();
     }//GEN-LAST:event_dejarSeguirUsuarioActionPerformed
 
+    private void consultaPerfilClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaPerfilClienteActionPerformed
+        ConsultaPerfilCliente cpc = new ConsultaPerfilCliente();
+        this.PanelMenu.add(cpc);
+        cpc.show();
+    }//GEN-LAST:event_consultaPerfilClienteActionPerformed
+
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -159,6 +174,7 @@ public class menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane PanelMenu;
     private javax.swing.JMenuItem album;
+    private javax.swing.JMenuItem consultaPerfilCliente;
     private javax.swing.JMenuItem dejarSeguirUsuario;
     private javax.swing.JMenuItem genero;
     private javax.swing.JMenu jMenu1;

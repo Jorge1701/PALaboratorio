@@ -1,6 +1,5 @@
 package Logica;
 
-import java.util.ArrayList;
 //import Persistencia.BDUsuario;
 import java.util.HashMap;
 
@@ -24,18 +23,21 @@ public class ControladorUsuario implements IUsuario {
     private ControladorUsuario(){
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
-        this.usuarios=new HashMap<String, Usuario>();
+        this.usuarios=new HashMap();
         //this.dbPersona=new DBPersona();
     }
     
+    @Override
     public Artista selectArtista(String nick) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public void ingresarUsuario(DtUsuario dtu) {
         
     }
     
+    @Override
     public ArrayList<DtUsuario> listarClientes() {
         ArrayList<DtUsuario> clientes = new ArrayList<>();
         
@@ -50,6 +52,7 @@ public class ControladorUsuario implements IUsuario {
         return clientes;
     }
 
+    @Override
     public ArrayList<DtUsuario> listarArtistas() {
         ArrayList<DtUsuario> artistas = new ArrayList<>();
         
@@ -64,10 +67,12 @@ public class ControladorUsuario implements IUsuario {
         return artistas;
     }
 
+    @Override
     public DtPerfilUsuario obtenerPerfilArtista(String nickArtista) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public DtPerfilUsuario obtenerPerfilCliente(String nickCliente) {
         Usuario u = usuarios.get(nickCliente);
         
@@ -80,14 +85,17 @@ public class ControladorUsuario implements IUsuario {
         return ((Cliente) u).obtenerPerfil();
     }
 
+    @Override
     public DtCliente getCliente() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public void seguirUsuario(String nickC, String nickU) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public void dejarSeguirUsuario(String nickUsuario, String nickSeguidor) {
         Usuario usuario = usuarios.get(nickUsuario);
         Usuario seguidor = usuarios.get(nickSeguidor);

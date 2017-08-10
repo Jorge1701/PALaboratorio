@@ -109,6 +109,7 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame {
             iUsuario.dejarSeguirUsuario(usuario, seguidor);
         } catch (UnsupportedOperationException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            return;
         }
         
         JOptionPane.showMessageDialog(this, seguidor + " dejo de seguir a " + usuario);
