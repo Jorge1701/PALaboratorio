@@ -42,7 +42,7 @@ public class Cliente extends Usuario {
     }
 
     public void agregar(Usuario u) {
-
+        seguidos.put(u.getNickname(), u);
     }
 
     public void dejarSeguir(Usuario u) {
