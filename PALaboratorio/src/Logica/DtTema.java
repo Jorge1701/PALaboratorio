@@ -3,10 +3,10 @@ package Logica;
 class DtTema {
     
     private String nombre;
-    private int duracion;
+    private DtTime duracion;
     private int ubicacion;
 
-    public DtTema(String nombre, int duracion, int ubicacion) {
+    public DtTema(String nombre, DtTime duracion, int ubicacion) {
         this.nombre = nombre;
         this.duracion = duracion;
         this.ubicacion = ubicacion;
@@ -16,7 +16,7 @@ class DtTema {
         return nombre;
     }
 
-    public int getDuracion() {
+    public DtTime getDuracion() {
         return duracion;
     }
 
