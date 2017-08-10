@@ -2,6 +2,8 @@ package Logica;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public abstract class Usuario {
 
@@ -10,7 +12,7 @@ public abstract class Usuario {
     private String apellido;
     private String email;
     private DtFecha fechaNac;
-    Imagen imagen;
+    private Imagen imagen;
     private HashMap<String,Cliente> seguidores;
     
     public Usuario(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, Imagen imagen) {
@@ -20,10 +22,26 @@ public abstract class Usuario {
         this.email = email;
         this.fechaNac = fechaNac;
         this.imagen = imagen;
-        this.seguidores = new HashMap<String,Cliente>();
+        this.seguidores = new HashMap();
     }
 
-    public void setNickname(String nickname) {                                  //SETTERS
+    public abstract String getTipo();
+    public abstract DtUsuario getData();
+    public abstract DtPerfilUsuario obtenerPerfil();
+    
+    public ArrayList<DtCliente> getSeguidores() {
+        ArrayList<DtCliente> dtSeguidores = new ArrayList<>();
+        
+        Iterator i = this.seguidores.entrySet().iterator();
+        while (i.hasNext()) {
+            Cliente c = (Cliente) ((Map.Entry) i.next()).getValue();
+            dtSeguidores.add(c.getData());
+        }
+        
+        return dtSeguidores;
+    }
+    
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
@@ -51,7 +69,7 @@ public abstract class Usuario {
         this.seguidores = seguidores;
     }
      
-    public String getNickname() {                                                //GETTERS
+    public String getNickname() {
         return this.nickname;
     }
 
@@ -73,17 +91,5 @@ public abstract class Usuario {
 
     public Imagen getImagen() {
         return this.imagen;
-    }
-    
-    public abstract String getTipo();                                                      //FUNCIONES PROPIAS
-    public abstract DtUsuario getData();
-    public abstract DtPerfilUsuario obtenerPerfil();
-    
-    public ArrayList<DtCliente> getSeguidores() {
-        return null;
-    }
-    
-    public void dejarSeguir(Usuario u) {
-        
     }
 }
