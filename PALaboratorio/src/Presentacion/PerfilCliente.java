@@ -75,6 +75,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                 dtl.getNombre(),
                 dtl.getTemas().size()
             };
+            dtmListasFavs.addRow(data);
         }
         
         // Cargar Albumes Favoritos
