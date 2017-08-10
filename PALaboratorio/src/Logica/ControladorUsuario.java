@@ -1,15 +1,12 @@
 package Logica;
 
-import java.util.List;
 import java.util.ArrayList;
-import Logica.Usuario;
 //import Persistencia.BDUsuario;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 public class ControladorUsuario implements IUsuario {
     
@@ -39,16 +36,48 @@ public class ControladorUsuario implements IUsuario {
         
     }
     
-    public ArrayList<DtArtista> listarArtistas() {
+    public ArrayList<DtUsuario> listarClientes() {
+        ArrayList<DtUsuario> clientes = new ArrayList<>();
+        
+        Iterator i = usuarios.entrySet().iterator();
+        while (i.hasNext()) {
+            Usuario u = (Usuario) ((Map.Entry) i.next()).getValue();
+            
+            if (u instanceof Cliente)
+                clientes.add(u.getData());
+        }
+        
+        return clientes;
+    }
+
+    public ArrayList<DtUsuario> listarArtistas() {
+        ArrayList<DtUsuario> artistas = new ArrayList<>();
+        
+        Iterator i = usuarios.entrySet().iterator();
+        while (i.hasNext()) {
+            Usuario u = (Usuario) ((Map.Entry) i.next()).getValue();
+            
+            if (u instanceof Artista)
+                artistas.add(u.getData());
+        }
+        
+        return artistas;
+    }
+
+    public DtPerfilUsuario obtenerPerfilArtista(String nickArtista) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public DtPerfilArtista obtenerPerfilArtista() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public DtPerfilCliente obtenerPerfilCliente() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    public DtPerfilUsuario obtenerPerfilCliente(String nickCliente) {
+        Usuario u = usuarios.get(nickCliente);
+        
+        if (u == null)
+            throw new UnsupportedOperationException("El cliente " + nickCliente + " no existe");
+        
+        if (!(u instanceof Cliente))
+            throw new UnsupportedOperationException("Este usuario no es un cliente");
+        
+        return ((Cliente) u).obtenerPerfil();
     }
     
     public DtCliente getCliente() {

@@ -1,6 +1,9 @@
 package Logica;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Cliente extends Usuario {
 
@@ -9,8 +12,41 @@ public class Cliente extends Usuario {
 
     public Cliente(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, Imagen imagen) {
         super(nickname, nombre, apellido, email, fechaNac, imagen);
-        this.seguidos = new HashMap<String, Usuario>();
-        this.listasParticulares = new HashMap<String, ListaParticular>();
+        this.seguidos = new HashMap();
+        this.listasParticulares = new HashMap();
+    }
+
+    @Override
+    public String getTipo() {
+        return "Cliente";
+    }
+
+    @Override
+    public DtCliente getData() {
+        return new DtCliente(getNickname(), getNombre(), getApellido(), getEmail(), getFechaNac());
+    }
+
+    @Override
+    public DtPerfilUsuario obtenerPerfil() {
+        DtUsuario info = getData();
+        ArrayList<DtCliente> dtSeguidores = getSeguidores();
+        ArrayList<DtUsuario> dtSeguidos = new ArrayList<>();
+
+        Iterator i = this.seguidos.entrySet().iterator();
+        while (i.hasNext()) {
+            Usuario u = (Usuario) ((Map.Entry) i.next()).getValue();
+            dtSeguidos.add(u.getData());
+        }
+
+        return new DtPerfilCliente(dtSeguidos, info, dtSeguidores);
+    }
+
+    public void agregar(Usuario u) {
+        seguidos.put(u.getNickname(), u);
+    }
+
+    public void dejarSeguir(Usuario u) {
+        seguidos.remove(u.getNickname());
     }
 
     public HashMap<String, Usuario> getSeguidos() {
@@ -29,23 +65,4 @@ public class Cliente extends Usuario {
         this.listasParticulares = listasParticulares;
     }
 
-    public String getTipo() {
-        return "Cliente";
-    }
-
-    public DtUsuario getData() {
-        return null;
-    }
-
-    public DtPerfilUsuario obtenerPerfil() {
-        return null;
-    }
-
-    public void agregar(Usuario u) {
-        seguidos.put(u.getNickname(), u);
-    }
-
-    public void dejarSeguir(Usuario u) {
-        seguidos.remove(u.getNickname());
-    }
 }
