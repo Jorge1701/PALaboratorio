@@ -10,18 +10,16 @@ public abstract class Usuario {
     private String apellido;
     private String email;
     private DtFecha fechaNac;
-    //Imagen imagen;
+    Imagen imagen;
     private HashMap<String,Cliente> seguidores;
     
-   
-
-    public Usuario(String nickname, String nombre, String apellido, String email, DtFecha fechaNac/*,Imagen imagen*/) {
+    public Usuario(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, Imagen imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.fechaNac = fechaNac;
-        // this.imagen = imagen;
+        this.imagen = imagen;
         this.seguidores = new HashMap<String,Cliente>();
     }
 
@@ -45,9 +43,9 @@ public abstract class Usuario {
         this.fechaNac = fechaNac;
     }
 
-    /* public void setImagen(Imagen imagen) {
+    public void setImagen(Imagen imagen) {
         this.imagen = imagen;
-    }*/
+    }
     
      public void setSeguidores(HashMap<String,Cliente> seguidores) {
         this.seguidores = seguidores;
@@ -73,18 +71,19 @@ public abstract class Usuario {
         return this.fechaNac;
     }
 
-    /* public Imagen getImagen() {
+    public Imagen getImagen() {
         return this.imagen;
-    }*/
-    public abstract String getTipo();                                                      //FUNCIONES PROPIAS
-
+    }
     
-
+    public abstract String getTipo();                                                      //FUNCIONES PROPIAS
     public abstract DtUsuario getData();
-
     public abstract DtPerfilUsuario obtenerPerfil();
-
+    
     public ArrayList<DtCliente> getSeguidores() {
         return null;
+    }
+    
+    public void dejarSeguir(Usuario u) {
+        
     }
 }

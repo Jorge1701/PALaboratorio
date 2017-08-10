@@ -59,13 +59,25 @@ public class ControladorUsuario implements IUsuario {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void dejarSeguirUsuario(String nickC, String nickU) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void dejarSeguirUsuario(String nickUsuario, String nickSeguidor) {
+        Usuario usuario = usuarios.get(nickUsuario);
+        Usuario seguidor = usuarios.get(nickSeguidor);
+        
+        if (usuario == null)
+            throw new UnsupportedOperationException("Usuario no existe");
+        
+        if (seguidor == null)
+            throw new UnsupportedOperationException("Seguidor no existe");
+        
+        if (!(usuario instanceof Cliente))
+            throw new UnsupportedOperationException("Usuario no es un cliente.");
+        
+        ((Cliente) usuario).dejarSeguir(seguidor);
     }
 
     @Override
     public void cargarUsuarios() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
 }

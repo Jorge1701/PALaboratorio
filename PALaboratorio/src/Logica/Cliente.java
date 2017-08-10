@@ -7,8 +7,8 @@ public class Cliente extends Usuario {
     private HashMap<String, Usuario> seguidos;
     private HashMap<String, ListaParticular> listasParticulares;
 
-    public Cliente(String nickname, String nombre, String apellido, String email, DtFecha fechaNac/*,Imagen imagen*/) {
-        super(nickname, nombre, apellido, email, fechaNac/*, imagen*/);
+    public Cliente(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, Imagen imagen) {
+        super(nickname, nombre, apellido, email, fechaNac, imagen);
         this.seguidos = new HashMap<String, Usuario>();
         this.listasParticulares = new HashMap<String, ListaParticular>();
     }
@@ -46,7 +46,6 @@ public class Cliente extends Usuario {
     }
 
     public void dejarSeguir(Usuario u) {
-
+        seguidos.remove(u.getNickname());
     }
-
 }

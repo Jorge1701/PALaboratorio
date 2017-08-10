@@ -9,8 +9,8 @@ public class Artista extends Usuario {
     private String web;
     private HashMap<String, Album> albumes;
 
-    public Artista(String nickname, String nombre, String apellido, String email, DtFecha fechaNac/*,Imagen imagen*/, String biografia, String web) {
-        super(nickname, nombre, apellido, email, fechaNac/*, imagen*/);             //LLama al constructor de Usuario
+    public Artista(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, Imagen imagen, String biografia, String web) {
+        super(nickname, nombre, apellido, email, fechaNac, imagen);             //LLama al constructor de Usuario
         this.biografia = biografia;
         this.web = web;
         this.albumes = new HashMap<String, Album>();
