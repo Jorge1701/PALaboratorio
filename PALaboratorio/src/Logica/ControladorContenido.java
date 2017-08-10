@@ -3,7 +3,19 @@ package Logica;
 import java.util.ArrayList;
 
 public class ControladorContenido implements IContenido {
-   
+    
+    private static ControladorContenido controladorContenido;
+    
+    public static ControladorContenido getControladorContenido() {
+        if (controladorContenido == null)
+            controladorContenido = new ControladorContenido();
+        
+        return controladorContenido;
+    }
+    
+    private ControladorContenido() {
+    }
+    
     public boolean selectArtista(String nick) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
