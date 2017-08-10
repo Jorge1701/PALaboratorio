@@ -11,7 +11,20 @@ import java.util.Set;
 
 import java.util.ArrayList;
 
-public class ControladorUsuario implements IUsuario{
+public class ControladorUsuario implements IUsuario {
+
+    private static ControladorUsuario controladorUsuario;
+
+    public static ControladorUsuario getControladorUsuario() {
+        if (controladorUsuario == null) {
+            controladorUsuario = new ControladorUsuario();
+        }
+
+        return controladorUsuario;
+    }
+
+    private ControladorUsuario() {
+    }
 
     private static ControladorUsuario instancia;
     private Map<String, Usuario> usuarios;
@@ -41,7 +54,7 @@ public class ControladorUsuario implements IUsuario{
     public ArrayList<DtArtista> listarArtistas() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-   
+
     public DtPerfilArtista obtenerPerfilArtista() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

@@ -1,6 +1,7 @@
 package Logica;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Usuario {
 
@@ -10,6 +11,9 @@ public abstract class Usuario {
     private String email;
     private DtFecha fechaNac;
     //Imagen imagen;
+    private HashMap<String,Cliente> seguidores;
+    
+   
 
     public Usuario(String nickname, String nombre, String apellido, String email, DtFecha fechaNac/*,Imagen imagen*/) {
         this.nickname = nickname;
@@ -18,6 +22,7 @@ public abstract class Usuario {
         this.email = email;
         this.fechaNac = fechaNac;
         // this.imagen = imagen;
+        this.seguidores = new HashMap<String,Cliente>();
     }
 
     public void setNickname(String nickname) {                                  //SETTERS
@@ -43,6 +48,11 @@ public abstract class Usuario {
     /* public void setImagen(Imagen imagen) {
         this.imagen = imagen;
     }*/
+    
+     public void setSeguidores(HashMap<String,Cliente> seguidores) {
+        this.seguidores = seguidores;
+    }
+     
     public String getNickname() {                                                //GETTERS
         return this.nickname;
     }

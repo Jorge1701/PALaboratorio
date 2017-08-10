@@ -1,24 +1,31 @@
 package Logica;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Artista extends Usuario {
 
     private String biografia;
     private String web;
+    private HashMap<String, Album> albumes;
 
     public Artista(String nickname, String nombre, String apellido, String email, DtFecha fechaNac/*,Imagen imagen*/, String biografia, String web) {
         super(nickname, nombre, apellido, email, fechaNac/*, imagen*/);             //LLama al constructor de Usuario
         this.biografia = biografia;
         this.web = web;
+        this.albumes = new HashMap<String, Album>();
     }
 
     public void setBiografia(String biografia) {
         this.biografia = biografia;
     }
 
-    public void setweb(String web) {
+    public void setWeb(String web) {
         this.web = web;
+    }
+
+    public void setAlbumes(HashMap<String, Album> albumes) {
+        this.albumes = albumes;
     }
 
     public String getBiografia() {
@@ -35,6 +42,10 @@ public class Artista extends Usuario {
 
     public DtUsuario getData() {
         return null;
+    }
+
+    public HashMap<String, Album> getAlbumes() {
+        return albumes;
     }
 
     public ArrayList<DtAlbum> obtenerAlbumes() {
