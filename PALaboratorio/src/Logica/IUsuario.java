@@ -12,4 +12,5 @@ public interface IUsuario {
     public DtCliente getCliente();
     public void seguirUsuario(String nickC, String nickU);
     public void dejarSeguirUsuario(String nickC, String nickU);
+    public void cargarUsuarios();
 }

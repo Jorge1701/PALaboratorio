@@ -1,19 +1,33 @@
 package Logica;
 
+import java.util.List;
+import java.util.ArrayList;
+import Logica.Usuario;
+//import Persistencia.BDUsuario;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
 import java.util.ArrayList;
 
 public class ControladorContenido implements IContenido {
     
-    private static ControladorContenido controladorContenido;
+    private static ControladorContenido instancia;
+    private Map<String, ListaDefecto> listasDefecto;
     
-    public static ControladorContenido getControladorContenido() {
-        if (controladorContenido == null)
-            controladorContenido = new ControladorContenido();
-        
-        return controladorContenido;
-    }
+ public static ControladorContenido getInstance(){
+        if (instancia == null){
+            instancia = new ControladorContenido();
+        }
+        return instancia;
+    } 
     
-    private ControladorContenido() {
+ private ControladorContenido(){
+        //Colección genérica común
+        //this.personas=new ArrayList<Persona>();
+        this.listasDefecto=new HashMap<String, ListaDefecto>();
+        //this.dbPersona=new DBPersona();
     }
     
     public boolean selectArtista(String nick) {
