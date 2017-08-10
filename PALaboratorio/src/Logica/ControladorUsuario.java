@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ControladorUsuario implements IUsuario {
 
     private static ControladorUsuario instancia;
-    private Map<Integer, Usuario> usuarios;
+    private Map<String, Usuario> usuarios;
     //private DBPersona dbPersona=null;
     
    public static ControladorUsuario getInstance(){
@@ -62,4 +62,10 @@ public class ControladorUsuario implements IUsuario {
     public void dejarSeguirUsuario(String nickC, String nickU) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void cargarUsuarios() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }
