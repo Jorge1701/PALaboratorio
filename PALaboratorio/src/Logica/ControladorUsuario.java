@@ -13,29 +13,17 @@ import java.util.ArrayList;
 
 public class ControladorUsuario implements IUsuario {
 
-    private static ControladorUsuario controladorUsuario;
-
-    public static ControladorUsuario getControladorUsuario() {
-        if (controladorUsuario == null) {
-            controladorUsuario = new ControladorUsuario();
-        }
-
-        return controladorUsuario;
-    }
-
-    private ControladorUsuario() {
-    }
-
     private static ControladorUsuario instancia;
-    private Map<String, Usuario> usuarios;
+    private Map<Integer, Usuario> usuarios;
+    //private DBPersona dbPersona=null;
     
-    public static ControladorUsuario getInstance(){
+   public static ControladorUsuario getInstance(){
         if (instancia == null){
             instancia = new ControladorUsuario();
         }
         return instancia;
-    }    
-
+    }  
+  
     private ControladorUsuario(){
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
