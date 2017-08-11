@@ -29,7 +29,7 @@ public class BDUsuario {
 
     private Connection conexion = new ConexionBD().getConexion();
 
-    public boolean ingresarUsuario(Usuario u) throws FileNotFoundException {
+    public boolean ingresarUsuario(Usuario u){
         try {
             PreparedStatement statement = conexion.prepareStatement("INSERT INTO usuario "
                     + "(nickname, correo, nombre,apellido,fecha_nac,tipo) values(?,?,?,?,?,?)");
