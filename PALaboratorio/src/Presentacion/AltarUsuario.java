@@ -1,23 +1,28 @@
 package Presentacion;
 
+import Logica.DtFecha;
+import Logica.DtUsuario;
+import Logica.IUsuario;
 import javax.swing.JTextField;
 
 
 public class AltarUsuario extends javax.swing.JInternalFrame {
 
-
-    public AltarUsuario() {
+private IUsuario IU;
+    
+    public AltarUsuario(IUsuario IU) {
         initComponents();
         biografia.setVisible(false);
         web.setVisible(false);
         webTx.setVisible(false);
         bioTx.setVisible(false);
-     
-        
-        
+        this.IU=IU;    
         
     }
 
+   public AltarUsuario() {
+  
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -36,7 +41,7 @@ public class AltarUsuario extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         mes = new javax.swing.JComboBox<>();
         anio = new javax.swing.JComboBox<>();
-        mes1 = new javax.swing.JComboBox<>();
+        dia = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         cliente = new javax.swing.JRadioButton();
         artista = new javax.swing.JRadioButton();
@@ -86,17 +91,17 @@ public class AltarUsuario extends javax.swing.JInternalFrame {
 
         mes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", " " }));
 
-        anio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----", "1918", "1919", "1921", "1922", "1923", "1924", "1925", "1926", "1927", "1928", "1929", "1930", "1931", "1932", "1933", "1934", "1935", "1936", "1937", "1938", "1939", "1940", "1941", "1942", "1943", "1944", "1945", "1946", "1947", "1948", "1949", "1950", "1950", "1951", "1952", "1953", "1954", "1955", "1956", "1957", "1958", "1959", "1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", " " }));
+        anio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005", "2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997", "1996", "1995", "1994", "1993", "1992", "1991", "1990", "1989", "1988", "1987", "1986", "1985", "1984", "1983", "1982", "1981", "1980", "1979", "1978", "1977", "1976", "1975", "1974", "1973", "1972", "1971", "1970", "1969", "1968", "1967", "1966", "1965", "1964", "1963", "1962", "1961", "1960", "1959", "1958", "1957", "1956", "1955", "1954", "1953", "1952", "1951", "1950", "1950", "1949", "1948", "1947", "1946", "1945", "1944", "1943", "1942", "1941", "1940", "1939", "1938", "1937", "1936", "1935", "1934", "1933", "1932", "1931", "1930", "1929", "1928", "1927", "1926", "1925", "1924", "1923", "1922", "1921", "1920", "1919", "1918", " " }));
         anio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 anioActionPerformed(evt);
             }
         });
 
-        mes1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        mes1.addActionListener(new java.awt.event.ActionListener() {
+        dia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        dia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mes1ActionPerformed(evt);
+                diaActionPerformed(evt);
             }
         });
 
@@ -124,6 +129,11 @@ public class AltarUsuario extends javax.swing.JInternalFrame {
         webTx.setText("Sitio web: ");
 
         aceptar.setText("Aceptar");
+        aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptarActionPerformed(evt);
+            }
+        });
         aceptar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 aceptarKeyTyped(evt);
@@ -184,7 +194,7 @@ public class AltarUsuario extends javax.swing.JInternalFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(50, 50, 50)
-                                        .addComponent(mes1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(dia, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
@@ -222,7 +232,7 @@ public class AltarUsuario extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mes1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -254,9 +264,9 @@ public class AltarUsuario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nickActionPerformed
 
-    private void mes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mes1ActionPerformed
+    private void diaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_mes1ActionPerformed
+    }//GEN-LAST:event_diaActionPerformed
 
     private void apellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apellidoActionPerformed
     }//GEN-LAST:event_apellidoActionPerformed
@@ -292,6 +302,25 @@ public class AltarUsuario extends javax.swing.JInternalFrame {
     private void cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarMouseClicked
       dispose();
     }//GEN-LAST:event_cancelarMouseClicked
+
+    private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
+        DtUsuario dtu= new DtUsuario(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())));
+        
+        boolean ok=IU.ingresarUsuario(dtu);
+        if (ok){
+            javax.swing.JOptionPane.showMessageDialog(null,"Persona Dada de alta");
+
+        }else{
+            javax.swing.JOptionPane.showMessageDialog(null,"Error al dar de ala la persona o la persona ya existe");
+            //javax.swing.JOptionPane.showMessageDialog();
+        }
+        this.nick.setText("");
+        this.nombre.setText(""); 
+        this.apellido.setText("");
+        this.correo.setText("");
+        this.biografia.setText("");
+        this.web.setText("");
+    }//GEN-LAST:event_aceptarActionPerformed
     
               
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -305,6 +334,7 @@ public class AltarUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JButton cancelar;
     private javax.swing.JRadioButton cliente;
     private javax.swing.JTextField correo;
+    private javax.swing.JComboBox<String> dia;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -313,7 +343,6 @@ public class AltarUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JComboBox<String> mes;
-    private javax.swing.JComboBox<String> mes1;
     private javax.swing.JTextField nick;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField web;

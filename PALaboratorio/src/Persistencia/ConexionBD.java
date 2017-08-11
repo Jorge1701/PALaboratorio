@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class ConexionBD {
     private final String host="localhost";
     private final String port="3306";
-    private final String db="ejemplojava";
+    private final String db="Espotify";
     private final String user="root";
     private final String pass="rooteo";
     

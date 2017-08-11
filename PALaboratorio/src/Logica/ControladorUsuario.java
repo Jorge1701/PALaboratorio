@@ -1,17 +1,18 @@
 package Logica;
 
-//import Persistencia.BDUsuario;
+import Persistencia.BDUsuario;
 import java.util.HashMap;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import jdk.nashorn.internal.objects.NativeArray;
 
 public class ControladorUsuario implements IUsuario {
 
     private static ControladorUsuario instancia;
-    private HashMap<String, Usuario> usuarios;
-    //private DBPersona dbPersona=null;
+    private Map<String, Usuario> usuarios;
+    private BDUsuario bdUsuario=null;
 
     public static ControladorUsuario getInstance() {
         if (instancia == null) {
@@ -23,22 +24,50 @@ public class ControladorUsuario implements IUsuario {
     private ControladorUsuario() {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
-        this.usuarios=new HashMap();
-        
-        //usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
-        //this.dbPersona=new DBPersona();
+        this.usuarios = new HashMap();
+        this.bdUsuario=new BDUsuario();
     }
-    
+
     @Override
     public Artista selectArtista(String nick) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void ingresarUsuario(DtUsuario dtu) {
+    public boolean ingresarUsuario(DtUsuario dtu) {
+
+        ArrayList<Usuario> usr = new ArrayList<>();
+
+        Iterator i = usuarios.entrySet().iterator();
+        while (i.hasNext()) {
+            Usuario u = (Usuario) ((Map.Entry) i.next()).getValue();
+
+            if (u.getNickname() == dtu.getNickname() || u.getEmail() == dtu.getEmail()) {
+                return false;
+            }
+        }
+        if (dtu instanceof DtCliente) {
+            Usuario c = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null);
+            boolean res =this.bdUsuario.ingresarUsuario(c);
+            if (res){
+                //Colección genérica común
+                //this.personas.add(p);
+                this.usuarios.put(c.getNickname(), c);
+            }
+            return res;
+        } else {
+            Usuario a = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null, ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
+            boolean res =this.bdUsuario.ingresarUsuario(a);
+            if (res){
+                //Colección genérica común
+                //this.personas.add(p);
+                this.usuarios.put(a.getNickname(), a);
+            }
+            return res;
+        }
 
     }
-    
+
     @Override
     public ArrayList<DtUsuario> listarClientes() {
         ArrayList<DtUsuario> clientes = new ArrayList<>();
