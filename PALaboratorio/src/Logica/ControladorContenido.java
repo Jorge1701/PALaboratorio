@@ -15,6 +15,7 @@ public class ControladorContenido implements IContenido {
 
     private static ControladorContenido instancia;
     private Map<String, ListaDefecto> listasDefecto;
+    private Artista artista;
     private Genero genero;
 
     public static ControladorContenido getInstance() {
@@ -32,7 +33,13 @@ public class ControladorContenido implements IContenido {
     }
 
     public boolean selectArtista(String nick) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.artista = ControladorUsuario.getInstance().selectArtista(nick);
+        if (this.artista != null){
+            return true;        
+        } else{
+            return false;
+        } 
     }
 
     public DtGenero listarGenero() {
