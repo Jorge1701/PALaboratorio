@@ -1,6 +1,7 @@
 package Logica;
 
 //import Persistencia.BDUsuario;
+import Persistencia.BDUsuario;
 import java.util.HashMap;
 
 import java.util.ArrayList;
@@ -130,7 +131,9 @@ public class ControladorUsuario implements IUsuario {
         if (!(usuario instanceof Cliente)) {
             throw new UnsupportedOperationException("Usuario no es un cliente.");
         }
-
+        
+        BDUsuario bdu = new BDUsuario();
+        bdu.dejarDeSeguir(nickUsuario, nickUsuario);
         ((Cliente) usuario).dejarSeguir(seguidor);
     }
 
