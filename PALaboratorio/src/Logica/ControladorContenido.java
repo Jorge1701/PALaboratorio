@@ -1,13 +1,8 @@
 package Logica;
 
-import java.util.List;
-import java.util.ArrayList;
-import Logica.Usuario;
 //import Persistencia.BDUsuario;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import java.util.ArrayList;
 
