@@ -20,6 +20,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alta de Perfil"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="altaPerfilActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="altaAlbum">
               <Properties>

@@ -55,6 +55,11 @@ public class menu extends javax.swing.JFrame {
         jMenu1.setText("Registros");
 
         altaPerfil.setText("Alta de Perfil");
+        altaPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaPerfilActionPerformed(evt);
+            }
+        });
         jMenu1.add(altaPerfil);
 
         altaAlbum.setText("Alta Album");
@@ -168,6 +173,12 @@ public class menu extends javax.swing.JFrame {
         PanelMenu.add(cpc);
         cpc.show();
     }//GEN-LAST:event_seguirUsuarioActionPerformed
+
+    private void altaPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaPerfilActionPerformed
+        AltaPerfil ap = new AltaPerfil();
+        PanelMenu.add(ap);
+        ap.show();
+    }//GEN-LAST:event_altaPerfilActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

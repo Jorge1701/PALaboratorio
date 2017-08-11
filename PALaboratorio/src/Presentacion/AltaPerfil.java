@@ -1,27 +1,27 @@
 package Presentacion;
 
+import Logica.DtArtista;
+import Logica.DtCliente;
 import Logica.DtFecha;
 import Logica.DtUsuario;
+import Logica.Fabrica;
 import Logica.IUsuario;
 import javax.swing.JTextField;
 
 
-public class AltarUsuario extends javax.swing.JInternalFrame {
+public class AltaPerfil extends javax.swing.JInternalFrame {
 
 private IUsuario IU;
     
-    public AltarUsuario(IUsuario IU) {
+    public AltaPerfil() {
         initComponents();
         biografia.setVisible(false);
         web.setVisible(false);
         webTx.setVisible(false);
         bioTx.setVisible(false);
-        this.IU=IU;    
+        cliente.setSelected(true);
+        this.IU=Fabrica.getInstance().getIControladorUsuario();    
         
-    }
-
-   public AltarUsuario() {
-  
     }
 
     @SuppressWarnings("unchecked")
@@ -304,14 +304,20 @@ private IUsuario IU;
     }//GEN-LAST:event_cancelarMouseClicked
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
-        DtUsuario dtu= new DtUsuario(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())));
+        DtUsuario dtu;
+        
+        if(cliente.isSelected() == true){
+            dtu = new DtCliente(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())));
+        }else{
+            dtu = new DtArtista(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())),biografia.getText(),web.getText());
+        }
         
         boolean ok=IU.ingresarUsuario(dtu);
         if (ok){
-            javax.swing.JOptionPane.showMessageDialog(null,"Persona Dada de alta");
+            javax.swing.JOptionPane.showMessageDialog(null,"Persona Dada de alta con éxito.");
 
         }else{
-            javax.swing.JOptionPane.showMessageDialog(null,"Error al dar de ala la persona o la persona ya existe");
+            javax.swing.JOptionPane.showMessageDialog(null,"Error: La persona ya está registrada o faltaron campos obligatorios.");
             //javax.swing.JOptionPane.showMessageDialog();
         }
         this.nick.setText("");

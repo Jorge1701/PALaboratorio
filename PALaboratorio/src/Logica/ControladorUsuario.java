@@ -36,8 +36,6 @@ public class ControladorUsuario implements IUsuario {
     @Override
     public boolean ingresarUsuario(DtUsuario dtu) {
 
-        ArrayList<Usuario> usr = new ArrayList<>();
-
         Iterator i = usuarios.entrySet().iterator();
         while (i.hasNext()) {
             Usuario u = (Usuario) ((Map.Entry) i.next()).getValue();
@@ -46,22 +44,21 @@ public class ControladorUsuario implements IUsuario {
                 return false;
             }
         }
+        
+        Usuario usr;
+        
         if (dtu instanceof DtCliente) {
-            Usuario c = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null);
-            boolean res =this.bdUsuario.ingresarUsuario(c);
+            usr = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null);
+            boolean res =this.bdUsuario.ingresarUsuario(usr);
             if (res){
-                //Colección genérica común
-                //this.personas.add(p);
-                this.usuarios.put(c.getNickname(), c);
+                this.usuarios.put(usr.getNickname(), usr);
             }
             return res;
         } else {
-            Usuario a = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null, ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
-            boolean res =this.bdUsuario.ingresarUsuario(a);
+            usr = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null, ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
+            boolean res =this.bdUsuario.ingresarUsuario(usr);
             if (res){
-                //Colección genérica común
-                //this.personas.add(p);
-                this.usuarios.put(a.getNickname(), a);
+                this.usuarios.put(usr.getNickname(), usr);
             }
             return res;
         }
