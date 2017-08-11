@@ -1,5 +1,5 @@
-
 package Presentacion;
+
 public class menu extends javax.swing.JFrame {
 
     public menu() {
@@ -14,12 +14,26 @@ public class menu extends javax.swing.JFrame {
         PanelMenu = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        usuario = new javax.swing.JMenuItem();
-        genero = new javax.swing.JMenuItem();
-        album = new javax.swing.JMenuItem();
+        altaPerfil = new javax.swing.JMenuItem();
+        altaAlbum = new javax.swing.JMenuItem();
+        altaGenero = new javax.swing.JMenuItem();
+        crearListaRep = new javax.swing.JMenuItem();
+        publicarLista = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        consultaPerfilCliente = new javax.swing.JMenuItem();
+        consultaPerfilArtista = new javax.swing.JMenuItem();
+        consultaAlbum = new javax.swing.JMenuItem();
+        consultaListaRep = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        seguirUsuario = new javax.swing.JMenuItem();
         dejarSeguirUsuario = new javax.swing.JMenuItem();
+        agregarTemaLista = new javax.swing.JMenuItem();
+        quitarTemaLista = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        guardarTLA = new javax.swing.JMenuItem();
+        eliminarTLA = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        cargarDatos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -33,45 +47,60 @@ public class menu extends javax.swing.JFrame {
         );
         PanelMenuLayout.setVerticalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
+            .addGap(0, 394, Short.MAX_VALUE)
         );
 
         jMenuBar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jMenu1.setBackground(new java.awt.Color(204, 204, 255));
-        jMenu1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu1.setText("Registros");
 
-        usuario.setText("Registrar Usuario");
-        usuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usuarioActionPerformed(evt);
-            }
-        });
-        jMenu1.add(usuario);
+        altaPerfil.setText("Alta de Perfil");
+        jMenu1.add(altaPerfil);
 
-        genero.setText("Registrar Género");
-        genero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generoActionPerformed(evt);
-            }
-        });
-        jMenu1.add(genero);
+        altaAlbum.setText("Alta Album");
+        jMenu1.add(altaAlbum);
 
-        album.setText("Registrar Álbum");
-        album.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                albumActionPerformed(evt);
-            }
-        });
-        jMenu1.add(album);
+        altaGenero.setText("Alta de Genero");
+        jMenu1.add(altaGenero);
+
+        crearListaRep.setText("Crear Lista de Reproduccion");
+        jMenu1.add(crearListaRep);
+
+        publicarLista.setText("Publicar Lista");
+        jMenu1.add(publicarLista);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Consultas");
+
+        consultaPerfilCliente.setText("Consulta de Perfil de Cliente");
+        consultaPerfilCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultaPerfilClienteActionPerformed(evt);
+            }
+        });
+        jMenu2.add(consultaPerfilCliente);
+
+        consultaPerfilArtista.setText("Consulta de Perfil de Artista");
+        jMenu2.add(consultaPerfilArtista);
+
+        consultaAlbum.setText("Consulta de Album");
+        jMenu2.add(consultaAlbum);
+
+        consultaListaRep.setText("Consulta de Lista de Reproduccion");
+        jMenu2.add(consultaListaRep);
+
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Usuario");
+        jMenu3.setText("Relaciones");
+
+        seguirUsuario.setText("Seguir Usuario");
+        seguirUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seguirUsuarioActionPerformed(evt);
+            }
+        });
+        jMenu3.add(seguirUsuario);
 
         dejarSeguirUsuario.setText("Dejar de Seguir Usuario");
         dejarSeguirUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -81,7 +110,30 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu3.add(dejarSeguirUsuario);
 
+        agregarTemaLista.setText("Agregar Tema a Lista");
+        jMenu3.add(agregarTemaLista);
+
+        quitarTemaLista.setText("Quitar Tema de Lista");
+        jMenu3.add(quitarTemaLista);
+
         jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Favoritos");
+
+        guardarTLA.setText("Guardar Tema/Lista/Album");
+        jMenu4.add(guardarTLA);
+
+        eliminarTLA.setText("Eliminar Tema/Lista/Album");
+        jMenu4.add(eliminarTLA);
+
+        jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("Datos de Prueba");
+
+        cargarDatos.setText("Cargar");
+        jMenu5.add(cargarDatos);
+
+        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -98,30 +150,24 @@ public class menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioActionPerformed
-        AltarUsuario user = new AltarUsuario();
-        this.PanelMenu.add(user);
-        user.show();
-    }//GEN-LAST:event_usuarioActionPerformed
-
-    private void generoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generoActionPerformed
-       AltaArtista  art = new AltaArtista();
-       this.PanelMenu.add(art);
-       art.show();
-    }//GEN-LAST:event_generoActionPerformed
-
-    private void albumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_albumActionPerformed
-        AltaAlbum alb = new AltaAlbum();
-        this.PanelMenu.add(alb);
-        alb.show();
-    }//GEN-LAST:event_albumActionPerformed
 
     private void dejarSeguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dejarSeguirUsuarioActionPerformed
         DejarSeguirUsuario dsu = new DejarSeguirUsuario();
-        this.PanelMenu.add(dsu);
+        PanelMenu.add(dsu);
         dsu.show();
     }//GEN-LAST:event_dejarSeguirUsuarioActionPerformed
 
+    private void consultaPerfilClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaPerfilClienteActionPerformed
+        ConsultaPerfilCliente cpc = new ConsultaPerfilCliente();
+        PanelMenu.add(cpc);
+        cpc.show();
+    }//GEN-LAST:event_consultaPerfilClienteActionPerformed
+
+    private void seguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirUsuarioActionPerformed
+        SeguirUsuario cpc = new SeguirUsuario();
+        PanelMenu.add(cpc);
+        cpc.show();
+    }//GEN-LAST:event_seguirUsuarioActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -155,16 +201,30 @@ public class menu extends javax.swing.JFrame {
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane PanelMenu;
-    private javax.swing.JMenuItem album;
+    private javax.swing.JMenuItem agregarTemaLista;
+    private javax.swing.JMenuItem altaAlbum;
+    private javax.swing.JMenuItem altaGenero;
+    private javax.swing.JMenuItem altaPerfil;
+    private javax.swing.JMenuItem cargarDatos;
+    private javax.swing.JMenuItem consultaAlbum;
+    private javax.swing.JMenuItem consultaListaRep;
+    private javax.swing.JMenuItem consultaPerfilArtista;
+    private javax.swing.JMenuItem consultaPerfilCliente;
+    private javax.swing.JMenuItem crearListaRep;
     private javax.swing.JMenuItem dejarSeguirUsuario;
-    private javax.swing.JMenuItem genero;
+    private javax.swing.JMenuItem eliminarTLA;
+    private javax.swing.JMenuItem guardarTLA;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem usuario;
+    private javax.swing.JMenuItem publicarLista;
+    private javax.swing.JMenuItem quitarTemaLista;
+    private javax.swing.JMenuItem seguirUsuario;
     // End of variables declaration//GEN-END:variables
 }

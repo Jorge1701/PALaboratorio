@@ -2,7 +2,7 @@ package Logica;
 
 import java.util.ArrayList;
 
-public class Lista {
+public abstract class Lista {
     
     private String nombre;
     private ArrayList<Tema> temas;
@@ -13,12 +13,19 @@ public class Lista {
         this.temas = temas;
         this.imagen = imagen;
     }
+    
+    public abstract DtLista getData();
 
     public String getNombre() {
         return nombre;
     }
 
-    public ArrayList<Tema> getTemas() {
+    public ArrayList<DtTema> getTemas() {
+        ArrayList<DtTema> temas = new ArrayList<>();
+        
+        for (Tema t : this.temas)
+            temas.add(t.getData());
+        
         return temas;
     }
 

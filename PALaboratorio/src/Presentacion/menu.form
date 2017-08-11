@@ -13,53 +13,79 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="cc" red="cc" type="rgb"/>
-            </Property>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-                <BevelBorder/>
-              </Border>
-            </Property>
             <Property name="text" type="java.lang.String" value="Registros"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="usuario">
+            <MenuItem class="javax.swing.JMenuItem" name="altaPerfil">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Registrar Usuario"/>
+                <Property name="text" type="java.lang.String" value="Alta de Perfil"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="usuarioActionPerformed"/>
-              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="genero">
+            <MenuItem class="javax.swing.JMenuItem" name="altaAlbum">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Registrar G&#xe9;nero"/>
+                <Property name="text" type="java.lang.String" value="Alta Album"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generoActionPerformed"/>
-              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="album">
+            <MenuItem class="javax.swing.JMenuItem" name="altaGenero">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Registrar &#xc1;lbum"/>
+                <Property name="text" type="java.lang.String" value="Alta de Genero"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="albumActionPerformed"/>
-              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="crearListaRep">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Crear Lista de Reproduccion"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="publicarLista">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Publicar Lista"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Edit"/>
+            <Property name="text" type="java.lang.String" value="Consultas"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="consultaPerfilCliente">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consulta de Perfil de Cliente"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="consultaPerfilClienteActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="consultaPerfilArtista">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consulta de Perfil de Artista"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="consultaAlbum">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consulta de Album"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="consultaListaRep">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consulta de Lista de Reproduccion"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Usuario"/>
+            <Property name="text" type="java.lang.String" value="Relaciones"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="seguirUsuario">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Seguir Usuario"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seguirUsuarioActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="dejarSeguirUsuario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Dejar de Seguir Usuario"/>
@@ -67,6 +93,45 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dejarSeguirUsuarioActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="agregarTemaLista">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Agregar Tema a Lista"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="quitarTemaLista">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Quitar Tema de Lista"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Favoritos"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="guardarTLA">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Guardar Tema/Lista/Album"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="eliminarTLA">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Eliminar Tema/Lista/Album"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Datos de Prueba"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="cargarDatos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cargar"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -124,7 +189,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="393" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="394" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

@@ -1,9 +1,9 @@
 package Logica;
 
-class DtArtista extends DtUsuario {
+public class DtArtista extends DtUsuario {
     
-    private String biografia;
-    private String web;
+    private final String biografia;
+    private final String web;
     
     public DtArtista(String nickname, String nombre, String apellido, String email, DtFecha fechaNac/*,Imagen imagen*/, String biografia, String web) {
         super(nickname, nombre, apellido, email, fechaNac/*,imagen*/);

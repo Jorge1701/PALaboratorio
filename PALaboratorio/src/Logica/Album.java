@@ -6,6 +6,7 @@ import java.util.Map;
 
 class Album {
 
+    public String nickArtista;
     public String nombre;
     public int anio;
     public Imagen imagen;
@@ -13,7 +14,8 @@ class Album {
     public ArrayList<Genero> generos;
     public Artista artista;
 
-    public Album(String nombre, int anio, Imagen imagen, ArrayList<Tema> temas, ArrayList<Genero> generos) {
+    public Album(String nickArtista, String nombre, int anio, Imagen imagen, ArrayList<Tema> temas, ArrayList<Genero> generos) {
+        this.nickArtista = nickArtista;
         this.nombre = nombre;
         this.anio = anio;
         this.imagen = imagen;
@@ -21,6 +23,10 @@ class Album {
         this.generos = generos;
     }
 
+    public String getNickArtista() {
+        return nickArtista;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -70,7 +76,7 @@ class Album {
     }
 
     public DtAlbum getData() {
-        return null;
+     return new DtAlbum(nickArtista, nombre, anio);
     }
 
     public DtAlbumContenido obtenerAlbumContenido() {

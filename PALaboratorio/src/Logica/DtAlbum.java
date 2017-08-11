@@ -1,6 +1,6 @@
 package Logica;
 
-class DtAlbum {
+public class DtAlbum {
     
     private String nickArtista;
     private String nombre;

@@ -2,9 +2,9 @@ package Logica;
 
 import java.util.ArrayList;
 
-class DtPerfilArtista extends DtPerfilUsuario {
+public class DtPerfilArtista extends DtPerfilUsuario {
     
-    private ArrayList<DtAlbum> albumes;
+    private final ArrayList<DtAlbum> albumes;
 
     public DtPerfilArtista(ArrayList<DtAlbum> albumes, DtUsuario info, ArrayList<DtCliente> seguidores) {
         super(info, seguidores);

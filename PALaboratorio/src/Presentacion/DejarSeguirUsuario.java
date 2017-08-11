@@ -5,12 +5,12 @@ import Logica.IUsuario;
 import javax.swing.JOptionPane;
 
 public class DejarSeguirUsuario extends javax.swing.JInternalFrame {
-    
+
     private IUsuario iUsuario;
-    
+
     public DejarSeguirUsuario() {
         initComponents();
-        
+
         iUsuario = Fabrica.getInstance().getIControladorUsuario();
     }
 
@@ -54,15 +54,19 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(btnAceptar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtUsuario)
-                    .addComponent(txtSeguidor, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtUsuario)
+                            .addComponent(txtSeguidor, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -76,11 +80,11 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtSeguidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAceptar))
-                .addContainerGap())
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -93,26 +97,29 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String usuario = txtUsuario.getText();
         String seguidor = txtSeguidor.getText();
-        
+
         String camposVacios = "";
-        if (usuario.isEmpty())
+        if (usuario.isEmpty()) {
             camposVacios += "Usuario\n";
-        if (seguidor.isEmpty())
+        }
+        if (seguidor.isEmpty()) {
             camposVacios += "Seguidor\n";
-        
+        }
+
         if (!camposVacios.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Hay campos obligatorio vacios:\n" + camposVacios);
             return;
         }
-        
+
         try {
             iUsuario.dejarSeguirUsuario(usuario, seguidor);
         } catch (UnsupportedOperationException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            return;
         }
-        
+
         JOptionPane.showMessageDialog(this, seguidor + " dejo de seguir a " + usuario);
-        
+
         txtUsuario.setText("");
         txtSeguidor.setText("");
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -126,5 +133,3 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
-
-

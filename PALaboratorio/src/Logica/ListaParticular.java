@@ -10,6 +10,11 @@ public class ListaParticular extends Lista {
         super(nombre, temas, imagen);
         this.privada = privada;
     }
+    
+    @Override
+    public DtLista getData() {
+        return new DtListaParticular(isPrivada(), getNombre(), getTemas(), getImagen());
+    }
 
     public boolean isPrivada() {
         return privada;
