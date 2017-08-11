@@ -32,7 +32,16 @@ public class ControladorUsuario implements IUsuario {
     
     @Override
     public Artista selectArtista(String nick) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Usuario us = usuarios.get(nick);
+        
+        if (us == null)
+            throw new UnsupportedOperationException("El artista " + nick + " no existe");
+        
+        if (!(us instanceof Artista))
+            throw new UnsupportedOperationException("Este usuario no es un Artista");
+        
+        return (Artista) us;   
     }
 
     @Override
