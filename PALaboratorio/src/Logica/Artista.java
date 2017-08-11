@@ -35,7 +35,20 @@ public class Artista extends Usuario {
     }
 
     public DtPerfilUsuario obtenerPerfil() {
-        return null;
+        DtUsuario info = getData();
+        ArrayList<DtCliente> dtSeguidores = getSeguidores();
+        ArrayList<DtAlbum> dtAlbumes = new ArrayList<>();
+        
+        Iterator i = this.albumes.entrySet().iterator();
+        
+        while(i.hasNext()){
+        Album a = (Album)((Map.Entry) i.next()).getValue();
+        dtAlbumes.add(a.getData());
+        }
+        
+        
+        return new DtPerfilArtista(dtAlbumes,info, dtSeguidores);
+
     }
 
     public void ingresarAlbum(String nom, int anio, ArrayList<Genero> generos/*, Imagen img*/, ArrayList<Tema> temas) {
@@ -44,11 +57,12 @@ public class Artista extends Usuario {
 
     @Override
     public String getTipo() {
+        
         return "Artista";
     }
 
     @Override
-    public DtUsuario getData() {
+    public DtArtista getData() {
         return new DtArtista(getNickname(), getNombre(), getApellido(), getEmail(), getFechaNac(), biografia, web);
     }
 

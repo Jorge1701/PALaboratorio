@@ -82,6 +82,11 @@ public class menu extends javax.swing.JFrame {
         jMenu2.add(consultaPerfilCliente);
 
         consultaPerfilArtista.setText("Consulta de Perfil de Artista");
+        consultaPerfilArtista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultaPerfilArtistaActionPerformed(evt);
+            }
+        });
         jMenu2.add(consultaPerfilArtista);
 
         consultaAlbum.setText("Consulta de Album");
@@ -158,7 +163,7 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_dejarSeguirUsuarioActionPerformed
 
     private void consultaPerfilClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaPerfilClienteActionPerformed
-        ConsultaPerfilCliente cpc = new ConsultaPerfilCliente();
+        ConsultaPerfil cpc = new ConsultaPerfil("Cliente");
         PanelMenu.add(cpc);
         cpc.show();
     }//GEN-LAST:event_consultaPerfilClienteActionPerformed
@@ -168,6 +173,12 @@ public class menu extends javax.swing.JFrame {
         PanelMenu.add(cpc);
         cpc.show();
     }//GEN-LAST:event_seguirUsuarioActionPerformed
+
+    private void consultaPerfilArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaPerfilArtistaActionPerformed
+        ConsultaPerfil cpc = new ConsultaPerfil("Artista");
+        PanelMenu.add(cpc);
+        cpc.show();
+    }//GEN-LAST:event_consultaPerfilArtistaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

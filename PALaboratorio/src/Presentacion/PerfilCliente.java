@@ -15,7 +15,6 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
     public PerfilCliente(DtPerfilCliente dtPerfilCliente) {
         initComponents();
         setTitle(getTitle() + dtPerfilCliente.getInfo().getNickname());
-        
         txtNickname.setText(dtPerfilCliente.getInfo().getNickname());
         txtNombre.setText(dtPerfilCliente.getInfo().getNombre());
         txtApellido.setText(dtPerfilCliente.getInfo().getApellido());
@@ -193,12 +192,12 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                     .addComponent(txtApellido)
                     .addComponent(txtEmail)
                     .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         PanelInfoLayout.setVerticalGroup(
             PanelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelInfoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(39, 39, 39)
                 .addGroup(PanelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNickname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -245,7 +244,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         );
         panelSeguidoresLayout.setVerticalGroup(
             panelSeguidoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
         );
 
         spanelSocial.setLeftComponent(panelSeguidores);
@@ -270,7 +269,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         );
         panelSeguidosLayout.setVerticalGroup(
             panelSeguidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
         );
 
         spanelSocial.setRightComponent(panelSeguidos);

@@ -2,6 +2,7 @@ package Presentacion;
 
 import Logica.DtUsuario;
 import Logica.DtCliente;
+import Logica.DtPerfilArtista;
 import Logica.DtPerfilCliente;
 import Logica.DtPerfilUsuario;
 import Logica.Fabrica;
@@ -10,16 +11,20 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
+public class ConsultaPerfil extends javax.swing.JInternalFrame {
     
     private IUsuario iUsuario;
-    
-    public ConsultaPerfilCliente() {
+    private String tipo;
+    public ConsultaPerfil(String tipo) {
         initComponents();
+        this.tipo = tipo;
         
         iUsuario = Fabrica.getInstance().getIControladorUsuario();
-        
-        ArrayList<DtUsuario> dtc = iUsuario.listarClientes();
+        ArrayList<DtUsuario> dtc;
+        if(tipo.equals("Cliente"))
+            dtc = iUsuario.listarClientes();
+        else 
+            dtc = iUsuario.listarArtistas();
         
         if (dtc.isEmpty())
             JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
@@ -52,7 +57,7 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Consulta de Perfil de Cliente");
+        setTitle("Consulta de Perfil");
 
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,7 +131,7 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Campos obligatorio vacios:\nNickname");
             return;
         }
-        
+        if(tipo.equals(tipo)){
         try {
             DtPerfilUsuario dtpu = iUsuario.obtenerPerfilCliente(nickname);
             PerfilCliente pc = new PerfilCliente((DtPerfilCliente) dtpu);
@@ -134,6 +139,22 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
             pc.show();
         } catch (UnsupportedOperationException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        }else{
+             try {
+            DtPerfilUsuario dtpu = iUsuario.obtenerPerfilArtista(nickname);
+            PerfilArtista pc = new PerfilArtista((DtPerfilArtista) dtpu);
+            getParent().add(pc);
+            pc.show();
+        } catch (UnsupportedOperationException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+        
+ 
+        
+        
+        
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 

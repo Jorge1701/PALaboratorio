@@ -91,5 +91,4 @@ public class Cliente extends Usuario {
     public void setListasParticulares(HashMap<String, ListaParticular> listasParticulares) {
         this.listasParticulares = listasParticulares;
     }
-
 }
