@@ -21,7 +21,6 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         txtEmail.setText(dtPerfilCliente.getInfo().getEmail());
         txtFechaNac.setText(dtPerfilCliente.getInfo().getFechaNac().toString());
         
-        
         // Cargar Seguidores
         ((TitledBorder) panelSeguidores.getBorder()).setTitle("Seguidores (" + dtPerfilCliente.getSeguidores().size() + "):");
         

@@ -47,7 +47,7 @@ public class Artista extends Usuario {
         }
         
         
-        return new DtPerfilArtista(dtAlbumes,info, dtSeguidores);
+        return new DtPerfilArtista(dtAlbumes,info,dtSeguidores,biografia,web);
 
     }
 

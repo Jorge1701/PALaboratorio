@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class DtPerfilUsuario {
     
-    private DtUsuario info;
-    private ArrayList<DtCliente> seguidores;
+    public DtUsuario info;
+    public ArrayList<DtCliente> seguidores;
 
     public DtPerfilUsuario(DtUsuario info, ArrayList<DtCliente> seguidores) {
         this.info = info;
