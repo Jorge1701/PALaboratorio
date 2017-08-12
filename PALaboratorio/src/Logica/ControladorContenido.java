@@ -70,4 +70,31 @@ public class ControladorContenido implements IContenido {
     public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, ArrayList<DtTema> temas) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public List<DtTema> selecListaDef(String nombre){
+     
+     ListaDefecto aux = listasDefecto.get(nombre);
+     
+     if(aux == null){
+      throw new UnsupportedOperationException("No existe la lista");
+     }
+     
+     List<DtTema> res = aux.getTemas();
+     
+     if(res.isEmpty()){
+         throw new UnsupportedOperationException("No hay temas en esta lista");
+    }
+     return res;
+    }
+    
+    public boolean quitarTema(String nombreT,String nombre){
+    
+        Lista lista =(ListaDefecto) listasDefecto.get(nombre);
+        
+        if(lista == null){
+        throw new UnsupportedOperationException("No existe la lista");
+        }
+        
+        return lista.quitarTema(nombreT);
+    }
 }

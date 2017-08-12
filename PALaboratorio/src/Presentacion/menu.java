@@ -119,6 +119,11 @@ public class menu extends javax.swing.JFrame {
         jMenu3.add(agregarTemaLista);
 
         quitarTemaLista.setText("Quitar Tema de Lista");
+        quitarTemaLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitarTemaListaActionPerformed(evt);
+            }
+        });
         jMenu3.add(quitarTemaLista);
 
         jMenuBar1.add(jMenu3);
@@ -179,6 +184,10 @@ public class menu extends javax.swing.JFrame {
         PanelMenu.add(ap);
         ap.show();
     }//GEN-LAST:event_altaPerfilActionPerformed
+
+    private void quitarTemaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarTemaListaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quitarTemaListaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
