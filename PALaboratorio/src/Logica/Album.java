@@ -1,6 +1,7 @@
 package Logica;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -11,10 +12,10 @@ class Album {
     public int anio;
     public Imagen imagen;
     public ArrayList<Tema> temas;
-    public ArrayList<Genero> generos;
+    public HashMap<String, Genero> generos;
     public Artista artista;
 
-    public Album(String nickArtista, String nombre, int anio, Imagen imagen, ArrayList<Tema> temas, ArrayList<Genero> generos) {
+    public Album(String nickArtista, String nombre, int anio, Imagen imagen, ArrayList<Tema> temas, HashMap<String, Genero> generos) {
         this.nickArtista = nickArtista;
         this.nombre = nombre;
         this.anio = anio;
@@ -26,7 +27,7 @@ class Album {
     public String getNickArtista() {
         return nickArtista;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -43,7 +44,7 @@ class Album {
         return temas;
     }
 
-    public ArrayList<Genero> getGeneros() {
+    public HashMap<String, Genero> getGeneros() {
         return generos;
     }
 
@@ -67,7 +68,7 @@ class Album {
         this.temas = temas;
     }
 
-    public void setGeneros(ArrayList<Genero> generos) {
+    public void setGeneros(HashMap<String, Genero> generos) {
         this.generos = generos;
     }
 
@@ -76,14 +77,14 @@ class Album {
     }
 
     public DtAlbum getData() {
-     return new DtAlbum(nickArtista, nombre, anio);
+        return new DtAlbum(nickArtista, nombre, anio);
     }
 
     public DtAlbumContenido obtenerAlbumContenido() {
         ArrayList<String> nomGeneros = new ArrayList<>();
         ArrayList<DtTema> dtTemas = new ArrayList<>();
-        
-        Iterator it = generos.iterator();
+
+        Iterator it = generos.entrySet().iterator();
         while (it.hasNext()) {
             Genero genero = (Genero) ((Map.Entry) it.next()).getValue();
             nomGeneros.add(genero.getNombre());

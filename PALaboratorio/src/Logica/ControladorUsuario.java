@@ -23,12 +23,13 @@ public class ControladorUsuario implements IUsuario {
     private ControladorUsuario() {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
-        this.usuarios=new HashMap();
-        
+        this.usuarios = new HashMap();
+
         //usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
         //this.dbPersona=new DBPersona();
+        
     }
-    
+
     @Override
     public Artista selectArtista(String nick) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -38,7 +39,7 @@ public class ControladorUsuario implements IUsuario {
     public void ingresarUsuario(DtUsuario dtu) {
 
     }
-    
+
     @Override
     public ArrayList<DtUsuario> listarClientes() {
         ArrayList<DtUsuario> clientes = new ArrayList<>();
@@ -137,29 +138,29 @@ public class ControladorUsuario implements IUsuario {
     public ArrayList<DtAlbum> listarAlbumesArtista(String nickArtista) {
         Usuario usuario = usuarios.get(nickArtista);
         if (usuario == null) {
-            throw new UnsupportedOperationException("Artista no existe"); 
+            throw new UnsupportedOperationException("Artista no existe");
         }
-        if (!(usuario instanceof Artista)){
-            throw new UnsupportedOperationException("Usuario no es un artista"); 
+        if (!(usuario instanceof Artista)) {
+            throw new UnsupportedOperationException("Usuario no es un artista");
         }
-        
-        return  ((Artista) usuario).obtenerAlbumes();
+
+        return ((Artista) usuario).obtenerAlbumes();
     }
-    
-     public DtAlbumContenido obtenerAlbumContenido(String nickArtista, String nomAlbum) {
-         Usuario usuario = usuarios.get(nickArtista);
+
+    public DtAlbumContenido obtenerAlbumContenido(String nickArtista, String nomAlbum) {
+        Usuario usuario = usuarios.get(nickArtista);
         if (usuario == null) {
-            throw new UnsupportedOperationException("Artista no existe"); 
+            throw new UnsupportedOperationException("Artista no existe");
         }
-        if (!(usuario instanceof Artista)){
-            throw new UnsupportedOperationException("Usuario no es un artista"); 
+        if (!(usuario instanceof Artista)) {
+            throw new UnsupportedOperationException("Usuario no es un artista");
         }
-        
+
         DtAlbumContenido dt = ((Artista) usuario).obtenerAlbumContenido(nomAlbum);
-        if(dt == null){
-            throw new UnsupportedOperationException("Album no existe"); 
+        if (dt == null) {
+            throw new UnsupportedOperationException("Album no existe");
         }
-        
+
         return dt;
     }
 
