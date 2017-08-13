@@ -35,11 +35,11 @@ public class ControladorContenido implements IContenido {
     public boolean selectArtista(String nick) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         this.artista = ControladorUsuario.getInstance().selectArtista(nick);
-        if (this.artista != null){
-            return true;        
-        } else{
+        if (this.artista != null) {
+            return true;
+        } else {
             return false;
-        } 
+        }
     }
 
     public DtGenero listarGenero() {
@@ -70,31 +70,68 @@ public class ControladorContenido implements IContenido {
     public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, ArrayList<DtTema> temas) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public List<DtTema> selecListaDef(String nombre){
-     
-     ListaDefecto aux = listasDefecto.get(nombre);
-     
-     if(aux == null){
-      throw new UnsupportedOperationException("No existe la lista");
-     }
-     
-     List<DtTema> res = aux.getTemas();
-     
-     if(res.isEmpty()){
-         throw new UnsupportedOperationException("No hay temas en esta lista");
-    }
-     return res;
-    }
-    
-    public boolean quitarTema(String nombreT,String nombre){
-    
-        Lista lista =(ListaDefecto) listasDefecto.get(nombre);
-        
-        if(lista == null){
-        throw new UnsupportedOperationException("No existe la lista");
+
+    public List<DtTema> selecListaDef(String nombre) {
+
+        ListaDefecto aux = listasDefecto.get(nombre);
+
+        if (aux == null) {
+            throw new UnsupportedOperationException("No existe la lista");
         }
-        
+
+        List<DtTema> res = aux.getTemas();
+
+        if (res.isEmpty()) {
+            throw new UnsupportedOperationException("No hay temas en esta lista");
+        }
+        return res;
+    }
+
+    public boolean quitarTema(String nombreT, String nombre) {
+
+        Lista lista = (ListaDefecto) listasDefecto.get(nombre);
+
+        if (lista == null) {
+            throw new UnsupportedOperationException("No existe la lista");
+        }
+
         return lista.quitarTema(nombreT);
+    }
+
+    public List<DtTema> selecLista(String nick, String nomL) {
+        Cliente us = (Cliente) ControladorUsuario.getInstance().getUsuario(nick);
+
+        if (us == null) {
+            throw new UnsupportedOperationException("No existe el usuario" + nick + " en el sistema.");
+        }
+
+        Lista lista = us.getLista(nomL);
+
+        List<DtTema> temas = lista.getTemas();
+
+        if (temas == null) {
+            throw new UnsupportedOperationException("No hay temas en la lista " + nomL + ".");
+        } else {
+            return temas;
+        }
+    }
+
+    @Override
+    public boolean publicarLista(String nick, String nomL) {
+        Cliente us = (Cliente) ControladorUsuario.getInstance().getUsuario(nick);
+
+        if (us == null) {
+            throw new UnsupportedOperationException("No existe el usuario" + nick + " en el sistema.");
+        }
+
+        ListaParticular l = (ListaParticular) us.getLista(nomL);
+
+        if (l == null) {
+            throw new UnsupportedOperationException("No existe la lista" + nomL + " en el sistema.");
+        }
+
+        l.setPrivada(false);
+
+        return true;
     }
 }

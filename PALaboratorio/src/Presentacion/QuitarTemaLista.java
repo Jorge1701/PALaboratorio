@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Luis
@@ -14,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 public class QuitarTemaLista extends javax.swing.JFrame {
 
     private IContenido IC;
+
     public QuitarTemaLista() {
         initComponents();
         defecto.setSelected(true);
@@ -155,31 +157,36 @@ public class QuitarTemaLista extends javax.swing.JFrame {
     }//GEN-LAST:event_nombreActionPerformed
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
-       boolean ok = IC.quitarTema(lista.getSelectedValue(),nombre.getText());
-       
-       if(ok){
-       javax.swing.JOptionPane.showMessageDialog(null,"El tema fue removido con éxito","Felicitaciones!",JOptionPane.INFORMATION_MESSAGE);
-       }else{
-       javax.swing.JOptionPane.showMessageDialog(null,"Hubo un error al tratar de quitar el tema","Ha ocurrido un error!",JOptionPane.ERROR_MESSAGE);
-       }
-       
+        boolean ok = IC.quitarTema(lista.getSelectedValue(), nombre.getText());
+
+        if (ok) {
+            javax.swing.JOptionPane.showMessageDialog(null, "El tema fue removido con éxito", "Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(null, "Hubo un error al tratar de quitar el tema", "Ha ocurrido un error!", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_aceptarActionPerformed
 
     private void cargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarActionPerformed
-        
-           List<DtTema> temas=IC.selecListaDef(nombre.getText());
-        DefaultTableModel modelo=(DefaultTableModel) lista.getModel();
-        modelo.setRowCount(0);
-        for (int i=0;i<temas.size();i++) {
-            DtTema t=(DtTema)temas.get(i);
-            Object[] dat={
-            t.getNombre(),
-            t.getDuracion(),
-            t.getUbicacion()
-            };
-            modelo.addRow(dat);
-        } 
-        
+        List<DtTema> temas;
+        if (defecto.isSelected() == true) {
+
+            temas = IC.selecListaDef(nombre.getText());
+            DefaultTableModel modelo = (DefaultTableModel) lista.getModel();
+            modelo.setRowCount(0);
+            for (int i = 0; i < temas.size(); i++) {
+                DtTema t = (DtTema) temas.get(i);
+                Object[] dat = {
+                    t.getNombre(),
+                    t.getDuracion(),
+                    t.getUbicacion()
+                };
+                modelo.addRow(dat);
+            }
+        } else {
+            temas = IC.selecLista(usuario.getText(),nombre.getText());            
+       
+        }
     }//GEN-LAST:event_cargarActionPerformed
 
     /**

@@ -91,5 +91,15 @@ public class Cliente extends Usuario {
     public void setListasParticulares(HashMap<String, ListaParticular> listasParticulares) {
         this.listasParticulares = listasParticulares;
     }
+    
+    public Lista getLista(String nomL){
+    
+       Lista l= this.listasParticulares.get(nomL);
+       
+       if(l == null){
+       throw new UnsupportedOperationException("No existe la lista" + nomL +" en el sistema.");
+       }else 
+           return l;
+    }
 
 }

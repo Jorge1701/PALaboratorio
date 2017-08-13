@@ -202,5 +202,18 @@ public class ControladorUsuario implements IUsuario {
     public void cargarUsuarios() {
 
     }
+    
+    
+    public Usuario getUsuario(String nick){
+       
+        Usuario us = usuarios.get(nick);
+        
+        if (us == null){
+            throw new UnsupportedOperationException("El usuario " + nick + " no existe");
+        }else
+        
+        return us;   
+    
+    }
 
 }

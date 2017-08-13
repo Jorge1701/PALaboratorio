@@ -72,6 +72,11 @@ public class menu extends javax.swing.JFrame {
         jMenu1.add(crearListaRep);
 
         publicarLista.setText("Publicar Lista");
+        publicarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                publicarListaActionPerformed(evt);
+            }
+        });
         jMenu1.add(publicarLista);
 
         jMenuBar1.add(jMenu1);
@@ -188,6 +193,13 @@ public class menu extends javax.swing.JFrame {
     private void quitarTemaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarTemaListaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_quitarTemaListaActionPerformed
+
+    private void publicarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicarListaActionPerformed
+        // TODO add your handling code here:
+        PublicarLista pt = new PublicarLista();
+        PanelMenu.add(pt);
+        pt.show();
+    }//GEN-LAST:event_publicarListaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
