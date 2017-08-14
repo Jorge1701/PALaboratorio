@@ -27,8 +27,7 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
     public ConsultarAlbum() {
         initComponents();
         consultaGenero.setSelected(true);
-        consultaGeneroMouseClicked(null);
-        
+        consultaGeneroActionPerformed(null);
 
     }
 
@@ -110,9 +109,13 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
             }
         });
 
+        generos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         generos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 generosMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                generosMousePressed(evt);
             }
         });
         generos.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
@@ -122,7 +125,7 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(generos);
 
-        JTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        JTable.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         JTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -138,7 +141,7 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         });
         jScrollPane4.setViewportView(JTable);
 
-        jLabel1.setText("Albumes:");
+        jLabel1.setText("Albumes del genero seleccionado:");
 
         jLabel3.setText("Generos:");
 
@@ -147,14 +150,15 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -162,13 +166,14 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        lstArtistas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lstArtistas.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstArtistasValueChanged(evt);
@@ -176,6 +181,7 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(lstArtistas);
 
+        lstAlbumes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lstAlbumes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstAlbumesValueChanged(evt);
@@ -183,7 +189,7 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         });
         jScrollPane3.setViewportView(lstAlbumes);
 
-        jLabel2.setText("Albumes:");
+        jLabel2.setText("Albumes del artista seleccionado:");
 
         jLabel4.setText("Artistas:");
 
@@ -235,27 +241,32 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(consultaGenero)
-                        .addGap(67, 67, 67))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnAceptar)
-                        .addGap(43, 43, 43))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(consultaArtista)
-                        .addGap(179, 179, 179))
+                        .addGap(27, 27, 27)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(201, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCancelar)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnAceptar)
+                                .addGap(43, 43, 43))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(consultaGenero)
+                                .addGap(98, 98, 98)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnCancelar)
+                                .addGap(266, 266, 266))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(consultaArtista))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,30 +282,13 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAceptar))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void consultaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaGeneroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_consultaGeneroActionPerformed
-
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
-    }//GEN-LAST:event_btnAceptarActionPerformed
-
-    private void consultaArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaArtistaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_consultaArtistaActionPerformed
-
-    private void consultaGeneroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_consultaGeneroStateChanged
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_consultaGeneroStateChanged
-
-    private void consultaGeneroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaGeneroMouseClicked
         this.mostrar();
         generos.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         DtGenero g = Fabrica.getInstance().getIControladorContenido().listarGenero();
@@ -302,87 +296,9 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         generos.setModel(modelo);
 
 
-    }//GEN-LAST:event_consultaGeneroMouseClicked
-    private void mostrar() {
-        if (consultaGenero.isSelected()) {
-            generos.setEnabled(true);
-            JTable.setEnabled(true);
-            lstArtistas.setEnabled(false);
-            lstAlbumes.setEnabled(false);
-        
-            
-           
-        } else if (consultaArtista.isSelected()) {
-           lstArtistas.setEnabled(true);
-            lstAlbumes.setEnabled(true);
-            generos.setEnabled(false);
-            JTable.setEnabled(false);
+    }//GEN-LAST:event_consultaGeneroActionPerformed
 
-        }
-        repaint();
-    }
-    
-    private void consultaArtistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaArtistaMouseClicked
-        mostrar();
-        DefaultListModel<String> model = new DefaultListModel<>();
-        lstArtistas.setModel(model);
-        for (DtUsuario dtg : Fabrica.getInstance().getIControladorUsuario().listarArtistas()) {
-            model.addElement(dtg.getNickname());
-        }
-
-    }//GEN-LAST:event_consultaArtistaMouseClicked
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void generosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generosMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_generosMouseClicked
-
-    private void generosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_generosValueChanged
-
-        DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
-        String generoSeleccionado = selectedElement.getUserObject().toString();
-
-        ArrayList<DtAlbum> dta = Fabrica.getInstance().getIControladorContenido().listarAlbumesGenero(generoSeleccionado);
-
-        DefaultTableModel dtm = (DefaultTableModel) JTable.getModel();
-        dtm.setRowCount(0);
-
-        /*if(dta == null){
-            Object[] data = {
-                "no hay albumes","para mostrar",};
-            dtm.addRow(data);
-            return;
-        }*/
-        for (DtAlbum dtAlbum : dta) {
-            Object[] data = {
-                ((DtAlbum) dtAlbum).getNickArtista(),
-                ((DtAlbum) dtAlbum).getNombre(),};
-            dtm.addRow(data);
-        }
-
-
-    }//GEN-LAST:event_generosValueChanged
-
-    private void lstArtistasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstArtistasValueChanged
-        String nickArtista = lstArtistas.getSelectedValue().toString();
-
-        DefaultListModel<String> model = new DefaultListModel<>();
-        lstAlbumes.setModel(model);
-
-        for (DtAlbum dta : Fabrica.getInstance().getIControladorUsuario().listarAlbumesArtista(nickArtista)) {
-            model.addElement(dta.getNombre());
-        }
-
-    }//GEN-LAST:event_lstArtistasValueChanged
-
-    private void lstAlbumesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstAlbumesValueChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lstAlbumesValueChanged
-
-    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String nickArtista = null;
         String nomAlbum = null;
         DtAlbumContenido albCont;
@@ -426,11 +342,102 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void consultaArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaArtistaActionPerformed
+       mostrar();
+        DefaultListModel<String> model = new DefaultListModel<>();
+        lstArtistas.setModel(model);
+        for (DtUsuario dtg : Fabrica.getInstance().getIControladorUsuario().listarArtistas()) {
+            model.addElement(dtg.getNickname());
+        }
+    }//GEN-LAST:event_consultaArtistaActionPerformed
+
+    private void consultaGeneroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_consultaGeneroStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_consultaGeneroStateChanged
+
+    private void consultaGeneroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaGeneroMouseClicked
+
+    }//GEN-LAST:event_consultaGeneroMouseClicked
+    
+    private void mostrar() {
+        if (consultaGenero.isSelected()) {
+            generos.setEnabled(true);
+            JTable.setEnabled(true);
+            lstArtistas.setEnabled(false);
+            lstAlbumes.setEnabled(false);
+
+        } else if (consultaArtista.isSelected()) {
+            lstArtistas.setEnabled(true);
+            lstAlbumes.setEnabled(true);
+            generos.setEnabled(false);
+            JTable.setEnabled(false);
+
+        }
+        repaint();
+    }
+
+    private void consultaArtistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaArtistaMouseClicked
+        
+
+    }//GEN-LAST:event_consultaArtistaMouseClicked
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void generosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_generosMouseClicked
+
+    private void generosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_generosValueChanged
+
+        DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
+        String generoSeleccionado = selectedElement.getUserObject().toString();
+
+        ArrayList<DtAlbum> dta = Fabrica.getInstance().getIControladorContenido().listarAlbumesGenero(generoSeleccionado);
+
+        DefaultTableModel dtm = (DefaultTableModel) JTable.getModel();
+        dtm.setRowCount(0);
+
+        for (DtAlbum dtAlbum : dta) {
+            Object[] data = {
+                ((DtAlbum) dtAlbum).getNickArtista(),
+                ((DtAlbum) dtAlbum).getNombre(),};
+            dtm.addRow(data);
+        }
+
+
+    }//GEN-LAST:event_generosValueChanged
+
+    private void lstArtistasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstArtistasValueChanged
+        String nickArtista = lstArtistas.getSelectedValue().toString();
+
+        DefaultListModel<String> model = new DefaultListModel<>();
+        lstAlbumes.setModel(model);
+
+        for (DtAlbum dta : Fabrica.getInstance().getIControladorUsuario().listarAlbumesArtista(nickArtista)) {
+            model.addElement(dta.getNombre());
+        }
+
+    }//GEN-LAST:event_lstArtistasValueChanged
+
+    private void lstAlbumesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstAlbumesValueChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lstAlbumesValueChanged
+
+    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
+
     }//GEN-LAST:event_btnAceptarMouseClicked
 
     private void JTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableMouseClicked
 
     }//GEN-LAST:event_JTableMouseClicked
+
+    private void generosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generosMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_generosMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
