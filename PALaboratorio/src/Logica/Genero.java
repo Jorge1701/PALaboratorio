@@ -31,6 +31,10 @@ class Genero {
         return albumes;
     }
 
+    public ListaDefecto getListaDefecto(String nombre) {
+        return listasDefecto.get(nombre);
+    }
+    
     public HashMap<String, ListaDefecto> getListasDefecto() {
         return listasDefecto;
     }

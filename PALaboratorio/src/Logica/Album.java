@@ -1,6 +1,7 @@
 package Logica;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -10,17 +11,21 @@ class Album {
     public String nombre;
     public int anio;
     public Imagen imagen;
-    public ArrayList<Tema> temas;
+    public HashMap<String, Tema> temas;
     public ArrayList<Genero> generos;
     public Artista artista;
 
-    public Album(String nickArtista, String nombre, int anio, Imagen imagen, ArrayList<Tema> temas, ArrayList<Genero> generos) {
+    public Album(String nickArtista, String nombre, int anio, Imagen imagen, HashMap<String, Tema> temas, ArrayList<Genero> generos) {
         this.nickArtista = nickArtista;
         this.nombre = nombre;
         this.anio = anio;
         this.imagen = imagen;
         this.temas = temas;
         this.generos = generos;
+    }
+    
+    public Tema getTema(String nombre) {
+        return temas.get(nombre);
     }
 
     public String getNickArtista() {
@@ -39,7 +44,7 @@ class Album {
         return imagen;
     }
 
-    public ArrayList<Tema> getTemas() {
+    public HashMap<String, Tema> getTemas() {
         return temas;
     }
 
@@ -63,7 +68,7 @@ class Album {
         this.imagen = imagen;
     }
 
-    public void setTemas(ArrayList<Tema> temas) {
+    public void setTemas(HashMap<String, Tema> temas) {
         this.temas = temas;
     }
 
@@ -89,7 +94,7 @@ class Album {
             nomGeneros.add(genero.getNombre());
         }
 
-        Iterator it1 = temas.iterator();
+        Iterator it1 = temas.entrySet().iterator();
         while (it1.hasNext()) {
             Tema tema = (Tema) ((Map.Entry) it1.next()).getValue();
             dtTemas.add(tema.getData());

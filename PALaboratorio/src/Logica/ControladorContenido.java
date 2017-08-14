@@ -1,6 +1,7 @@
 package Logica;
 
 //import Persistencia.BDUsuario;
+import Persistencia.BDCliente;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +14,8 @@ public class ControladorContenido implements IContenido {
     private Artista artista;
     private Genero genero;
 
+    private Cliente clienteFav;
+
     public static ControladorContenido getInstance() {
         if (instancia == null) {
             instancia = new ControladorContenido();
@@ -21,47 +24,226 @@ public class ControladorContenido implements IContenido {
     }
 
     private ControladorContenido() {
-        //Colección genérica común
-        //this.personas=new ArrayList<Persona>();
-        this.listasDefecto = new HashMap<String, ListaDefecto>();
-        //this.dbPersona=new DBPersona();
+        this.listasDefecto = new HashMap();
     }
 
+    @Override
+    public void indicarCliente(String nick) {
+        Usuario u = Fabrica.getInstance().getIControladorUsuario().obtenerUsuario(nick);
+
+        if (u == null) {
+            throw new UnsupportedOperationException("Usuario " + nick + " no existe");
+        }
+
+        if (!(u instanceof Cliente)) {
+            throw new UnsupportedOperationException("El usuario " + nick + " debe ser un cliente");
+        }
+
+        clienteFav = (Cliente) u;
+    }
+
+    @Override
+    public void guardarTema(String nickArtista, String nomAlbum, String nomTema) {
+        Usuario u = Fabrica.getInstance().getIControladorUsuario().obtenerUsuario(nickArtista);
+
+        if (u == null) {
+            throw new UnsupportedOperationException("El artista " + nickArtista + " no existe");
+        }
+
+        if (!(u instanceof Artista)) {
+            throw new UnsupportedOperationException("Este usuario " + nickArtista + " debe ser un artista");
+        }
+
+        Album album = ((Artista) u).getAlbum(nomAlbum);
+
+        if (album == null) {
+            throw new UnsupportedOperationException("El artista " + nickArtista + " no tiene ningun album llamado " + nomAlbum);
+        }
+
+        Tema tema = album.getTema(nomTema);
+
+        if (tema == null) {
+            throw new UnsupportedOperationException("El album " + nomAlbum + " no tiene ningun tema llamado " + nomTema);
+        }
+
+        try {
+            BDCliente bdc = new BDCliente();
+            //boolean ok = bdc.agregarTemaFav();
+            
+            //if (!ok)
+               // throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
+            
+            clienteFav.agregarTemaFav(tema);
+            clienteFav = null;
+        } catch (UnsupportedOperationException e) {
+            throw new UnsupportedOperationException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void guardarListaDefault(String nomGenero, String nomLista) {
+        Genero g = genero.obtener(nomGenero);
+
+        if (g == null) {
+            throw new UnsupportedOperationException("El genero " + nomGenero + " no existe");
+        }
+
+        ListaDefecto l = g.getListaDefecto(nomLista);
+
+        if (l == null) {
+            throw new UnsupportedOperationException("La lista " + nomLista + " no existe dentro del genero " + nomGenero);
+        }
+
+        try {
+            BDCliente bdc = new BDCliente();
+            boolean ok = bdc.agregarListaDefaultFav(nomGenero, nomLista, clienteFav.getNickname());
+            
+            if (!ok)
+                throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
+            
+            clienteFav.agregarListaFav(l);
+            clienteFav = null;
+        } catch (UnsupportedOperationException e) {
+            throw new UnsupportedOperationException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void guardarListaParticular(String nickCliente, String nomLista) {
+        Usuario u = Fabrica.getInstance().getIControladorUsuario().obtenerUsuario(nickCliente);
+
+        if (u == null) {
+            throw new UnsupportedOperationException("El cliente " + nickCliente + " no existe");
+        }
+
+        if (!(u instanceof Cliente)) {
+            throw new UnsupportedOperationException("El usuario " + nickCliente + " debe ser un cliente");
+        }
+
+        ListaParticular l = ((Cliente) u).getListaParticular(nomLista);
+
+        if (l == null) {
+            throw new UnsupportedOperationException("El cliente " + nickCliente + " no tinene ninguna lista llamada " + nomLista);
+        }
+
+        try {
+            BDCliente bdc = new BDCliente();
+            boolean ok = bdc.agregarListaParticularFav(nickCliente, nomLista, clienteFav.getNickname());
+            
+            if (!ok)
+                throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
+            
+            clienteFav.agregarListaFav(l);
+            clienteFav = null;
+        } catch (UnsupportedOperationException e) {
+            throw new UnsupportedOperationException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void guardarAlbum(String nickArtista, String nomAlbum) {
+        Usuario u = Fabrica.getInstance().getIControladorUsuario().obtenerUsuario(nickArtista);
+
+        if (u == null) {
+            throw new UnsupportedOperationException("El artista " + nickArtista + " no existe");
+        }
+
+        if (!(u instanceof Artista)) {
+            throw new UnsupportedOperationException("Este usuario " + nickArtista + " debe ser un artista");
+        }
+
+        Album album = ((Artista) u).getAlbum(nomAlbum);
+
+        if (album == null) {
+            throw new UnsupportedOperationException("El artista " + nickArtista + " no tiene ningun album llamado " + nomAlbum);
+        }
+
+        try {
+            BDCliente bdc = new BDCliente();
+            boolean ok = bdc.agregarAlbumFav(nickArtista, nomAlbum, clienteFav.getNickname());
+            
+            if (!ok)
+                throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
+            
+            clienteFav.agregarAlbumFav(album);
+            clienteFav = null;
+        } catch (UnsupportedOperationException e) {
+            throw new UnsupportedOperationException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void eliminarTema(int i) {
+        try {
+            clienteFav.eliminarTemaFav(i);
+            clienteFav = null;
+        } catch (UnsupportedOperationException e) {
+            throw new UnsupportedOperationException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void eliminarListaFavoritos(int i) {
+        try {
+            clienteFav.eliminarListaFav(i);
+            clienteFav = null;
+        } catch (UnsupportedOperationException e) {
+            throw new UnsupportedOperationException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void eliminarAlbum(int i) {
+        try {
+            clienteFav.eliminarAlbumFav(i);
+            clienteFav = null;
+        } catch (UnsupportedOperationException e) {
+            throw new UnsupportedOperationException(e.getMessage());
+        }
+    }
+
+    @Override
     public boolean selectArtista(String nick) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         this.artista = ControladorUsuario.getInstance().selectArtista(nick);
-        if (this.artista != null){
-            return true;        
-        } else{
+        if (this.artista != null) {
+            return true;
+        } else {
             return false;
-        } 
+        }
     }
 
+    @Override
     public DtGenero listarGenero() {
         return genero.getData();
-
     }
 
+    @Override
     public ArrayList<DtAlbum> listarAlbumesGenero(String nombre) {
         Genero gen = genero.obtener(nombre);
         if (gen == null) {
             throw new UnsupportedOperationException("Genero no existe");
         }
+
         ArrayList al = gen.obtenerAlbumes();
         if (al.isEmpty()) {
             throw new UnsupportedOperationException("No hay albumes en este genero");
         }
+
         return al;
     }
 
+    @Override
     public void crearListaReproduccionDefecto(String nombre, String genero) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public void crearListaReproduccionParticular(String nombre, String nick) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, ArrayList<DtTema> temas) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

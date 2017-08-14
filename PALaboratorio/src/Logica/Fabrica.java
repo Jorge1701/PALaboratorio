@@ -26,4 +26,9 @@ public class Fabrica {
         IUsuario ICU = ControladorUsuario.getInstance();
         return ICU;
     } 
+    
+    public IContenido getIControladorContenido() {
+        IContenido ICC = ControladorContenido.getInstance();
+        return ICC;
+    } 
 }

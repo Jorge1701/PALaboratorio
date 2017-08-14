@@ -26,8 +26,14 @@ public class ControladorUsuario implements IUsuario {
         //this.personas=new ArrayList<Persona>();
         this.usuarios=new HashMap();
         
-        //usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
+        usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
+        usuarios.put("jorge2", new Cliente("jorge2", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
         //this.dbPersona=new DBPersona();
+    }
+    
+    @Override
+    public Usuario obtenerUsuario(String nick) {
+        return usuarios.get(nick);
     }
     
     @Override
@@ -142,7 +148,7 @@ public class ControladorUsuario implements IUsuario {
         }
         
         BDUsuario bdu = new BDUsuario();
-        bdu.dejarDeSeguir(nickUsuario, nickUsuario);
+        bdu.dejarDeSeguir("jorge", "jorge2");
         ((Cliente) usuario).dejarSeguir(seguidor);
     }
 
