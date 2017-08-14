@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public interface IUsuario {
     
+    public Usuario obtenerUsuario(String nick);
     public Artista selectArtista(String nick);
-    public void ingresarUsuario(DtUsuario dtu);
+    public boolean ingresarUsuario(DtUsuario dtu);
     public ArrayList<DtUsuario> listarClientes();
     public ArrayList<DtUsuario> listarArtistas();
     public DtPerfilUsuario obtenerPerfilArtista(String nickArtista);

@@ -24,6 +24,54 @@ public class Cliente extends Usuario {
         this.temas = new ArrayList<>();
     }
 
+    public void agregarAlbumFav(Album a) {
+        if (albumes.contains(a)) {
+            throw new UnsupportedOperationException("Album ya en favoritos");
+        } else {
+            albumes.add(a);
+        }
+    }
+
+    public void agregarListaFav(Lista l) {
+        if (listas.contains(l)) {
+            throw new UnsupportedOperationException("Lista ya en favoritos");
+        } else {
+            listas.add(l);
+        }
+    }
+
+    public void agregarTemaFav(Tema t) {
+        if (temas.contains(t)) {
+            throw new UnsupportedOperationException("Tema ya en favoritos");
+        } else {
+            temas.add(t);
+        }
+    }
+    
+    public void eliminarAlbumFav(int i) {
+        if (albumes.size() >= i) {
+            albumes.remove(i);
+        } else {
+            throw new UnsupportedOperationException("Album no esta en favoritos");
+        }
+    }
+    
+    public void eliminarListaFav(int i) {
+        if (listas.size() >= i) {
+            listas.remove(i);
+        } else {
+            throw new UnsupportedOperationException("Lista no esta en favoritos");
+        }
+    }
+    
+    public void eliminarTemaFav(int i) {
+        if (temas.size() >= i) {
+            temas.remove(i);
+        } else {
+            throw new UnsupportedOperationException("Tema no esta en favoritos");
+        }
+    }
+
     @Override
     public String getTipo() {
         return "Cliente";
@@ -82,6 +130,10 @@ public class Cliente extends Usuario {
     public HashMap<String, Usuario> getSeguidos() {
         return seguidos;
     }
+    
+    public ListaParticular getListaParticular(String nombre) {
+        return listasParticulares.get(nombre);
+    }
 
     public HashMap<String, ListaParticular> getListasParticulares() {
         return listasParticulares;
@@ -94,6 +146,16 @@ public class Cliente extends Usuario {
     public void setListasParticulares(HashMap<String, ListaParticular> listasParticulares) {
         this.listasParticulares = listasParticulares;
     }
+    
+    public Lista getLista(String nomL){
+    
+       Lista l= this.listasParticulares.get(nomL);
+       
+       if(l == null){
+       throw new UnsupportedOperationException("No existe la lista" + nomL +" en el sistema.");
+       }else 
+           return l;
+    }
 
     public ArrayList<DtLista> listarLisReproduccion() {
         ArrayList<DtLista> res = new ArrayList<>();
@@ -101,7 +163,7 @@ public class Cliente extends Usuario {
         while (it.hasNext()) {
             ListaParticular lp = (ListaParticular) ((Map.Entry) it.next()).getValue();
             if (!lp.isPrivada()) {
-                res.add(new DtLista(lp.getNombre(), lp.getTemas(), lp.getImagen()));
+                res.add(new DtLista(lp.getNombre(), lp.getTemas()));
             }
         }
         return res;
@@ -109,6 +171,6 @@ public class Cliente extends Usuario {
 
     public DtLista seleccionarLista(String nombreL) {
         ListaParticular lp = listasParticulares.get(nombreL);
-        return new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(), lp.getImagen());
+        return new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas());
     }
 }

@@ -6,14 +6,14 @@ public class ListaParticular extends Lista {
     
     private boolean privada;
 
-    public ListaParticular(boolean privada, String nombre, ArrayList<Tema> temas, Imagen imagen) {
-        super(nombre, temas, imagen);
+    public ListaParticular(boolean privada, String nombre, ArrayList<Tema> temas) {
+        super(nombre, temas);
         this.privada = privada;
     }
     
     @Override
     public DtLista getData() {
-        return new DtListaParticular(isPrivada(), getNombre(), getTemas(), getImagen());
+        return new DtListaParticular(isPrivada(), getNombre(), getTemas());
     }
 
     public boolean isPrivada() {
@@ -22,5 +22,9 @@ public class ListaParticular extends Lista {
 
     public void setPrivada(boolean privada) {
         this.privada = privada;
+    }
+    
+    public boolean quitarTema(String nombreT){
+    return false;
     }
 }

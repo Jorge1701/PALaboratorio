@@ -28,7 +28,7 @@ public class Fabrica {
     } 
     
     public IContenido getIControladorContenido() {
-        IContenido ICU = ControladorContenido.getInstance();
-        return ICU;
+        IContenido ICC = ControladorContenido.getInstance();
+        return ICC;
     } 
 }
