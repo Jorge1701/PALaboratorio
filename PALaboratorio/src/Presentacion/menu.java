@@ -54,6 +54,7 @@ public class menu extends javax.swing.JFrame {
 
         jMenu1.setText("Registros");
 
+        altaPerfil.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         altaPerfil.setText("Alta de Perfil");
         altaPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,6 +193,9 @@ public class menu extends javax.swing.JFrame {
 
     private void quitarTemaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarTemaListaActionPerformed
         // TODO add your handling code here:
+        QuitarTemaLista qtl = new QuitarTemaLista();
+        PanelMenu.add(qtl);
+        qtl.show();
     }//GEN-LAST:event_quitarTemaListaActionPerformed
 
     private void publicarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicarListaActionPerformed
