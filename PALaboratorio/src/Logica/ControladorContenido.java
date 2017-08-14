@@ -62,7 +62,9 @@ public class ControladorContenido implements IContenido {
     }
 
     public void crearListaReproduccionDefecto(String nombre, String genero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+
+       
     }
 
     public void crearListaReproduccionParticular(String nombre, String nick) {
