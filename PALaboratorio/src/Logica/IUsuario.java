@@ -16,4 +16,6 @@ public interface IUsuario {
     public void cargarUsuarios();
     public ArrayList<DtAlbum> listarAlbumesArtista(String nickArtista);
     public DtAlbumContenido obtenerAlbumContenido(String nickArt, String nomAlbum);
+    public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente);
+    public DtLista selectListaCli(String nombreL);
 }

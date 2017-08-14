@@ -11,6 +11,7 @@ public class ControladorUsuario implements IUsuario {
 
     private static ControladorUsuario instancia;
     private HashMap<String, Usuario> usuarios;
+    private Usuario usuarioRecordado;
     //private DBPersona dbPersona=null;
 
     public static ControladorUsuario getInstance() {
@@ -24,24 +25,24 @@ public class ControladorUsuario implements IUsuario {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
         this.usuarios = new HashMap();
-
+        this.usuarioRecordado = null;
         //usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
         //this.dbPersona=new DBPersona();
-        
     }
 
     @Override
     public Artista selectArtista(String nick) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         Usuario us = usuarios.get(nick);
-        
-        if (us == null)
+
+        if (us == null) {
             throw new UnsupportedOperationException("El artista " + nick + " no existe");
-        
-        if (!(us instanceof Artista))
+        }
+
+        if (!(us instanceof Artista)) {
             throw new UnsupportedOperationException("Este usuario no es un Artista");
-        
-        return (Artista) us;   
+        }
+
+        return (Artista) us;
     }
 
     @Override
@@ -178,4 +179,22 @@ public class ControladorUsuario implements IUsuario {
 
     }
 
+    @Override
+    public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente) {
+         Usuario c = this.usuarios.get(nickCliente);
+         if (c == null){
+             throw new UnsupportedOperationException("No existe el Cliente");
+         }
+         if (!(c instanceof Cliente)) {
+            throw new UnsupportedOperationException("Usuario no es un cliente");
+        }
+         
+         this.usuarioRecordado = c;
+        
+        return ((Cliente) c).listarLisReproduccion();
+    }
+
+    public DtLista selectListaCli(String nombreL){
+        return ((Cliente) this.usuarioRecordado).seleccionarLista(nombreL);
+    }
 }

@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class ControladorContenido implements IContenido {
 
@@ -17,6 +18,7 @@ public class ControladorContenido implements IContenido {
     private Map<String, ListaDefecto> listasDefecto;
     private Artista artista;
     private Genero genero;
+    private Genero generoRecordado;
 
     public static ControladorContenido getInstance() {
         if (instancia == null) {
@@ -30,18 +32,17 @@ public class ControladorContenido implements IContenido {
         //this.personas=new ArrayList<Persona>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
         genero = new Genero("Generos");
-       
+
         //this.dbPersona=new DBPersona();
     }
 
     public boolean selectArtista(String nick) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         this.artista = ControladorUsuario.getInstance().selectArtista(nick);
-        if (this.artista != null){
-            return true;        
-        } else{
+        if (this.artista != null) {
+            return true;
+        } else {
             return false;
-        } 
+        }
     }
 
     public DtGenero listarGenero() {
@@ -71,5 +72,18 @@ public class ControladorContenido implements IContenido {
 
     public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, ArrayList<DtTema> temas) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ArrayList<DtLista> listarLisReproduccionGen(String nomGen) {
+        Genero g = this.genero.obtener(nomGen);
+        if (g == null) {
+            throw new UnsupportedOperationException("El genero no existe");
+        }
+        this.generoRecordado = g;
+        return g.listarLisReproduccion();
+    }
+
+    public DtLista selecListGen(String nombreL) {
+        return generoRecordado.seleccionarLista(nombreL);
     }
 }

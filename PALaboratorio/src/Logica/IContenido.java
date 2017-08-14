@@ -10,4 +10,8 @@ public interface IContenido {
     public void crearListaReproduccionDefecto(String nombre, String genero);
     public void crearListaReproduccionParticular(String nombre, String nick);
     public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, /*Imagen img*/ ArrayList<DtTema> temas);
+    public ArrayList<DtLista> listarLisReproduccionGen(String nomGen);
+    public DtLista selecListGen(String nombreL);
+        
+    
 }
