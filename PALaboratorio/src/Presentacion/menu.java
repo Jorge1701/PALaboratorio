@@ -21,7 +21,7 @@ public class menu extends javax.swing.JFrame {
         publicarLista = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         consultaPerfilCliente = new javax.swing.JMenuItem();
-        consultaPerfilArtista = new javax.swing.JMenuItem();
+        ConsultaPerfilArtista = new javax.swing.JMenuItem();
         consultaAlbum = new javax.swing.JMenuItem();
         consultaListaRep = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -81,15 +81,20 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu2.add(consultaPerfilCliente);
 
-        consultaPerfilArtista.setText("Consulta de Perfil de Artista");
-        consultaPerfilArtista.addActionListener(new java.awt.event.ActionListener() {
+        ConsultaPerfilArtista.setText("Consulta de Perfil de Artista");
+        ConsultaPerfilArtista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                consultaPerfilArtistaActionPerformed(evt);
+                ConsultaPerfilArtistaActionPerformed(evt);
             }
         });
-        jMenu2.add(consultaPerfilArtista);
+        jMenu2.add(ConsultaPerfilArtista);
 
         consultaAlbum.setText("Consulta de Album");
+        consultaAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultaAlbumActionPerformed(evt);
+            }
+        });
         jMenu2.add(consultaAlbum);
 
         consultaListaRep.setText("Consulta de Lista de Reproduccion");
@@ -174,11 +179,18 @@ public class menu extends javax.swing.JFrame {
         cpc.show();
     }//GEN-LAST:event_seguirUsuarioActionPerformed
 
-    private void consultaPerfilArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaPerfilArtistaActionPerformed
+    private void consultaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaAlbumActionPerformed
+        ConsultarAlbum cpc = new ConsultarAlbum();
+        PanelMenu.add(cpc);
+        cpc.show();
+    }//GEN-LAST:event_consultaAlbumActionPerformed
+
+    private void ConsultaPerfilArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaPerfilArtistaActionPerformed
+        // TODO add your handling code here:
         ConsultaPerfil cpc = new ConsultaPerfil("Artista");
         PanelMenu.add(cpc);
         cpc.show();
-    }//GEN-LAST:event_consultaPerfilArtistaActionPerformed
+    }//GEN-LAST:event_ConsultaPerfilArtistaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -214,6 +226,7 @@ public class menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ConsultaPerfilArtista;
     private javax.swing.JDesktopPane PanelMenu;
     private javax.swing.JMenuItem agregarTemaLista;
     private javax.swing.JMenuItem altaAlbum;
@@ -222,7 +235,6 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem cargarDatos;
     private javax.swing.JMenuItem consultaAlbum;
     private javax.swing.JMenuItem consultaListaRep;
-    private javax.swing.JMenuItem consultaPerfilArtista;
     private javax.swing.JMenuItem consultaPerfilCliente;
     private javax.swing.JMenuItem crearListaRep;
     private javax.swing.JMenuItem dejarSeguirUsuario;

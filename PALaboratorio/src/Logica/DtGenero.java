@@ -2,7 +2,7 @@ package Logica;
 
 import java.util.ArrayList;
 
-class DtGenero {
+public class DtGenero {
     
     private String nombre;
     private ArrayList<DtGenero> subGeneros;
