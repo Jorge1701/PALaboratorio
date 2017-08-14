@@ -29,6 +29,8 @@ public class ControladorContenido implements IContenido {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
+        genero = new Genero("Generos");
+       
         //this.dbPersona=new DBPersona();
     }
 
