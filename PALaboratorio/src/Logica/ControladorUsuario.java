@@ -26,6 +26,14 @@ public class ControladorUsuario implements IUsuario {
         //this.personas=new ArrayList<Persona>();
         this.usuarios = new HashMap();
         this.bdUsuario=new BDUsuario();
+        //usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
+        //this.dbPersona=new DBPersona();
+    }
+    
+    @Override
+    public Usuario obtenerUsuario(String nick) {
+        return usuarios.get(nick);
+        
     }
 
     @Override
@@ -165,7 +173,9 @@ public class ControladorUsuario implements IUsuario {
         if (!(usuario instanceof Cliente)) {
             throw new UnsupportedOperationException("Usuario no es un cliente.");
         }
-
+        
+        BDUsuario bdu = new BDUsuario();
+        bdu.dejarDeSeguir("jorge", "jorge2");
         ((Cliente) usuario).dejarSeguir(seguidor);
     }
 
