@@ -31,7 +31,7 @@ class Album {
     public String getNickArtista() {
         return nickArtista;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -81,13 +81,13 @@ class Album {
     }
 
     public DtAlbum getData() {
-     return new DtAlbum(nickArtista, nombre, anio);
+        return new DtAlbum(nickArtista, nombre, anio);
     }
 
     public DtAlbumContenido obtenerAlbumContenido() {
         ArrayList<String> nomGeneros = new ArrayList<>();
         ArrayList<DtTema> dtTemas = new ArrayList<>();
-        
+
         Iterator it = generos.iterator();
         while (it.hasNext()) {
             Genero genero = (Genero) ((Map.Entry) it.next()).getValue();

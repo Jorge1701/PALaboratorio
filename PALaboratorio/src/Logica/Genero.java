@@ -17,6 +17,30 @@ class Genero {
         this.subgeneros = subgeneros;
         this.albumes = albumes;
         this.listasDefecto = listasDefecto;
+        
+        this.albumes.put(nombre, new Album( "cualquiera",  "la primera vez",  2012,  null, null, null));
+        this.albumes.put(nombre, new Album( "cualquiera",  "la segunda vez",  2012,  null, null, null));
+        this.albumes.put(nombre, new Album( "cualquiera",  "la tercera vez",  2012,  null, null, null));
+        this.albumes.put(nombre, new Album( "cualquiera",  "la cuarta vez",  2012,  null, null, null));
+    }
+
+    public Genero(String nombre) {
+        this.nombre = nombre;
+        subgeneros = new HashMap<>();
+        albumes = new HashMap<>();
+        listasDefecto = new HashMap<>();
+    }
+    
+    public void agregarGenero(String padre, String nombre) {
+        if (this.nombre.equals(padre)) {
+            subgeneros.put(nombre, new Genero(nombre));
+        } else {
+            Iterator i = subgeneros.entrySet().iterator();
+            while (i.hasNext()) {
+                Genero g = (Genero) ((Map.Entry) i.next()).getValue();
+                g.agregarGenero(padre, nombre);
+            }
+        }
     }
 
     public void setAlbumes(HashMap<String, Album> albumes) {
