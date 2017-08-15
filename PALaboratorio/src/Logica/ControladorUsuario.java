@@ -1,17 +1,18 @@
 package Logica;
 
-//import Persistencia.BDUsuario;
+import Persistencia.BDUsuario;
 import java.util.HashMap;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import jdk.nashorn.internal.objects.NativeArray;
 
 public class ControladorUsuario implements IUsuario {
 
     private static ControladorUsuario instancia;
-    private HashMap<String, Usuario> usuarios;
-    //private DBPersona dbPersona=null;
+    private Map<String, Usuario> usuarios;
+    private BDUsuario bdUsuario=null;
 
     public static ControladorUsuario getInstance() {
         if (instancia == null) {
@@ -24,15 +25,20 @@ public class ControladorUsuario implements IUsuario {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
         this.usuarios = new HashMap();
-
+        this.bdUsuario=new BDUsuario();
         //usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
         //this.dbPersona=new DBPersona();
+    }
+    
+    @Override
+    public Usuario obtenerUsuario(String nick) {
+        return usuarios.get(nick);
         
     }
 
     @Override
     public Artista selectArtista(String nick) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
         Usuario us = usuarios.get(nick);
         
         if (us == null)
@@ -45,7 +51,34 @@ public class ControladorUsuario implements IUsuario {
     }
 
     @Override
-    public void ingresarUsuario(DtUsuario dtu) {
+    public boolean ingresarUsuario(DtUsuario dtu) {
+
+        Iterator i = usuarios.entrySet().iterator();
+        while (i.hasNext()) {
+            Usuario u = (Usuario) ((Map.Entry) i.next()).getValue();
+
+            if (u.getNickname() == dtu.getNickname() || u.getEmail() == dtu.getEmail()) {
+                return false;
+            }
+        }
+        
+        Usuario usr;
+        
+        if (dtu instanceof DtCliente) {
+            usr = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null);
+            boolean res =this.bdUsuario.ingresarUsuario(usr);
+            if (res){
+                this.usuarios.put(usr.getNickname(), usr);
+            }
+            return res;
+        } else {
+            usr = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null, ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
+            boolean res =this.bdUsuario.ingresarUsuario(usr);
+            if (res){
+                this.usuarios.put(usr.getNickname(), usr);
+            }
+            return res;
+        }
 
     }
 
@@ -148,7 +181,9 @@ public class ControladorUsuario implements IUsuario {
         if (!(usuario instanceof Cliente)) {
             throw new UnsupportedOperationException("Usuario no es un cliente.");
         }
-
+        
+        BDUsuario bdu = new BDUsuario();
+        bdu.dejarDeSeguir("jorge", "jorge2");
         ((Cliente) usuario).dejarSeguir(seguidor);
     }
 
@@ -184,6 +219,19 @@ public class ControladorUsuario implements IUsuario {
     @Override
     public void cargarUsuarios() {
 
+    }
+    
+    
+    public Usuario getUsuario(String nick){
+       
+        Usuario us = usuarios.get(nick);
+        
+        if (us == null){
+            throw new UnsupportedOperationException("El usuario " + nick + " no existe");
+        }else
+        
+        return us;   
+    
     }
 
 }

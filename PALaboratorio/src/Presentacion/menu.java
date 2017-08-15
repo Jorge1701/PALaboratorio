@@ -54,7 +54,13 @@ public class menu extends javax.swing.JFrame {
 
         jMenu1.setText("Registros");
 
+        altaPerfil.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         altaPerfil.setText("Alta de Perfil");
+        altaPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaPerfilActionPerformed(evt);
+            }
+        });
         jMenu1.add(altaPerfil);
 
         altaAlbum.setText("Alta Album");
@@ -67,6 +73,11 @@ public class menu extends javax.swing.JFrame {
         jMenu1.add(crearListaRep);
 
         publicarLista.setText("Publicar Lista");
+        publicarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                publicarListaActionPerformed(evt);
+            }
+        });
         jMenu1.add(publicarLista);
 
         jMenuBar1.add(jMenu1);
@@ -124,6 +135,11 @@ public class menu extends javax.swing.JFrame {
         jMenu3.add(agregarTemaLista);
 
         quitarTemaLista.setText("Quitar Tema de Lista");
+        quitarTemaLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitarTemaListaActionPerformed(evt);
+            }
+        });
         jMenu3.add(quitarTemaLista);
 
         jMenuBar1.add(jMenu3);
@@ -179,6 +195,25 @@ public class menu extends javax.swing.JFrame {
         cpc.show();
     }//GEN-LAST:event_seguirUsuarioActionPerformed
 
+    private void altaPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaPerfilActionPerformed
+        AltaPerfil ap = new AltaPerfil();
+        PanelMenu.add(ap);
+        ap.show();
+    }//GEN-LAST:event_altaPerfilActionPerformed
+
+    private void quitarTemaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarTemaListaActionPerformed
+        // TODO add your handling code here:
+        QuitarTemaLista qtl = new QuitarTemaLista();
+        PanelMenu.add(qtl);
+        qtl.show();
+    }//GEN-LAST:event_quitarTemaListaActionPerformed
+
+    private void publicarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicarListaActionPerformed
+        // TODO add your handling code here:
+        PublicarLista pt = new PublicarLista();
+        PanelMenu.add(pt);
+        pt.show();
+    }//GEN-LAST:event_publicarListaActionPerformed
     private void consultaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaAlbumActionPerformed
         ConsultarAlbum cpc = new ConsultarAlbum();
         PanelMenu.add(cpc);

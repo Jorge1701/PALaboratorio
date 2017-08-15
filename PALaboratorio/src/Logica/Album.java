@@ -11,17 +11,21 @@ class Album {
     public String nombre;
     public int anio;
     public Imagen imagen;
-    public ArrayList<Tema> temas;
-    public HashMap<String, Genero> generos;
+    public HashMap<String, Tema> temas;
+    public ArrayList<Genero> generos;
     public Artista artista;
 
-    public Album(String nickArtista, String nombre, int anio, Imagen imagen, ArrayList<Tema> temas, HashMap<String, Genero> generos) {
+    public Album(String nickArtista, String nombre, int anio, Imagen imagen, HashMap<String, Tema> temas, ArrayList<Genero> generos) {
         this.nickArtista = nickArtista;
         this.nombre = nombre;
         this.anio = anio;
         this.imagen = imagen;
         this.temas = temas;
         this.generos = generos;
+    }
+    
+    public Tema getTema(String nombre) {
+        return temas.get(nombre);
     }
 
     public String getNickArtista() {
@@ -40,11 +44,11 @@ class Album {
         return imagen;
     }
 
-    public ArrayList<Tema> getTemas() {
+    public HashMap<String, Tema> getTemas() {
         return temas;
     }
 
-    public HashMap<String, Genero> getGeneros() {
+    public ArrayList<Genero> getGeneros() {
         return generos;
     }
 
@@ -64,11 +68,11 @@ class Album {
         this.imagen = imagen;
     }
 
-    public void setTemas(ArrayList<Tema> temas) {
+    public void setTemas(HashMap<String, Tema> temas) {
         this.temas = temas;
     }
 
-    public void setGeneros(HashMap<String, Genero> generos) {
+    public void setGeneros(ArrayList<Genero> generos) {
         this.generos = generos;
     }
 
@@ -84,13 +88,13 @@ class Album {
         ArrayList<String> nomGeneros = new ArrayList<>();
         ArrayList<DtTema> dtTemas = new ArrayList<>();
 
-        Iterator it = generos.entrySet().iterator();
+        Iterator it = generos.iterator();
         while (it.hasNext()) {
             Genero genero = (Genero) ((Map.Entry) it.next()).getValue();
             nomGeneros.add(genero.getNombre());
         }
 
-        Iterator it1 = temas.iterator();
+        Iterator it1 = temas.entrySet().iterator();
         while (it1.hasNext()) {
             Tema tema = (Tema) ((Map.Entry) it1.next()).getValue();
             dtTemas.add(tema.getData());

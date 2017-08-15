@@ -8,11 +8,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConexionBD {
+    
     private final String host="localhost";
     private final String port="3306";
-    private final String db="espotify";
+    private final String db="Espotify";
     private final String user="root";
-    private final String pass="rooteo";
+    private final String pass="root";
     
     //Para hacer ConexionDB singleton descomentar
     //private static Connection conexion=null;
@@ -27,7 +28,7 @@ public class ConexionBD {
             try {
                 Driver driver = new com.mysql.jdbc.Driver();
                 DriverManager.registerDriver(driver);
-                conexion = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+db, user, pass);
+                conexion = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db, user, pass);
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
@@ -35,6 +36,7 @@ public class ConexionBD {
         }
         return conexion;
     }
+    
     public void cerrar(){
         if (conexion != null) {
             try {
@@ -43,8 +45,6 @@ public class ConexionBD {
                 ex.printStackTrace();
                 Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }        
+        }
     }
-    
-    
 }
