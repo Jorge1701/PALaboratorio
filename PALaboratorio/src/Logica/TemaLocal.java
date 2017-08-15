@@ -17,4 +17,7 @@ public class TemaLocal extends Tema {
         this.directorio = directorio;
     }
 
+    public DtTemaLocal getData() {
+        return new DtTemaLocal(this.getDirectorio(),this.getNombre(),this.getDuracion(),this.getUbicacion());
+    }
 }
