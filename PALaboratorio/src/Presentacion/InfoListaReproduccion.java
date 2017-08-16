@@ -34,8 +34,8 @@ public class InfoListaReproduccion extends javax.swing.JInternalFrame {
 
             Object[] data = {
                 ((DtTema) dtt).getNombre(),
-                ((DtTema) dtt).getUbicacion(),
                 ((DtTema) dtt).getDuracion().getHoras() + ":" + ((DtTema) dtt).getDuracion().getMinutos() + ":" + ((DtTema) dtt).getDuracion().getSegundos(),
+                ((DtTema) dtt).getUbicacion(),
                 pathoUrl,};
             dtm.addRow(data);
         }

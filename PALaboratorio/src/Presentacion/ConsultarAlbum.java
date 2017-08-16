@@ -284,7 +284,7 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
 
         try {
             albCont = Fabrica.getInstance().getIControladorUsuario().obtenerAlbumContenido(nickArtista, nomAlbum);
-            AlbumContenido albc = new AlbumContenido(albCont);
+            AlbumContenido albc = new AlbumContenido((DtAlbumContenido) albCont);
             this.getParent().add(albc);
             albc.show();
 

@@ -29,9 +29,17 @@ public class ControladorContenido implements IContenido {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
-        genero = new Genero("Generos");
+        genero = new Genero("Géneros");
 
         //this.dbPersona=new DBPersona();
+        //this.genero.agregarGenero("Géneros", "Rock");
+        //this.genero.agregarGenero("Rock", "Rock clásico");
+        //this.genero.agregarGenero("Géneros", "Electrónica");
+        //this.genero.agregarGenero("Electrónica", "Electro house");
+        //this.genero.agregarGenero("Géneros", "Pop");
+        //this.genero.agregarGenero("Géneros", "Cumbia");
+        //this.genero.agregarGenero("Cumbia", "Cumbia cheta");
+        //this.genero.agregarGenero("Cumbia", "Cumbia de negro");
     }
 
     @Override
@@ -76,10 +84,9 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             //boolean ok = bdc.agregarTemaFav();
-            
+
             //if (!ok)
-               // throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            // throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
             clienteFav.agregarTemaFav(tema);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -104,10 +111,11 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             boolean ok = bdc.agregarListaDefaultFav(nomGenero, nomLista, clienteFav.getNickname());
-            
-            if (!ok)
+
+            if (!ok) {
                 throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            }
+
             clienteFav.agregarListaFav(l);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -136,10 +144,11 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             boolean ok = bdc.agregarListaParticularFav(nickCliente, nomLista, clienteFav.getNickname());
-            
-            if (!ok)
+
+            if (!ok) {
                 throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            }
+
             clienteFav.agregarListaFav(l);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -168,10 +177,11 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             boolean ok = bdc.agregarAlbumFav(nickArtista, nomAlbum, clienteFav.getNickname());
-            
-            if (!ok)
+
+            if (!ok) {
                 throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            }
+
             clienteFav.agregarAlbumFav(album);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -266,6 +276,7 @@ public class ControladorContenido implements IContenido {
     public DtLista selecListGen(String nombreL) {
         return generoRecordado.seleccionarLista(nombreL);
     }
+
     public ArrayList<DtTema> selecListaDef(String nombre) {
 
         ListaDefecto aux = listasDefecto.get(nombre);

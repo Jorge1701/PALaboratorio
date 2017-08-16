@@ -16,6 +16,12 @@ public class Artista extends Usuario {
         this.biografia = biografia;
         this.web = web;
         this.albumes = new HashMap();
+        
+     
+        
+       // albumes.put("album1", new Album(this.getNickname(),"album1",2015,null,new HashMap<String, Tema> (),new ArrayList<Genero>()));
+       // albumes.put("album2", new Album(this.getNickname(),"album2",2016,null,new HashMap<String, Tema> (),new ArrayList<Genero>()));
+       // albumes.put("album3", new Album(this.getNickname(),"album3",2017,null,new HashMap<String, Tema> (),new ArrayList<Genero>()));
     }
 
     public ArrayList<DtAlbum> obtenerAlbumes() {
@@ -29,8 +35,13 @@ public class Artista extends Usuario {
     }
 
     public DtAlbumContenido obtenerAlbumContenido(String nomAlbum) {
+        DtAlbumContenido dtac = null;
         Album album = albumes.get(nomAlbum);
-        return album.obtenerAlbumContenido();
+        if (album != null){
+            dtac = album.obtenerAlbumContenido();
+        }
+        
+        return dtac;
     }
     
     public Album getAlbum(String nombre) {
