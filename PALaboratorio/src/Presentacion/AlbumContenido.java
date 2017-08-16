@@ -11,10 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class AlbumContenido extends javax.swing.JInternalFrame {
 
-    private DtAlbumContenido album;
-
     public AlbumContenido(DtAlbumContenido dtac) {
-        this.album = dtac;
         initComponents();
 
         //Cargar la informacion
