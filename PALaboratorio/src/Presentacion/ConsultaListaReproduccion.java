@@ -27,7 +27,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         generos = new javax.swing.JTree();
         jScrollPane2 = new javax.swing.JScrollPane();
-        lstArtistas = new javax.swing.JList<>();
+        lstClientes = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         consultaGenero = new javax.swing.JRadioButton();
@@ -50,13 +50,13 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(generos);
 
-        lstArtistas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lstArtistas.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        lstClientes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lstClientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstArtistasValueChanged(evt);
+                lstClientesValueChanged(evt);
             }
         });
-        jScrollPane2.setViewportView(lstArtistas);
+        jScrollPane2.setViewportView(lstClientes);
 
         jLabel3.setText("Generos:");
 
@@ -184,10 +184,10 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
     private void mostrar() {
         if (consultaGenero.isSelected()) {
             generos.setEnabled(true);
-            lstArtistas.setEnabled(false);
+            lstClientes.setEnabled(false);
 
         } else if (consultaCliente.isSelected()) {
-            lstArtistas.setEnabled(true);
+            lstClientes.setEnabled(true);
             generos.setEnabled(false);
 
         }
@@ -204,7 +204,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
     private void consultaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaClienteActionPerformed
         mostrar();
         DefaultListModel<String> model = new DefaultListModel<>();
-        lstArtistas.setModel(model);
+        lstClientes.setModel(model);
         for (DtUsuario dtg : Fabrica.getInstance().getIControladorUsuario().listarClientes()) {
             model.addElement(dtg.getNickname());
         }
@@ -226,8 +226,8 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_generosValueChanged
 
-    private void lstArtistasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstArtistasValueChanged
-        String nickArtista = lstArtistas.getSelectedValue().toString();
+    private void lstClientesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstClientesValueChanged
+        String nickArtista = lstClientes.getSelectedValue();
 
         DefaultListModel<String> model = new DefaultListModel<>();
         lstListasRep.setModel(model);
@@ -237,10 +237,11 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         for (DtLista dta : dtl) {
             model.addElement(dta.getNombre());
         }
-    }//GEN-LAST:event_lstArtistasValueChanged
+
+    }//GEN-LAST:event_lstClientesValueChanged
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nickArtista = null;
+        String nickCliente = null;
         String nomLista = null;
         DtLista lista = null;
 
@@ -252,6 +253,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
                 DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
                 String generoSeleccionado = selectedElement.getUserObject().toString();
+                nomLista = lstListasRep.getSelectedValue();
 
                 if (nomLista == null) {
                     JOptionPane.showMessageDialog(this, "Debe de seleccionar una Lista");
@@ -269,18 +271,19 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
                 }
             }
         } else if (consultaCliente.isSelected()) {
-            nickArtista = (String) lstArtistas.getSelectedValue();
-            if (nickArtista == null) {
-                JOptionPane.showMessageDialog(this, "Debe de seleccionar un Artista");
+            nickCliente = lstClientes.getSelectedValue();
+            if (nickCliente == null) {
+                JOptionPane.showMessageDialog(this, "Debe de seleccionar un Cliente");
                 return;
             } else {
+                nomLista = lstListasRep.getSelectedValue();
                 if (nomLista == null) {
                     JOptionPane.showMessageDialog(this, "Debe de seleccionar una Lista");
                     return;
                 } else {
                     try {
                         lista = Fabrica.getInstance().getIControladorUsuario().selectListaCli(nomLista);
-                        InfoListaReproduccion l = new InfoListaReproduccion(lista, nickArtista);
+                        InfoListaReproduccion l = new InfoListaReproduccion(lista, nickCliente);
                         this.getParent().add(l);
                         l.show();
 
@@ -310,7 +313,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JList<String> lstArtistas;
+    private javax.swing.JList<String> lstClientes;
     private javax.swing.JList<String> lstListasRep;
     // End of variables declaration//GEN-END:variables
 }
