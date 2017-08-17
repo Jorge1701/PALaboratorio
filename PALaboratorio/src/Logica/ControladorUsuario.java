@@ -88,6 +88,19 @@ public class ControladorUsuario implements IUsuario {
         }
 
     }
+    
+    @Override
+    public ArrayList<DtUsuario> listarUsuarios() {
+        ArrayList<DtUsuario> dtUsuarios = new ArrayList<>();
+
+        Iterator i = usuarios.entrySet().iterator();
+        while (i.hasNext()) {
+            Usuario u = (Usuario) ((Map.Entry) i.next()).getValue();
+            dtUsuarios.add(u.getData());
+        }
+
+        return dtUsuarios;
+    }
 
     @Override
     public ArrayList<DtUsuario> listarClientes() {
@@ -234,6 +247,15 @@ public class ControladorUsuario implements IUsuario {
     }
 
     @Override
+    public ArrayList<DtCliente> listarSeguidoresDe(String nickUsuario) {
+        Usuario u = usuarios.get(nickUsuario);
+        
+        if (u == null)
+            throw new UnsupportedOperationException("El cliente no existe");
+        
+        return u.getSeguidores();
+    }
+    
     public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente) {
          Usuario c = this.usuarios.get(nickCliente);
          if (c == null){
