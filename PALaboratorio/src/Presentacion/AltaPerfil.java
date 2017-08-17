@@ -305,12 +305,9 @@ private IUsuario IU;
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         DtUsuario dtu;
          
-        if(nick.getText().isEmpty() == true || nombre.getText().isEmpty() == true || apellido.getText().isEmpty() == true || correo.getText().isEmpty() == true || dia.getSelectedItem().equals("--") || mes.getSelectedItem().equals("--") || anio.getSelectedItem().equals("----")){
-        if(Validacion.ValidarEmail(correo.getText())==false){
-            javax.swing.JOptionPane.showMessageDialog(null,"El formato del email es incorrecto","Advertencia",JOptionPane.WARNING_MESSAGE);
-        }else{
+        if(nick.getText().isEmpty() == true || nombre.getText().isEmpty() == true || apellido.getText().isEmpty() == true || correo.getText().isEmpty() == true || dia.getSelectedItem().equals("--") || mes.getSelectedItem().equals("--") || anio.getSelectedItem().equals("----") || Validacion.ValidarEmail(correo.getText())==false){
+
         javax.swing.JOptionPane.showMessageDialog(null,"Hay algun campo sin completar","Advertencia",JOptionPane.WARNING_MESSAGE);
-        }
         }else{
         
         if(cliente.isSelected() == true){
