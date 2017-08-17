@@ -8,8 +8,9 @@ import Logica.Fabrica;
 import Logica.IUsuario;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import Presentacion.Validacion;
 public class AltaPerfil extends javax.swing.JInternalFrame {
 
 private IUsuario IU;
@@ -305,7 +306,11 @@ private IUsuario IU;
         DtUsuario dtu;
          
         if(nick.getText().isEmpty() == true || nombre.getText().isEmpty() == true || apellido.getText().isEmpty() == true || correo.getText().isEmpty() == true || dia.getSelectedItem().equals("--") || mes.getSelectedItem().equals("--") || anio.getSelectedItem().equals("----")){
-        javax.swing.JOptionPane.showMessageDialog(null,"Hay algún campo sin completar.","Advertencia",JOptionPane.WARNING_MESSAGE);
+        if(Validacion.ValidarEmail(correo.getText())==false){
+            javax.swing.JOptionPane.showMessageDialog(null,"El formato del email es incorrecto","Advertencia",JOptionPane.WARNING_MESSAGE);
+        }else{
+        javax.swing.JOptionPane.showMessageDialog(null,"Hay algun campo sin completar","Advertencia",JOptionPane.WARNING_MESSAGE);
+        }
         }else{
         
         if(cliente.isSelected() == true){
