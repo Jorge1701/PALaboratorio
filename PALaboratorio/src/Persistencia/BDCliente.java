@@ -87,7 +87,7 @@ public class BDCliente extends BDUsuario {
     
     private int obtenerIdListaDefecto(int idGenero, String nombreLista) {
         try {
-            PreparedStatement buscar = conexion.prepareStatement("SELECT FROM lista AS l, listapordefecto AS ld WHERE l.idLista = ld.idLista AND l.nombre = ? AND ld.idGenero = ?");
+            PreparedStatement buscar = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listapordefecto AS ld WHERE l.idLista = ld.idLista AND l.nombre = ? AND ld.idGenero = ?");
             buscar.setString(1, nombreLista);
             buscar.setInt(2, idGenero);
             

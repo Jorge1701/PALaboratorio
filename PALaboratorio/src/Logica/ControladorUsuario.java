@@ -26,7 +26,7 @@ public class ControladorUsuario implements IUsuario {
         //this.personas=new ArrayList<Persona>();
         this.usuarios = new HashMap();
 
-        //usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
+        usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
         //this.dbPersona=new DBPersona();
     }
     
@@ -52,6 +52,19 @@ public class ControladorUsuario implements IUsuario {
     @Override
     public void ingresarUsuario(DtUsuario dtu) {
 
+    }
+    
+    @Override
+    public ArrayList<DtUsuario> listarUsuarios() {
+        ArrayList<DtUsuario> dtUsuarios = new ArrayList<>();
+
+        Iterator i = usuarios.entrySet().iterator();
+        while (i.hasNext()) {
+            Usuario u = (Usuario) ((Map.Entry) i.next()).getValue();
+            dtUsuarios.add(u.getData());
+        }
+
+        return dtUsuarios;
     }
 
     @Override
@@ -185,4 +198,13 @@ public class ControladorUsuario implements IUsuario {
 
     }
 
+    @Override
+    public ArrayList<DtCliente> listarSeguidoresDe(String nickUsuario) {
+        Usuario u = usuarios.get(nickUsuario);
+        
+        if (u == null)
+            throw new UnsupportedOperationException("El cliente no existe");
+        
+        return u.getSeguidores();
+    }
 }
