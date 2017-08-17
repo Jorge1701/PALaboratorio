@@ -1,5 +1,6 @@
 package Logica;
 
+import Persistencia.BDAlbum;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ public class Artista extends Usuario {
     private String biografia;
     private String web;
     private HashMap<String, Album> albumes;
+    private BDAlbum bdAlbum = null;
 
     public Artista(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, Imagen imagen, String biografia, String web) {
         super(nickname, nombre, apellido, email, fechaNac, imagen); //LLama al constructor de Usuario
@@ -52,8 +54,29 @@ public class Artista extends Usuario {
         return null;
     }
 
-    public void ingresarAlbum(String nom, int anio, ArrayList<Genero> generos/*, Imagen img*/, ArrayList<Tema> temas) {
-        return;
+     public void ingresarAlbum(String nom, int anio, ArrayList<Genero> generos/*, Imagen img*/, HashMap<String,Tema> temas) {
+        
+        if(this.albumes.get(nom) != null) {
+            throw new UnsupportedOperationException("Ya existe Albun con ese nombre");
+        } else {
+            
+            
+            //Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
+            Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
+           
+            //boolean res = this.bdAlbum.altaAlbum(this.getEmail(), album);
+            boolean res = true;
+            if (res) {
+                this.albumes.put(nom, album);
+            } else {
+               throw new UnsupportedOperationException("Error en Persistencia"); 
+            }
+           
+        }
+        
+        
+        
+        
     }
 
     @Override

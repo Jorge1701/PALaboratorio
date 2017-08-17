@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-class Genero {
+public class Genero {
 
     private String nombre;
     private HashMap<String, Genero> subgeneros;
