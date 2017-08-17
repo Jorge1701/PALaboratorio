@@ -89,4 +89,7 @@ public abstract class Usuario {
         return this.fechaNac;
     }
 
+    public void agregar(Cliente cliente){
+        this.seguidores.put(cliente.getNickname(), cliente); 
+    }
 }

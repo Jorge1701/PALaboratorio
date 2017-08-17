@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-class Album {
+public class Album {
 
     public String nickArtista;
     public String nombre;

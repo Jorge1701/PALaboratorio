@@ -22,7 +22,10 @@ public abstract class Lista {
         ArrayList<DtTema> temas = new ArrayList<>();
         
         for (Tema t : this.temas)
-            temas.add(t.getData());
+            if(t instanceof TemaLocal)
+            temas.add(((TemaLocal)t).getData());
+        else
+            temas.add(((TemaRemoto)t).getData());  
         
         return temas;
     }

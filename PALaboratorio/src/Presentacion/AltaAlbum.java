@@ -1,17 +1,27 @@
 
 package Presentacion;
 
+import Logica.DtTema;
+import Logica.DtTime;
+import Logica.Fabrica;
+import Logica.IContenido;
 import com.sun.glass.events.KeyEvent;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 
+ 
 
 public class AltaAlbum extends javax.swing.JInternalFrame {
+    
+    private IContenido iContenido;
+    
     public AltaAlbum() {
         initComponents();
         jScrollPane2.setViewportView(ListaGeneros);
-
+        iContenido = Fabrica.getInstance().getIControladorContenido();
     }
 
 
@@ -185,7 +195,42 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_GenerosKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String nickA = Nombre.getText();
+        String album = Album.getText();
+         
+        String camposVacios = "";
+        if (nickA.isEmpty()) {
+            camposVacios += "Nick Artista\n";
+        }
+        if (album.isEmpty()) {
+            camposVacios += "Nombre Album \n";
+        }
+        
+        if (!camposVacios.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Hay campos obligatorios vacios:\n" + camposVacios);
+            return;
+        }
+        
+        try {
+            iContenido.selectArtista(nickA);
+            ArrayList<String> generos = new ArrayList<>();
+            generos.add("Rock");
+            
+            DtTema dtT = new DtTema( "pista1", new DtTime(0, 2, 23), 1);
+            ArrayList<DtTema> temas = new ArrayList<DtTema>();
+            temas.add(dtT);
+            
+            iContenido.ingresarAlbum(album, 2007, generos, temas);
+            
+            
+        } catch (UnsupportedOperationException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(this, "Se ingreso Album");
+        Nombre.setText("");
+        Album.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked

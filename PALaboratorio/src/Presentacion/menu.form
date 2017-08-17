@@ -31,11 +31,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alta Album"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="altaAlbumActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="altaGenero">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alta de Genero"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="altaGeneroActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="crearListaRep">
               <Properties>
@@ -82,6 +88,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consulta de Lista de Reproduccion"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="consultaListaRepActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

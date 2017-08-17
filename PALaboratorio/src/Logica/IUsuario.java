@@ -6,6 +6,7 @@ public interface IUsuario {
     
     public Usuario obtenerUsuario(String nick);
     public Artista selectArtista(String nick);
+    public ArrayList<DtUsuario> listarUsuarios();
     public boolean ingresarUsuario(DtUsuario dtu);
     public ArrayList<DtUsuario> listarClientes();
     public ArrayList<DtUsuario> listarArtistas();
@@ -17,4 +18,7 @@ public interface IUsuario {
     public void cargarUsuarios();
     public ArrayList<DtAlbum> listarAlbumesArtista(String nickArtista);
     public DtAlbumContenido obtenerAlbumContenido(String nickArt, String nomAlbum);
+    public ArrayList<DtCliente> listarSeguidoresDe(String nickUsuario);
+    public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente);
+    public DtLista selectListaCli(String nombreL);
 }

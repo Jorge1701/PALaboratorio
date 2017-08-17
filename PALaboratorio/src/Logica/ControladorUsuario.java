@@ -6,12 +6,15 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
-import jdk.nashorn.internal.objects.NativeArray;
+
 
 public class ControladorUsuario implements IUsuario {
 
     private static ControladorUsuario instancia;
-    private Map<String, Usuario> usuarios;
+    private HashMap<String, Usuario> usuarios;
+    private Usuario usuarioRecordado;
+    //private DBPersona dbPersona=null;
+   
     private BDUsuario bdUsuario=null;
 
     public static ControladorUsuario getInstance() {
@@ -25,9 +28,13 @@ public class ControladorUsuario implements IUsuario {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
         this.usuarios = new HashMap();
+        this.usuarioRecordado = null;
         this.bdUsuario=new BDUsuario();
-        //usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
+        usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
         //this.dbPersona=new DBPersona();
+        usuarios.put("ale",new Artista("ale", "Alejandro", "Peculio","ale@gmail.com",new DtFecha(25,7,1997),null,"",""));
+        //usuarios.put("joaco", new Artista("joaco", "Joaco", "Rey", "joaconrey@gmail.com", new DtFecha(31, 11, 1996), null, "biografia", "web"));
+        
     }
     
     @Override
@@ -38,16 +45,17 @@ public class ControladorUsuario implements IUsuario {
 
     @Override
     public Artista selectArtista(String nick) {
-       
         Usuario us = usuarios.get(nick);
-        
-        if (us == null)
+
+        if (us == null) {
             throw new UnsupportedOperationException("El artista " + nick + " no existe");
-        
-        if (!(us instanceof Artista))
+        }
+
+        if (!(us instanceof Artista)) {
             throw new UnsupportedOperationException("Este usuario no es un Artista");
-        
-        return (Artista) us;   
+        }
+
+        return (Artista) us;
     }
 
     @Override
@@ -80,6 +88,19 @@ public class ControladorUsuario implements IUsuario {
             return res;
         }
 
+    }
+    
+    @Override
+    public ArrayList<DtUsuario> listarUsuarios() {
+        ArrayList<DtUsuario> dtUsuarios = new ArrayList<>();
+
+        Iterator i = usuarios.entrySet().iterator();
+        while (i.hasNext()) {
+            Usuario u = (Usuario) ((Map.Entry) i.next()).getValue();
+            dtUsuarios.add(u.getData());
+        }
+
+        return dtUsuarios;
     }
 
     @Override
@@ -155,6 +176,7 @@ public class ControladorUsuario implements IUsuario {
             throw new UnsupportedOperationException("Usuario no es un cliente.");
         }
         ((Cliente) cliente).agregar(seguido);
+        ((Usuario) seguido).agregar((Cliente)cliente);
     }
 
     @Override
@@ -226,4 +248,31 @@ public class ControladorUsuario implements IUsuario {
     
     }
 
+    @Override
+    public ArrayList<DtCliente> listarSeguidoresDe(String nickUsuario) {
+        Usuario u = usuarios.get(nickUsuario);
+        
+        if (u == null)
+            throw new UnsupportedOperationException("El cliente no existe");
+        
+        return u.getSeguidores();
+    }
+    
+    public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente) {
+         Usuario c = this.usuarios.get(nickCliente);
+         if (c == null){
+             throw new UnsupportedOperationException("No existe el Cliente");
+         }
+         if (!(c instanceof Cliente)) {
+            throw new UnsupportedOperationException("Usuario no es un cliente");
+        }
+         
+         this.usuarioRecordado = c;
+        
+        return ((Cliente) c).listarLisReproduccion();
+    }
+
+    public DtLista selectListaCli(String nombreL){
+        return ((Cliente) this.usuarioRecordado).seleccionarLista(nombreL);
+    }
 }
