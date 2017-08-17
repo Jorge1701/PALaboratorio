@@ -1,5 +1,9 @@
 package Presentacion;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class menu extends javax.swing.JFrame {
 
     public menu() {
@@ -64,9 +68,19 @@ public class menu extends javax.swing.JFrame {
         jMenu1.add(altaPerfil);
 
         altaAlbum.setText("Alta Album");
+        altaAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaAlbumActionPerformed(evt);
+            }
+        });
         jMenu1.add(altaAlbum);
 
         altaGenero.setText("Alta de Genero");
+        altaGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaGeneroActionPerformed(evt);
+            }
+        });
         jMenu1.add(altaGenero);
 
         crearListaRep.setText("Crear Lista de Reproduccion");
@@ -236,6 +250,26 @@ public class menu extends javax.swing.JFrame {
         PanelMenu.add(cpc);
         cpc.show();
     }//GEN-LAST:event_ConsultaPerfilArtistaActionPerformed
+
+    private void altaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaGeneroActionPerformed
+         AltaGenero cpc;
+        try {
+            cpc = new AltaGenero();
+            PanelMenu.add(cpc);
+         cpc.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ;        // TODO add your handling code here:
+          // TODO add your handling code here:
+    }//GEN-LAST:event_altaGeneroActionPerformed
+    private void altaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaAlbumActionPerformed
+        // TODO add your handling code here:
+         AltaAlbum cpc = new AltaAlbum();
+         PanelMenu.add(cpc);
+         cpc.show();
+    }//GEN-LAST:event_altaAlbumActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

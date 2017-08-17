@@ -29,9 +29,17 @@ public class ControladorContenido implements IContenido {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
-        genero = new Genero("Generos");
+        genero = new Genero("Géneros");
 
         //this.dbPersona=new DBPersona();
+       /* this.genero.agregarGenero("Géneros", "Rock");
+        this.genero.agregarGenero("Rock", "Rock clásico");
+        this.genero.agregarGenero("Géneros", "Electrónica");
+        this.genero.agregarGenero("Electrónica", "Electro house");
+        this.genero.agregarGenero("Géneros", "Pop");
+        this.genero.agregarGenero("Géneros", "Cumbia");
+        this.genero.agregarGenero("Cumbia", "Cumbia cheta");
+        this.genero.agregarGenero("Cumbia", "Cumbia de negro");*/
     }
     
  
@@ -78,10 +86,9 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             //boolean ok = bdc.agregarTemaFav();
-            
+
             //if (!ok)
-               // throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            // throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
             clienteFav.agregarTemaFav(tema);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -106,10 +113,11 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             boolean ok = bdc.agregarListaDefaultFav(nomGenero, nomLista, clienteFav.getNickname());
-            
-            if (!ok)
+
+            if (!ok) {
                 throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            }
+
             clienteFav.agregarListaFav(l);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -138,10 +146,11 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             boolean ok = bdc.agregarListaParticularFav(nickCliente, nomLista, clienteFav.getNickname());
-            
-            if (!ok)
+
+            if (!ok) {
                 throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            }
+
             clienteFav.agregarListaFav(l);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -170,10 +179,11 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             boolean ok = bdc.agregarAlbumFav(nickArtista, nomAlbum, clienteFav.getNickname());
-            
-            if (!ok)
+
+            if (!ok) {
                 throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            }
+
             clienteFav.agregarAlbumFav(album);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -255,7 +265,40 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, ArrayList<DtTema> temas) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        ArrayList<Genero> lstGeneros = new ArrayList<Genero>();
+        HashMap<String, Tema> mapTemas = new  HashMap<String, Tema>();
+        
+        if (generos.isEmpty()){
+            throw new UnsupportedOperationException("Debe de indicar al menos un Genero");
+        }
+        
+        for(int i =0; i< generos.size(); i++){
+            String nomG = generos.get(i);
+            lstGeneros.add(this.genero.obtener(nomG));
+            //mapGeneros.put(nomG, this.genero.obtener(nomG));           
+            
+        }
+        
+         if (temas.isEmpty()){
+            throw new UnsupportedOperationException("Debe de indicar al menos un Tema");
+        }       
+        
+        for(int i = 0; i< temas.size(); i++){
+            DtTema dtT = (DtTema) temas.get(i);
+            Tema t = new Tema(dtT.getNombre(), dtT.getDuracion(), dtT.getUbicacion());
+            mapTemas.put(dtT.getNombre(), t);
+            //lstTemas.add(t);
+        }
+        
+        
+        this.artista.ingresarAlbum(nom, anio, lstGeneros, mapTemas);
+        
+        //set null artista seleccionado
+        this.artista = null;
+        
+    
     }
 
     public ArrayList<DtLista> listarLisReproduccionGen(String nomGen) {
@@ -270,6 +313,7 @@ public class ControladorContenido implements IContenido {
     public DtLista selecListGen(String nombreL) {
         return generoRecordado.seleccionarLista(nombreL);
     }
+
     public ArrayList<DtTema> selecListaDef(String nombre) {
 
         ListaDefecto aux = listasDefecto.get(nombre);
