@@ -69,8 +69,10 @@ public class BDUsuario {
     }
     public boolean ingresarUsuario(Usuario u){
         try {
-            PreparedStatement statement = conexion.prepareStatement("INSERT INTO usuario "
-                    + "(nickname, correo, nombre,apellido,fecha_nac,tipo) values(?,?,?,?,?,?)");
+
+            if (u instanceof Cliente) {
+            PreparedStatement statement = conexion.prepareStatement("INSERT INTO cliente "
+            + "(nickname, correo, nombre,apellido,fecha_nac,tipo,) values(?,?,?,?,?,?)");
             statement.setString(1, u.getNickname());
             statement.setString(2, u.getEmail());
             statement.setString(3, u.getNombre());
@@ -79,21 +81,11 @@ public class BDUsuario {
             statement.setBoolean(6, false);
             statement.executeUpdate();
             statement.close();
-            if (u instanceof Cliente) {
-
-                //
-                PreparedStatement statement2 = conexion.prepareStatement("INSERT INTO cliente "
-                        + "(nickname, correo) values(?,?)");
-                statement2.setString(1, u.getNickname());
-                statement2.setString(2, u.getEmail());
-                statement2.executeUpdate();
-                statement2.close();
-                //
                 return true;
             } else {
                 
                 PreparedStatement statement3 = conexion.prepareStatement("INSERT INTO artista "
-                        + "(biografia, sitio_web, nickname, correo) values(?,?,?,?)");
+                + "(biografia, sitio_web, nickname, correo) values(?,?,?,?)");
                 statement3.setString(1, ((Artista) u).getBiografia());
                 statement3.setString(2, ((Artista) u).getWeb());
                 statement3.setString(3, u.getNickname());

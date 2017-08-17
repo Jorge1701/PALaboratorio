@@ -157,4 +157,20 @@ public class Cliente extends Usuario {
            return l;
     }
 
+    public ArrayList<DtLista> listarLisReproduccion() {
+        ArrayList<DtLista> res = new ArrayList<>();
+        Iterator it = listasParticulares.entrySet().iterator();
+        while (it.hasNext()) {
+            ListaParticular lp = (ListaParticular) ((Map.Entry) it.next()).getValue();
+            if (!lp.isPrivada()) {
+                res.add(new DtLista(lp.getNombre(), lp.getTemas()));
+            }
+        }
+        return res;
+    }
+
+    public DtLista seleccionarLista(String nombreL) {
+        ListaParticular lp = listasParticulares.get(nombreL);
+        return new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas());
+    }
 }

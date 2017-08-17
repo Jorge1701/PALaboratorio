@@ -11,9 +11,9 @@ public class ConexionBD {
     
     private final String host="localhost";
     private final String port="3306";
-    private final String db="Espotify";
+    private final String db="espotify";
     private final String user="root";
-    private final String pass="root";
+    private final String pass="rooteo";
     
     //Para hacer ConexionDB singleton descomentar
     //private static Connection conexion=null;

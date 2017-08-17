@@ -109,6 +109,11 @@ public class menu extends javax.swing.JFrame {
         jMenu2.add(consultaAlbum);
 
         consultaListaRep.setText("Consulta de Lista de Reproduccion");
+        consultaListaRep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultaListaRepActionPerformed(evt);
+            }
+        });
         jMenu2.add(consultaListaRep);
 
         jMenuBar1.add(jMenu2);
@@ -220,6 +225,11 @@ public class menu extends javax.swing.JFrame {
         cpc.show();
     }//GEN-LAST:event_consultaAlbumActionPerformed
 
+    private void consultaListaRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaListaRepActionPerformed
+      ConsultaListaReproduccion clr = new ConsultaListaReproduccion();
+        PanelMenu.add(clr);
+        clr.show();
+    }//GEN-LAST:event_consultaListaRepActionPerformed
     private void ConsultaPerfilArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaPerfilArtistaActionPerformed
         // TODO add your handling code here:
         ConsultaPerfil cpc = new ConsultaPerfil("Artista");

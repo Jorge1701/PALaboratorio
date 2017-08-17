@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Presentacion;
 
 import Logica.DtAlbum;
@@ -18,10 +13,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
-/**
- *
- * @author Ale
- */
 public class ConsultarAlbum extends javax.swing.JInternalFrame {
 
     public ConsultarAlbum() {
@@ -75,16 +66,6 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
 
         Grupo.add(consultaGenero);
         consultaGenero.setText("Consultar por género");
-        consultaGenero.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                consultaGeneroStateChanged(evt);
-            }
-        });
-        consultaGenero.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                consultaGeneroMouseClicked(evt);
-            }
-        });
         consultaGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consultaGeneroActionPerformed(evt);
@@ -93,11 +74,6 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
 
         Grupo.add(consultaArtista);
         consultaArtista.setText("Consultar por artista");
-        consultaArtista.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                consultaArtistaMouseClicked(evt);
-            }
-        });
         consultaArtista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consultaArtistaActionPerformed(evt);
@@ -105,14 +81,6 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         });
 
         generos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        generos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                generosMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                generosMousePressed(evt);
-            }
-        });
         generos.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
             public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
                 generosValueChanged(evt);
@@ -129,11 +97,6 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
                 "Abum", "del artista"
             }
         ));
-        JTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JTableMouseClicked(evt);
-            }
-        });
         jScrollPane4.setViewportView(JTable);
 
         jLabel1.setText("Albumes del genero seleccionado:");
@@ -177,11 +140,6 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(lstArtistas);
 
         lstAlbumes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lstAlbumes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstAlbumesValueChanged(evt);
-            }
-        });
         jScrollPane3.setViewportView(lstAlbumes);
 
         jLabel2.setText("Albumes del artista seleccionado:");
@@ -213,11 +171,6 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         );
 
         btnAceptar.setText("Aceptar");
-        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseClicked(evt);
-            }
-        });
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -251,18 +204,20 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
                                 .addGap(98, 98, 98)))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(consultaArtista))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnCancelar)
-                                .addGap(266, 266, 266))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(consultaArtista))))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(btnCancelar)))))
+                .addGap(28, 28, 28))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAceptar, btnCancelar});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -277,8 +232,10 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAceptar))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAceptar, btnCancelar});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -346,14 +303,6 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_consultaArtistaActionPerformed
 
-    private void consultaGeneroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_consultaGeneroStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_consultaGeneroStateChanged
-
-    private void consultaGeneroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaGeneroMouseClicked
-
-    }//GEN-LAST:event_consultaGeneroMouseClicked
-
     private void mostrar() {
         if (consultaGenero.isSelected()) {
             generos.setEnabled(true);
@@ -371,17 +320,9 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         repaint();
     }
 
-    private void consultaArtistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaArtistaMouseClicked
-
-    }//GEN-LAST:event_consultaArtistaMouseClicked
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void generosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generosMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_generosMouseClicked
 
     private void generosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_generosValueChanged
 
@@ -414,22 +355,6 @@ public class ConsultarAlbum extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_lstArtistasValueChanged
-
-    private void lstAlbumesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstAlbumesValueChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lstAlbumesValueChanged
-
-    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-
-    }//GEN-LAST:event_btnAceptarMouseClicked
-
-    private void JTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableMouseClicked
-
-    }//GEN-LAST:event_JTableMouseClicked
-
-    private void generosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generosMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_generosMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

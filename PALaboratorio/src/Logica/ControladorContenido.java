@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class ControladorContenido implements IContenido {
 
@@ -13,6 +14,7 @@ public class ControladorContenido implements IContenido {
     private Map<String, ListaDefecto> listasDefecto;
     private Artista artista;
     private Genero genero;
+    private Genero generoRecordado;
 
     private Cliente clienteFav;
 
@@ -28,7 +30,7 @@ public class ControladorContenido implements IContenido {
         //this.personas=new ArrayList<Persona>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
         genero = new Genero("Generos");
-       
+
         //this.dbPersona=new DBPersona();
     }
     
@@ -211,7 +213,6 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public boolean selectArtista(String nick) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         this.artista = ControladorUsuario.getInstance().selectArtista(nick);
         if (this.artista != null) {
             return true;
@@ -257,6 +258,18 @@ public class ControladorContenido implements IContenido {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public ArrayList<DtLista> listarLisReproduccionGen(String nomGen) {
+        Genero g = this.genero.obtener(nomGen);
+        if (g == null) {
+            throw new UnsupportedOperationException("El genero no existe");
+        }
+        this.generoRecordado = g;
+        return g.listarLisReproduccion();
+    }
+
+    public DtLista selecListGen(String nombreL) {
+        return generoRecordado.seleccionarLista(nombreL);
+    }
     public ArrayList<DtTema> selecListaDef(String nombre) {
 
         ListaDefecto aux = listasDefecto.get(nombre);
