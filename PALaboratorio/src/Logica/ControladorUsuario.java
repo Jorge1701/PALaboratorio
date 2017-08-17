@@ -176,6 +176,7 @@ public class ControladorUsuario implements IUsuario {
             throw new UnsupportedOperationException("Usuario no es un cliente.");
         }
         ((Cliente) cliente).agregar(seguido);
+        ((Usuario) seguido).agregar((Cliente)cliente);
     }
 
     @Override
