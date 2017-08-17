@@ -5,17 +5,27 @@
  */
 package Presentacion;
 
-/**
- *
- * @author brian
- */
-public class AltaAlbum extends javax.swing.JInternalFrame {
+import Logica.DtTema;
+import Logica.DtTime;
+import Logica.Fabrica;
+import Logica.IContenido;
+import com.sun.glass.events.KeyEvent;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
 
-    /**
-     * Creates new form AltaAlbum
-     */
+ 
+
+public class AltaAlbum extends javax.swing.JInternalFrame {
+    
+    private IContenido iContenido;
+    
     public AltaAlbum() {
         initComponents();
+        jScrollPane2.setViewportView(ListaGeneros);
+        iContenido = Fabrica.getInstance().getIControladorContenido();
     }
 
     /**
@@ -27,21 +37,136 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ListaGeneros = new javax.swing.JList<>();
+        Generos = new javax.swing.JTextField();
+        Nombre = new javax.swing.JTextField();
+        Album = new javax.swing.JTextField();
+
+        ListaGeneros.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(ListaGeneros);
+
+        Nombre.setText("jTextField1");
+
+        Album.setText("jTextField2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(Generos)
+                        .addGap(49, 49, 49))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Album, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Generos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Album, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void anioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_anioActionPerformed
+
+    private void GenerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_GenerosActionPerformed
+
+    private void NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NombreActionPerformed
+    DefaultListModel model = new DefaultListModel();
+    private void GenerosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_GenerosKeyTyped
+        char tecla = evt.getKeyChar();
+        if(tecla == KeyEvent.VK_ENTER){
+        model.addElement(Generos.getText());
+        ListaGeneros.setModel(model);
+        Generos.setText("");
+        
+        }
+    }//GEN-LAST:event_GenerosKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String nickA = Nombre.getText();
+        String album = Album.getText();
+         
+        String camposVacios = "";
+        if (nickA.isEmpty()) {
+            camposVacios += "Nick Artista\n";
+        }
+        if (album.isEmpty()) {
+            camposVacios += "Nombre Album \n";
+        }
+        
+        if (!camposVacios.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Hay campos obligatorios vacios:\n" + camposVacios);
+            return;
+        }
+        
+        try {
+            iContenido.selectArtista(nickA);
+            ArrayList<String> generos = new ArrayList<>();
+            generos.add("Rock");
+            
+            DtTema dtT = new DtTema( "pista1", new DtTime(0, 2, 23), 1);
+            ArrayList<DtTema> temas = new ArrayList<DtTema>();
+            temas.add(dtT);
+            
+            iContenido.ingresarAlbum(album, 2007, generos, temas);
+            
+            
+        } catch (UnsupportedOperationException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(this, "Se ingreso Album");
+        Nombre.setText("");
+        Album.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void ListaGenerosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaGenerosValueChanged
+               model.removeElement(ListaGeneros.getSelectedValue());
+               ListaGeneros.setModel(model);
+    }//GEN-LAST:event_ListaGenerosValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Album;
+    private javax.swing.JTextField Generos;
+    private javax.swing.JList<String> ListaGeneros;
+    private javax.swing.JTextField Nombre;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

@@ -102,6 +102,8 @@ public class ControladorUsuario implements IUsuario {
 
         return dtUsuarios;
     }
+    
+
 
     @Override
     public ArrayList<DtUsuario> listarClientes() {
