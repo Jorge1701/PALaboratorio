@@ -8,13 +8,11 @@ public class BDCliente extends BDUsuario {
     
     public boolean agregarListaDefaultFav(String nomGenero, String nomLista, String nomCliente) {
         try {
-            String correoCliente = obtenerCorreo(nomCliente);
             int idLista = obtenerIdListaDefecto(obtenerIdGenero(nomGenero), nomLista);
             
-            PreparedStatement agregar = conexion.prepareStatement("INSERT INTO favl VALUES (?, ?, ?)");
+            PreparedStatement agregar = conexion.prepareStatement("INSERT INTO favl VALUES (?, ?)");
             agregar.setString(1, nomCliente);
-            agregar.setString(2, correoCliente);
-            agregar.setInt(3, idLista);
+            agregar.setInt(2, idLista);
             agregar.executeUpdate();
             agregar.close();
             
@@ -27,13 +25,11 @@ public class BDCliente extends BDUsuario {
     
     public boolean agregarListaParticularFav(String duenio, String nomLista, String cliente) {
         try {
-            String correoCliente = obtenerCorreo(cliente);
             int idLista = obtenerIdListaParticular(duenio, nomLista);
             
-            PreparedStatement agregar = conexion.prepareStatement("INSERT INTO favl VALUES (?, ?, ?)");
+            PreparedStatement agregar = conexion.prepareStatement("INSERT INTO favl VALUES (?, ?)");
             agregar.setString(1, cliente);
-            agregar.setString(2, correoCliente);
-            agregar.setInt(3, idLista);
+            agregar.setInt(2, idLista);
             agregar.executeUpdate();
             agregar.close();
             
@@ -46,16 +42,12 @@ public class BDCliente extends BDUsuario {
     
     public boolean agregarAlbumFav(String nickArt, String nomAlbum, String nickCli){
         try {
-            String correoArt = obtenerCorreo(nickArt);
-            String correoCli = obtenerCorreo(nickCli);
-            int idAlbum = obtenerIdAlbum(nickArt, correoArt, nomAlbum);
+            int idAlbum = obtenerIdAlbum(nickArt, nomAlbum);
             
-            PreparedStatement agregar = conexion.prepareStatement("INSERT INTO fava VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement agregar = conexion.prepareStatement("INSERT INTO fava VALUES (?, ?, ?)");
             agregar.setInt(1, idAlbum);
             agregar.setString(2, nickArt);
-            agregar.setString(3, correoArt);
-            agregar.setString(4, nickCli);
-            agregar.setString(5, correoCli);
+            agregar.setString(3, nickCli);
             agregar.executeUpdate();
             agregar.close();
             
@@ -87,7 +79,7 @@ public class BDCliente extends BDUsuario {
     
     private int obtenerIdListaDefecto(int idGenero, String nombreLista) {
         try {
-            PreparedStatement buscar = conexion.prepareStatement("SELECT FROM lista AS l, listapordefecto AS ld WHERE l.idLista = ld.idLista AND l.nombre = ? AND ld.idGenero = ?");
+            PreparedStatement buscar = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listapordefecto AS ld WHERE l.idLista = ld.idLista AND l.nombre = ? AND ld.idGenero = ?");
             buscar.setString(1, nombreLista);
             buscar.setInt(2, idGenero);
             
@@ -129,12 +121,11 @@ public class BDCliente extends BDUsuario {
         }
     }
     
-    private int obtenerIdAlbum(String nickArt, String correoArt, String nomAlbum) {
+    private int obtenerIdAlbum(String nickArt, String nomAlbum) {
         try {
-            PreparedStatement buscar = conexion.prepareStatement("SELECT idAlbum FROM album WHERE nickname = ? AND correo = ? AND nombre = ?");
+            PreparedStatement buscar = conexion.prepareStatement("SELECT idAlbum FROM album WHERE nickname = ? AND nombre = ?");
             buscar.setString(1, nickArt);
-            buscar.setString(2, correoArt);
-            buscar.setString(3, nomAlbum);
+            buscar.setString(2, nomAlbum);
             ResultSet rs = buscar.executeQuery();
             int id = 0;
             while (rs.next())

@@ -23,7 +23,7 @@ public class Cliente extends Usuario {
         this.listas = new ArrayList<>();
         this.temas = new ArrayList<>();
 
-        /*ArrayList<Tema> t = new ArrayList<>();
+       /* ArrayList<Tema> t = new ArrayList<>();
         t.add(new TemaLocal("directorio/dirctorio2", "tema1", new DtTime(0, 25, 36), 2));
         t.add(new TemaLocal("directorio/dirctorio2/omass", "tema2", new DtTime(0, 225, 3622), 1));
         
@@ -31,7 +31,7 @@ public class Cliente extends Usuario {
         listasParticulares.put("la mejor lista", new ListaParticular(false, "la mejor lista", t));
         listasParticulares.put("uno dos tres", new ListaParticular(false, "uno dos tres", t));
         listasParticulares.put("Esta no va a aparecer", new ListaParticular(true, "Esta no va a aparecer", t));
-        listasParticulares.put("dddddd", new ListaParticular(false, "dddddd", t))*/
+        listasParticulares.put("dddddd", new ListaParticular(false, "dddddd", t));*/
     }
 
     public void agregarAlbumFav(Album a) {

@@ -32,14 +32,14 @@ public class ControladorContenido implements IContenido {
         genero = new Genero("Géneros");
 
         //this.dbPersona=new DBPersona();
-        //this.genero.agregarGenero("Géneros", "Rock");
-        //this.genero.agregarGenero("Rock", "Rock clásico");
-        //this.genero.agregarGenero("Géneros", "Electrónica");
-        //this.genero.agregarGenero("Electrónica", "Electro house");
-        //this.genero.agregarGenero("Géneros", "Pop");
-        //this.genero.agregarGenero("Géneros", "Cumbia");
-        //this.genero.agregarGenero("Cumbia", "Cumbia cheta");
-        //this.genero.agregarGenero("Cumbia", "Cumbia de negro");
+       /* this.genero.agregarGenero("Géneros", "Rock");
+        this.genero.agregarGenero("Rock", "Rock clásico");
+        this.genero.agregarGenero("Géneros", "Electrónica");
+        this.genero.agregarGenero("Electrónica", "Electro house");
+        this.genero.agregarGenero("Géneros", "Pop");
+        this.genero.agregarGenero("Géneros", "Cumbia");
+        this.genero.agregarGenero("Cumbia", "Cumbia cheta");
+        this.genero.agregarGenero("Cumbia", "Cumbia de negro");*/
     }
 
     @Override
