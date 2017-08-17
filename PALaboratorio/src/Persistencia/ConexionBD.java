@@ -13,7 +13,7 @@ public class ConexionBD {
     private final String port="3306";
     private final String db="espotify";
     private final String user="root";
-    private final String pass="rooteo";
+    private final String pass="diego";
     
     //Para hacer ConexionDB singleton descomentar
     //private static Connection conexion=null;

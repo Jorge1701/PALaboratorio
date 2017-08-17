@@ -64,6 +64,11 @@ public class menu extends javax.swing.JFrame {
         jMenu1.add(altaPerfil);
 
         altaAlbum.setText("Alta Album");
+        altaAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaAlbumActionPerformed(evt);
+            }
+        });
         jMenu1.add(altaAlbum);
 
         altaGenero.setText("Alta de Genero");
@@ -225,6 +230,13 @@ public class menu extends javax.swing.JFrame {
         PanelMenu.add(clr);
         clr.show();
     }//GEN-LAST:event_consultaListaRepActionPerformed
+
+    private void altaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaAlbumActionPerformed
+        // TODO add your handling code here:
+         AltaAlbum cpc = new AltaAlbum();
+         PanelMenu.add(cpc);
+         cpc.show();
+    }//GEN-LAST:event_altaAlbumActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
