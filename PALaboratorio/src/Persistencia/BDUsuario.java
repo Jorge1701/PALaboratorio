@@ -81,8 +81,8 @@ public class BDUsuario {
                 statement.setString(4, u.getEmail());
                 statement.setDate(5, java.sql.Date.valueOf(u.getFechaNac().getAnio() + "-" + u.getFechaNac().getMes() + "-" + u.getFechaNac().getDia()));
                 statement.setBoolean(6, true);
-                statement.setString(6, ((Artista) u).getBiografia());
-                statement.setString(7, ((Artista) u).getWeb());
+                statement.setString(7, ((Artista) u).getBiografia());
+                statement.setString(8, ((Artista) u).getWeb());
                 statement.executeUpdate();
                 statement.close();
                 return true;

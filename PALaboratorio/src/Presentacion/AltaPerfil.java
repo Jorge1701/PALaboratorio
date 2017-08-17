@@ -67,6 +67,7 @@ private IUsuario IU;
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Alta de Perfil ");
 
         jLabel1.setText("Nick :");
 
@@ -203,7 +204,7 @@ private IUsuario IU;
                         .addComponent(cliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(artista)))
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +248,7 @@ private IUsuario IU;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aceptar)
                     .addComponent(cancelar))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
