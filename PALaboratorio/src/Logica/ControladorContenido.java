@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class ControladorContenido implements IContenido {
 
@@ -13,6 +14,7 @@ public class ControladorContenido implements IContenido {
     private Map<String, ListaDefecto> listasDefecto;
     private Artista artista;
     private Genero genero;
+    private Genero generoRecordado;
 
     private Cliente clienteFav;
 
@@ -27,9 +29,17 @@ public class ControladorContenido implements IContenido {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
-        genero = new Genero("Generos");
-       
+        genero = new Genero("Géneros");
+
         //this.dbPersona=new DBPersona();
+       /* this.genero.agregarGenero("Géneros", "Rock");
+        this.genero.agregarGenero("Rock", "Rock clásico");
+        this.genero.agregarGenero("Géneros", "Electrónica");
+        this.genero.agregarGenero("Electrónica", "Electro house");
+        this.genero.agregarGenero("Géneros", "Pop");
+        this.genero.agregarGenero("Géneros", "Cumbia");
+        this.genero.agregarGenero("Cumbia", "Cumbia cheta");
+        this.genero.agregarGenero("Cumbia", "Cumbia de negro");*/
     }
 
     @Override
@@ -74,10 +84,9 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             //boolean ok = bdc.agregarTemaFav();
-            
+
             //if (!ok)
-               // throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            // throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
             clienteFav.agregarTemaFav(tema);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -102,10 +111,11 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             boolean ok = bdc.agregarListaDefaultFav(nomGenero, nomLista, clienteFav.getNickname());
-            
-            if (!ok)
+
+            if (!ok) {
                 throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            }
+
             clienteFav.agregarListaFav(l);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -134,10 +144,11 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             boolean ok = bdc.agregarListaParticularFav(nickCliente, nomLista, clienteFav.getNickname());
-            
-            if (!ok)
+
+            if (!ok) {
                 throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            }
+
             clienteFav.agregarListaFav(l);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -166,10 +177,11 @@ public class ControladorContenido implements IContenido {
         try {
             BDCliente bdc = new BDCliente();
             boolean ok = bdc.agregarAlbumFav(nickArtista, nomAlbum, clienteFav.getNickname());
-            
-            if (!ok)
+
+            if (!ok) {
                 throw new UnsupportedOperationException("Error al agregar datos en la base de datos");
-            
+            }
+
             clienteFav.agregarAlbumFav(album);
             clienteFav = null;
         } catch (UnsupportedOperationException e) {
@@ -209,7 +221,6 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public boolean selectArtista(String nick) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         this.artista = ControladorUsuario.getInstance().selectArtista(nick);
         if (this.artista != null) {
             return true;
@@ -251,5 +262,82 @@ public class ControladorContenido implements IContenido {
     @Override
     public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, ArrayList<DtTema> temas) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ArrayList<DtLista> listarLisReproduccionGen(String nomGen) {
+        Genero g = this.genero.obtener(nomGen);
+        if (g == null) {
+            throw new UnsupportedOperationException("El genero no existe");
+        }
+        this.generoRecordado = g;
+        return g.listarLisReproduccion();
+    }
+
+    public DtLista selecListGen(String nombreL) {
+        return generoRecordado.seleccionarLista(nombreL);
+    }
+
+    public ArrayList<DtTema> selecListaDef(String nombre) {
+
+        ListaDefecto aux = listasDefecto.get(nombre);
+
+        if (aux == null) {
+            throw new UnsupportedOperationException("No existe la lista");
+        }
+
+        ArrayList<DtTema> res = aux.getTemas();
+
+        if (res.isEmpty()) {
+            throw new UnsupportedOperationException("No hay temas en esta lista");
+        }
+        return res;
+    }
+
+    public boolean quitarTema(String nombreT, String nombre) {
+
+        Lista lista = (ListaDefecto) listasDefecto.get(nombre);
+
+        if (lista == null) {
+            throw new UnsupportedOperationException("No existe la lista");
+        }
+
+        return lista.quitarTema(nombreT);
+    }
+
+    public ArrayList<DtTema> selecLista(String nick, String nomL) {
+        Cliente us = (Cliente) ControladorUsuario.getInstance().getUsuario(nick);
+
+        if (us == null) {
+            throw new UnsupportedOperationException("No existe el usuario" + nick + " en el sistema.");
+        }
+
+        Lista lista = us.getLista(nomL);
+
+        ArrayList<DtTema> temas = lista.getTemas();
+
+        if (temas == null) {
+            throw new UnsupportedOperationException("No hay temas en la lista " + nomL + ".");
+        } else {
+            return temas;
+        }
+    }
+
+    @Override
+    public boolean publicarLista(String nick, String nomL) {
+        Cliente us = (Cliente) ControladorUsuario.getInstance().getUsuario(nick);
+
+        if (us == null) {
+            throw new UnsupportedOperationException("No existe el usuario" + nick + " en el sistema.");
+        }
+
+        ListaParticular l = (ListaParticular) us.getLista(nomL);
+
+        if (l == null) {
+            throw new UnsupportedOperationException("No existe la lista" + nomL + " en el sistema.");
+        }
+
+        l.setPrivada(false);
+
+        return true;
     }
 }

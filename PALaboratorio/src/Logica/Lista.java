@@ -5,13 +5,11 @@ import java.util.ArrayList;
 public abstract class Lista {
     
     private String nombre;
-    private ArrayList<Tema> temas;
-    private Imagen imagen;
+    protected ArrayList<Tema> temas;
 
-    public Lista(String nombre, ArrayList<Tema> temas, Imagen imagen) {
+    public Lista(String nombre, ArrayList<Tema> temas) {
         this.nombre = nombre;
         this.temas = temas;
-        this.imagen = imagen;
     }
     
     public abstract DtLista getData();
@@ -24,14 +22,14 @@ public abstract class Lista {
         ArrayList<DtTema> temas = new ArrayList<>();
         
         for (Tema t : this.temas)
-            temas.add(t.getData());
+            if(t instanceof TemaLocal)
+            temas.add(((TemaLocal)t).getData());
+        else
+            temas.add(((TemaRemoto)t).getData());  
         
         return temas;
     }
 
-    public Imagen getImagen() {
-        return imagen;
-    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -41,7 +39,6 @@ public abstract class Lista {
         this.temas = temas;
     }
 
-    public void setImagen(Imagen imagen) {
-        this.imagen = imagen;
-    }
+    
+    public abstract boolean quitarTema(String nombreT);
 }

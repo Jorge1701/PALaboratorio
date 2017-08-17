@@ -18,10 +18,6 @@ class Genero {
         this.albumes = albumes;
         this.listasDefecto = listasDefecto;
         
-        this.albumes.put(nombre, new Album( "cualquiera",  "la primera vez",  2012,  null, null, null));
-        this.albumes.put(nombre, new Album( "cualquiera",  "la segunda vez",  2012,  null, null, null));
-        this.albumes.put(nombre, new Album( "cualquiera",  "la tercera vez",  2012,  null, null, null));
-        this.albumes.put(nombre, new Album( "cualquiera",  "la cuarta vez",  2012,  null, null, null));
     }
 
     public Genero(String nombre) {
@@ -119,4 +115,18 @@ class Genero {
         return res;
     }
 
+    public ArrayList<DtLista> listarLisReproduccion(){
+        ArrayList<DtLista> res = new ArrayList<>();
+        Iterator it = listasDefecto.entrySet().iterator();
+        while (it.hasNext()) {
+            ListaDefecto ld = (ListaDefecto) ((Map.Entry) it.next()).getValue();
+            res.add(new DtLista(ld.getNombre(),ld.getTemas()));
+        }
+        return res;
+    }
+    
+    public DtLista seleccionarLista(String nombreL){
+        ListaDefecto ld = this.listasDefecto.get(nombreL);
+        return new DtListaDefecto(ld.getGenero().getData(),ld.getNombre(),ld.getTemas());
+    }
 }

@@ -1,5 +1,9 @@
 package Presentacion;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class menu extends javax.swing.JFrame {
 
     public menu() {
@@ -54,19 +58,35 @@ public class menu extends javax.swing.JFrame {
 
         jMenu1.setText("Registros");
 
+        altaPerfil.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         altaPerfil.setText("Alta de Perfil");
+        altaPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaPerfilActionPerformed(evt);
+            }
+        });
         jMenu1.add(altaPerfil);
 
         altaAlbum.setText("Alta Album");
         jMenu1.add(altaAlbum);
 
         altaGenero.setText("Alta de Genero");
+        altaGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaGeneroActionPerformed(evt);
+            }
+        });
         jMenu1.add(altaGenero);
 
         crearListaRep.setText("Crear Lista de Reproduccion");
         jMenu1.add(crearListaRep);
 
         publicarLista.setText("Publicar Lista");
+        publicarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                publicarListaActionPerformed(evt);
+            }
+        });
         jMenu1.add(publicarLista);
 
         jMenuBar1.add(jMenu1);
@@ -93,6 +113,11 @@ public class menu extends javax.swing.JFrame {
         jMenu2.add(consultaAlbum);
 
         consultaListaRep.setText("Consulta de Lista de Reproduccion");
+        consultaListaRep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultaListaRepActionPerformed(evt);
+            }
+        });
         jMenu2.add(consultaListaRep);
 
         jMenuBar1.add(jMenu2);
@@ -119,6 +144,11 @@ public class menu extends javax.swing.JFrame {
         jMenu3.add(agregarTemaLista);
 
         quitarTemaLista.setText("Quitar Tema de Lista");
+        quitarTemaLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitarTemaListaActionPerformed(evt);
+            }
+        });
         jMenu3.add(quitarTemaLista);
 
         jMenuBar1.add(jMenu3);
@@ -174,11 +204,50 @@ public class menu extends javax.swing.JFrame {
         cpc.show();
     }//GEN-LAST:event_seguirUsuarioActionPerformed
 
+    private void altaPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaPerfilActionPerformed
+        AltaPerfil ap = new AltaPerfil();
+        PanelMenu.add(ap);
+        ap.show();
+    }//GEN-LAST:event_altaPerfilActionPerformed
+
+    private void quitarTemaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarTemaListaActionPerformed
+        // TODO add your handling code here:
+        QuitarTemaLista qtl = new QuitarTemaLista();
+        PanelMenu.add(qtl);
+        qtl.show();
+    }//GEN-LAST:event_quitarTemaListaActionPerformed
+
+    private void publicarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicarListaActionPerformed
+        // TODO add your handling code here:
+        PublicarLista pt = new PublicarLista();
+        PanelMenu.add(pt);
+        pt.show();
+    }//GEN-LAST:event_publicarListaActionPerformed
     private void consultaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaAlbumActionPerformed
         ConsultarAlbum cpc = new ConsultarAlbum();
         PanelMenu.add(cpc);
         cpc.show();
     }//GEN-LAST:event_consultaAlbumActionPerformed
+
+    private void consultaListaRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaListaRepActionPerformed
+      ConsultaListaReproduccion clr = new ConsultaListaReproduccion();
+        PanelMenu.add(clr);
+        clr.show();
+    }//GEN-LAST:event_consultaListaRepActionPerformed
+
+    private void altaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaGeneroActionPerformed
+         AltaGenero cpc;
+        try {
+            cpc = new AltaGenero();
+            PanelMenu.add(cpc);
+         cpc.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ;        // TODO add your handling code here:
+          // TODO add your handling code here:
+    }//GEN-LAST:event_altaGeneroActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

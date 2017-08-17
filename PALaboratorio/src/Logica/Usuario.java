@@ -89,7 +89,4 @@ public abstract class Usuario {
         return this.fechaNac;
     }
 
-    public Imagen getImagen() {
-        return this.imagen;
-    }
 }

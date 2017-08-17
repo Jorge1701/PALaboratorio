@@ -1,6 +1,5 @@
 package Logica;
 
-//import Persistencia.BDUsuario;
 import Persistencia.BDUsuario;
 import java.util.HashMap;
 
@@ -8,11 +7,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+
 public class ControladorUsuario implements IUsuario {
 
     private static ControladorUsuario instancia;
     private HashMap<String, Usuario> usuarios;
+    private Usuario usuarioRecordado;
     //private DBPersona dbPersona=null;
+   
+    private BDUsuario bdUsuario=null;
 
     public static ControladorUsuario getInstance() {
         if (instancia == null) {
@@ -25,32 +28,64 @@ public class ControladorUsuario implements IUsuario {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
         this.usuarios = new HashMap();
-
+        this.usuarioRecordado = null;
+        this.bdUsuario=new BDUsuario();
         usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
         //this.dbPersona=new DBPersona();
+        usuarios.put("ale",new Artista("ale", "Alejandro", "Peculio","ale@gmail.com",new DtFecha(25,7,1997),null,"",""));
+        
     }
     
     @Override
     public Usuario obtenerUsuario(String nick) {
         return usuarios.get(nick);
+        
     }
 
     @Override
     public Artista selectArtista(String nick) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         Usuario us = usuarios.get(nick);
-        
-        if (us == null)
+
+        if (us == null) {
             throw new UnsupportedOperationException("El artista " + nick + " no existe");
-        
-        if (!(us instanceof Artista))
+        }
+
+        if (!(us instanceof Artista)) {
             throw new UnsupportedOperationException("Este usuario no es un Artista");
-        
-        return (Artista) us;   
+        }
+
+        return (Artista) us;
     }
 
     @Override
-    public void ingresarUsuario(DtUsuario dtu) {
+    public boolean ingresarUsuario(DtUsuario dtu) {
+
+        Iterator i = usuarios.entrySet().iterator();
+        while (i.hasNext()) {
+            Usuario u = (Usuario) ((Map.Entry) i.next()).getValue();
+
+            if (u.getNickname() == dtu.getNickname() || u.getEmail() == dtu.getEmail()) {
+                return false;
+            }
+        }
+        
+        Usuario usr;
+        
+        if (dtu instanceof DtCliente) {
+            usr = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null);
+            boolean res =this.bdUsuario.ingresarUsuario(usr);
+            if (res){
+                this.usuarios.put(usr.getNickname(), usr);
+            }
+            return res;
+        } else {
+            usr = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null, ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
+            boolean res =this.bdUsuario.ingresarUsuario(usr);
+            if (res){
+                this.usuarios.put(usr.getNickname(), usr);
+            }
+            return res;
+        }
 
     }
     
@@ -197,6 +232,19 @@ public class ControladorUsuario implements IUsuario {
     public void cargarUsuarios() {
 
     }
+    
+    
+    public Usuario getUsuario(String nick){
+       
+        Usuario us = usuarios.get(nick);
+        
+        if (us == null){
+            throw new UnsupportedOperationException("El usuario " + nick + " no existe");
+        }else
+        
+        return us;   
+    
+    }
 
     @Override
     public ArrayList<DtCliente> listarSeguidoresDe(String nickUsuario) {
@@ -206,5 +254,23 @@ public class ControladorUsuario implements IUsuario {
             throw new UnsupportedOperationException("El cliente no existe");
         
         return u.getSeguidores();
+    }
+    
+    public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente) {
+         Usuario c = this.usuarios.get(nickCliente);
+         if (c == null){
+             throw new UnsupportedOperationException("No existe el Cliente");
+         }
+         if (!(c instanceof Cliente)) {
+            throw new UnsupportedOperationException("Usuario no es un cliente");
+        }
+         
+         this.usuarioRecordado = c;
+        
+        return ((Cliente) c).listarLisReproduccion();
+    }
+
+    public DtLista selectListaCli(String nombreL){
+        return ((Cliente) this.usuarioRecordado).seleccionarLista(nombreL);
     }
 }

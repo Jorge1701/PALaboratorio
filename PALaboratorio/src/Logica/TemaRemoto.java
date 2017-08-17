@@ -19,6 +19,8 @@ public class TemaRemoto extends Tema {
         this.url = url;
     }
     
-    
+     public DtTemaRemoto getData() {
+        return new DtTemaRemoto(this.getUrl(),this.getNombre(),this.getDuracion(),this.getUbicacion());
+    }
     
 }
