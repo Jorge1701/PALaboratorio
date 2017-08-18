@@ -1,5 +1,6 @@
 package Presentacion;
 
+import Logica.DtArtista;
 import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IUsuario;
@@ -11,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSelectionListener {
 
-    private IUsuario iUsuario;
+    private final IUsuario iUsuario;
 
     public SeguirUsuario() {
         initComponents();
@@ -172,20 +173,59 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
         // Obtiene el nick del cliente seleccionado y se lo pasa a la funcion cliente seleccionado
         clienteSeleccionado(tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString());
     }
-    
+
     private void clienteSeleccionado(String nickCliente) {
-        // TODO: Listar en tablaUsuarios los usuarios que el cliente nickCliente puede seguir
-        // Esto es todos los usuarios del sistema (menos el mismo nickCliente (No se puede seguir a si mismo))
-        JOptionPane.showMessageDialog(null, nickCliente);
+        //Lista en tablaUsuarios los usuarios que el cliente nickCliente puede seguir
+        ArrayList<DtUsuario> usuarios = iUsuario.listarUsuarios();
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaUsuarios.getModel();
+        dtm.setRowCount(0);
+
+        for (DtUsuario dtu : usuarios) {
+            String nick = dtu.getNickname();
+            if (nick != nickCliente) {
+                Object[] data = {
+                    nick,
+                    dtu.getNombre(),
+                    dtu.getApellido(),
+                    dtu.getEmail(),
+                    (dtu instanceof DtArtista ? "Artista" : "Cliente")
+                };
+                dtm.addRow(data);
+            }
+        }
     }
-    
+
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        // TODO: Chequear que haya un cliente seleccionado y un usuario seleccionado
-        // Si los hay entonces hacer que el cliente siga al usuario
+        String tablasSinSeleccionar = "";
+
+        if (tablaClientes.getSelectionModel().isSelectionEmpty()) {
+            tablasSinSeleccionar += "\nClientes";
+        }
+
+        if (tablaUsuarios.getSelectionModel().isSelectionEmpty()) {
+            tablasSinSeleccionar += "\nUsuarios";
+        }
+
+        if (!tablasSinSeleccionar.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fila en las siguientes tablas:\n" + tablasSinSeleccionar);
+            return;
+        }
+        
+        String cliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
+        String usuario = tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString();
+        
+
+        try {
+            iUsuario.seguirUsuario(cliente, usuario);
+            JOptionPane.showMessageDialog(this, "El cliente " + cliente + " comenzo a seguir al usuario " + usuario);
+        } catch (UnsupportedOperationException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }//GEN-LAST:event_botonAceptarActionPerformed
 
 

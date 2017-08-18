@@ -224,7 +224,7 @@ public class menu extends javax.swing.JFrame {
         pt.show();
     }//GEN-LAST:event_publicarListaActionPerformed
     private void consultaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaAlbumActionPerformed
-        ConsultarAlbum cpc = new ConsultarAlbum();
+        ConsultaAlbum cpc = new ConsultaAlbum();
         PanelMenu.add(cpc);
         cpc.show();
     }//GEN-LAST:event_consultaAlbumActionPerformed
