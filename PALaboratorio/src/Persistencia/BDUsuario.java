@@ -26,33 +26,34 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BDUsuario {
-    
+
     protected Connection conexion = new ConexionBD().getConexion();
-    
+
     protected String obtenerCorreo(String nick) {
         try {
             String res = "";
-            
+
             PreparedStatement correo = conexion.prepareStatement("SELECT correo FROM usuario WHERE nickname = '" + nick + "'");
             ResultSet c = correo.executeQuery();
-            while (c.next())
+            while (c.next()) {
                 res = c.getString("correo");
+            }
             c.close();
             correo.close();
-            
+
             return res;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
         return "";
     }
-    
-    public boolean dejarDeSeguir(String nickname_c, String nickname_u){
+
+    public boolean dejarDeSeguir(String nickname_c, String nickname_u) {
         try {
             String correo_c = obtenerCorreo(nickname_c);
             String correo_u = obtenerCorreo(nickname_u);
-            
+
             PreparedStatement delete = conexion.prepareStatement("DELETE FROM seguir_usuario WHERE nickname_c = ? AND correo_c = ? AND nickname_u = ? AND correo_u = ?");
             delete.setString(1, nickname_c);
             delete.setString(2, correo_c);
@@ -60,46 +61,44 @@ public class BDUsuario {
             delete.setString(4, correo_u);
             delete.executeUpdate();
             delete.close();
-            
+
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
-        }        
+        }
     }
-    public boolean ingresarUsuario(Usuario u){
-        try {
-            PreparedStatement statement = conexion.prepareStatement("INSERT INTO usuario "
-                    + "(nickname, correo, nombre,apellido,fecha_nac,tipo) values(?,?,?,?,?,?)");
-            statement.setString(1, u.getNickname());
-            statement.setString(2, u.getEmail());
-            statement.setString(3, u.getNombre());
-            statement.setString(4, u.getApellido());
-            statement.setDate(5, java.sql.Date.valueOf(u.getFechaNac().getAnio()+"-"+u.getFechaNac().getMes()+"-"+u.getFechaNac().getDia()));
-            statement.setBoolean(6, false);
-            statement.executeUpdate();
-            statement.close();
-            if (u instanceof Cliente) {
 
-                //
+    public boolean ingresarUsuario(Usuario u) {
+        try {
+            if (u instanceof Artista) {
+
+                PreparedStatement statement = conexion.prepareStatement("INSERT INTO artista "
+                        + "(nickname, nombre, apellido,correo,fecha_nac,tipo,biografia,sitio_web) values(?,?,?,?,?,?,?,?)");
+                statement.setString(1, u.getNickname());
+                statement.setString(2, u.getNombre());
+                statement.setString(3, u.getApellido());
+                statement.setString(4, u.getEmail());
+                statement.setDate(5, java.sql.Date.valueOf(u.getFechaNac().getAnio() + "-" + u.getFechaNac().getMes() + "-" + u.getFechaNac().getDia()));
+                statement.setBoolean(6, true);
+                statement.setString(7, ((Artista) u).getBiografia());
+                statement.setString(8, ((Artista) u).getWeb());
+                statement.executeUpdate();
+                statement.close();
+                return true;
+
+            } else {
+
                 PreparedStatement statement2 = conexion.prepareStatement("INSERT INTO cliente "
-                        + "(nickname, correo) values(?,?)");
+                        + "(nickname, correo, nombre, apellido, fecha_nac, tipo) values(?,?,?,?,?,?)");
                 statement2.setString(1, u.getNickname());
                 statement2.setString(2, u.getEmail());
+                statement2.setString(3, u.getNombre());
+                statement2.setString(4, u.getApellido());
+                statement2.setDate(5, java.sql.Date.valueOf(u.getFechaNac().getAnio() + "-" + u.getFechaNac().getMes() + "-" + u.getFechaNac().getDia()));
+                statement2.setBoolean(6, false);
                 statement2.executeUpdate();
                 statement2.close();
-                //
-                return true;
-            } else {
-                
-                PreparedStatement statement3 = conexion.prepareStatement("INSERT INTO artista "
-                        + "(biografia, sitio_web, nickname, correo) values(?,?,?,?)");
-                statement3.setString(1, ((Artista) u).getBiografia());
-                statement3.setString(2, ((Artista) u).getWeb());
-                statement3.setString(3, u.getNickname());
-                statement3.setString(4, u.getEmail());
-                statement3.executeUpdate();
-                statement3.close();
                 return true;
             }
 

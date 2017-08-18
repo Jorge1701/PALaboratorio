@@ -8,8 +8,9 @@ import Logica.Fabrica;
 import Logica.IUsuario;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import Presentacion.Validacion;
 public class AltaPerfil extends javax.swing.JInternalFrame {
 
 private IUsuario IU;
@@ -67,6 +68,7 @@ private IUsuario IU;
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Alta de Perfil ");
 
         jLabel1.setText("Nick :");
 
@@ -203,7 +205,7 @@ private IUsuario IU;
                         .addComponent(cliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(artista)))
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +249,7 @@ private IUsuario IU;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aceptar)
                     .addComponent(cancelar))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -303,8 +305,9 @@ private IUsuario IU;
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         DtUsuario dtu;
          
-        if(nick.getText().isEmpty() == true || nombre.getText().isEmpty() == true || apellido.getText().isEmpty() == true || correo.getText().isEmpty() == true || dia.getSelectedItem().equals("--") || mes.getSelectedItem().equals("--") || anio.getSelectedItem().equals("----")){
-        javax.swing.JOptionPane.showMessageDialog(null,"Hay algún campo sin completar.","Advertencia",JOptionPane.WARNING_MESSAGE);
+        if(nick.getText().isEmpty() == true || nombre.getText().isEmpty() == true || apellido.getText().isEmpty() == true || correo.getText().isEmpty() == true || dia.getSelectedItem().equals("--") || mes.getSelectedItem().equals("--") || anio.getSelectedItem().equals("----") || Validacion.ValidarEmail(correo.getText())==false){
+
+        javax.swing.JOptionPane.showMessageDialog(null,"Hay algun campo sin completar","Advertencia",JOptionPane.WARNING_MESSAGE);
         }else{
         
         if(cliente.isSelected() == true){
