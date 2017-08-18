@@ -18,16 +18,21 @@ public class Artista extends Usuario {
         this.biografia = biografia;
         this.web = web;
         this.albumes = new HashMap();
+
+        /*HashMap<String, Tema> temas = new HashMap<>();
+        temas.put("tema1", new TemaRemoto("tema1", new DtTime(2, 94, 4), 2,"https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable"));
+        temas.put("tema2", new TemaRemoto("tema2", new DtTime(3, 85, 244), 6,"https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable"));
+        temas.put("tema3", new TemaLocal("/dir1/dir2","tema3", new DtTime(4,77,424), 8));
+      
         
-     
-        
-       // albumes.put("album1", new Album(this.getNickname(),"album1",2015,null,new HashMap<String, Tema> (),new ArrayList<Genero>()));
-       // albumes.put("album2", new Album(this.getNickname(),"album2",2016,null,new HashMap<String, Tema> (),new ArrayList<Genero>()));
-       // albumes.put("album3", new Album(this.getNickname(),"album3",2017,null,new HashMap<String, Tema> (),new ArrayList<Genero>()));
+        albumes.put("album1", new Album(this.getNickname(), "album1", 2015, null, temas,new ArrayList<>()));
+        albumes.put("album2", new Album(this.getNickname(), "album2", 2016, null, temas,new ArrayList<>()));
+        albumes.put("album3", new Album(this.getNickname(), "album3", 2017, null, temas, new ArrayList<>()));*/
     }
 
     public ArrayList<DtAlbum> obtenerAlbumes() {
-        ArrayList<DtAlbum> res = new ArrayList<DtAlbum>();
+        ArrayList<DtAlbum> res;
+        res = new ArrayList<>();
         Iterator it = albumes.entrySet().iterator();
         while (it.hasNext()) {
             Album album = (Album) ((Map.Entry) it.next()).getValue();
@@ -37,46 +42,41 @@ public class Artista extends Usuario {
     }
 
     public DtAlbumContenido obtenerAlbumContenido(String nomAlbum) {
-        DtAlbumContenido dtac = null;
+        DtAlbumContenido dtac;
         Album album = albumes.get(nomAlbum);
-        if (album != null){
-            dtac = album.obtenerAlbumContenido();
-        }
-        
+        dtac = album.obtenerAlbumContenido();
+       
         return dtac;
     }
-    
+
     public Album getAlbum(String nombre) {
         return albumes.get(nombre);
     }
 
+    @Override
     public DtPerfilUsuario obtenerPerfil() {
         return null;
     }
 
-     public void ingresarAlbum(String nom, int anio, ArrayList<Genero> generos/*, Imagen img*/, HashMap<String,Tema> temas) {
-        
-        if(this.albumes.get(nom) != null) {
+    public void ingresarAlbum(String nom, int anio, ArrayList<Genero> generos/*, Imagen img*/, HashMap<String, Tema> temas) {
+
+        if (this.albumes.get(nom) != null) {
             throw new UnsupportedOperationException("Ya existe Albun con ese nombre");
         } else {
-            
-            
+
             //Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
             Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
-           
+
             //boolean res = this.bdAlbum.altaAlbum(this.getEmail(), album);
             boolean res = true;
             if (res) {
                 this.albumes.put(nom, album);
             } else {
-               throw new UnsupportedOperationException("Error en Persistencia"); 
+                throw new UnsupportedOperationException("Error en Persistencia");
             }
-           
+
         }
-        
-        
-        
-        
+
     }
 
     @Override

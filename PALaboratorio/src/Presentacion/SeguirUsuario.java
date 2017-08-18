@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSelectionListener {
 
-    private IUsuario iUsuario;
+    private final IUsuario iUsuario;
 
     public SeguirUsuario() {
         initComponents();
