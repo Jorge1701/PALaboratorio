@@ -72,7 +72,7 @@ public class BDUsuario {
 
             if (u instanceof Cliente) {
             PreparedStatement statement = conexion.prepareStatement("INSERT INTO cliente "
-            + "(nickname, correo, nombre,apellido,fecha_nac,tipo,) values(?,?,?,?,?,?)");
+            + "(nickname, correo, nombre,apellido,fecha_nac,tipo) values(?,?,?,?,?,?)");
             statement.setString(1, u.getNickname());
             statement.setString(2, u.getEmail());
             statement.setString(3, u.getNombre());
@@ -85,11 +85,15 @@ public class BDUsuario {
             } else {
                 
                 PreparedStatement statement3 = conexion.prepareStatement("INSERT INTO artista "
-                + "(biografia, sitio_web, nickname, correo) values(?,?,?,?)");
-                statement3.setString(1, ((Artista) u).getBiografia());
-                statement3.setString(2, ((Artista) u).getWeb());
-                statement3.setString(3, u.getNickname());
+                + "(nickname,nombre,apellido,correo,fecha_nac,tipo,biografia, sitio_web) values(?,?,?,?,?,?,?,?)");
+                statement3.setString(1, u.getNickname());
+                statement3.setString(2, u.getNombre());  
+                statement3.setString(3, u.getApellido());
                 statement3.setString(4, u.getEmail());
+                statement3.setDate(5,java.sql.Date.valueOf(u.getFechaNac().getAnio()+"-"+u.getFechaNac().getMes()+"-"+u.getFechaNac().getDia()));
+                statement3.setBoolean(6, true);
+                statement3.setString(3, ((Artista) u).getBiografia());
+                statement3.setString(3, ((Artista) u).getWeb());
                 statement3.executeUpdate();
                 statement3.close();
                 return true;

@@ -107,13 +107,15 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
 
         jTextField1.setText("jTextField1");
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.X_AXIS));
 
-        jSplitPane3.setDividerLocation(300);
+        jSplitPane3.setDividerLocation(350);
         jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        jSplitPane4.setDividerLocation(150);
-        jSplitPane4.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jSplitPane4.setDividerLocation(350);
 
         PanelAlbum.setBorder(javax.swing.BorderFactory.createTitledBorder("Albumes Publicados: "));
 
@@ -124,21 +126,26 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
             new String [] {
                 "Nombre"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(TablaAlbum);
 
         javax.swing.GroupLayout PanelAlbumLayout = new javax.swing.GroupLayout(PanelAlbum);
         PanelAlbum.setLayout(PanelAlbumLayout);
         PanelAlbumLayout.setHorizontalGroup(
             PanelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAlbumLayout.createSequentialGroup()
-                .addContainerGap(98, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
         );
         PanelAlbumLayout.setVerticalGroup(
             PanelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
         );
 
         jSplitPane4.setLeftComponent(PanelAlbum);
@@ -155,20 +162,26 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
             new String [] {
                 "nickname", "Nombre", "Apellido"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tablaSeguidores);
 
         javax.swing.GroupLayout PanelSeguidoresLayout = new javax.swing.GroupLayout(PanelSeguidores);
         PanelSeguidores.setLayout(PanelSeguidoresLayout);
         PanelSeguidoresLayout.setHorizontalGroup(
             PanelSeguidoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
         );
         PanelSeguidoresLayout.setVerticalGroup(
             PanelSeguidoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelSeguidoresLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
         );
 
         jSplitPane4.setRightComponent(PanelSeguidores);
@@ -179,12 +192,21 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
 
         jLabel38.setText("Fecha Nac");
 
+        txtNickname7.setEditable(false);
         txtNickname7.setEnabled(false);
 
+        txtNombre7.setEditable(false);
         txtNombre7.setEnabled(false);
+        txtNombre7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombre7ActionPerformed(evt);
+            }
+        });
 
+        txtApellido7.setEditable(false);
         txtApellido7.setEnabled(false);
 
+        txtEmail7.setEditable(false);
         txtEmail7.setEnabled(false);
 
         jLabel39.setText("Nickname");
@@ -195,6 +217,8 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
 
         jLabel42.setText("Email");
 
+        txtFechaNac7.setEditable(false);
+        txtFechaNac7.setBackground(new java.awt.Color(255, 255, 255));
         txtFechaNac7.setEnabled(false);
         txtFechaNac7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,7 +243,8 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Biografia");
 
-        txtBiografia.setBackground(new java.awt.Color(240, 240, 240));
+        txtBiografia.setEditable(false);
+        txtBiografia.setBackground(new java.awt.Color(255, 255, 255));
         txtBiografia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBiografiaActionPerformed(evt);
@@ -228,6 +253,7 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
 
         jLabel43.setText("Sitio Web");
 
+        txtSitioWeb.setEditable(false);
         txtSitioWeb.setEnabled(false);
 
         javax.swing.GroupLayout PanelInfo7Layout = new javax.swing.GroupLayout(PanelInfo7);
@@ -237,39 +263,34 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
             .addGroup(PanelInfo7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelInfo7Layout.createSequentialGroup()
+                    .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel38)
                         .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel41)
                             .addComponent(jLabel42)
                             .addComponent(jLabel39)
-                            .addComponent(jLabel40)
-                            .addComponent(jLabel38)
-                            .addComponent(jLabel43))
-                        .addGap(51, 51, 51)
+                            .addComponent(jLabel40)))
+                    .addComponent(jLabel43)
+                    .addComponent(jLabel7))
+                .addGap(56, 56, 56)
+                .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(PanelInfo7Layout.createSequentialGroup()
+                        .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtApellido7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEmail7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNickname7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFechaNac7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PanelInfo7Layout.createSequentialGroup()
-                                .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNickname7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(137, 137, 137)
+                                .addComponent(PanelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(PanelInfo7Layout.createSequentialGroup()
-                                .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtApellido7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEmail7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombre7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFechaNac7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                                .addComponent(PanelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38))))
-                    .addGroup(PanelInfo7Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(56, 56, 56)
-                        .addComponent(txtBiografia)
-                        .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInfo7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(79, 79, 79))
+                                .addGap(159, 159, 159)
+                                .addComponent(jLabel6))))
+                    .addComponent(txtSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBiografia))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
         PanelInfo7Layout.setVerticalGroup(
             PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,7 +300,12 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
                         .addGap(15, 15, 15)
                         .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel39)
-                            .addComponent(txtFechaNac7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtFechaNac7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(PanelInfo7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6)))
+                .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelInfo7Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNombre7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -292,26 +318,28 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
                         .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel42)
                             .addComponent(txtEmail7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInfo7Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel38)
+                            .addComponent(txtNickname7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(PanelInfo7Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addComponent(PanelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)))
-                .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNickname7, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                    .addComponent(jLabel38))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel43))
-                .addGap(23, 23, 23)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtBiografia, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)))
+                    .addGroup(PanelInfo7Layout.createSequentialGroup()
+                        .addComponent(jLabel43)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7))
+                    .addGroup(PanelInfo7Layout.createSequentialGroup()
+                        .addComponent(txtSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBiografia, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(49, 49, 49))
         );
 
-        jSplitPane3.setLeftComponent(PanelInfo7);
+        jSplitPane3.setTopComponent(PanelInfo7);
 
         getContentPane().add(jSplitPane3);
 
@@ -326,70 +354,25 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaNac7ActionPerformed
 
+    private void txtNombre7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombre7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombre7ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Imagen;
-    private javax.swing.JPanel Imagen1;
-    private javax.swing.JPanel Imagen2;
-    private javax.swing.JPanel Imagen3;
-    private javax.swing.JPanel Imagen4;
-    private javax.swing.JPanel Imagen5;
-    private javax.swing.JPanel Imagen6;
     private javax.swing.JPanel PanelAlbum;
     private javax.swing.JPanel PanelImagen;
-    private javax.swing.JPanel PanelInfo;
-    private javax.swing.JPanel PanelInfo1;
-    private javax.swing.JPanel PanelInfo2;
-    private javax.swing.JPanel PanelInfo3;
-    private javax.swing.JPanel PanelInfo4;
-    private javax.swing.JPanel PanelInfo5;
-    private javax.swing.JPanel PanelInfo6;
     private javax.swing.JPanel PanelInfo7;
     private javax.swing.JPanel PanelSeguidores;
     private javax.swing.JTable TablaAlbum;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -397,46 +380,11 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
     private javax.swing.JSplitPane jSplitPane4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tablaSeguidores;
-    private javax.swing.JTextField txtApellido;
-    private javax.swing.JTextField txtApellido1;
-    private javax.swing.JTextField txtApellido2;
-    private javax.swing.JTextField txtApellido3;
-    private javax.swing.JTextField txtApellido4;
-    private javax.swing.JTextField txtApellido5;
-    private javax.swing.JTextField txtApellido6;
     private javax.swing.JTextField txtApellido7;
     private javax.swing.JTextField txtBiografia;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtEmail1;
-    private javax.swing.JTextField txtEmail2;
-    private javax.swing.JTextField txtEmail3;
-    private javax.swing.JTextField txtEmail4;
-    private javax.swing.JTextField txtEmail5;
-    private javax.swing.JTextField txtEmail6;
     private javax.swing.JTextField txtEmail7;
-    private javax.swing.JTextField txtFechaNac;
-    private javax.swing.JTextField txtFechaNac1;
-    private javax.swing.JTextField txtFechaNac2;
-    private javax.swing.JTextField txtFechaNac3;
-    private javax.swing.JTextField txtFechaNac4;
-    private javax.swing.JTextField txtFechaNac5;
-    private javax.swing.JTextField txtFechaNac6;
     private javax.swing.JTextField txtFechaNac7;
-    private javax.swing.JTextField txtNickname;
-    private javax.swing.JTextField txtNickname1;
-    private javax.swing.JTextField txtNickname2;
-    private javax.swing.JTextField txtNickname3;
-    private javax.swing.JTextField txtNickname4;
-    private javax.swing.JTextField txtNickname5;
-    private javax.swing.JTextField txtNickname6;
     private javax.swing.JTextField txtNickname7;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
-    private javax.swing.JTextField txtNombre2;
-    private javax.swing.JTextField txtNombre3;
-    private javax.swing.JTextField txtNombre4;
-    private javax.swing.JTextField txtNombre5;
-    private javax.swing.JTextField txtNombre6;
     private javax.swing.JTextField txtNombre7;
     private javax.swing.JTextField txtSitioWeb;
     // End of variables declaration//GEN-END:variables

@@ -34,7 +34,8 @@ public class ControladorUsuario implements IUsuario {
         //this.dbPersona=new DBPersona();
         usuarios.put("ale",new Artista("ale", "Alejandro", "Peculio","ale@gmail.com",new DtFecha(25,7,1997),null,"",""));
         //usuarios.put("joaco", new Artista("joaco", "Joaco", "Rey", "joaconrey@gmail.com", new DtFecha(31, 11, 1996), null, "biografia", "web"));
-        
+        usuarios.put("Brian2016",new Artista("Brian2016","Brian","Gomez","brian.gomez2016@outlook.com",new DtFecha(24,07,1997),null,"www.facebook.com","Cantante de la banda Cuarteto De Nos"));
+    
     }
     
     @Override

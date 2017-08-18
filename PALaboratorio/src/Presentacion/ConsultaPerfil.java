@@ -1,5 +1,6 @@
 package Presentacion;
 
+import Logica.DtArtista;
 import Logica.DtUsuario;
 import Logica.DtCliente;
 import Logica.DtPerfilArtista;
@@ -7,6 +8,7 @@ import Logica.DtPerfilCliente;
 import Logica.DtPerfilUsuario;
 import Logica.Fabrica;
 import Logica.IUsuario;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,27 +22,46 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
         this.tipo = tipo;
         
         iUsuario = Fabrica.getInstance().getIControladorUsuario();
-        ArrayList<DtUsuario> dtc;
-        if(tipo.equals("Cliente"))
+        ArrayList<DtUsuario> dtc=null;
+        
+        ArrayList<DtUsuario> dta=null;
+        
+        if(tipo.equals("Cliente")){
             dtc = iUsuario.listarClientes();
-        else 
-            dtc = iUsuario.listarArtistas();
-        
-        if (dtc.isEmpty())
-            JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
-        
-        DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
-        dtm.setRowCount(0);
-        for (DtUsuario dtUsuario : dtc) {
-            Object[] data = {
-                ((DtCliente) dtUsuario).getNickname(),
-                ((DtCliente) dtUsuario).getNombre(),
-                ((DtCliente) dtUsuario).getApellido(),
-                ((DtCliente) dtUsuario).getEmail(),
-                ((DtCliente) dtUsuario).getFechaNac().toString()
+            if (dtc.isEmpty())
+                JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
+            
+            DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
+            dtm.setRowCount(0);
+            for (DtUsuario dtUsuario : dtc) {
+                Object[] data = {
+                    ((DtCliente) dtUsuario).getNickname(),
+                    ((DtCliente) dtUsuario).getNombre(),
+                    ((DtCliente) dtUsuario).getApellido(),
+                    ((DtCliente) dtUsuario).getEmail(),
+                    ((DtCliente) dtUsuario).getFechaNac().toString()
             };
             dtm.addRow(data);
-        }
+            }
+        }else if(tipo.equals("Artista")) {
+            dta = iUsuario.listarArtistas();
+            if (dta.isEmpty())
+            JOptionPane.showMessageDialog(this, "No hay ningun artista registrado");
+            
+            DefaultTableModel dtm2 = (DefaultTableModel) tablaClientes.getModel();
+            dtm2.setRowCount(0);
+            for (DtUsuario dtUsuario : dta) {
+                Object[] data = {
+                    ((DtArtista) dtUsuario).getNickname(),
+                    ((DtArtista) dtUsuario).getNombre(),
+                    ((DtArtista) dtUsuario).getApellido(),
+                    ((DtArtista) dtUsuario).getEmail(),
+                    ((DtArtista) dtUsuario).getFechaNac().toString()
+                };
+                dtm2.addRow(data);
+            }
+                }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -70,6 +91,12 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tablaClientes);
 
         jLabel1.setText("Nickname:");
+
+        txtNickname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNicknameKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +158,7 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Campos obligatorio vacios:\nNickname");
             return;
         }
-        if(tipo.equals(tipo)){
+        if(tipo.equals("Cliente")){
         try {
             DtPerfilUsuario dtpu = iUsuario.obtenerPerfilCliente(nickname);
             PerfilCliente pc = new PerfilCliente((DtPerfilCliente) dtpu);
@@ -157,6 +184,37 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
         
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtNicknameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNicknameKeyPressed
+if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+         String nickname = txtNickname.getText();
+        
+        if (nickname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Campos obligatorio vacios:\nNickname");
+            return;
+        }
+        if(tipo.equals("Cliente")){
+        try {
+            DtPerfilUsuario dtpu = iUsuario.obtenerPerfilCliente(nickname);
+            PerfilCliente pc = new PerfilCliente((DtPerfilCliente) dtpu);
+            getParent().add(pc);
+            pc.show();
+        } catch (UnsupportedOperationException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        }else{
+             try {
+            DtPerfilUsuario dtpu = iUsuario.obtenerPerfilArtista(nickname);
+            PerfilArtista pc = new PerfilArtista((DtPerfilArtista) dtpu);
+            getParent().add(pc);
+            pc.show();
+        } catch (UnsupportedOperationException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    
+        }
+}        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNicknameKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
