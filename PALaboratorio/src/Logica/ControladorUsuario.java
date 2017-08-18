@@ -86,7 +86,6 @@ public class ControladorUsuario implements IUsuario {
             }
             return res;
         }
-
     }
     
     @Override
@@ -178,25 +177,25 @@ public class ControladorUsuario implements IUsuario {
     }
 
     @Override
-    public void dejarSeguirUsuario(String nickUsuario, String nickSeguidor) {
-        Usuario usuario = usuarios.get(nickUsuario);
+    public void dejarSeguirUsuario(String nickSeguidor, String nickUsuario) {
         Usuario seguidor = usuarios.get(nickSeguidor);
+        Usuario usuario = usuarios.get(nickUsuario);
+
+        if (seguidor == null) {
+            throw new UnsupportedOperationException("Cliente seguidor no existe");
+        }
 
         if (usuario == null) {
             throw new UnsupportedOperationException("Usuario no existe");
         }
 
-        if (seguidor == null) {
-            throw new UnsupportedOperationException("Seguidor no existe");
-        }
-
-        if (!(usuario instanceof Cliente)) {
-            throw new UnsupportedOperationException("Usuario no es un cliente.");
+        if (!(seguidor instanceof Cliente)) {
+            throw new UnsupportedOperationException("Usuario seguidor no es un cliente.");
         }
         
         BDUsuario bdu = new BDUsuario();
-        bdu.dejarDeSeguir("jorge", "jorge2");
-        ((Cliente) usuario).dejarSeguir(seguidor);
+        bdu.dejarDeSeguir(seguidor.getNickname(), usuario.getNickname());
+        ((Cliente) seguidor).dejarSeguir(usuario);
     }
 
     public ArrayList<DtAlbum> listarAlbumesArtista(String nickArtista) {

@@ -93,19 +93,16 @@ public class BDCliente extends BDUsuario {
             
             return idLista;
         } catch (SQLException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
             return 0;
         }
     }
     
     private int obtenerIdListaParticular(String cliente, String nomLista) {
         try {
-            String correoCliente = obtenerCorreo(cliente);
-            
-            PreparedStatement lista = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista AND l.nombre = ? AND lp.nickname = ? AND lp.correo = ?");
+            PreparedStatement lista = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista AND l.nombre = ? AND lp.nickname = ?");
             lista.setString(1, nomLista);
             lista.setString(2, cliente);
-            lista.setString(3, correoCliente);
             
             int idLista = 0;
             ResultSet rs = lista.executeQuery();

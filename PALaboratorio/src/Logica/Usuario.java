@@ -41,6 +41,10 @@ public abstract class Usuario {
         return dtSeguidores;
     }
     
+    public void clienteMeDejoDeSeguir(Cliente c) {
+        seguidores.remove(c.getNickname());
+    }
+    
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }

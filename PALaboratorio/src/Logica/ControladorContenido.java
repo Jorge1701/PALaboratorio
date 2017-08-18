@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class ControladorContenido implements IContenido {
 

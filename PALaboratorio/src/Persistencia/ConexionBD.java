@@ -16,7 +16,7 @@ public class ConexionBD {
     private final String port="3306";
     private final String db="espotify";
     private final String user="root";
-    private final String pass="rooteo";
+    private final String pass="root";
     private  String url;
      public Connection Link = null;
      public boolean conectado;

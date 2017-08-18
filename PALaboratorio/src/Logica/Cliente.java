@@ -134,6 +134,7 @@ public class Cliente extends Usuario {
     }
 
     public void dejarSeguir(Usuario u) {
+        u.clienteMeDejoDeSeguir(this);
         seguidos.remove(u.getNickname());
     }
 

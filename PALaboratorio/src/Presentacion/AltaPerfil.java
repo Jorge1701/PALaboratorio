@@ -7,8 +7,6 @@ import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IUsuario;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
 
 public class AltaPerfil extends javax.swing.JInternalFrame {
 
@@ -16,7 +14,7 @@ private IUsuario IU;
     
     public AltaPerfil() {
         initComponents();
-        biografia.setVisible(false);
+        bioPanel.setVisible(false);
         web.setVisible(false);
         webTx.setVisible(false);
         bioTx.setVisible(false);
@@ -47,11 +45,12 @@ private IUsuario IU;
         cliente = new javax.swing.JRadioButton();
         artista = new javax.swing.JRadioButton();
         bioTx = new javax.swing.JLabel();
-        biografia = new javax.swing.JTextField();
         webTx = new javax.swing.JLabel();
         web = new javax.swing.JTextField();
         aceptar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
+        bioPanel = new javax.swing.JScrollPane();
+        biografia = new javax.swing.JTextArea();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -67,6 +66,7 @@ private IUsuario IU;
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Alta Perfil");
 
         jLabel1.setText("Nick :");
 
@@ -121,12 +121,6 @@ private IUsuario IU;
 
         bioTx.setText("Biografia :");
 
-        biografia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                biografiaActionPerformed(evt);
-            }
-        });
-
         webTx.setText("Sitio web: ");
 
         aceptar.setText("Aceptar");
@@ -153,6 +147,11 @@ private IUsuario IU;
             }
         });
 
+        biografia.setColumns(20);
+        biografia.setLineWrap(true);
+        biografia.setRows(5);
+        bioPanel.setViewportView(biografia);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,10 +176,6 @@ private IUsuario IU;
                                 .addComponent(apellido, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
                                 .addComponent(nombre))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(bioTx)
-                        .addGap(18, 18, 18)
-                        .addComponent(biografia, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(dia, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,26 +184,29 @@ private IUsuario IU;
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(anio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(webTx)
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(cliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(artista))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(webTx)
+                            .addComponent(bioTx))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(aceptar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cancelar))
-                            .addComponent(web, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(cliente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(artista)))
+                            .addComponent(web)
+                            .addComponent(bioPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(275, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -235,11 +233,11 @@ private IUsuario IU;
                     .addComponent(jLabel6)
                     .addComponent(cliente)
                     .addComponent(artista))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bioTx)
-                    .addComponent(biografia, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bioPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bioTx))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(webTx)
                     .addComponent(web, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -247,7 +245,7 @@ private IUsuario IU;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aceptar)
                     .addComponent(cancelar))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         pack();
@@ -268,20 +266,16 @@ private IUsuario IU;
     private void apellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apellidoActionPerformed
     }//GEN-LAST:event_apellidoActionPerformed
 
-    private void biografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_biografiaActionPerformed
-       
-    }//GEN-LAST:event_biografiaActionPerformed
-
     private void artistaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_artistaStateChanged
         // TODO add your handling code here:
         if(artista.isSelected()){    
-        biografia.setVisible(true);
+        bioPanel.setVisible(true);
         web.setVisible(true);
         webTx.setVisible(true);
         bioTx.setVisible(true);
         
         }else {
-        biografia.setVisible(false);
+        bioPanel.setVisible(false);
         web.setVisible(false);
         webTx.setVisible(false);
         bioTx.setVisible(false);
@@ -289,7 +283,7 @@ private IUsuario IU;
     }//GEN-LAST:event_artistaStateChanged
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void aceptarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_aceptarKeyTyped
@@ -342,8 +336,9 @@ private IUsuario IU;
     private javax.swing.JComboBox<String> anio;
     private javax.swing.JTextField apellido;
     private javax.swing.JRadioButton artista;
+    private javax.swing.JScrollPane bioPanel;
     private javax.swing.JLabel bioTx;
-    private javax.swing.JTextField biografia;
+    private javax.swing.JTextArea biografia;
     private javax.swing.JButton cancelar;
     private javax.swing.JRadioButton cliente;
     private javax.swing.JTextField correo;
