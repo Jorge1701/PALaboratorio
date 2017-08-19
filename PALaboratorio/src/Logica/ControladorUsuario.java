@@ -11,7 +11,7 @@ import java.util.Map;
 public class ControladorUsuario implements IUsuario {
 
     private static ControladorUsuario instancia;
-    private HashMap<String, Usuario> usuarios;
+    private final HashMap<String, Usuario> usuarios;
     private Usuario usuarioRecordado;
     //private DBPersona dbPersona=null;
    
@@ -30,16 +30,16 @@ public class ControladorUsuario implements IUsuario {
         this.usuarios = new HashMap();
         this.usuarioRecordado = null;
         this.bdUsuario=new BDUsuario();
-        usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
+        //usuarios.put("jorge", new Cliente("jorge", "Jorge", "Rosas", "jore@gm,asom", new DtFecha(31, 11, 1996), null));
         //this.dbPersona=new DBPersona();
-        usuarios.put("ale",new Artista("ale", "Alejandro", "Peculio","ale@gmail.com",new DtFecha(25,7,1997),null,"",""));
+        //usuarios.put("ale",new Artista("ale", "Alejandro", "Peculio","ale@gmail.com",new DtFecha(25,7,1997),null,"",""));
+        //usuarios.put("joaco", new Artista("joaco", "Joaco", "Rey", "joaconrey@gmail.com", new DtFecha(31, 11, 1996), null, "biografia", "web"));
         
     }
     
     @Override
     public Usuario obtenerUsuario(String nick) {
         return usuarios.get(nick);
-        
     }
 
     @Override
@@ -158,6 +158,7 @@ public class ControladorUsuario implements IUsuario {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public void seguirUsuario(String nickCliente, String nickSeguido) {
         Usuario cliente = usuarios.get(nickCliente);
         Usuario seguido = usuarios.get(nickSeguido);
@@ -174,6 +175,7 @@ public class ControladorUsuario implements IUsuario {
             throw new UnsupportedOperationException("Usuario no es un cliente.");
         }
         ((Cliente) cliente).agregar(seguido);
+        ((Usuario) seguido).agregar((Cliente)cliente);
     }
 
     @Override
@@ -198,6 +200,7 @@ public class ControladorUsuario implements IUsuario {
         ((Cliente) seguidor).dejarSeguir(usuario);
     }
 
+    @Override
     public ArrayList<DtAlbum> listarAlbumesArtista(String nickArtista) {
         Usuario usuario = usuarios.get(nickArtista);
         if (usuario == null) {
@@ -210,6 +213,7 @@ public class ControladorUsuario implements IUsuario {
         return ((Artista) usuario).obtenerAlbumes();
     }
 
+    @Override
     public DtAlbumContenido obtenerAlbumContenido(String nickArtista, String nomAlbum) {
         Usuario usuario = usuarios.get(nickArtista);
         if (usuario == null) {

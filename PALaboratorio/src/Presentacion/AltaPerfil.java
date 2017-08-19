@@ -7,7 +7,10 @@ import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IUsuario;
 import javax.swing.JOptionPane;
-
+import javax.swing.JTextField;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import Presentacion.Validacion;
 public class AltaPerfil extends javax.swing.JInternalFrame {
 
 private IUsuario IU;
@@ -66,7 +69,7 @@ private IUsuario IU;
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Alta Perfil");
+        setTitle("Alta de Perfil ");
 
         jLabel1.setText("Nick :");
 
@@ -201,7 +204,7 @@ private IUsuario IU;
                                 .addComponent(cancelar))
                             .addComponent(web)
                             .addComponent(bioPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,7 +248,7 @@ private IUsuario IU;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aceptar)
                     .addComponent(cancelar))
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -296,19 +299,56 @@ private IUsuario IU;
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         DtUsuario dtu;
-         
-        if(nick.getText().isEmpty() == true || nombre.getText().isEmpty() == true || apellido.getText().isEmpty() == true || correo.getText().isEmpty() == true || dia.getSelectedItem().equals("--") || mes.getSelectedItem().equals("--") || anio.getSelectedItem().equals("----")){
-        javax.swing.JOptionPane.showMessageDialog(null,"Hay algún campo sin completar.","Advertencia",JOptionPane.WARNING_MESSAGE);
-        }else{
+        
+        String nick = this.nick.getText();
+        String nombre = this.nombre.getText();
+        String apellido = this.apellido.getText();
+        String correo = this.correo.getText();
+        String dia = this.dia.getSelectedItem().toString();
+        String mes = this.mes.getSelectedItem().toString();
+        String anio = this.anio.getSelectedItem().toString();
+
+        String camposVacios = "";
+
+        if (nick.isEmpty())
+            camposVacios += "\nNickname";
+        
+        if (nombre.isEmpty())
+            camposVacios += "\nNombre";
+        
+        if (apellido.isEmpty())
+            camposVacios += "\nApellido";
+        
+        if (correo.isEmpty())
+            camposVacios += "\nCorreo";
+        
+        if (dia.equals("--"))
+            camposVacios += "\nFecha: Dia";
+        
+        if (mes.equals("--"))
+            camposVacios += "\nFecha: Mes";
+        
+        if (anio.equals("----"))
+            camposVacios += "\nFecha: Año";
+        
+        if (!camposVacios.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Los siguientes campos necesitan ser llenados:\n" + camposVacios);
+            return;
+        }
+        
+        if (!Validacion.ValidarEmail(correo)) {
+            JOptionPane.showMessageDialog(this, "El correo no tiene un formato correcto");
+            return;
+        }
         
         if(cliente.isSelected() == true){
-            dtu = new DtCliente(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())));
+            dtu = new DtCliente(nick, nombre, apellido, correo, new DtFecha(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(anio)));
         }else{
-            
-            dtu = new DtArtista(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())),biografia.getText(),web.getText());
+            dtu = new DtArtista(nick, nombre, apellido, correo, new DtFecha(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(anio)), biografia.getText(),web.getText());
         }
         
         boolean ok=IU.ingresarUsuario(dtu);
+        
         if (ok){
             //javax.swing.JOptionPane.showMessageDialog(null,"Persona Dada de alta con éxito.");
             javax.swing.JOptionPane.showMessageDialog(null,"El usuario fue ingresado con exito","Felicitaciones!",JOptionPane.INFORMATION_MESSAGE);
@@ -316,6 +356,7 @@ private IUsuario IU;
             //javax.swing.JOptionPane.showMessageDialog(null,"Error: La persona ya está registrada o faltaron campos obligatorios.");
             javax.swing.JOptionPane.showMessageDialog(null,"El usuario que desea ingresar ya existe en el sistema","Ha ocurrido un error",JOptionPane.ERROR_MESSAGE);
         }
+        
         this.nick.setText("");
         this.nombre.setText(""); 
         this.apellido.setText("");
@@ -326,7 +367,6 @@ private IUsuario IU;
         this.dia.setSelectedIndex(0);
         this.mes.setSelectedIndex(0);
         this.anio.setSelectedIndex(0);
-        }
     }//GEN-LAST:event_aceptarActionPerformed
     
               

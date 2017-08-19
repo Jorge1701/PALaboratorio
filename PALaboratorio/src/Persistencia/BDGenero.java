@@ -11,7 +11,6 @@ package Persistencia;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JTable;
@@ -23,6 +22,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class BDGenero {
 
+    
+    
+    
     
     
     public void llenar_genero( JList listagenero) throws SQLException//  funcion que le paso una lista y me la llena con el genero 
@@ -120,9 +122,11 @@ jtabla.getTableHeader().setReorderingAllowed(false);
      }
 
   
+     
+ }
 
     
 
-}
+
   
 

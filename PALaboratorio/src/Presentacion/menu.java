@@ -1,8 +1,10 @@
 package Presentacion;
 
+import Logica.Fabrica;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class menu extends javax.swing.JFrame {
 
@@ -68,6 +70,11 @@ public class menu extends javax.swing.JFrame {
         jMenu1.add(altaPerfil);
 
         altaAlbum.setText("Alta Album");
+        altaAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaAlbumActionPerformed(evt);
+            }
+        });
         jMenu1.add(altaAlbum);
 
         altaGenero.setText("Alta de Genero");
@@ -166,6 +173,11 @@ public class menu extends javax.swing.JFrame {
         jMenu5.setText("Datos de Prueba");
 
         cargarDatos.setText("Cargar");
+        cargarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargarDatosActionPerformed(evt);
+            }
+        });
         jMenu5.add(cargarDatos);
 
         jMenuBar1.add(jMenu5);
@@ -224,7 +236,7 @@ public class menu extends javax.swing.JFrame {
         pt.show();
     }//GEN-LAST:event_publicarListaActionPerformed
     private void consultaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaAlbumActionPerformed
-        ConsultarAlbum cpc = new ConsultarAlbum();
+        ConsultaAlbum cpc = new ConsultaAlbum();
         PanelMenu.add(cpc);
         cpc.show();
     }//GEN-LAST:event_consultaAlbumActionPerformed
@@ -248,6 +260,20 @@ public class menu extends javax.swing.JFrame {
         ;        // TODO add your handling code here:
           // TODO add your handling code here:
     }//GEN-LAST:event_altaGeneroActionPerformed
+    private void altaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaAlbumActionPerformed
+        // TODO add your handling code here:
+         AltaAlbum cpc = new AltaAlbum();
+         PanelMenu.add(cpc);
+         cpc.show();
+    }//GEN-LAST:event_altaAlbumActionPerformed
+
+    private void cargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarDatosActionPerformed
+        try {
+            Fabrica.getInstance().cargarDatosPrueba();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_cargarDatosActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

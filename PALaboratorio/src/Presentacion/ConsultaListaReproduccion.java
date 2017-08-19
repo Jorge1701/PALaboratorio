@@ -1,20 +1,31 @@
 package Presentacion;
 
+import Logica.DtAlbum;
 import Logica.DtGenero;
 import Logica.DtLista;
 import Logica.DtUsuario;
 import Logica.Fabrica;
+import Logica.IContenido;
+import Logica.IUsuario;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
+    public IUsuario iUsuario;
+    public IContenido iContenido;
+
     public ConsultaListaReproduccion() {
         initComponents();
+        iUsuario = Fabrica.getInstance().getIControladorUsuario();
+        iContenido = Fabrica.getInstance().getIControladorContenido();
         consultaGenero.setSelected(true);
         consultaGeneroActionPerformed(null);
     }
@@ -24,43 +35,25 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        generos = new javax.swing.JTree();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lstClientes = new javax.swing.JList<>();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         consultaGenero = new javax.swing.JRadioButton();
         consultaCliente = new javax.swing.JRadioButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        lstListasRep = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jSplitPane2 = new javax.swing.JSplitPane();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaClientes = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        generos = new javax.swing.JTree();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstListasRep = new javax.swing.JList<>();
 
         setClosable(true);
         setIconifiable(true);
         setTitle("Consulta de lista de reproducción");
-
-        generos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        generos.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-                generosValueChanged(evt);
-            }
-        });
-        jScrollPane1.setViewportView(generos);
-
-        lstClientes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lstClientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstClientesValueChanged(evt);
-            }
-        });
-        jScrollPane2.setViewportView(lstClientes);
-
-        jLabel3.setText("Generos:");
-
-        jLabel4.setText("Clientes:");
 
         buttonGroup1.add(consultaGenero);
         consultaGenero.setText("Consultar por género");
@@ -78,11 +71,6 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
             }
         });
 
-        lstListasRep.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jScrollPane3.setViewportView(lstListasRep);
-
-        jLabel1.setText("Listas de Reproduccion:");
-
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,45 +85,98 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
             }
         });
 
+        jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        jSplitPane1.setDividerLocation(250);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Clientes"));
+
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Nick"
+            }
+        ));
+        tablaClientes.setDragEnabled(true);
+        jScrollPane2.setViewportView(tablaClientes);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+        );
+
+        jSplitPane1.setRightComponent(jPanel2);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Generos"));
+
+        generos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        generos.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                generosValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(generos);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+        );
+
+        jSplitPane1.setLeftComponent(jPanel1);
+
+        jSplitPane2.setTopComponent(jSplitPane1);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Listas de Reproduccion"));
+
+        lstListasRep.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jScrollPane3.setViewportView(lstListasRep);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jSplitPane2.setRightComponent(jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(consultaGenero)
-                                .addGap(13, 13, 13)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(44, 44, 44))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addComponent(consultaCliente)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(176, 176, 176)
+                        .addGap(121, 121, 121)
+                        .addComponent(consultaGenero)
+                        .addGap(27, 27, 27)
+                        .addComponent(consultaCliente))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(169, 169, 169)
                         .addComponent(btnAceptar)
-                        .addGap(71, 71, 71)
-                        .addComponent(btnCancelar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(168, 168, 168)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(42, 42, 42)
+                        .addComponent(btnCancelar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -149,22 +190,12 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
                     .addComponent(consultaCliente)
                     .addComponent(consultaGenero))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3))
+                .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAceptar, btnCancelar});
@@ -184,10 +215,10 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
     private void mostrar() {
         if (consultaGenero.isSelected()) {
             generos.setEnabled(true);
-            lstClientes.setEnabled(false);
+            tablaClientes.setEnabled(false);
 
         } else if (consultaCliente.isSelected()) {
-            lstClientes.setEnabled(true);
+            tablaClientes.setEnabled(true);
             generos.setEnabled(false);
 
         }
@@ -203,13 +234,40 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
     private void consultaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaClienteActionPerformed
         mostrar();
-        DefaultListModel<String> model = new DefaultListModel<>();
-        lstClientes.setModel(model);
-        for (DtUsuario dtg : Fabrica.getInstance().getIControladorUsuario().listarClientes()) {
-            model.addElement(dtg.getNickname());
+
+        ArrayList<DtUsuario> dtc = iUsuario.listarClientes();
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
+        dtm.setRowCount(0);
+
+        for (DtUsuario dtCliente : dtc) {
+            Object[] data = {
+                dtCliente.getNombre(),
+                dtCliente.getNickname(),};
+            dtm.addRow(data);
         }
+
+        tablaClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                clienteSeleccionado(tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString());
+
+            }
+        });
+
     }//GEN-LAST:event_consultaClienteActionPerformed
 
+    private void clienteSeleccionado(String nickCliente) {
+        ArrayList<DtLista> dtl = iUsuario.listarListaReproduccionCli(nickCliente);
+
+        DefaultListModel<String> model = new DefaultListModel<>();
+        lstListasRep.setModel(model);
+
+        for (DtLista dta : dtl) {
+            model.addElement(dta.getNombre());
+        }
+
+    }
     private void generosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_generosValueChanged
 
         DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
@@ -226,67 +284,46 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_generosValueChanged
 
-    private void lstClientesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstClientesValueChanged
-        String nickArtista = lstClientes.getSelectedValue();
-
-        DefaultListModel<String> model = new DefaultListModel<>();
-        lstListasRep.setModel(model);
-
-        ArrayList<DtLista> dtl = Fabrica.getInstance().getIControladorUsuario().listarListaReproduccionCli(nickArtista);
-
-        for (DtLista dta : dtl) {
-            model.addElement(dta.getNombre());
-        }
-
-    }//GEN-LAST:event_lstClientesValueChanged
-
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nickCliente = null;
-        String nomLista = null;
-        DtLista lista = null;
+        String nickCliente;
+        String nomLista;
+        DtLista lista;
 
         if (consultaGenero.isSelected()) {
             if (generos.getSelectionPath() == null) {
                 JOptionPane.showMessageDialog(this, "Debe de seleccionar un Genero");
-                return;
             } else {
-
                 DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
                 String generoSeleccionado = selectedElement.getUserObject().toString();
                 nomLista = lstListasRep.getSelectedValue();
 
                 if (nomLista == null) {
                     JOptionPane.showMessageDialog(this, "Debe de seleccionar una Lista");
-                    return;
                 } else {
                     try {
-                        lista = Fabrica.getInstance().getIControladorContenido().selecListGen(nomLista);
+                        lista = iContenido.selecListGen(nomLista);
                         InfoListaReproduccion l = new InfoListaReproduccion(lista, generoSeleccionado);
                         this.getParent().add(l);
                         l.show();
-
                     } catch (UnsupportedOperationException e) {
                         JOptionPane.showMessageDialog(this, e.getMessage());
                     }
                 }
             }
         } else if (consultaCliente.isSelected()) {
-            nickCliente = lstClientes.getSelectedValue();
-            if (nickCliente == null) {
+            if (tablaClientes.getSelectionModel().isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe de seleccionar un Cliente");
-                return;
             } else {
                 nomLista = lstListasRep.getSelectedValue();
                 if (nomLista == null) {
                     JOptionPane.showMessageDialog(this, "Debe de seleccionar una Lista");
-                    return;
                 } else {
+                    nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString();
                     try {
-                        lista = Fabrica.getInstance().getIControladorUsuario().selectListaCli(nomLista);
+                        lista = iUsuario.selectListaCli(nomLista);
                         InfoListaReproduccion l = new InfoListaReproduccion(lista, nickCliente);
                         this.getParent().add(l);
                         l.show();
-
                     } catch (UnsupportedOperationException e) {
                         JOptionPane.showMessageDialog(this, e.getMessage());
                     }
@@ -307,13 +344,15 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
     public static javax.swing.JRadioButton consultaCliente;
     public static javax.swing.JRadioButton consultaGenero;
     private javax.swing.JTree generos;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JList<String> lstClientes;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JList<String> lstListasRep;
+    private javax.swing.JTable tablaClientes;
     // End of variables declaration//GEN-END:variables
 }

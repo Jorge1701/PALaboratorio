@@ -1,34 +1,41 @@
 package Logica;
 
+import Persistencia.CargarDatosPrueba;
+
 public class Fabrica {
-    
-    
+
     //SINGLETON
     private static Fabrica instancia;
 
-    public static Fabrica getInstance(){
-        if (instancia == null){
+    public static Fabrica getInstance() {
+        if (instancia == null) {
             instancia = new Fabrica();
         }
         return instancia;
-    }    
-    
-    private Fabrica(){
-        this.cargarDatosPrueba();
-    };
-    
-    private void cargarDatosPrueba(){
-        IUsuario iu=this.getIControladorUsuario();
+    }
+
+    private Fabrica() {
+
+    }
+
+    public void cargarDatosPrueba() throws Exception {
+        CargarDatosPrueba cdp = new CargarDatosPrueba();
+
+        if (!cdp.borrarTodosLosDatos()) {
+            throw new Exception("No se pudieron borrar los datos viejos de la base de datos para ingresar los de prueba.");
+        }
+
+        IUsuario iu = this.getIControladorUsuario();
         iu.cargarUsuarios();
     }
-    
+
     public IUsuario getIControladorUsuario() {
         IUsuario ICU = ControladorUsuario.getInstance();
         return ICU;
-    } 
-    
+    }
+
     public IContenido getIControladorContenido() {
         IContenido ICC = ControladorContenido.getInstance();
         return ICC;
-    } 
+    }
 }

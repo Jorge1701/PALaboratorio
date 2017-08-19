@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-class Album {
+public class Album {
 
     public String nickArtista;
     public String nombre;
@@ -23,7 +23,7 @@ class Album {
         this.temas = temas;
         this.generos = generos;
     }
-    
+
     public Tema getTema(String nombre) {
         return temas.get(nombre);
     }
@@ -92,12 +92,14 @@ class Album {
         while (it.hasNext()) {
             Genero genero = (Genero) ((Map.Entry) it.next()).getValue();
             nomGeneros.add(genero.getNombre());
+
         }
 
         Iterator it1 = temas.entrySet().iterator();
         while (it1.hasNext()) {
             Tema tema = (Tema) ((Map.Entry) it1.next()).getValue();
             dtTemas.add(tema.getData());
+
         }
 
         return new DtAlbumContenido(this.getData(), nomGeneros, dtTemas);
