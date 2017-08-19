@@ -96,4 +96,20 @@ public abstract class Usuario {
     public void agregar(Cliente cliente){
         this.seguidores.put(cliente.getNickname(), cliente); 
     }
+    
+    public boolean meComenzoASeguir(Cliente cliente){
+        if(seguidores.get(cliente.getNickname())!= null){
+            return false;
+        }
+        seguidores.put(cliente.getNickname(), cliente);
+        return true;
+    }
+    
+    public boolean meDejoDeSeguir(Cliente cliente){
+       if(seguidores.get(cliente.getNickname())== null){
+            return false;
+        }
+        seguidores.remove(cliente.getNickname());
+        return true; 
+    }
 }

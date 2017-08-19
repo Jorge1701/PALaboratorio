@@ -11,18 +11,19 @@ import javax.swing.JTextField;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import Presentacion.Validacion;
+
 public class AltaPerfil extends javax.swing.JInternalFrame {
 
 private IUsuario IU;
     
     public AltaPerfil() {
         initComponents();
-        bioPanel.setVisible(false);
+        biografia.setVisible(false);
         web.setVisible(false);
         webTx.setVisible(false);
         bioTx.setVisible(false);
         cliente.setSelected(true);
-        this.IU=Fabrica.getInstance().getIControladorUsuario();    
+        this.IU=Fabrica.getIControladorUsuario();    
         
     }
 
@@ -82,6 +83,17 @@ private IUsuario IU;
         nick.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nickActionPerformed(evt);
+            }
+        });
+        nick.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nickKeyTyped(evt);
+            }
+        });
+
+        nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nombreKeyPressed(evt);
             }
         });
 
@@ -162,22 +174,24 @@ private IUsuario IU;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(nick, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE))
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(apellido, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                                .addComponent(nombre))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(nick, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
@@ -213,25 +227,26 @@ private IUsuario IU;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cliente)
@@ -244,7 +259,7 @@ private IUsuario IU;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(webTx)
                     .addComponent(web, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aceptar)
                     .addComponent(cancelar))
@@ -258,10 +273,6 @@ private IUsuario IU;
         // TODO add your handling code here:
     }//GEN-LAST:event_anioActionPerformed
 
-    private void nickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nickActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nickActionPerformed
-
     private void diaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_diaActionPerformed
@@ -269,16 +280,20 @@ private IUsuario IU;
     private void apellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apellidoActionPerformed
     }//GEN-LAST:event_apellidoActionPerformed
 
+    private void biografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_biografiaActionPerformed
+       
+    }//GEN-LAST:event_biografiaActionPerformed
+
     private void artistaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_artistaStateChanged
         // TODO add your handling code here:
         if(artista.isSelected()){    
-        bioPanel.setVisible(true);
+        biografia.setVisible(true);
         web.setVisible(true);
         webTx.setVisible(true);
         bioTx.setVisible(true);
         
         }else {
-        bioPanel.setVisible(false);
+        biografia.setVisible(false);
         web.setVisible(false);
         webTx.setVisible(false);
         bioTx.setVisible(false);
@@ -286,7 +301,7 @@ private IUsuario IU;
     }//GEN-LAST:event_artistaStateChanged
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        dispose();
+        // TODO add your handling code here:
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void aceptarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_aceptarKeyTyped
@@ -299,56 +314,20 @@ private IUsuario IU;
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         DtUsuario dtu;
-        
-        String nick = this.nick.getText();
-        String nombre = this.nombre.getText();
-        String apellido = this.apellido.getText();
-        String correo = this.correo.getText();
-        String dia = this.dia.getSelectedItem().toString();
-        String mes = this.mes.getSelectedItem().toString();
-        String anio = this.anio.getSelectedItem().toString();
+         
+        if(nick.getText().isEmpty() == true || nombre.getText().isEmpty() == true || apellido.getText().isEmpty() == true || correo.getText().isEmpty() == true || dia.getSelectedItem().equals("--") || mes.getSelectedItem().equals("--") || anio.getSelectedItem().equals("----") || Validacion.ValidarEmail(correo.getText())==false){
 
-        String camposVacios = "";
-
-        if (nick.isEmpty())
-            camposVacios += "\nNickname";
-        
-        if (nombre.isEmpty())
-            camposVacios += "\nNombre";
-        
-        if (apellido.isEmpty())
-            camposVacios += "\nApellido";
-        
-        if (correo.isEmpty())
-            camposVacios += "\nCorreo";
-        
-        if (dia.equals("--"))
-            camposVacios += "\nFecha: Dia";
-        
-        if (mes.equals("--"))
-            camposVacios += "\nFecha: Mes";
-        
-        if (anio.equals("----"))
-            camposVacios += "\nFecha: Año";
-        
-        if (!camposVacios.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Los siguientes campos necesitan ser llenados:\n" + camposVacios);
-            return;
-        }
-        
-        if (!Validacion.ValidarEmail(correo)) {
-            JOptionPane.showMessageDialog(this, "El correo no tiene un formato correcto");
-            return;
-        }
+        javax.swing.JOptionPane.showMessageDialog(null,"Hay algun campo sin completar","Advertencia",JOptionPane.WARNING_MESSAGE);
+        }else{
         
         if(cliente.isSelected() == true){
-            dtu = new DtCliente(nick, nombre, apellido, correo, new DtFecha(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(anio)));
+            dtu = new DtCliente(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())));
         }else{
-            dtu = new DtArtista(nick, nombre, apellido, correo, new DtFecha(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(anio)), biografia.getText(),web.getText());
+            
+            dtu = new DtArtista(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())),biografia.getText(),web.getText());
         }
         
         boolean ok=IU.ingresarUsuario(dtu);
-        
         if (ok){
             //javax.swing.JOptionPane.showMessageDialog(null,"Persona Dada de alta con éxito.");
             javax.swing.JOptionPane.showMessageDialog(null,"El usuario fue ingresado con exito","Felicitaciones!",JOptionPane.INFORMATION_MESSAGE);
@@ -356,7 +335,6 @@ private IUsuario IU;
             //javax.swing.JOptionPane.showMessageDialog(null,"Error: La persona ya está registrada o faltaron campos obligatorios.");
             javax.swing.JOptionPane.showMessageDialog(null,"El usuario que desea ingresar ya existe en el sistema","Ha ocurrido un error",JOptionPane.ERROR_MESSAGE);
         }
-        
         this.nick.setText("");
         this.nombre.setText(""); 
         this.apellido.setText("");
@@ -367,7 +345,21 @@ private IUsuario IU;
         this.dia.setSelectedIndex(0);
         this.mes.setSelectedIndex(0);
         this.anio.setSelectedIndex(0);
+        }
     }//GEN-LAST:event_aceptarActionPerformed
+
+    private void nickKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nickKeyTyped
+            
+    }//GEN-LAST:event_nickKeyTyped
+
+    private void nickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nickActionPerformed
+
+    }//GEN-LAST:event_nickActionPerformed
+
+    private void nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyPressed
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_nombreKeyPressed
     
               
     // Variables declaration - do not modify//GEN-BEGIN:variables

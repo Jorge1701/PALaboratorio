@@ -7,7 +7,14 @@ import Logica.DtTemaLocal;
 import Logica.DtTemaRemoto;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class AlbumContenido extends javax.swing.JInternalFrame {
 
@@ -41,6 +48,17 @@ public class AlbumContenido extends javax.swing.JInternalFrame {
             dtm.addRow(data);
         }
 
+        //Ordenar tabla por Ubicacion del tema
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tablaTemas.getModel());
+        tablaTemas.setRowSorter(sorter);
+        ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<>();
+
+        int columnIndexToSort = 2;
+        sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
+
+        sorter.setSortKeys(sortKeys);
+        sorter.sort();
+
         //Cargar lista de generos
         ArrayList<String> generos = dtac.getGeneros();
 
@@ -71,6 +89,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstGeneros = new javax.swing.JList<>();
+        btnDescargar = new javax.swing.JButton();
 
         setTitle("Informacion del album");
 
@@ -137,7 +156,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre", "Duracion", "Ubicacion"
+                "Nombre", "Duracion", "Ubicacion", "Archivo"
             }
         ));
         jScrollPane1.setViewportView(tablaTemas);
@@ -175,12 +194,21 @@ public class AlbumContenido extends javax.swing.JInternalFrame {
 
         jSplitPane1.setRightComponent(jPanel5);
 
+        btnDescargar.setText("Descargar");
+        btnDescargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(270, 270, 270)
+                .addGap(25, 25, 25)
+                .addComponent(btnDescargar)
+                .addGap(144, 144, 144)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jSplitPane1)
@@ -193,11 +221,17 @@ public class AlbumContenido extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSplitPane1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(16, 16, 16))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                        .addGap(23, 23, 23)
+                        .addComponent(jButton1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDescargar)
+                        .addGap(29, 29, 29))))
         );
 
         pack();
@@ -207,8 +241,23 @@ public class AlbumContenido extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
+       
+        if(tablaTemas.getSelectionModel().isSelectionEmpty()){
+            JOptionPane.showMessageDialog(this, "Debe de seleccionar un tema");
+            return;
+        }
+        
+       String tema = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 3).toString();
+        
+       JOptionPane.showMessageDialog(this, tema);
+    
+
+    }//GEN-LAST:event_btnDescargarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDescargar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

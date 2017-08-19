@@ -1,6 +1,6 @@
 package Presentacion;
 
-import Logica.DtAlbum;
+
 import Logica.DtGenero;
 import Logica.DtLista;
 import Logica.DtUsuario;
@@ -24,8 +24,8 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
     public ConsultaListaReproduccion() {
         initComponents();
-        iUsuario = Fabrica.getInstance().getIControladorUsuario();
-        iContenido = Fabrica.getInstance().getIControladorContenido();
+        iUsuario = Fabrica.getIControladorUsuario();
+        iContenido = Fabrica.getIControladorContenido();
         consultaGenero.setSelected(true);
         consultaGeneroActionPerformed(null);
     }
@@ -227,7 +227,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
     private void consultaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaGeneroActionPerformed
         this.mostrar();
         generos.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        DtGenero g = Fabrica.getInstance().getIControladorContenido().listarGenero();
+        DtGenero g = iContenido.listarGenero();
         DefaultTreeModel modelo = new DefaultTreeModel(getNodo(g));
         generos.setModel(modelo);
     }//GEN-LAST:event_consultaGeneroActionPerformed
@@ -273,7 +273,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
         String generoSeleccionado = selectedElement.getUserObject().toString();
 
-        ArrayList<DtLista> dtl = Fabrica.getInstance().getIControladorContenido().listarLisReproduccionGen(generoSeleccionado);
+        ArrayList<DtLista> dtl = iContenido.listarLisReproduccionGen(generoSeleccionado);
 
         DefaultListModel<String> model = new DefaultListModel<>();
         lstListasRep.setModel(model);
