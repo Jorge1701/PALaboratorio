@@ -287,7 +287,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         );
         panelSeguidoresLayout.setVerticalGroup(
             panelSeguidoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
         );
 
         spanelSocial.setLeftComponent(panelSeguidores);
@@ -312,7 +312,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         );
         panelSeguidosLayout.setVerticalGroup(
             panelSeguidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
         );
 
         spanelSocial.setRightComponent(panelSeguidos);

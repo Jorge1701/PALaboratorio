@@ -110,6 +110,8 @@ public class ControladorUsuario implements IUsuario {
 
         return dtUsuarios;
     }
+    
+
 
     @Override
     public ArrayList<DtUsuario> listarClientes() {
@@ -145,7 +147,14 @@ public class ControladorUsuario implements IUsuario {
 
     @Override
     public DtPerfilUsuario obtenerPerfilArtista(String nickArtista) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Usuario u = usuarios.get(nickArtista);
+        if(u == null)
+        throw new UnsupportedOperationException("El Artista "+nickArtista+" no existe"); 
+        
+        if(!(u instanceof Artista))
+            throw new UnsupportedOperationException("Este usuario no es un artista");
+  
+        return((Artista) u).obtenerPerfil();
     }
 
     @Override
@@ -161,6 +170,7 @@ public class ControladorUsuario implements IUsuario {
         }
 
         return ((Cliente) u).obtenerPerfil();
+        
     }
 
     @Override

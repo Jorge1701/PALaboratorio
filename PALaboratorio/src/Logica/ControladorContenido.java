@@ -51,6 +51,8 @@ public class ControladorContenido implements IContenido {
         this.genero.agregarGenero("Cumbia", "Cumbia cheta");
         this.genero.agregarGenero("Cumbia", "Cumbia de negro");*/
     }
+    
+ 
 
     @Override
     public void indicarCliente(String nick) {
@@ -256,7 +258,9 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public void crearListaReproduccionDefecto(String nombre, String genero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+
+       
     }
 
     @Override

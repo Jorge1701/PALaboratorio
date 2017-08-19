@@ -35,7 +35,7 @@ public class menu extends javax.swing.JFrame {
         publicarLista = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         consultaPerfilCliente = new javax.swing.JMenuItem();
-        consultaPerfilArtista = new javax.swing.JMenuItem();
+        ConsultaPerfilArtista = new javax.swing.JMenuItem();
         consultaAlbum = new javax.swing.JMenuItem();
         consultaListaRep = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -78,19 +78,9 @@ public class menu extends javax.swing.JFrame {
         jMenu1.add(altaPerfil);
 
         altaAlbum.setText("Alta Album");
-        altaAlbum.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                altaAlbumActionPerformed(evt);
-            }
-        });
         jMenu1.add(altaAlbum);
 
         altaGenero.setText("Alta de Genero");
-        altaGenero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                altaGeneroActionPerformed(evt);
-            }
-        });
         jMenu1.add(altaGenero);
 
         crearListaRep.setText("Crear Lista de Reproduccion");
@@ -116,8 +106,13 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu2.add(consultaPerfilCliente);
 
-        consultaPerfilArtista.setText("Consulta de Perfil de Artista");
-        jMenu2.add(consultaPerfilArtista);
+        ConsultaPerfilArtista.setText("Consulta de Perfil de Artista");
+        ConsultaPerfilArtista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultaPerfilArtistaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(ConsultaPerfilArtista);
 
         consultaAlbum.setText("Consulta de Album");
         consultaAlbum.addActionListener(new java.awt.event.ActionListener() {
@@ -213,7 +208,7 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_dejarSeguirUsuarioActionPerformed
 
     private void consultaPerfilClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaPerfilClienteActionPerformed
-        ConsultaPerfilCliente cpc = new ConsultaPerfilCliente();
+        ConsultaPerfil cpc = new ConsultaPerfil("Cliente");
         PanelMenu.add(cpc);
         cpc.show();
     }//GEN-LAST:event_consultaPerfilClienteActionPerformed
@@ -254,8 +249,14 @@ public class menu extends javax.swing.JFrame {
         PanelMenu.add(clr);
         clr.show();
     }//GEN-LAST:event_consultaListaRepActionPerformed
+    private void ConsultaPerfilArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaPerfilArtistaActionPerformed
+        // TODO add your handling code here:
+        ConsultaPerfil cpc = new ConsultaPerfil("Artista");
+        PanelMenu.add(cpc);
+        cpc.show();
+    }//GEN-LAST:event_ConsultaPerfilArtistaActionPerformed
 
-    private void altaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaGeneroActionPerformed
+    private void altaGeneroActionPerformed(java.awt.event.ActionEvent evt) {                                           
          AltaGenero cpc;
         try {
             cpc = new AltaGenero();
@@ -264,16 +265,13 @@ public class menu extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        ;        // TODO add your handling code here:
-          // TODO add your handling code here:
-    }//GEN-LAST:event_altaGeneroActionPerformed
-    private void altaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaAlbumActionPerformed
-        // TODO add your handling code here:
+    }                                          
+    private void altaAlbumActionPerformed(java.awt.event.ActionEvent evt) {                                          
+
          AltaAlbum cpc = new AltaAlbum();
          PanelMenu.add(cpc);
          cpc.show();
-    }//GEN-LAST:event_altaAlbumActionPerformed
+    }                                         
 
     private void cargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarDatosActionPerformed
        try{
@@ -318,6 +316,7 @@ public class menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ConsultaPerfilArtista;
     private javax.swing.JDesktopPane PanelMenu;
     private javax.swing.JMenuItem agregarTemaLista;
     private javax.swing.JMenuItem altaAlbum;
@@ -326,7 +325,6 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem cargarDatos;
     private javax.swing.JMenuItem consultaAlbum;
     private javax.swing.JMenuItem consultaListaRep;
-    private javax.swing.JMenuItem consultaPerfilArtista;
     private javax.swing.JMenuItem consultaPerfilCliente;
     private javax.swing.JMenuItem crearListaRep;
     private javax.swing.JMenuItem dejarSeguirUsuario;
