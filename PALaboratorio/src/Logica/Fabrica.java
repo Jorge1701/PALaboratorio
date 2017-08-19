@@ -1,6 +1,6 @@
 package Logica;
 
-import Persistencia.CargarDatosPrueba;
+import Persistencia.CargaDatosPrueba;
 
 public class Fabrica {
 
@@ -19,12 +19,14 @@ public class Fabrica {
     }
 
     public void cargarDatosPrueba() throws Exception {
-        CargarDatosPrueba cdp = new CargarDatosPrueba();
+        CargaDatosPrueba cdp = new CargaDatosPrueba();
 
         if (!cdp.borrarTodosLosDatos()) {
             throw new Exception("No se pudieron borrar los datos viejos de la base de datos para ingresar los de prueba.");
         }
-
+        
+        
+        
         IUsuario iu = this.getIControladorUsuario();
         iu.cargarUsuarios();
     }
