@@ -22,7 +22,7 @@ private IUsuario IU;
         webTx.setVisible(false);
         bioTx.setVisible(false);
         cliente.setSelected(true);
-        this.IU=Fabrica.getInstance().getIControladorUsuario();    
+        this.IU=Fabrica.getIControladorUsuario();    
         
     }
 

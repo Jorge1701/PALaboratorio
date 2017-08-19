@@ -1,14 +1,24 @@
 package Presentacion;
 
+import Logica.Fabrica;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class menu extends javax.swing.JFrame {
 
     public menu() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
+        
+        Fabrica.inicializarControladores();
+        
+        try {
+            Fabrica.levantarDatos();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -171,6 +181,11 @@ public class menu extends javax.swing.JFrame {
         jMenu5.setText("Datos de Prueba");
 
         cargarDatos.setText("Cargar");
+        cargarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargarDatosActionPerformed(evt);
+            }
+        });
         jMenu5.add(cargarDatos);
 
         jMenuBar1.add(jMenu5);
@@ -259,6 +274,15 @@ public class menu extends javax.swing.JFrame {
          PanelMenu.add(cpc);
          cpc.show();
     }//GEN-LAST:event_altaAlbumActionPerformed
+
+    private void cargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarDatosActionPerformed
+       try{
+           Fabrica.cargaDatosPrueba();
+       }catch(Exception e) {
+           e.printStackTrace();
+           JOptionPane.showMessageDialog(this, "Error al cargar los datos de prueba");
+       }
+    }//GEN-LAST:event_cargarDatosActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

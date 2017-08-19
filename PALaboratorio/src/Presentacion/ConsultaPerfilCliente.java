@@ -17,7 +17,7 @@ public class ConsultaPerfilCliente extends javax.swing.JInternalFrame {
     public ConsultaPerfilCliente() {
         initComponents();
         
-        iUsuario = Fabrica.getInstance().getIControladorUsuario();
+        iUsuario = Fabrica.getIControladorUsuario();
         
         ArrayList<DtUsuario> dtc = iUsuario.listarClientes();
         

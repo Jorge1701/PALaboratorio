@@ -21,7 +21,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
     public QuitarTemaLista() {
         initComponents();
         defecto.setSelected(true);
-        this.IC = Fabrica.getInstance().getIControladorContenido();
+        this.IC = Fabrica.getIControladorContenido();
     }
 
     /**

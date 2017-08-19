@@ -10,6 +10,18 @@ import java.util.ArrayList;
 public class ControladorContenido implements IContenido {
 
     private static ControladorContenido instancia;
+
+    public static void cargarInstancia() {
+        instancia = new ControladorContenido();
+    }
+
+    public static ControladorContenido getInstance() {
+        if (instancia == null) {
+            cargarInstancia();
+        }
+        return instancia;
+    }
+
     private Map<String, ListaDefecto> listasDefecto;
     private Artista artista;
     private Genero genero;
@@ -17,11 +29,10 @@ public class ControladorContenido implements IContenido {
 
     private Cliente clienteFav;
 
-    public static ControladorContenido getInstance() {
-        if (instancia == null) {
-            instancia = new ControladorContenido();
-        }
-        return instancia;
+    private IUsuario iUsuario;
+
+    public void setIUsuario(IUsuario iUsuario) {
+        this.iUsuario = iUsuario;
     }
 
     private ControladorContenido() {
@@ -43,7 +54,7 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public void indicarCliente(String nick) {
-        Usuario u = Fabrica.getInstance().getIControladorUsuario().obtenerUsuario(nick);
+        Usuario u = iUsuario.obtenerUsuario(nick);
 
         if (u == null) {
             throw new UnsupportedOperationException("Usuario " + nick + " no existe");
@@ -58,7 +69,7 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public void guardarTema(String nickArtista, String nomAlbum, String nomTema) {
-        Usuario u = Fabrica.getInstance().getIControladorUsuario().obtenerUsuario(nickArtista);
+        Usuario u = iUsuario.obtenerUsuario(nickArtista);
 
         if (u == null) {
             throw new UnsupportedOperationException("El artista " + nickArtista + " no existe");
@@ -124,7 +135,7 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public void guardarListaParticular(String nickCliente, String nomLista) {
-        Usuario u = Fabrica.getInstance().getIControladorUsuario().obtenerUsuario(nickCliente);
+        Usuario u = iUsuario.obtenerUsuario(nickCliente);
 
         if (u == null) {
             throw new UnsupportedOperationException("El cliente " + nickCliente + " no existe");
@@ -157,7 +168,7 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public void guardarAlbum(String nickArtista, String nomAlbum) {
-        Usuario u = Fabrica.getInstance().getIControladorUsuario().obtenerUsuario(nickArtista);
+        Usuario u = iUsuario.obtenerUsuario(nickArtista);
 
         if (u == null) {
             throw new UnsupportedOperationException("El artista " + nickArtista + " no existe");

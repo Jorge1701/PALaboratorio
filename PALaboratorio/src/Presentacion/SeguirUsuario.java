@@ -16,8 +16,15 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
 
     public SeguirUsuario() {
         initComponents();
-        iUsuario = Fabrica.getInstance().getIControladorUsuario();
+        iUsuario = Fabrica.getIControladorUsuario();
 
+        cargarDatos();
+
+        // Hace que al hacer click en una fila de la tablaClientes se llame al metodo valueChanged()
+        tablaClientes.getSelectionModel().addListSelectionListener(this);
+    }
+
+    private void cargarDatos() {
         // Obtiene todo los clientes
         ArrayList<DtUsuario> dtcs = iUsuario.listarClientes();
 
@@ -35,9 +42,6 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
             };
             dtm.addRow(data);
         }
-
-        // Hace que al hacer click en una fila de la tablaClientes se llame al metodo valueChanged()
-        tablaClientes.getSelectionModel().addListSelectionListener(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -171,7 +175,9 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
     @Override
     public void valueChanged(ListSelectionEvent e) {
         // Obtiene el nick del cliente seleccionado y se lo pasa a la funcion cliente seleccionado
-        clienteSeleccionado(tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString());
+        if (tablaClientes.getSelectedRow() != -1) {
+            clienteSeleccionado(tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString());
+        }
     }
 
     private void clienteSeleccionado(String nickCliente) {
@@ -215,10 +221,9 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
             JOptionPane.showMessageDialog(this, "Debe seleccionar una fila en las siguientes tablas:\n" + tablasSinSeleccionar);
             return;
         }
-        
+
         String cliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
         String usuario = tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString();
-        
 
         try {
             iUsuario.seguirUsuario(cliente, usuario);
@@ -226,6 +231,11 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
         } catch (UnsupportedOperationException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+
+        cargarDatos();
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaUsuarios.getModel();
+        dtm.setRowCount(0);
     }//GEN-LAST:event_botonAceptarActionPerformed
 
 

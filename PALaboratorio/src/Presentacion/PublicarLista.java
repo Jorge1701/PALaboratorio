@@ -15,7 +15,7 @@ public class PublicarLista extends javax.swing.JInternalFrame {
      */
     public PublicarLista() {
         initComponents();
-        this.IC = Fabrica.getInstance().getIControladorContenido();
+        this.IC = Fabrica.getIControladorContenido();
     }
 
     /**

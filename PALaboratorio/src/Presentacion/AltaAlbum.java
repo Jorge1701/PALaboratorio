@@ -21,7 +21,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     public AltaAlbum() {
         initComponents();
         jScrollPane2.setViewportView(ListaGeneros);
-        iContenido = Fabrica.getInstance().getIControladorContenido();
+        iContenido = Fabrica.getIControladorContenido();
     }
 
 

@@ -23,8 +23,8 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
 
     public ConsultaAlbum() {
         initComponents();
-        this.iUsuario = Fabrica.getInstance().getIControladorUsuario();
-        this.iContenido = Fabrica.getInstance().getIControladorContenido();
+        this.iUsuario = Fabrica.getIControladorUsuario();
+        this.iContenido = Fabrica.getIControladorContenido();
 
         btnConsultaGenero.setSelected(true);
         btnConsultaGeneroActionPerformed(null);

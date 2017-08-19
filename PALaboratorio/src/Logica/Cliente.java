@@ -23,7 +23,6 @@ public class Cliente extends Usuario {
         this.listas = new ArrayList<>();
         this.temas = new ArrayList<>();
 
-   
     }
 
     public void agregarAlbumFav(Album a) {
@@ -121,14 +120,26 @@ public class Cliente extends Usuario {
         return new DtPerfilCliente(dtSeguidos, dtListasCreadas, dtAlbumes, dtListas, dtTemas, info, dtSeguidores);
     }
 
-    public void agregar(Usuario u) {
+    public boolean agregar(Usuario u) {
+        if (seguidos.get(u.getNickname()) != null) {
+            return false;
+        }
+        if (!u.meComenzoASeguir(this)) {
+            return false;
+        }
         seguidos.put(u.getNickname(), u);
-        
-        
+        return true;
     }
 
-    public void dejarSeguir(Usuario u) {
+    public boolean dejarSeguir(Usuario u) {
+        if (seguidos.get(u.getNickname()) == null) {
+            return false;
+        }
+        if (!u.meDejoDeSeguir(this)) {
+            return false;
+        }
         seguidos.remove(u.getNickname());
+        return true;
     }
 
     public HashMap<String, Usuario> getSeguidos() {

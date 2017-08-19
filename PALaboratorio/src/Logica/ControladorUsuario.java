@@ -7,35 +7,38 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-
 public class ControladorUsuario implements IUsuario {
 
     private static ControladorUsuario instancia;
-    private final HashMap<String, Usuario> usuarios;
-    private Usuario usuarioRecordado;
-    //private DBPersona dbPersona=null;
-   
-    private BDUsuario bdUsuario=null;
+
+    public static void cargarInstancia() {
+        instancia = new ControladorUsuario();
+    }
 
     public static ControladorUsuario getInstance() {
         if (instancia == null) {
-            instancia = new ControladorUsuario();
+            cargarInstancia();
         }
         return instancia;
     }
+    private final HashMap<String, Usuario> usuarios;
+    private Usuario usuarioRecordado;
+    //private DBPersona dbPersona=null;
+
+    private BDUsuario bdUsuario = null;
 
     private ControladorUsuario() {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
         this.usuarios = new HashMap();
         this.usuarioRecordado = null;
-        this.bdUsuario=new BDUsuario();  
+        this.bdUsuario = new BDUsuario();
     }
-    
+
     @Override
     public Usuario obtenerUsuario(String nick) {
         return usuarios.get(nick);
-        
+
     }
 
     @Override
@@ -64,27 +67,37 @@ public class ControladorUsuario implements IUsuario {
                 return false;
             }
         }
-        
+
         Usuario usr;
-        
+
         if (dtu instanceof DtCliente) {
             usr = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null);
-            boolean res =this.bdUsuario.ingresarUsuario(usr);
-            if (res){
+            boolean res = this.bdUsuario.ingresarUsuario(usr);
+            if (res) {
                 this.usuarios.put(usr.getNickname(), usr);
             }
             return res;
         } else {
             usr = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null, ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
-            boolean res =this.bdUsuario.ingresarUsuario(usr);
-            if (res){
+            boolean res = this.bdUsuario.ingresarUsuario(usr);
+            if (res) {
                 this.usuarios.put(usr.getNickname(), usr);
             }
             return res;
         }
 
     }
-    
+
+    public void levantarUsuario(DtUsuario dtu) {
+        Usuario u;
+        if (dtu instanceof DtCliente) {
+            u = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null);
+        } else {
+            u = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null, ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
+        }
+        usuarios.put(u.getNickname(), u);
+    }
+
     @Override
     public ArrayList<DtUsuario> listarUsuarios() {
         ArrayList<DtUsuario> dtUsuarios = new ArrayList<>();
@@ -159,42 +172,30 @@ public class ControladorUsuario implements IUsuario {
     public void seguirUsuario(String nickCliente, String nickSeguido) {
         Usuario cliente = usuarios.get(nickCliente);
         Usuario seguido = usuarios.get(nickSeguido);
-
-        if (cliente == null) {
-            throw new UnsupportedOperationException("Cliente no existe.");
+        
+        BDUsuario bdu = new BDUsuario();
+        if (!((Cliente) cliente).agregar(seguido)) {
+            throw new UnsupportedOperationException("El cliente " + nickCliente + " no pudo seguir al usuario " + nickSeguido);
         }
-
-        if (seguido == null) {
-            throw new UnsupportedOperationException("Usuario a seguir no existe.");
+        if(! bdu.seguirUsuario(nickCliente,nickSeguido)){
+             throw new UnsupportedOperationException("El cliente " + nickCliente + " no pudo seguir al usuario " + nickSeguido);
         }
-
-        if (!(cliente instanceof Cliente)) {
-            throw new UnsupportedOperationException("Usuario no es un cliente.");
-        }
-        ((Cliente) cliente).agregar(seguido);
-        ((Usuario) seguido).agregar((Cliente)cliente);
+       
+           
     }
 
     @Override
-    public void dejarSeguirUsuario(String nickUsuario, String nickSeguidor) {
+    public void dejarSeguirUsuario(String nickSeguidor, String nickUsuario) {
         Usuario usuario = usuarios.get(nickUsuario);
         Usuario seguidor = usuarios.get(nickSeguidor);
 
-        if (usuario == null) {
-            throw new UnsupportedOperationException("Usuario no existe");
-        }
-
-        if (seguidor == null) {
-            throw new UnsupportedOperationException("Seguidor no existe");
-        }
-
-        if (!(usuario instanceof Cliente)) {
-            throw new UnsupportedOperationException("Usuario no es un cliente.");
-        }
-        
         BDUsuario bdu = new BDUsuario();
-        bdu.dejarDeSeguir("jorge", "jorge2");
-        ((Cliente) usuario).dejarSeguir(seguidor);
+        if (!bdu.dejarDeSeguir(nickSeguidor, nickUsuario)) {
+            throw new UnsupportedOperationException("El cliente " + nickSeguidor + " no pudo dejar de seguir al usuario " + nickUsuario);
+        }
+        if (!((Cliente) seguidor).dejarSeguir(usuario)) {
+            throw new UnsupportedOperationException("El cliente " + nickSeguidor + " no pudo dejar de seguir al usuario " + nickUsuario);
+        }
     }
 
     @Override
@@ -232,45 +233,45 @@ public class ControladorUsuario implements IUsuario {
     public void cargarUsuarios() {
 
     }
-    
-    
-    public Usuario getUsuario(String nick){
-       
+
+    public Usuario getUsuario(String nick) {
+
         Usuario us = usuarios.get(nick);
-        
-        if (us == null){
+
+        if (us == null) {
             throw new UnsupportedOperationException("El usuario " + nick + " no existe");
-        }else
-        
-        return us;   
-    
+        } else {
+            return us;
+        }
+
     }
 
     @Override
     public ArrayList<DtCliente> listarSeguidoresDe(String nickUsuario) {
         Usuario u = usuarios.get(nickUsuario);
-        
-        if (u == null)
+
+        if (u == null) {
             throw new UnsupportedOperationException("El cliente no existe");
-        
+        }
+
         return u.getSeguidores();
     }
-    
+
     public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente) {
-         Usuario c = this.usuarios.get(nickCliente);
-         if (c == null){
-             throw new UnsupportedOperationException("No existe el Cliente");
-         }
-         if (!(c instanceof Cliente)) {
+        Usuario c = this.usuarios.get(nickCliente);
+        if (c == null) {
+            throw new UnsupportedOperationException("No existe el Cliente");
+        }
+        if (!(c instanceof Cliente)) {
             throw new UnsupportedOperationException("Usuario no es un cliente");
         }
-         
-         this.usuarioRecordado = c;
-        
+
+        this.usuarioRecordado = c;
+
         return ((Cliente) c).listarLisReproduccion();
     }
 
-    public DtLista selectListaCli(String nombreL){
+    public DtLista selectListaCli(String nombreL) {
         return ((Cliente) this.usuarioRecordado).seleccionarLista(nombreL);
     }
 }

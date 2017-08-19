@@ -8,6 +8,7 @@ public interface IUsuario {
     public Artista selectArtista(String nick);
     public ArrayList<DtUsuario> listarUsuarios();
     public boolean ingresarUsuario(DtUsuario dtu);
+    public void levantarUsuario(DtUsuario dtu);
     public ArrayList<DtUsuario> listarClientes();
     public ArrayList<DtUsuario> listarArtistas();
     public DtPerfilUsuario obtenerPerfilArtista(String nickArtista);
