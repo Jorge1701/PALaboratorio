@@ -74,6 +74,11 @@ public class menu extends javax.swing.JFrame {
         jMenu1.add(altaGenero);
 
         crearListaRep.setText("Crear Lista de Reproduccion");
+        crearListaRep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearListaRepActionPerformed(evt);
+            }
+        });
         jMenu1.add(crearListaRep);
 
         publicarLista.setText("Publicar Lista");
@@ -240,6 +245,10 @@ public class menu extends javax.swing.JFrame {
         PanelMenu.add(cpc);
         cpc.show();
     }//GEN-LAST:event_ConsultaPerfilArtistaActionPerformed
+
+    private void crearListaRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearListaRepActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_crearListaRepActionPerformed
 
     private void altaGeneroActionPerformed(java.awt.event.ActionEvent evt) {                                           
          AltaGenero cpc;

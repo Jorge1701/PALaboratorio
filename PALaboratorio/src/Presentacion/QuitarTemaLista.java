@@ -22,6 +22,8 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
         initComponents();
         defecto.setSelected(true);
         this.IC = Fabrica.getInstance().getIControladorContenido();
+        TXTusuario.setVisible(false);
+        usuario.setVisible(false);
     }
 
     /**
@@ -33,12 +35,13 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        TipoLista = new javax.swing.ButtonGroup();
         tipo = new javax.swing.JLabel();
         defecto = new javax.swing.JRadioButton();
         particular = new javax.swing.JRadioButton();
         usuario = new javax.swing.JTextField();
         nombre = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        TXTusuario = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lista = new javax.swing.JList<>();
@@ -52,6 +55,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
 
         tipo.setText("Tipo de Lista:");
 
+        TipoLista.add(defecto);
         defecto.setText("Defecto");
         defecto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,9 +63,15 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
             }
         });
 
+        TipoLista.add(particular);
         particular.setText("Particular");
+        particular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                particularActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setText("Usuario:");
+        TXTusuario.setText("Usuario:");
 
         jLabel3.setText("Nombre:");
 
@@ -97,7 +107,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel3)
-                        .addComponent(jLabel2))
+                        .addComponent(TXTusuario))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(tipo)))
@@ -140,7 +150,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
                         .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+                            .addComponent(TXTusuario))
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -161,7 +171,8 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void defectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defectoActionPerformed
-        // TODO add your handling code here:
+                    usuario.setVisible(false);
+        TXTusuario.setVisible(false);       // TODO add your handling code here:
     }//GEN-LAST:event_defectoActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
@@ -171,8 +182,13 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         // TODO add your handling code here:
-        boolean ok = IC.quitarTema(lista.getSelectedValue(), nombre.getText());
+        boolean ok=false ;
+        if(defecto.isSelected()){
+         ok = IC.quitarTema(lista.getSelectedValue(), nombre.getText(),null);
 
+        }
+        else
+         ok = IC.quitarTema(lista.getSelectedValue(), nombre.getText(),usuario.getText());    
         if (ok) {
             javax.swing.JOptionPane.showMessageDialog(null, "El tema fue removido con éxito", "Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -203,18 +219,25 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_cargarActionPerformed
 
+    private void particularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_particularActionPerformed
+     if(particular.isSelected()){
+         usuario.setVisible(true);
+         TXTusuario.setVisible(true);
+    }//GEN-LAST:event_particularActionPerformed
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel TXTusuario;
+    private javax.swing.ButtonGroup TipoLista;
     private javax.swing.JButton aceptar;
     private javax.swing.JButton cancelar;
     private javax.swing.JButton cargar;
-    private javax.swing.JRadioButton defecto;
-    private javax.swing.JLabel jLabel2;
+    public static javax.swing.JRadioButton defecto;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> lista;
     private javax.swing.JTextField nombre;
-    private javax.swing.JRadioButton particular;
+    public static javax.swing.JRadioButton particular;
     private javax.swing.JLabel tipo;
     private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
