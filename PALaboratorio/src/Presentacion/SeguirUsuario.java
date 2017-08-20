@@ -1,5 +1,6 @@
 package Presentacion;
 
+import Logica.Cliente;
 import Logica.DtArtista;
 import Logica.DtCliente;
 import Logica.DtUsuario;
@@ -190,7 +191,7 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
 
         for (DtUsuario dtu : usuarios) {
             String nick = dtu.getNickname();
-            if (nick != nickCliente) {
+            if (nick != nickCliente &&  ! iUsuario.listarSeguidosDe(nickCliente).contains(dtu.getNickname())) {
                 Object[] data = {
                     nick,
                     dtu.getNombre(),

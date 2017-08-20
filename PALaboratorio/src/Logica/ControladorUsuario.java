@@ -257,6 +257,13 @@ public class ControladorUsuario implements IUsuario {
     }
 
     @Override
+    public ArrayList<String> listarSeguidosDe(String nickCliente){
+        Cliente c = (Cliente)usuarios.get(nickCliente);
+        return c.obtenerSeguidos();
+        
+    }
+    
+    @Override
     public ArrayList<DtCliente> listarSeguidoresDe(String nickUsuario) {
         Usuario u = usuarios.get(nickUsuario);
 
