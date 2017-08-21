@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -371,6 +372,10 @@ public class CargaDatosPrueba {
             return false;
         }
 
+        if (!insertarTemas()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -400,6 +405,70 @@ public class CargaDatosPrueba {
         }
 
         return true;
+    }
+
+    private boolean insertarTemas() {
+        for (String[] tema : temas) {
+            try {
+                String nickArtista = "";
+                String nombreAlbum = "";
+
+                for (String[] album : albumes) {
+                    if (album[1] == tema[0]) {
+                        nombreAlbum = album[2];
+
+                        for (String[] usuario : perfiles) {
+                            if (usuario[0] == album[0]) {
+                                nickArtista = usuario[1];
+                            }
+                        }
+                    }
+                }
+
+                int idAlbum = obtenerIdAlbum(nickArtista, nombreAlbum);
+                String nombre = tema[2];
+                Time duracion = new Time(0, Integer.parseInt(nombre), 0);
+                int ubicacion = Integer.parseInt(tema[5]);
+
+                PreparedStatement insert = conexion.prepareStatement("INSERT INTO tema (nickArtista, idAlbum, nombre, duracion, ubicacion) VALUES (?, ?, ?, ?, ?)");
+                insert.setString(1, nickArtista);
+                insert.setInt(2, idAlbum);
+                insert.setString(3, nombre);
+                insert.setTime(4, duracion);
+                insert.setInt(5, ubicacion);
+                insert.executeUpdate();
+                insert.close();
+
+                return true;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int obtenerIdAlbum(String nickArtista, String nombreAlbum) {
+        try {
+            PreparedStatement query = conexion.prepareStatement("SELECT idAlbum FROM album WHERE nombre = ? AND nicknameArtista = ?");
+            query.setString(1, nombreAlbum);
+            query.setString(2, nickArtista);
+
+            ResultSet rs = query.executeQuery();
+            int idAlbum = 0;
+
+            while (rs.next()) {
+                idAlbum = rs.getInt(1);
+            }
+
+            rs.close();
+            query.close();
+
+            return idAlbum;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return 0;
+        }
     }
 
     public boolean borrarTodosLosDatos() {
@@ -433,5 +502,4 @@ public class CargaDatosPrueba {
             return false;
         }
     }
-
 }
