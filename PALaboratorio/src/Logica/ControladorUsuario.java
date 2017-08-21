@@ -86,6 +86,7 @@ public class ControladorUsuario implements IUsuario {
         }
     }
 
+    @Override
     public void levantarUsuario(DtUsuario dtu) {
         Usuario u;
         if (dtu instanceof DtCliente) {

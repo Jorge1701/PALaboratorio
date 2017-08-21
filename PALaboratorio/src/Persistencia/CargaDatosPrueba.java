@@ -370,8 +370,59 @@ public class CargaDatosPrueba {
         if (!insertarSeguidores()) {
             return false;
         }
-
+        insertarUsuarios();
         return true;
+    }
+
+    public boolean insertarUsuarios() {
+
+        for (String[] usuario : perfiles) {
+            String nickName = usuario[1];
+            String nombre = usuario[3];
+            String apellido = usuario[4];
+            String correo = usuario[2];
+            Date fecha = new Date(Integer.parseInt(usuario[5]), Integer.parseInt(usuario[6]), Integer.parseInt(usuario[7]));
+            if (usuario[8] == "A") {
+                try {
+                    String bio = "";
+                    String web = "";
+                    for (String[] info : infoArtistas) {
+                        if (info[0] == usuario[0]) {
+                            bio = info[2];
+                            web = info[3];
+                        }
+                    }
+                    PreparedStatement insert = conexion.prepareStatement("INSERT INTO artista VALUES(?,?,?,?,?,?,?)");
+                    insert.setString(1, nickName);
+                    insert.setString(2, nombre);
+                    insert.setString(3, apellido);
+                    insert.setString(4, correo);
+                    insert.setDate(5, fecha);
+                    insert.setString(6, bio);
+                    insert.setString(7, web);
+                    insert.executeUpdate();
+                    insert.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else {
+                try {
+                    PreparedStatement insert = conexion.prepareStatement("INSERT INTO cliente VALUES(?,?,?,?,?)");
+                    insert.setString(1, nickName);
+                    insert.setString(2, nombre);
+                    insert.setString(3, apellido);
+                    insert.setString(4, correo);
+                    insert.setDate(5, fecha);
+                    insert.executeUpdate();
+                    insert.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        return false;
     }
 
     private boolean insertarSeguidores() {
@@ -400,10 +451,6 @@ public class CargaDatosPrueba {
         }
 
         return true;
-    }
-
-    public void levantarAlbumes() {
-
     }
 
     public boolean borrarTodosLosDatos() {

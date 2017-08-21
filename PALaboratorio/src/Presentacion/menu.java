@@ -16,8 +16,8 @@ public class menu extends javax.swing.JFrame {
 
         try {
             Fabrica.levantarDatos();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,e.getMessage() );
         }
     }
 

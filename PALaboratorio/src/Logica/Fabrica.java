@@ -2,7 +2,6 @@ package Logica;
 
 import Persistencia.CargaDatosPrueba;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Fabrica {
 
@@ -47,6 +46,7 @@ public class Fabrica {
         ArrayList<DtUsuario> usuarios = cdp.cargarUsuarios();
         if (usuarios == null) {
             throw new Exception("Error : Los usuarios no puedieron ser cargados");
+
         }
 
         for (DtUsuario dtu : usuarios) {
@@ -57,7 +57,7 @@ public class Fabrica {
         if (relaciones == null) {
             throw new Exception("Error : Las relaciones de seguimiento no pudieron ser cargadas");
         }
-        
+
         for (String[] r : relaciones) {
             Usuario cliente = iu.obtenerUsuario(r[0]);
             Usuario usuario = iu.obtenerUsuario(r[1]);

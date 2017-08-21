@@ -5,16 +5,12 @@
  */
 package Persistencia;
 
-import Logica.Genero;
 import Logica.Tema;
 import Logica.Album;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
