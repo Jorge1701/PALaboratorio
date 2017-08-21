@@ -17,7 +17,7 @@ public class Fabrica {
     }
 
     private Fabrica() {
-        levantarDatos();
+        insertarDatosPrueba();
     }
      */
     public static void inicializarControladores() {
@@ -33,7 +33,7 @@ public class Fabrica {
 
         inicializarControladores();
 
-        if (!cdp.levantarDatos()) {
+        if (!cdp.insertarDatosPrueba()) {
             throw new Exception("Error : no se puedieron levantar los datos de la BD");
         }
 
