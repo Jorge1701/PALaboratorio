@@ -139,7 +139,12 @@ public class CargaDatosPrueba {
     }
 
     public boolean levantarDatos() {
+        levantarAlbumes();
         return false;
+    }
+
+    public void levantarAlbumes() {
+
     }
 
     public boolean borrarTodosLosDatos() {

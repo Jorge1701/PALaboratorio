@@ -191,7 +191,7 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
 
         for (DtUsuario dtu : usuarios) {
             String nick = dtu.getNickname();
-            if (nick != nickCliente &&  ! iUsuario.listarSeguidosDe(nickCliente).contains(dtu.getNickname())) {
+            if (nick != nickCliente &&  ! iUsuario.listarSeguidosDe(nickCliente).contains(dtu.getNickname()) /*iUsuario.listarSeguidoresDe(nick).contains(iUsuario.obtenerUsuario(nickCliente).getData())*/) {
                 Object[] data = {
                     nick,
                     dtu.getNombre(),
