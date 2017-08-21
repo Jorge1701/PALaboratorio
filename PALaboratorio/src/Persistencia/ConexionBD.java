@@ -16,17 +16,10 @@ public class ConexionBD {
     private final String port="3306";
     private final String db="espotify";
     private final String user="root";
-    private final String pass="rooteo";
-    
-    
-    
-
-
-
-
-     private  String url;
-      public Connection Link = null;
-      public boolean conectado;
+    private final String pass="root";
+    private  String url;
+     public Connection Link = null;
+     public boolean conectado;
     //Para hacer ConexionDB singleton descomentar
     //private static Connection conexion=null;
     private Connection conexion=null;

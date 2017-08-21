@@ -21,7 +21,7 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
         initComponents();
         this.tipo = tipo;
         
-        iUsuario = Fabrica.getInstance().getIControladorUsuario();
+        iUsuario = Fabrica.getIControladorUsuario();
         ArrayList<DtUsuario> dtc=null;
         
         ArrayList<DtUsuario> dta=null;

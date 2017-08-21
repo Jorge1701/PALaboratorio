@@ -41,6 +41,10 @@ public abstract class Usuario {
         return dtSeguidores;
     }
     
+    public void clienteMeDejoDeSeguir(Cliente c) {
+        seguidores.remove(c.getNickname());
+    }
+    
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -91,5 +95,21 @@ public abstract class Usuario {
 
     public void agregar(Cliente cliente){
         this.seguidores.put(cliente.getNickname(), cliente); 
+    }
+    
+    public boolean meComenzoASeguir(Cliente cliente){
+        if(seguidores.get(cliente.getNickname())!= null){
+            return false;
+        }
+        seguidores.put(cliente.getNickname(), cliente);
+        return true;
+    }
+    
+    public boolean meDejoDeSeguir(Cliente cliente){
+       if(seguidores.get(cliente.getNickname())== null){
+            return false;
+        }
+        seguidores.remove(cliente.getNickname());
+        return true; 
     }
 }

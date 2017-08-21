@@ -23,8 +23,8 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
 
     public ConsultaAlbum() {
         initComponents();
-        this.iUsuario = Fabrica.getInstance().getIControladorUsuario();
-        this.iContenido = Fabrica.getInstance().getIControladorContenido();
+        this.iUsuario = Fabrica.getIControladorUsuario();
+        this.iContenido = Fabrica.getIControladorContenido();
 
         btnConsultaGenero.setSelected(true);
         btnConsultaGeneroActionPerformed(null);
@@ -34,13 +34,12 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
         if (btnConsultaGenero.isSelected()) {
             generos.setEnabled(true);
             tablaArtistas.setEnabled(false);
-
+            lblSelec.setText("Seleccione un genero y un album y luego presione 'aceptar'");
         } else if (btnConsultaArtista.isSelected()) {
             generos.setEnabled(false);
             tablaArtistas.setEnabled(true);
-
+            lblSelec.setText("Seleccione un artista y un album y luego presione 'aceptar'");
         }
-        repaint();
     }
 
     private DefaultMutableTreeNode getNodo(DtGenero g) {
@@ -71,8 +70,9 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaAlbumes = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
+        lblSelec = new javax.swing.JLabel();
 
         setIconifiable(true);
         setTitle("Consulta de album");
@@ -137,7 +137,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +172,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,13 +181,6 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
 
         jSplitPane1.setRightComponent(jPanel3);
 
-        btnAceptar.setText("Aceptar");
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
-
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,23 +188,39 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnAceptar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
-                .addContainerGap())
+                .addGap(22, 22, 22))
         );
+
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAceptar, btnCancelar});
+
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(btnAceptar)
-                .addComponent(btnCancelar))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnAceptar)))
         );
+
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAceptar, btnCancelar});
+
+        lblSelec.setText("Seleccione un y un album y luego presione 'aceptar'");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,7 +235,9 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
                         .addGap(28, 28, 28)
                         .addComponent(btnConsultaArtista))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(204, 204, 204)
+                        .addContainerGap()
+                        .addComponent(lblSelec)
+                        .addGap(48, 48, 48)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -239,9 +250,11 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
                     .addComponent(btnConsultaArtista))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSelec)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -249,7 +262,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
 
     private void btnConsultaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaGeneroActionPerformed
         mostrar();
-
+        //Carga los generos en el arbol(generos)
         generos.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         DtGenero g = iContenido.listarGenero();
 
@@ -258,6 +271,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnConsultaGeneroActionPerformed
 
     private void generosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_generosValueChanged
+        //Carga los albumes del genero seleccionado en la tabla
         DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
         String generoSeleccionado = selectedElement.getUserObject().toString();
 
@@ -278,9 +292,8 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
 
     private void btnConsultaArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaArtistaActionPerformed
         mostrar();
-
+        //Carga  los artistas en la tabla(tablaArtistas)
         ArrayList<DtUsuario> dta = iUsuario.listarArtistas();
-
         DefaultTableModel dtm = (DefaultTableModel) tablaArtistas.getModel();
         dtm.setRowCount(0);
 
@@ -291,11 +304,12 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
             dtm.addRow(data);
         }
 
+        //Permite que al seleccionar una fila se obtenga el dato seleccionado(en este caso el nick)
         tablaArtistas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 artistaSeleccionado(tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 1).toString());
-                
+
             }
         });
 
@@ -303,8 +317,8 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
 
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nickArtista = null;
-        String nomAlbum = null;
+        String nickArtista;
+        String nomAlbum;
         DtAlbumContenido albCont;
 
         if (btnConsultaGenero.isSelected()) {
@@ -342,6 +356,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void artistaSeleccionado(String nickArtista) {
+       //Carga la tabla de albumes del artista(nickArtista)
         ArrayList<DtAlbum> dta = iUsuario.listarAlbumesArtista(nickArtista);
 
         DefaultTableModel dtm = (DefaultTableModel) tablaAlbumes.getModel();
@@ -372,6 +387,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
+    private javax.swing.JLabel lblSelec;
     private javax.swing.JTable tablaAlbumes;
     private javax.swing.JTable tablaArtistas;
     // End of variables declaration//GEN-END:variables

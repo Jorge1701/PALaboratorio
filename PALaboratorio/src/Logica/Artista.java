@@ -18,16 +18,6 @@ public class Artista extends Usuario {
         this.biografia = biografia;
         this.web = web;
         this.albumes = new HashMap();
-
-        /*HashMap<String, Tema> temas = new HashMap<>();
-        temas.put("tema1", new TemaRemoto("tema1", new DtTime(2, 94, 4), 2,"https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable"));
-        temas.put("tema2", new TemaRemoto("tema2", new DtTime(3, 85, 244), 6,"https://stackoverflow.com/questions/1990817/how-to-make-a-jtable-non-editable"));
-        temas.put("tema3", new TemaLocal("/dir1/dir2","tema3", new DtTime(4,77,424), 8));
-      
-        
-        albumes.put("album1", new Album(this.getNickname(), "album1", 2015, null, temas,new ArrayList<>()));
-        albumes.put("album2", new Album(this.getNickname(), "album2", 2016, null, temas,new ArrayList<>()));
-        albumes.put("album3", new Album(this.getNickname(), "album3", 2017, null, temas, new ArrayList<>()));*/
     }
 
     public ArrayList<DtAlbum> obtenerAlbumes() {

@@ -1,14 +1,26 @@
 package Presentacion;
-
+import Logica.Fabrica;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+
+
 
 public class menu extends javax.swing.JFrame {
 
     public menu() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
+
+        Fabrica.inicializarControladores();
+
+        try {
+            Fabrica.levantarDatos();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -68,17 +80,22 @@ public class menu extends javax.swing.JFrame {
         jMenu1.add(altaPerfil);
 
         altaAlbum.setText("Alta Album");
+        altaAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaAlbumActionPerformed(evt);
+            }
+        });
         jMenu1.add(altaAlbum);
 
         altaGenero.setText("Alta de Genero");
+        altaGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaGeneroActionPerformed(evt);
+            }
+        });
         jMenu1.add(altaGenero);
 
         crearListaRep.setText("Crear Lista de Reproduccion");
-        crearListaRep.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                crearListaRepActionPerformed(evt);
-            }
-        });
         jMenu1.add(crearListaRep);
 
         publicarLista.setText("Publicar Lista");
@@ -171,6 +188,11 @@ public class menu extends javax.swing.JFrame {
         jMenu5.setText("Datos de Prueba");
 
         cargarDatos.setText("Cargar");
+        cargarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargarDatosActionPerformed(evt);
+            }
+        });
         jMenu5.add(cargarDatos);
 
         jMenuBar1.add(jMenu5);
@@ -235,7 +257,7 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_consultaAlbumActionPerformed
 
     private void consultaListaRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaListaRepActionPerformed
-      ConsultaListaReproduccion clr = new ConsultaListaReproduccion();
+        ConsultaListaReproduccion clr = new ConsultaListaReproduccion();
         PanelMenu.add(clr);
         clr.show();
     }//GEN-LAST:event_consultaListaRepActionPerformed
@@ -246,26 +268,30 @@ public class menu extends javax.swing.JFrame {
         cpc.show();
     }//GEN-LAST:event_ConsultaPerfilArtistaActionPerformed
 
-    private void crearListaRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearListaRepActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_crearListaRepActionPerformed
+    private void cargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarDatosActionPerformed
+        try {
+            Fabrica.cargaDatosPrueba();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_cargarDatosActionPerformed
 
-    private void altaGeneroActionPerformed(java.awt.event.ActionEvent evt) {                                           
-         AltaGenero cpc;
+    private void altaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaAlbumActionPerformed
+        AltaAlbum cpc = new AltaAlbum();
+        PanelMenu.add(cpc);
+        cpc.show();
+    }//GEN-LAST:event_altaAlbumActionPerformed
+
+    private void altaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaGeneroActionPerformed
+        AltaGenero cpc;
         try {
             cpc = new AltaGenero();
             PanelMenu.add(cpc);
-         cpc.show();
+            cpc.show();
         } catch (SQLException ex) {
             Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }                                          
-    private void altaAlbumActionPerformed(java.awt.event.ActionEvent evt) {                                          
-
-         AltaAlbum cpc = new AltaAlbum();
-         PanelMenu.add(cpc);
-         cpc.show();
-    }                                         
+    }//GEN-LAST:event_altaGeneroActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

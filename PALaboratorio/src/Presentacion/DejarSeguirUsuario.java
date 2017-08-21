@@ -16,8 +16,15 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
 
     public DejarSeguirUsuario() {
         initComponents();
-        iUsuario = Fabrica.getInstance().getIControladorUsuario();
+        iUsuario = Fabrica.getIControladorUsuario();
         
+        cargarDatos();
+
+        // Hace que al hacer click en una fila de la tablaClientes se llame al metodo valueChanged()
+        tablaUsuarios.getSelectionModel().addListSelectionListener(this);
+    }
+    
+    private void cargarDatos() {
         // Obtiene todo los clientes
         ArrayList<DtUsuario> dtus = iUsuario.listarUsuarios();
 
@@ -36,15 +43,14 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
             };
             dtm.addRow(data);
         }
-
-        // Hace que al hacer click en una fila de la tablaClientes se llame al metodo valueChanged()
-        tablaUsuarios.getSelectionModel().addListSelectionListener(this);
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
         // Obtiene el nick del cliente seleccionado y se lo pasa a la funcion cliente seleccionado
-        usuarioSeleccionado(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString());
+        if (tablaUsuarios.getSelectedRow() != -1) {
+            usuarioSeleccionado(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString());
+        }
     }
     
     private void usuarioSeleccionado(String nickUsuario) {
@@ -223,11 +229,17 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
         String seguidor = tablaSeguidores.getValueAt(tablaSeguidores.getSelectedRow(), 0).toString();
         
         try {
+            JOptionPane.showMessageDialog(this, "asdasd");
             iUsuario.dejarSeguirUsuario(seguidor, usuario);
             JOptionPane.showMessageDialog(this, "El cliente " + seguidor + " dejo de seguir al usuario " + usuario);
         } catch (UnsupportedOperationException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+        
+        cargarDatos();
+        
+        DefaultTableModel dtm = (DefaultTableModel) tablaSeguidores.getModel();
+        dtm.setRowCount(0);
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

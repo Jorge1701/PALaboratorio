@@ -88,13 +88,10 @@ public class Album {
         ArrayList<String> nomGeneros = new ArrayList<>();
         ArrayList<DtTema> dtTemas = new ArrayList<>();
 
-        Iterator it = generos.iterator();
-        while (it.hasNext()) {
-            Genero genero = (Genero) ((Map.Entry) it.next()).getValue();
+        for (Genero genero : generos) {
             nomGeneros.add(genero.getNombre());
-
         }
-
+      
         Iterator it1 = temas.entrySet().iterator();
         while (it1.hasNext()) {
             Tema tema = (Tema) ((Map.Entry) it1.next()).getValue();
