@@ -17,30 +17,28 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
     public DejarSeguirUsuario() {
         initComponents();
         iUsuario = Fabrica.getIControladorUsuario();
-        
+
         cargarDatos();
 
         // Hace que al hacer click en una fila de la tablaClientes se llame al metodo valueChanged()
-        tablaUsuarios.getSelectionModel().addListSelectionListener(this);
+        tablaClientes.getSelectionModel().addListSelectionListener(this);
     }
-    
+
     private void cargarDatos() {
         // Obtiene todo los clientes
-        ArrayList<DtUsuario> dtus = iUsuario.listarUsuarios();
+        ArrayList<DtUsuario> dtcs = iUsuario.listarClientes();
 
         // Obtiene el modelo de la tablaClientes y borra su contenido
-        DefaultTableModel dtm = (DefaultTableModel) tablaUsuarios.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
         dtm.setRowCount(0);
 
         // Agrega los clientes a la tablaClientes
-        for (DtUsuario dtu : dtus) {
+        for (DtUsuario dtc : dtcs) {
             Object[] data = {
-                dtu.getNickname(),
-                dtu.getNickname(),
-                dtu.getApellido(),
-                dtu.getEmail(),
-                (dtu instanceof DtCliente ? "Cliente" : "Artista")
-            };
+                dtc.getNickname(),
+                dtc.getNickname(),
+                dtc.getApellido(),
+                dtc.getEmail(),};
             dtm.addRow(data);
         }
     }
@@ -48,37 +46,38 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
     @Override
     public void valueChanged(ListSelectionEvent e) {
         // Obtiene el nick del cliente seleccionado y se lo pasa a la funcion cliente seleccionado
-        if (tablaUsuarios.getSelectedRow() != -1) {
-            usuarioSeleccionado(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString());
+        if (tablaClientes.getSelectedRow() != -1) {
+            usuarioSeleccionado(tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString());
         }
     }
-    
+
     private void usuarioSeleccionado(String nickUsuario) {
         // Se obtienen los seguidores de nickUsuario
-        ArrayList<DtCliente> seguidores = iUsuario.listarSeguidoresDe(nickUsuario);
-        
+        ArrayList<DtUsuario> seguidos = iUsuario.listarSeguidosDe(nickUsuario);
+
         // Si no tiene seguidores se muestra un mensaje
-        if (seguidores.isEmpty()) {
+        if (seguidos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El usuario " + nickUsuario + " no tiene seguidores");
             return;
         }
 
         // Obtiene el modelo de la tablaSeguidores y borra su contenido
-        DefaultTableModel dtm = (DefaultTableModel) tablaSeguidores.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) tablaSeguidos.getModel();
         dtm.setRowCount(0);
-        
+
         // Agrega los seguidores a la tablaSeguidores
-        for (DtCliente seguidor : seguidores) {
+        for (DtUsuario seguido : seguidos) {
             Object[] data = {
-                seguidor.getNickname(),
-                seguidor.getNickname(),
-                seguidor.getApellido(),
-                seguidor.getEmail()
+                seguido.getNickname(),
+                seguido.getNickname(),
+                seguido.getApellido(),
+                seguido.getEmail(),
+                (seguido instanceof DtCliente ? "Cliente" : "Artista")
             };
             dtm.addRow(data);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -87,14 +86,14 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tablaSeguidores = new javax.swing.JTable();
+        tablaSeguidos = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         botonCancelar = new javax.swing.JButton();
         botonAceptar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaUsuarios = new javax.swing.JTable();
+        tablaClientes = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -108,17 +107,17 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
         jSplitPane2.setDividerLocation(250);
         jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Seguidores"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Seguidos"));
 
-        tablaSeguidores.setModel(new javax.swing.table.DefaultTableModel(
+        tablaSeguidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nickname", "Nombre", "Apellido", "Correo"
+                "Nickname", "Nombre", "Apellido", "Correo", "Tipo"
             }
         ));
-        jScrollPane2.setViewportView(tablaSeguidores);
+        jScrollPane2.setViewportView(tablaSeguidos);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -177,17 +176,17 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
 
         jSplitPane1.setBottomComponent(jSplitPane2);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Usuarios"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Clientes"));
 
-        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nickname", "Nombre", "Apellido", "Correo", "Tipo"
+                "Nickname", "Nombre", "Apellido", "Correo"
             }
         ));
-        jScrollPane1.setViewportView(tablaUsuarios);
+        jScrollPane1.setViewportView(tablaClientes);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -213,32 +212,33 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         String tablasSinSeleccionar = "";
-        
-        if (tablaUsuarios.getSelectionModel().isSelectionEmpty())
-            tablasSinSeleccionar += "\nUsuarios";
-        
-        if (tablaSeguidores.getSelectionModel().isSelectionEmpty())
-            tablasSinSeleccionar += "\nSeguidores";
-        
+
+        if (tablaClientes.getSelectionModel().isSelectionEmpty()) {
+            tablasSinSeleccionar += "\nClientes";
+        }
+
+        if (tablaSeguidos.getSelectionModel().isSelectionEmpty()) {
+            tablasSinSeleccionar += "\nSeguidos";
+        }
+
         if (!tablasSinSeleccionar.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una fila en las siguientes tablas:\n" + tablasSinSeleccionar);
             return;
         }
-        
-        String usuario = tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0).toString();
-        String seguidor = tablaSeguidores.getValueAt(tablaSeguidores.getSelectedRow(), 0).toString();
-        
+
+        String cliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
+        String seguido = tablaSeguidos.getValueAt(tablaSeguidos.getSelectedRow(), 0).toString();
+
         try {
-            JOptionPane.showMessageDialog(this, "asdasd");
-            iUsuario.dejarSeguirUsuario(seguidor, usuario);
-            JOptionPane.showMessageDialog(this, "El cliente " + seguidor + " dejo de seguir al usuario " + usuario);
+            iUsuario.dejarSeguirUsuario(cliente, seguido);
+            JOptionPane.showMessageDialog(this, "El cliente " + cliente + " dejo de seguir al usuario " + seguido);
         } catch (UnsupportedOperationException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        
+
         cargarDatos();
-        
-        DefaultTableModel dtm = (DefaultTableModel) tablaSeguidores.getModel();
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaSeguidos.getModel();
         dtm.setRowCount(0);
     }//GEN-LAST:event_botonAceptarActionPerformed
 
@@ -253,7 +253,7 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
-    private javax.swing.JTable tablaSeguidores;
-    private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTable tablaClientes;
+    private javax.swing.JTable tablaSeguidos;
     // End of variables declaration//GEN-END:variables
 }

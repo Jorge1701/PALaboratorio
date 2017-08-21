@@ -189,15 +189,15 @@ public class Cliente extends Usuario {
         ListaParticular lp = listasParticulares.get(nombreL);
         return new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas());
     }
-    
-    public ArrayList<String> obtenerSeguidos(){
-        ArrayList<String> dtu = new ArrayList<>();
-        
+
+    public ArrayList<DtUsuario> obtenerSeguidos() {
+        ArrayList<DtUsuario> dtu = new ArrayList<>();
+
         Iterator it = seguidos.entrySet().iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             Usuario u = (Usuario) ((Map.Entry) it.next()).getValue();
-            dtu.add(u.getNickname());
+            dtu.add(u.getData());
         }
         return dtu;
-    } 
+    }
 }

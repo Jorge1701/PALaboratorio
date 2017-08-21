@@ -368,15 +368,15 @@ public class CargaDatosPrueba {
     }
 
     public boolean insertarDatosPrueba() {
+        insertarUsuarios();
+
         if (!insertarSeguidores()) {
             return false;
         }
-        insertarUsuarios();
 
-        if (!insertarTemas()) {
-            return false;
-        }
-
+        //if (!insertarTemas()) {
+        //  return false;
+        //}
         return true;
     }
 

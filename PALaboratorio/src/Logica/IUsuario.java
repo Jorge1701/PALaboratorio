@@ -20,7 +20,7 @@ public interface IUsuario {
     public ArrayList<DtAlbum> listarAlbumesArtista(String nickArtista);
     public DtAlbumContenido obtenerAlbumContenido(String nickArt, String nomAlbum);
     public ArrayList<DtCliente> listarSeguidoresDe(String nickUsuario);
-    public ArrayList<String> listarSeguidosDe(String nickCliente);
+    public ArrayList<DtUsuario> listarSeguidosDe(String nickCliente);
     public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente);
     public DtLista selectListaCli(String nombreL);
 }
