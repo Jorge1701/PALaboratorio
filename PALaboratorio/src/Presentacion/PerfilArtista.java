@@ -231,7 +231,6 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
 
         txtFechaNac7.setEditable(false);
         txtFechaNac7.setBackground(new java.awt.Color(255, 255, 255));
-        txtFechaNac7.setEnabled(false);
         txtFechaNac7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFechaNac7ActionPerformed(evt);
