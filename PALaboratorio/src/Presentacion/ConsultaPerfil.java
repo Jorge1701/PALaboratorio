@@ -8,7 +8,6 @@ import Logica.DtPerfilCliente;
 import Logica.DtPerfilUsuario;
 import Logica.Fabrica;
 import Logica.IUsuario;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
