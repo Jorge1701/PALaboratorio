@@ -1,9 +1,11 @@
 package Presentacion;
 
 import Logica.Fabrica;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class menu extends javax.swing.JFrame {
@@ -17,7 +19,7 @@ public class menu extends javax.swing.JFrame {
         try {
             Fabrica.levantarDatos();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,e.getMessage() );
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -292,6 +294,15 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_altaGeneroActionPerformed
 
     public static void main(String args[]) {
+
+        JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int o = fc.showOpenDialog(null);
+        if (o == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fc.getSelectedFile();
+            JOptionPane.showMessageDialog(null, selectedFile.getAbsolutePath());
+
+        }
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
