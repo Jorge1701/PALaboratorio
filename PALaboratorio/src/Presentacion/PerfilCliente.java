@@ -16,18 +16,31 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class PerfilCliente extends javax.swing.JInternalFrame {
-    
+
     public PerfilCliente(DtPerfilCliente dtPerfilCliente) {
         initComponents();
+
+        txtNickname.setEnabled(true);
+        txtNombre.setEnabled(true);
+        txtApellido.setEnabled(true);
+        txtEmail.setEnabled(true);
+        txtFechaNac.setEnabled(true);
+
+        txtNickname.setEditable(false);
+        txtNombre.setEditable(false);
+        txtApellido.setEditable(false);
+        txtEmail.setEditable(false);
+        txtFechaNac.setEditable(false);
+
         setTitle(getTitle() + dtPerfilCliente.getInfo().getNickname());
-        
+
         // Cargar datos basicos
         txtNickname.setText(dtPerfilCliente.getInfo().getNickname());
         txtNombre.setText(dtPerfilCliente.getInfo().getNombre());
         txtApellido.setText(dtPerfilCliente.getInfo().getApellido());
         txtEmail.setText(dtPerfilCliente.getInfo().getEmail());
         txtFechaNac.setText(dtPerfilCliente.getInfo().getFechaNac().toString());
-        
+
         // Cargar imagen
         try {
             BufferedImage img = ImageIO.read(new File("E:/tierra.jpg"));
@@ -38,10 +51,10 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen del usuario");
         }
-        
+
         // Cargar Seguidores
         ((TitledBorder) panelSeguidores.getBorder()).setTitle("Seguidores (" + dtPerfilCliente.getSeguidores().size() + "):");
-        
+
         DefaultTableModel dtmSeguidores = (DefaultTableModel) talbaSeguidores.getModel();
         dtmSeguidores.setRowCount(0);
         for (DtCliente dtc : dtPerfilCliente.getSeguidores()) {
@@ -50,14 +63,13 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                 dtc.getNombre(),
                 dtc.getApellido(),
                 dtc.getEmail(),
-                dtc.getFechaNac().toString(),
-            };
+                dtc.getFechaNac().toString(),};
             dtmSeguidores.addRow(data);
         }
-        
+
         // Cargar Seguidos
         ((TitledBorder) panelSeguidos.getBorder()).setTitle("Seguidos (" + dtPerfilCliente.getSeguidos().size() + "):");
-        
+
         DefaultTableModel dtmSeguidos = (DefaultTableModel) tablaSeguidos.getModel();
         dtmSeguidos.setRowCount(0);
         for (DtUsuario dtc : dtPerfilCliente.getSeguidos()) {
@@ -67,10 +79,10 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             };
             dtmSeguidos.addRow(data);
         }
-        
+
         // Cargar Listas Creadas
         ((TitledBorder) panelListasCreadas.getBorder()).setTitle("Listas Creadas (" + dtPerfilCliente.getListasCreadas().size() + "):");
-        
+
         DefaultTableModel dtmListasCreadas = (DefaultTableModel) tablaListasCreadas.getModel();
         dtmListasCreadas.setRowCount(0);
         for (DtListaParticular dtlp : dtPerfilCliente.getListasCreadas()) {
@@ -80,10 +92,10 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             };
             dtmListasCreadas.addRow(data);
         }
-        
+
         // Cargar Listas Favoritos
         ((TitledBorder) panelListasFavs.getBorder()).setTitle("Listas Favoritas (" + dtPerfilCliente.getListasFavoritas().size() + "):");
-        
+
         DefaultTableModel dtmListasFavs = (DefaultTableModel) tablaListasFavs.getModel();
         dtmListasFavs.setRowCount(0);
         for (DtLista dtl : dtPerfilCliente.getListasFavoritas()) {
@@ -93,10 +105,10 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             };
             dtmListasFavs.addRow(data);
         }
-        
+
         // Cargar Albumes Favoritos
         ((TitledBorder) panelAlbumes.getBorder()).setTitle("Albumes Favoritos (" + dtPerfilCliente.getAlbumes().size() + "):");
-        
+
         DefaultTableModel dtmAlbumes = (DefaultTableModel) tablaAlbumes.getModel();
         dtmAlbumes.setRowCount(0);
         for (DtAlbum dta : dtPerfilCliente.getAlbumes()) {
@@ -107,10 +119,10 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             };
             dtmAlbumes.addRow(data);
         }
-        
+
         // Cargar Temas Favoritos
         ((TitledBorder) panelTemas.getBorder()).setTitle("Temas Favoritos (" + dtPerfilCliente.getTemas().size() + "):");
-        
+
         DefaultTableModel dtmTemas = (DefaultTableModel) tablaTemas.getModel();
         dtmTemas.setRowCount(0);
         for (DtTema dtt : dtPerfilCliente.getTemas()) {
@@ -473,5 +485,3 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
-
-

@@ -86,6 +86,7 @@ public class ControladorUsuario implements IUsuario {
         }
     }
 
+    @Override
     public void levantarUsuario(DtUsuario dtu) {
         Usuario u;
         if (dtu instanceof DtCliente) {
@@ -256,6 +257,13 @@ public class ControladorUsuario implements IUsuario {
 
     }
 
+    @Override
+    public ArrayList<DtUsuario> listarSeguidosDe(String nickCliente){
+        Cliente c = (Cliente)usuarios.get(nickCliente);
+        return c.obtenerSeguidos();
+        
+    }
+    
     @Override
     public ArrayList<DtCliente> listarSeguidoresDe(String nickUsuario) {
         Usuario u = usuarios.get(nickUsuario);
