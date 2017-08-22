@@ -3,19 +3,81 @@ package Presentacion;
 import Logica.Fabrica;
 import Logica.IContenido;
 import javax.swing.JOptionPane;
+import Logica.DtArtista;
+import Logica.DtLista;
+import Logica.DtListaParticular;
+import Logica.DtUsuario;
+import Logica.IUsuario;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Luis
  */
-public class PublicarLista extends javax.swing.JInternalFrame {
-    private IContenido IC;
+public class PublicarLista extends javax.swing.JInternalFrame implements ListSelectionListener {
+    private IContenido iContenido;
+    private final IUsuario iUsuario;
+    
     /**
      * Creates new form PublicarLista
      */
     public PublicarLista() {
         initComponents();
-        this.IC = Fabrica.getIControladorContenido();
+        iUsuario = Fabrica.getIControladorUsuario();
+        iContenido = Fabrica.getIControladorContenido();
+        cargarDatos();
+        // Hace que al hacer click en una fila de la tablaClientes se llame al metodo valueChanged()
+        tablaClientes.getSelectionModel().addListSelectionListener(this);
+    }
+    
+     private void cargarDatos() {
+        // Obtiene todo los clientes
+        ArrayList<DtUsuario> dtcs = iUsuario.listarClientes();
+
+        // Obtiene el modelo de la tablaClientes y borra su contenido
+        DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
+        dtm.setRowCount(0);
+
+        // Agrega los clientes a la tablaClientes
+        for (DtUsuario dtu : dtcs) {
+            Object[] data = {
+                dtu.getNickname(),
+                dtu.getNickname(),
+                dtu.getApellido(),
+                dtu.getEmail()
+            };
+            dtm.addRow(data);
+        }
+    }
+     
+      @Override
+    public void valueChanged(ListSelectionEvent e) {
+        // Obtiene el nick del cliente seleccionado y se lo pasa a la funcion cliente seleccionado
+        if (tablaClientes.getSelectedRow() != -1) {
+            clienteSeleccionado(tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString());
+        }
+    }
+     
+      private void clienteSeleccionado(String nickCliente) {
+        //Lista en tablaUsuarios los usuarios que el cliente nickCliente puede seguir
+        ArrayList<DtLista> listas = iUsuario.listarLisReproduccion(nickCliente);
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaListas.getModel();
+        dtm.setRowCount(0);
+
+        for (DtLista dtu : listas) {
+            
+            if (((DtListaParticular)dtu).isPrivada()) {
+                Object[] data = {
+                    dtu.getNombre()
+                };
+                dtm.addRow(data);
+            }
+        }
     }
 
     /**
@@ -27,108 +89,190 @@ public class PublicarLista extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jSplitPane2 = new javax.swing.JSplitPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaListas = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        botonAceptar = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        usuario = new javax.swing.JTextField();
-        lista = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaClientes = new javax.swing.JTable();
 
+        setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
+        setPreferredSize(new java.awt.Dimension(555, 580));
+        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jSplitPane1.setDividerLocation(250);
+        jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        jSplitPane2.setDividerLocation(250);
+        jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Listas"));
+
+        tablaListas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tablaListas);
+        if (tablaListas.getColumnModel().getColumnCount() > 0) {
+            tablaListas.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+        );
+
+        jSplitPane2.setTopComponent(jPanel2);
+
+        botonAceptar.setText("Aceptar");
+        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonAceptarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonCancelarActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Usuario:");
+        jLabel1.setText("Al dar 'Aceptar' el cliente hace pública dicha lista");
 
-        jLabel2.setText("Lista:");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addComponent(jButton1)
-                        .addGap(47, 47, 47)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(117, 117, 117)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(lista)
-                        .addGap(40, 40, 40)))
-                .addContainerGap(101, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+                .addComponent(botonAceptar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonCancelar)
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonAceptar)
+                    .addComponent(botonCancelar)
                     .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(43, 43, 43))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
+
+        jSplitPane2.setRightComponent(jPanel3);
+
+        jSplitPane1.setBottomComponent(jSplitPane2);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Clientes"));
+
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nickname", "Nombre", "Apellido", "Correo"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaClientes);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+        );
+
+        jSplitPane1.setLeftComponent(jPanel1);
+
+        getContentPane().add(jSplitPane1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        String tablasSinSeleccionar = "";
+
+        if (tablaClientes.getSelectionModel().isSelectionEmpty()) {
+            tablasSinSeleccionar += "\nClientes";
+        }
+
+        if (tablaListas.getSelectionModel().isSelectionEmpty()) {
+            tablasSinSeleccionar += "\nListas";
+        }
+
+        if (!tablasSinSeleccionar.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fila en las siguientes tablas:\n" + tablasSinSeleccionar);
+            return;
+        }
+
+        String cliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
+        String lista = tablaListas.getValueAt(tablaListas.getSelectedRow(), 0).toString();
+
+        try {
+            //IUsuario.seguirUsuario(cliente, usuario);
+            JOptionPane.showMessageDialog(this, "La lista " + lista + "del cliente " + cliente + "se hizo pública");
+        } catch (UnsupportedOperationException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+
+        cargarDatos();
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaListas.getModel();
+        dtm.setRowCount(0);
+    }//GEN-LAST:event_botonAceptarActionPerformed
+
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        if(usuario.getText().isEmpty() || lista.getText().isEmpty()){
-                    javax.swing.JOptionPane.showMessageDialog(null, "Hay campos sin completar...", "ADVERTENCIA!", JOptionPane.ERROR_MESSAGE);
-        }
-        
-        boolean ok = IC.publicarLista(usuario.getText(), lista.getText());
-
-        if (ok) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Hubo éxito al publicar la lista", "Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(null, "Hubo un error al tratar de publicar la lista", "Ha ocurrido un error!", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton botonAceptar;
+    private javax.swing.JButton botonCancelar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField lista;
-    private javax.swing.JTextField usuario;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane jSplitPane2;
+    private javax.swing.JTable tablaClientes;
+    private javax.swing.JTable tablaListas;
     // End of variables declaration//GEN-END:variables
 }

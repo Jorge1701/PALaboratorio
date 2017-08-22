@@ -23,4 +23,5 @@ public interface IUsuario {
     public ArrayList<DtUsuario> listarSeguidosDe(String nickCliente);
     public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente);
     public DtLista selectListaCli(String nombreL);
+    public ArrayList<DtLista> listarLisReproduccion(String nickCliente);
 }
