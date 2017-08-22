@@ -66,12 +66,14 @@ public class Artista extends Usuario {
         if (this.albumes.get(nom) != null) {
             throw new UnsupportedOperationException("Ya existe Albun con ese nombre");
         } else {
+           
 
             //Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
             Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
+            bdAlbum = new BDAlbum();
 
-            //boolean res = this.bdAlbum.altaAlbum(this.getEmail(), album);
-            boolean res = true;
+            boolean res = this.bdAlbum.altaAlbum(album);
+            //boolean res = true;
             if (res) {
                 this.albumes.put(nom, album);
             } else {
@@ -79,6 +81,7 @@ public class Artista extends Usuario {
             }
 
         }
+
 
     }
 
