@@ -68,22 +68,21 @@ public class ControladorUsuario implements IUsuario {
         }
 
         Usuario usr;
+        boolean res = this.bdUsuario.ingresarUsuario(dtu);
+        if (res) {
 
-        if (dtu instanceof DtCliente) {
-            usr = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null);
-            boolean res = this.bdUsuario.ingresarUsuario(usr);
-            if (res) {
-                this.usuarios.put(usr.getNickname(), usr);
+            if (dtu instanceof DtCliente) {
+                usr = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null);
+            } else {
+                usr = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null, ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
             }
-            return res;
+            this.usuarios.put(usr.getNickname(), usr);
+
         } else {
-            usr = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null, ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
-            boolean res = this.bdUsuario.ingresarUsuario(usr);
-            if (res) {
-                this.usuarios.put(usr.getNickname(), usr);
-            }
-            return res;
+            throw new UnsupportedOperationException("No se pudo ingresar el usuario a la BD");
         }
+
+        return res;
     }
 
     @Override
@@ -109,8 +108,6 @@ public class ControladorUsuario implements IUsuario {
 
         return dtUsuarios;
     }
-    
-
 
     @Override
     public ArrayList<DtUsuario> listarClientes() {
@@ -147,13 +144,15 @@ public class ControladorUsuario implements IUsuario {
     @Override
     public DtPerfilUsuario obtenerPerfilArtista(String nickArtista) {
         Usuario u = usuarios.get(nickArtista);
-        if(u == null)
-        throw new UnsupportedOperationException("El Artista "+nickArtista+" no existe"); 
-        
-        if(!(u instanceof Artista))
+        if (u == null) {
+            throw new UnsupportedOperationException("El Artista " + nickArtista + " no existe");
+        }
+
+        if (!(u instanceof Artista)) {
             throw new UnsupportedOperationException("Este usuario no es un artista");
-  
-        return((Artista) u).obtenerPerfil();
+        }
+
+        return ((Artista) u).obtenerPerfil();
     }
 
     @Override
@@ -169,7 +168,7 @@ public class ControladorUsuario implements IUsuario {
         }
 
         return ((Cliente) u).obtenerPerfil();
-        
+
     }
 
     @Override
@@ -181,13 +180,13 @@ public class ControladorUsuario implements IUsuario {
     public void seguirUsuario(String nickCliente, String nickSeguido) {
         Usuario cliente = usuarios.get(nickCliente);
         Usuario seguido = usuarios.get(nickSeguido);
-        
+
         BDUsuario bdu = new BDUsuario();
         if (!((Cliente) cliente).agregar(seguido)) {
             throw new UnsupportedOperationException("El cliente " + nickCliente + " no pudo seguir al usuario " + nickSeguido);
         }
-        if(! bdu.seguirUsuario(nickCliente,nickSeguido)){
-             throw new UnsupportedOperationException("El cliente " + nickCliente + " no pudo seguir al usuario " + nickSeguido);
+        if (!bdu.seguirUsuario(nickCliente, nickSeguido)) {
+            throw new UnsupportedOperationException("El cliente " + nickCliente + " no pudo seguir al usuario " + nickSeguido);
         }
     }
 
@@ -258,12 +257,12 @@ public class ControladorUsuario implements IUsuario {
     }
 
     @Override
-    public ArrayList<DtUsuario> listarSeguidosDe(String nickCliente){
-        Cliente c = (Cliente)usuarios.get(nickCliente);
+    public ArrayList<DtUsuario> listarSeguidosDe(String nickCliente) {
+        Cliente c = (Cliente) usuarios.get(nickCliente);
         return c.obtenerSeguidos();
-        
+
     }
-    
+
     @Override
     public ArrayList<DtCliente> listarSeguidoresDe(String nickUsuario) {
         Usuario u = usuarios.get(nickUsuario);

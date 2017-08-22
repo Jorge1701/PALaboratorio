@@ -25,7 +25,7 @@ public class AltaGenero extends javax.swing.JInternalFrame {
         initComponents();
         BDGenero datos=new BDGenero(); // creo una instancia de bdgenero y la llamo datos
        
-        datos.ActualizarTablaGenero(tabla);//llamo a la funcion llenar genero que se encuentra en esa instancia datos , y le paso la lista de generros para que me la llene 
+        //datos.ActualizarTablaGenero(tabla);//llamo a la funcion llenar genero que se encuentra en esa instancia datos , y le paso la lista de generros para que me la llene 
         
     }
 
@@ -197,7 +197,7 @@ this.dispose();
 
                            
                             BDGenero datos=new BDGenero(); //creo una intancia de bd genero 
-                           if(datos.insertar_subgenero((String)tabla.getValueAt(i,0) ,txtnombre.getText()))
+                           if(/*datos.insertar_subgenero((String)tabla.getValueAt(i,0) ,txtnombre.getText())*/true)
                            {
                            
                            JOptionPane.showMessageDialog(null,"Sub genero Agregado","Cheeee",JOptionPane.INFORMATION_MESSAGE);

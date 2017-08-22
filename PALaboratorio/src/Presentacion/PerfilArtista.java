@@ -193,10 +193,8 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
         jLabel38.setText("Fecha Nac");
 
         txtNickname7.setEditable(false);
-        txtNickname7.setEnabled(false);
 
         txtNombre7.setEditable(false);
-        txtNombre7.setEnabled(false);
         txtNombre7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombre7ActionPerformed(evt);
@@ -204,10 +202,8 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
         });
 
         txtApellido7.setEditable(false);
-        txtApellido7.setEnabled(false);
 
         txtEmail7.setEditable(false);
-        txtEmail7.setEnabled(false);
 
         jLabel39.setText("Nickname");
 
@@ -219,7 +215,6 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
 
         txtFechaNac7.setEditable(false);
         txtFechaNac7.setBackground(new java.awt.Color(255, 255, 255));
-        txtFechaNac7.setEnabled(false);
         txtFechaNac7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFechaNac7ActionPerformed(evt);
@@ -254,7 +249,6 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
         jLabel43.setText("Sitio Web");
 
         txtSitioWeb.setEditable(false);
-        txtSitioWeb.setEnabled(false);
 
         javax.swing.GroupLayout PanelInfo7Layout = new javax.swing.GroupLayout(PanelInfo7);
         PanelInfo7.setLayout(PanelInfo7Layout);
