@@ -1,9 +1,15 @@
 package Presentacion;
 
+import Logica.DtAlbum;
+import Logica.DtAlbumContenido;
+import Logica.DtTema;
 import Logica.Fabrica;
+import java.awt.Dimension;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 public class menu extends javax.swing.JFrame {
@@ -17,7 +23,7 @@ public class menu extends javax.swing.JFrame {
         try {
             Fabrica.levantarDatos();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,e.getMessage() );
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -214,24 +220,28 @@ public class menu extends javax.swing.JFrame {
     private void dejarSeguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dejarSeguirUsuarioActionPerformed
         DejarSeguirUsuario dsu = new DejarSeguirUsuario();
         PanelMenu.add(dsu);
+        centrar(dsu);
         dsu.show();
     }//GEN-LAST:event_dejarSeguirUsuarioActionPerformed
 
     private void consultaPerfilClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaPerfilClienteActionPerformed
         ConsultaPerfil cpc = new ConsultaPerfil("Cliente");
         PanelMenu.add(cpc);
+        centrar(cpc);
         cpc.show();
     }//GEN-LAST:event_consultaPerfilClienteActionPerformed
 
     private void seguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirUsuarioActionPerformed
         SeguirUsuario cpc = new SeguirUsuario();
         PanelMenu.add(cpc);
+        centrar(cpc);
         cpc.show();
     }//GEN-LAST:event_seguirUsuarioActionPerformed
 
     private void altaPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaPerfilActionPerformed
         AltaPerfil ap = new AltaPerfil();
         PanelMenu.add(ap);
+        centrar(ap);
         ap.show();
     }//GEN-LAST:event_altaPerfilActionPerformed
 
@@ -239,6 +249,7 @@ public class menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         QuitarTemaLista qtl = new QuitarTemaLista();
         PanelMenu.add(qtl);
+        centrar(qtl);
         qtl.show();
     }//GEN-LAST:event_quitarTemaListaActionPerformed
 
@@ -246,23 +257,40 @@ public class menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         PublicarLista pt = new PublicarLista();
         PanelMenu.add(pt);
+        centrar(pt);
         pt.show();
     }//GEN-LAST:event_publicarListaActionPerformed
     private void consultaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaAlbumActionPerformed
         ConsultaAlbum cpc = new ConsultaAlbum();
         PanelMenu.add(cpc);
+        centrar(cpc);
         cpc.show();
+
+        /*AlbumContenido cpc = new AlbumContenido(new DtAlbumContenido(new DtAlbum("asd", "asd", 19), new ArrayList<String>(), new ArrayList<DtTema>()));
+        PanelMenu.add(cpc);
+        cpc.show();*/
+
     }//GEN-LAST:event_consultaAlbumActionPerformed
+
+    public void centrar(JInternalFrame cpc) {
+        Dimension desktopSize = this.getSize();
+        Dimension jInternalFrameSize = cpc.getSize();
+        int width = (desktopSize.width - jInternalFrameSize.width) / 2;
+        int height = (desktopSize.height - jInternalFrameSize.height) / 2;
+        cpc.setLocation(width, height);
+    }
 
     private void consultaListaRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaListaRepActionPerformed
         ConsultaListaReproduccion clr = new ConsultaListaReproduccion();
         PanelMenu.add(clr);
+        centrar(clr);
         clr.show();
     }//GEN-LAST:event_consultaListaRepActionPerformed
     private void ConsultaPerfilArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaPerfilArtistaActionPerformed
         // TODO add your handling code here:
         ConsultaPerfil cpc = new ConsultaPerfil("Artista");
         PanelMenu.add(cpc);
+        centrar(cpc);
         cpc.show();
     }//GEN-LAST:event_ConsultaPerfilArtistaActionPerformed
 
@@ -277,6 +305,7 @@ public class menu extends javax.swing.JFrame {
     private void altaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaAlbumActionPerformed
         AltaAlbum cpc = new AltaAlbum();
         PanelMenu.add(cpc);
+        centrar(cpc);
         cpc.show();
     }//GEN-LAST:event_altaAlbumActionPerformed
 
@@ -285,9 +314,12 @@ public class menu extends javax.swing.JFrame {
         try {
             cpc = new AltaGenero();
             PanelMenu.add(cpc);
+            centrar(cpc);
             cpc.show();
+
         } catch (SQLException ex) {
-            Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(menu.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_altaGeneroActionPerformed
 
@@ -302,16 +334,24 @@ public class menu extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
