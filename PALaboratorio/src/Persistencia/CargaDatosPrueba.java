@@ -368,19 +368,22 @@ public class CargaDatosPrueba {
     }
 
     public boolean insertarDatosPrueba() {
-        insertarUsuarios();
-
+        if (!insertarUsuarios()) {
+            return false;
+        }
         if (!insertarSeguidores()) {
             return false;
         }
-
-        //if (!insertarTemas()) {
-        //  return false;
-        //}
+        /*if (!insertarGeneros()) {
+            return false;
+        }
+        if (!insertarTemas()) {
+          return false;
+        }*/
         return true;
     }
 
-    public boolean insertarUsuarios() {
+    private boolean insertarUsuarios() {
         BDUsuario bdu = new BDUsuario();
         boolean res = false;
         DtUsuario dtu;
@@ -407,11 +410,10 @@ public class CargaDatosPrueba {
                 dtu = new DtCliente(nickName, nombre, apellido, correo, fecha);
             }
             res = bdu.ingresarUsuario(dtu);
-            if(res == false){
+            if (res == false) {
                 break;
             }
         }
-
         return res;
     }
 

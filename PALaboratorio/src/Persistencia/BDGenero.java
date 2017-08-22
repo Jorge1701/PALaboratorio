@@ -1,33 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Persistencia;
-//package Persistencia;
 
-
-
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * 
- */
 public class BDGenero {
 
-    
-    
-    
-    
-    
-    public void llenar_genero( JList listagenero) throws SQLException//  funcion que le paso una lista y me la llena con el genero 
+    protected Connection conexion = new ConexionBD().getConexion();
+
+     public void llenar_genero( JList listagenero) throws SQLException//  funcion que le paso una lista y me la llena con el genero 
             {
               
               
@@ -120,13 +109,8 @@ jtabla.getTableHeader().setReorderingAllowed(false);
        return test.Ejecutar("INSERT INTO subgenero(idGenero,nombreSubGenero) VALUE('"+idgen+"','"+nombresub+"')");
   
      }
-
-  
-     
- }
-
     
-
-
+    
   
 
+}
