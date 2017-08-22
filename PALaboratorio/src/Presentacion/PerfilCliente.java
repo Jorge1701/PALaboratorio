@@ -175,6 +175,9 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         tablaTemas = new javax.swing.JTable();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Perfil del Cliente ");
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.Y_AXIS));
 

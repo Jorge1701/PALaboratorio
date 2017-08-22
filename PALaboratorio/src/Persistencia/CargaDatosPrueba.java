@@ -445,6 +445,34 @@ public class CargaDatosPrueba {
         return true;
     }
 
+     private boolean insertarGeneros() {
+        String nombre = "";
+        String padre = "";
+        String pRef = "";
+        BDGenero bdg = new BDGenero();
+        bdg.ingresarGeneros("Géneros", null);
+
+        for (String[] genero : generos) {
+            nombre = genero[1];
+            pRef = genero[2];
+
+            if ("".equals(pRef)) {
+                padre = "Generos";
+            } else {
+                for (String[] generoPadre : generos) {
+                    if (pRef.equals(generoPadre[0])) {
+                        padre = generoPadre[1];
+                        break;
+                    }
+                }
+            }
+            if (!bdg.ingresarGeneros(nombre, padre)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     private boolean insertarTemas() {
         for (String[] tema : temas) {
             try {

@@ -109,7 +109,25 @@ jtabla.getTableHeader().setReorderingAllowed(false);
        return test.Ejecutar("INSERT INTO subgenero(idGenero,nombreSubGenero) VALUE('"+idgen+"','"+nombresub+"')");
   
      }
-    
+      // ingresar generos a la BD
+        public boolean ingresarGeneros(String nombre, String padre) {
+        try {
+            PreparedStatement insertar = conexion.prepareStatement("INSERT INTO genero(nombreGenero,Padre) VALUES(?,?)");
+            insertar.setString(1, nombre);
+            if (padre == null) {
+                insertar.setNull(2, Types.VARCHAR);
+            } else {
+                insertar.setString(2, padre);
+            }
+            insertar.executeUpdate();
+            insertar.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(BDGenero.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
+        return true;
+    }
     
   
 
