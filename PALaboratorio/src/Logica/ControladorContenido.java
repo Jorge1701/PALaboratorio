@@ -42,14 +42,14 @@ public class ControladorContenido implements IContenido {
         genero = new Genero("Géneros");
 
         //this.dbPersona=new DBPersona();
-        /* this.genero.agregarGenero("Géneros", "Rock");
+        this.genero.agregarGenero("Géneros", "Rock");
         this.genero.agregarGenero("Rock", "Rock clásico");
         this.genero.agregarGenero("Géneros", "Electrónica");
         this.genero.agregarGenero("Electrónica", "Electro house");
         this.genero.agregarGenero("Géneros", "Pop");
         this.genero.agregarGenero("Géneros", "Cumbia");
         this.genero.agregarGenero("Cumbia", "Cumbia cheta");
-        this.genero.agregarGenero("Cumbia", "Cumbia de negro");*/
+        this.genero.agregarGenero("Cumbia", "Cumbia de negro");
     }
     
  
@@ -270,8 +270,6 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, ArrayList<DtTema> temas) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
         ArrayList<Genero> lstGeneros = new ArrayList<>();
         HashMap<String, Tema> mapTemas = new HashMap<>();
 
@@ -292,16 +290,21 @@ public class ControladorContenido implements IContenido {
 
         for (int i = 0; i < temas.size(); i++) {
             DtTema dtT = (DtTema) temas.get(i);
-            Tema t = new Tema(dtT.getNombre(), dtT.getDuracion(), dtT.getUbicacion());
-            mapTemas.put(dtT.getNombre(), t);
-            //lstTemas.add(t);
+            Tema t;
+            if (dtT instanceof DtTemaLocal) {
+                t = new TemaLocal(((DtTemaLocal) dtT).getDirectorio(), dtT.getNombre(), dtT.getDuracion(), dtT.getUbicacion());
+                mapTemas.put(dtT.getNombre(), t);
+            } else if (dtT instanceof DtTemaRemoto) {
+                t = new TemaRemoto(dtT.getNombre(), dtT.getDuracion(), dtT.getUbicacion(), ((DtTemaRemoto) dtT).getUrl());
+                mapTemas.put(dtT.getNombre(), t);
+            }
+
         }
 
         this.artista.ingresarAlbum(nom, anio, lstGeneros, mapTemas);
 
         //set null artista seleccionado
         this.artista = null;
-
     }
 
     @Override
