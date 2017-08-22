@@ -36,7 +36,7 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
         for (DtUsuario dtu : dtcs) {
             Object[] data = {
                 dtu.getNickname(),
-                dtu.getNickname(),
+                dtu.getNombre(),
                 dtu.getApellido(),
                 dtu.getEmail()
             };

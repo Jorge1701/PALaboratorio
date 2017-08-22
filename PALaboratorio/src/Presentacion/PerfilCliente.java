@@ -31,6 +31,8 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         txtApellido.setEditable(false);
         txtEmail.setEditable(false);
         txtFechaNac.setEditable(false);
+        tablaSeguidos.setEnabled(false);
+        tablaSeguidores .setEnabled(false);
 
         setTitle(getTitle() + dtPerfilCliente.getInfo().getNickname());
 
@@ -43,7 +45,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
         // Cargar imagen
         try {
-            BufferedImage img = ImageIO.read(new File("E:/tierra.jpg"));
+            BufferedImage img = ImageIO.read(new File("D:/wallpapers/292379.jpg"));
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
             pImg.setBounds(0, 0, 100, 160);
