@@ -1,23 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Persistencia;
-
 import Logica.Tema;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-/**
- *
- * @author brian
- */
+
 public class BDLista {
     
     protected Connection conexion = new ConexionBD().getConexion();
+    public boolean altaLista(String nombreList,String NombreTema){
+        return true;
+    }
+    public boolean altaListaPorDefecto(String nombreLista, String genero, String NombreTema){
+    return true;
+    }
+    public boolean altaListaParticular(String nombreLista, String nombreCliente, String nombreTema, String Publica ){
+    return true;
+    }
     
     public boolean quitarTemaLista(String NomUser,String NomLista, String NomTema){
     try{
