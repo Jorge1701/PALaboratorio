@@ -9,10 +9,32 @@ import java.sql.SQLException;
 public class BDLista {
     
     protected Connection conexion = new ConexionBD().getConexion();
-    public boolean altaLista(String nombreList,String NombreTema){
-        return true;
+    public boolean altaLista(String nombreList,String NombreTema, String NombreCliente,String Genero){
+        try{
+            
+        String sql = "INSERT INTO lista VALUES(?,?)"; 
+        PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+        statament.setString(1, nombreList);
+        statament.setString(2, NombreTema);
+        statament.executeUpdate();
+        statament.close();
+        if(Genero==null){
+            if(altaListaParticular(nombreList, nombreList, NombreTema, sql)){
+                return true;
+            }else return false;      
+        }else{
+            if(altaListaPorDefecto(nombreList, Genero, NombreTema)){
+                return true;
+            }else return false;
+        } 
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     public boolean altaListaPorDefecto(String nombreLista, String genero, String NombreTema){
+        
     return true;
     }
     public boolean altaListaParticular(String nombreLista, String nombreCliente, String nombreTema, String Publica ){

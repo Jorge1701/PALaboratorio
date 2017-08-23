@@ -419,7 +419,7 @@ public class CargaDatosPrueba {
     }
 
     
-    private boolean levantarListaPorDefecto(){
+    private boolean CargarListaPorDefecto(){
     BDLista bdl = new BDLista();
     for(String[] listaPordefecto : listarPorDefecto){
         String refLista = listaPordefecto[0];
@@ -443,18 +443,17 @@ public class CargaDatosPrueba {
      nombreTema = tema[2];
      }
      }
-    if(bdl.altaLista(nombreListaD, nombreTema)){
-    if(!bdl.altaListaPorDefecto(nombreListaD,genero,nombreTema)){
+    if(!bdl.altaLista(nombreListaD, nombreTema,null, genero)){
      return false; 
     }else return false;
-    }
+  
     }
     }
     }
      return true;
     }
     // Listas de Reproduccion Particulares (Ref cliente, Ref, Nombre, Publica, Imagen)
-    private boolean levantarListaParticular(){
+    private boolean CargarListaParticular(){
     BDLista bdl = new BDLista();
     for(String[] listaParticular : listasParticulares){
     String refCliente = listaParticular[0];
@@ -481,17 +480,16 @@ public class CargaDatosPrueba {
     nombretema=tema[2];
     }
     }
-    if(bdl.altaLista(nombreLista, nombretema)){
-    if(!bdl.altaListaParticular(nombreLista, nombreCliente, nombretema, publica)){
+    if(!bdl.altaLista(nombreLista, nombretema, nombreCliente,null)){
      return false;
-    }
-    }else return false;
-    }
-    return false;
+    }else return true;
     }
     }
-    return true;
+
     }
+        return false;
+    }
+ 
     private boolean insertarSeguidores(){
         BDCliente bdc = new BDCliente();
 
@@ -588,6 +586,7 @@ public class CargaDatosPrueba {
         }
         return true;
     }
+
 
     private int obtenerIdAlbum(String nickArtista, String nombreAlbum) {
         try {
