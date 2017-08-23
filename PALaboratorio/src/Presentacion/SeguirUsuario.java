@@ -105,6 +105,8 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
             }
         });
 
+        botonCancelar.setBackground(new java.awt.Color(255, 0, 0));
+        botonCancelar.setForeground(new java.awt.Color(255, 255, 255));
         botonCancelar.setText("Cancelar");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,7 +137,7 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
                     .addComponent(botonAceptar)
                     .addComponent(botonCancelar)
                     .addComponent(jLabel1))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jSplitPane2.setRightComponent(jPanel3);
