@@ -291,4 +291,8 @@ public class ControladorUsuario implements IUsuario {
     public DtLista selectListaCli(String nombreL) {
         return ((Cliente) this.usuarioRecordado).seleccionarLista(nombreL);
     }
+    
+    public ArrayList<DtLista> listarLisReproduccion(String nickCliente){
+    return ((Cliente)obtenerUsuario(nickCliente)).listarLisReproduccion();
+    }
 }
