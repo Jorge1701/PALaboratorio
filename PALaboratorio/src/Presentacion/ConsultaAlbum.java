@@ -7,7 +7,9 @@ import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IContenido;
 import Logica.IUsuario;
+import java.awt.Dimension;
 import java.util.ArrayList;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -16,7 +18,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
-public class ConsultaAlbum extends javax.swing.JInternalFrame {
+public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSelectionListener {
 
     IUsuario iUsuario;
     IContenido iContenido;
@@ -31,6 +33,9 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
     }
 
     private void mostrar() {
+        DefaultTableModel dtm = (DefaultTableModel)tablaAlbumes.getModel();
+        dtm.setRowCount(0);
+        
         if (btnConsultaGenero.isSelected()) {
             generos.setEnabled(true);
             tablaArtistas.setEnabled(false);
@@ -131,6 +136,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
             }
         ));
         tablaArtistas.setDragEnabled(true);
+        tablaArtistas.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaArtistas);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -155,17 +161,18 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre", "Artista"
+                "Nombre"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tablaAlbumes.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tablaAlbumes);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -282,8 +289,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
 
         for (DtAlbum dtAlbum : dta) {
             Object[] data = {
-                ((DtAlbum) dtAlbum).getNombre(),
-                ((DtAlbum) dtAlbum).getNickArtista(),};
+                ((DtAlbum) dtAlbum).getNombre(),};
             dtm.addRow(data);
         }
 
@@ -303,18 +309,19 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
                 dtArtista.getNickname(),};
             dtm.addRow(data);
         }
-
         //Permite que al seleccionar una fila se obtenga el dato seleccionado(en este caso el nick)
-        tablaArtistas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent event) {
-                artistaSeleccionado(tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 1).toString());
+        tablaArtistas.getSelectionModel().addListSelectionListener(this);
 
-            }
-        });
 
     }//GEN-LAST:event_btnConsultaArtistaActionPerformed
 
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        // Obtiene el nick del cliente seleccionado y se lo pasa a la funcion cliente seleccionado
+        if (tablaArtistas.getSelectedRow() != -1) {
+            artistaSeleccionado(tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 1).toString());
+        }
+    }
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String nickArtista;
@@ -337,13 +344,14 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe de seleccionar un Album");
         }
 
-        nickArtista = tablaAlbumes.getValueAt(tablaAlbumes.getSelectedRow(), 1).toString();
+        nickArtista = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 1).toString();
         nomAlbum = tablaAlbumes.getValueAt(tablaAlbumes.getSelectedRow(), 0).toString();
 
         try {
             albCont = iUsuario.obtenerAlbumContenido(nickArtista, nomAlbum);
             AlbumContenido albc = new AlbumContenido((DtAlbumContenido) albCont);
             this.getParent().add(albc);
+            centrar(albc);
             albc.show();
 
         } catch (UnsupportedOperationException e) {
@@ -356,7 +364,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void artistaSeleccionado(String nickArtista) {
-       //Carga la tabla de albumes del artista(nickArtista)
+        //Carga la tabla de albumes del artista(nickArtista)
         ArrayList<DtAlbum> dta = iUsuario.listarAlbumesArtista(nickArtista);
 
         DefaultTableModel dtm = (DefaultTableModel) tablaAlbumes.getModel();
@@ -364,10 +372,17 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame {
 
         for (DtAlbum dtAlbum : dta) {
             Object[] data = {
-                ((DtAlbum) dtAlbum).getNombre(),
-                ((DtAlbum) dtAlbum).getNickArtista(),};
+                ((DtAlbum) dtAlbum).getNombre(),};
             dtm.addRow(data);
         }
+
+    }
+
+    public void centrar(JInternalFrame cpc) {
+        Dimension jInternalFrameSize = cpc.getSize();
+        int width = (1382 - jInternalFrameSize.width) / 2;
+        int height = (634 - jInternalFrameSize.height) / 2;
+        cpc.setLocation(width, height);
 
     }
 
