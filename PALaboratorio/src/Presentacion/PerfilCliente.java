@@ -45,7 +45,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
         // Cargar imagen
         try {
-            BufferedImage img = ImageIO.read(new File("D:/wallpapers/292379.jpg"));
+            BufferedImage img = ImageIO.read(new File("C:/Users/Luis/Pictures/user_profile.png"));
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
             pImg.setBounds(0, 0, 100, 160);
