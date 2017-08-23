@@ -20,7 +20,7 @@ public interface IContenido {
     public void crearListaReproduccionParticular(String nombre, String nick);
     public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, /*Imagen img*/ ArrayList<DtTema> temas);
     public List<DtTema> selecListaDef(String nombre);
-    public boolean quitarTema(String nombreT,String nombre);
+    public boolean quitarTema(String nombreT,String nombre,String nombreUser);
     public List<DtTema> selecLista(String nick,String nomL);
     public boolean publicarLista(String nick,String nomL);
     public ArrayList<DtLista> listarLisReproduccionGen(String nomGen);

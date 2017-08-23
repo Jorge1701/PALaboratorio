@@ -2,6 +2,7 @@ package Logica;
 
 //import Persistencia.BDUsuario;
 import Persistencia.BDCliente;
+import Persistencia.BDLista;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ public class ControladorContenido implements IContenido {
     }
 
     private Map<String, ListaDefecto> listasDefecto;
+    private Map<String, ListaParticular> listasParticular;
     private Artista artista;
     private Genero genero;
     private Genero generoRecordado;
@@ -40,7 +42,7 @@ public class ControladorContenido implements IContenido {
         //this.personas=new ArrayList<Persona>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
         genero = new Genero("Géneros");
-
+        
         //this.dbPersona=new DBPersona();
         this.genero.agregarGenero("Géneros", "Rock");
         this.genero.agregarGenero("Rock", "Rock clásico");
@@ -340,8 +342,9 @@ public class ControladorContenido implements IContenido {
     }
 
     @Override
-    public boolean quitarTema(String nombreT, String nombre) {
-
+    public boolean quitarTema(String nombreT, String nombre,String nombreUser) {
+        Cliente u = (Cliente) ControladorUsuario.getInstance().getUsuario(nombreUser);
+        if(nombreUser==null){
         Lista lista = (ListaDefecto) listasDefecto.get(nombre);
 
         if (lista == null) {
@@ -349,6 +352,19 @@ public class ControladorContenido implements IContenido {
         }
 
         return lista.quitarTema(nombreT);
+    }else{
+        if(nombreUser!=null && !(u instanceof Cliente)){
+           Lista lista = (ListaParticular) listasParticular.get(nombre);
+           
+           if(lista==null){
+           throw new UnsupportedOperationException("No existe la lista");
+           }
+           if(u.getLista(nombre).quitarTema(nombreT)&& this.quitarTema(nombreT, nombre, nombreUser))
+           return true;
+        }
+        }
+ 
+        return false;
     }
 
     @Override

@@ -16,7 +16,7 @@ public class Fabrica {
     }
 
     private Fabrica() {
-        insertarDatosPrueba();
+        levantarDatos();
     }
      */
     public static void inicializarControladores() {

@@ -1,8 +1,4 @@
 package Presentacion;
-
-import Logica.DtAlbum;
-import Logica.DtAlbumContenido;
-import Logica.DtTema;
 import Logica.Fabrica;
 import java.awt.Dimension;
 import java.sql.SQLException;
@@ -11,6 +7,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+
+
+
 
 public class menu extends javax.swing.JFrame {
 
