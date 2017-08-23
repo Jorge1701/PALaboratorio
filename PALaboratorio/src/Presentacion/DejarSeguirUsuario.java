@@ -132,6 +132,8 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
 
         jSplitPane2.setTopComponent(jPanel2);
 
+        botonCancelar.setBackground(new java.awt.Color(255, 0, 0));
+        botonCancelar.setForeground(new java.awt.Color(255, 255, 255));
         botonCancelar.setText("Cancelar");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

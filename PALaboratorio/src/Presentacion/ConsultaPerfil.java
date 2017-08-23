@@ -8,7 +8,10 @@ import Logica.DtPerfilCliente;
 import Logica.DtPerfilUsuario;
 import Logica.Fabrica;
 import Logica.IUsuario;
+import java.awt.Dimension;
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -100,6 +103,8 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
             }
         });
 
+        btnCancelar.setBackground(new java.awt.Color(255, 0, 0));
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,6 +165,7 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
                 DtPerfilUsuario dtpu = iUsuario.obtenerPerfilCliente(nickname);
                 PerfilCliente pc = new PerfilCliente((DtPerfilCliente) dtpu);
                 getParent().add(pc);
+                centrar(pc);
                 pc.show();
             } catch (UnsupportedOperationException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
@@ -169,11 +175,21 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
                 DtPerfilUsuario dtpu = iUsuario.obtenerPerfilArtista(nickname);
                 PerfilArtista pc = new PerfilArtista((DtPerfilArtista) dtpu);
                 getParent().add(pc);
+                centrar(pc);
                 pc.show();
             } catch (UnsupportedOperationException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
+
+    }
+
+    public void centrar(JInternalFrame cpc) {
+        Dimension jInternalFrameSize = cpc.getSize();
+        int width = (1382 - jInternalFrameSize.width) / 2;
+        int height = (634 - jInternalFrameSize.height) / 2;
+        cpc.setLocation(width, height);
+
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

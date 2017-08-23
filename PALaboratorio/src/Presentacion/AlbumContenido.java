@@ -5,13 +5,13 @@ import Logica.DtAlbumContenido;
 import Logica.DtTema;
 import Logica.DtTemaLocal;
 import Logica.DtTemaRemoto;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -29,7 +29,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame {
 
         //Cargar tabla de Temas
         DefaultTableModel dtm = (DefaultTableModel) tablaTemas.getModel();
-        dtm.setRowCount(0);
+        //dtm.setRowCount(0);
 
         String pathoUrl;
 
@@ -153,7 +153,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame {
 
         tablaTemas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null}
             },
             new String [] {
                 "Nombre", "Duracion", "Ubicacion", "Archivo"
@@ -242,16 +242,29 @@ public class AlbumContenido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
-       
-        if(tablaTemas.getSelectionModel().isSelectionEmpty()){
+
+        if (tablaTemas.getSelectionModel().isSelectionEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe de seleccionar un tema");
             return;
         }
-        
-       String tema = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 3).toString();
-        
-       JOptionPane.showMessageDialog(this, tema);
-    
+
+        String tema = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 3).toString();
+
+        JFileChooser fc = new JFileChooser();
+
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int o = fc.showOpenDialog(this);
+        if (o == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fc.getSelectedFile();
+            String path = selectedFile.getAbsolutePath();
+            File archivo = new File(tema);
+            if (!archivo.renameTo(new File(path + "\\" + archivo.getName()))) {
+                JOptionPane.showMessageDialog(this, "No se pudo descargar el archivo", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No selecciono una carpeta", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+
 
     }//GEN-LAST:event_btnDescargarActionPerformed
 

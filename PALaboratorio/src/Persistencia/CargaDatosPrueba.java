@@ -1,5 +1,6 @@
 package Persistencia;
 
+import Logica.DtAlbum;
 import Logica.DtArtista;
 import Logica.DtCliente;
 import Logica.DtFecha;
@@ -151,7 +152,7 @@ public class CargaDatosPrueba {
         {"CUM", "Cumbia", ""}
     };
 
-    // Albumes (Ref artista, Ref alnum, Nombre, Generos, Anio, Imagen)
+    // Albumes (Ref artista, Ref album, Nombre, Generos, Anio, Imagen)
     private String[][] albumes = {
         {"VP", "VPL", "Village People Live and Sleazy", "DIS,DPO,PCL", "1980", ""},
         {"DM", "DMV", "Violator", "EPO", "1990", ""},
@@ -230,7 +231,7 @@ public class CargaDatosPrueba {
         {"CB", "LP5", "Fiesteras", "S", "bit.ly/fiestaFiesta"},
         {"CB", "LP6", "Mis FAvoritas", "N", ""},};
 
-    // Temas De Listas (Ref, Ref Album, Ref Tema)
+    // Temas De Listas (Ref Lista, Ref Album, Ref Tema)
     private String[][] temasDeListas = {
         {"LD1", "VPL", "T11"},
         {"LD1", "VPL", "T12"},
@@ -417,7 +418,79 @@ public class CargaDatosPrueba {
         return res;
     }
 
-    private boolean insertarSeguidores() {
+    
+    private boolean CargarListaPorDefecto(){
+    BDLista bdl = new BDLista();
+    for(String[] listaPordefecto : listarPorDefecto){
+        String refLista = listaPordefecto[0];
+        String nombre = listaPordefecto[1];
+        String genero = listaPordefecto[2];
+        
+    String nombreListaD="";
+    String nombreTema="";
+    
+    for(String[] listapordefecto : listarPorDefecto){
+        if(listapordefecto[0]==refLista ){
+        nombreListaD=listapordefecto[1];
+        }
+    }
+    for(String[] temaLista : temasDeListas){
+    if(temaLista[0]==refLista){
+       String refTema = temaLista[2];
+       
+     for(String[] tema : temas){
+     if(tema[1] == refTema ){
+     nombreTema = tema[2];
+     }
+     }
+    if(!bdl.altaLista(nombreListaD, nombreTema,null, genero)){
+     return false; 
+    }else return false;
+  
+    }
+    }
+    }
+     return true;
+    }
+    // Listas de Reproduccion Particulares (Ref cliente, Ref, Nombre, Publica, Imagen)
+    private boolean CargarListaParticular(){
+    BDLista bdl = new BDLista();
+    for(String[] listaParticular : listasParticulares){
+    String refCliente = listaParticular[0];
+    String refLista = listaParticular[1];
+    String nombreLista = listaParticular[2];
+    String publica = listaParticular[3];
+  
+    String nombreCliente="";
+    String  nombretema="";
+    String refTema="";
+    for(String[] cliente : perfiles){
+    if(cliente[0]==refCliente){
+     nombreCliente=cliente[1];   
+    }
+    
+    for(String[] temalista: temasDeListas){
+        
+    if(temalista[0]==refLista){
+    refTema = temalista[2];
+    }   
+    
+    for(String[] tema : temas){
+    if(tema[0]==refTema){
+    nombretema=tema[2];
+    }
+    }
+    if(!bdl.altaLista(nombreLista, nombretema, nombreCliente,null)){
+     return false;
+    }else return true;
+    }
+    }
+
+    }
+        return false;
+    }
+ 
+    private boolean insertarSeguidores(){
         BDCliente bdc = new BDCliente();
 
         for (String[] seguidor : seguidores) {
@@ -514,6 +587,7 @@ public class CargaDatosPrueba {
         return true;
     }
 
+
     private int obtenerIdAlbum(String nickArtista, String nombreAlbum) {
         try {
             PreparedStatement query = conexion.prepareStatement("SELECT idAlbum FROM album WHERE nombre = ? AND nicknameArtista = ?");
@@ -568,4 +642,7 @@ public class CargaDatosPrueba {
             return false;
         }
     }
+    
+
+
 }
