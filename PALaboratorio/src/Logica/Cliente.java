@@ -22,7 +22,6 @@ public class Cliente extends Usuario {
         this.albumesfav = new ArrayList<>();
         this.listasfav = new ArrayList<>();
         this.temasfav = new ArrayList<>();
-
     }
 
     public void agregarAlbumFav(Album a) {
