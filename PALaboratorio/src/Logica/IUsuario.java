@@ -24,4 +24,6 @@ public interface IUsuario {
     public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente);
     public DtLista selectListaCli(String nombreL);
     public ArrayList<DtLista> listarLisReproduccion(String nickCliente);
+    
+    public void cargarAlbum(Album dta);
 }

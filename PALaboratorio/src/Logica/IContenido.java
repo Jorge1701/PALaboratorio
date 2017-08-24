@@ -27,4 +27,5 @@ public interface IContenido {
     public DtLista selecListGen(String nombreL);
         
     public void cargarGenero(String nombre, String padre);
+    public Genero obtenerGenero(String nombre);
 }

@@ -35,7 +35,7 @@ public class Artista extends Usuario {
         DtAlbumContenido dtac;
         Album album = albumes.get(nomAlbum);
         dtac = album.obtenerAlbumContenido();
-       
+
         return dtac;
     }
 
@@ -48,16 +48,15 @@ public class Artista extends Usuario {
         DtUsuario info = getData();
         ArrayList<DtCliente> dtSeguidores = getSeguidores();
         ArrayList<DtAlbum> dtAlbumes = new ArrayList<>();
-        
+
         Iterator i = this.albumes.entrySet().iterator();
-        
-        while(i.hasNext()){
-        Album a = (Album)((Map.Entry) i.next()).getValue();
-        dtAlbumes.add(a.getData());
+
+        while (i.hasNext()) {
+            Album a = (Album) ((Map.Entry) i.next()).getValue();
+            dtAlbumes.add(a.getData());
         }
-        
-        
-        return new DtPerfilArtista(dtAlbumes,info,dtSeguidores,biografia,web);
+
+        return new DtPerfilArtista(dtAlbumes, info, dtSeguidores, biografia, web);
 
     }
 
@@ -66,7 +65,6 @@ public class Artista extends Usuario {
         if (this.albumes.get(nom) != null) {
             throw new UnsupportedOperationException("Ya existe Albun con ese nombre");
         } else {
-           
 
             //Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
             Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
@@ -82,12 +80,11 @@ public class Artista extends Usuario {
 
         }
 
-
     }
 
     @Override
     public String getTipo() {
-        
+
         return "Artista";
     }
 
@@ -114,5 +111,9 @@ public class Artista extends Usuario {
 
     public void setAlbumes(HashMap<String, Album> albumes) {
         this.albumes = albumes;
+    }
+
+    public void cargarAlbum(Album a) {
+        albumes.put(a.getNombre(), a);
     }
 }

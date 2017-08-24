@@ -24,6 +24,15 @@ public class Album {
         this.generos = generos;
     }
 
+    public Album(String nickArtista, String nombre, int anio, Imagen imagen) {
+        this.nickArtista = nickArtista;
+        this.nombre = nombre;
+        this.anio = anio;
+        this.imagen = imagen;
+        this.temas = new HashMap<>();
+        this.generos = new ArrayList<>();
+    }
+
     public Tema getTema(String nombre) {
         return temas.get(nombre);
     }
@@ -91,7 +100,7 @@ public class Album {
         for (Genero genero : generos) {
             nomGeneros.add(genero.getNombre());
         }
-      
+
         Iterator it1 = temas.entrySet().iterator();
         while (it1.hasNext()) {
             Tema tema = (Tema) ((Map.Entry) it1.next()).getValue();

@@ -9,10 +9,10 @@ public class Genero {
 
     private String nombre;
     private HashMap<String, Genero> subgeneros;
-    private HashMap<String, Album> albumes;
+    private ArrayList<Album> albumes;
     private HashMap<String, ListaDefecto> listasDefecto;
 
-    public Genero(String nombre, HashMap<String, Genero> subgeneros, HashMap<String, Album> albumes, HashMap<String, ListaDefecto> listasDefecto) {
+    public Genero(String nombre, HashMap<String, Genero> subgeneros, ArrayList<Album> albumes, HashMap<String, ListaDefecto> listasDefecto) {
         this.nombre = nombre;
         this.subgeneros = subgeneros;
         this.albumes = albumes;
@@ -22,7 +22,7 @@ public class Genero {
     public Genero(String nombre) {
         this.nombre = nombre;
         subgeneros = new HashMap<>();
-        albumes = new HashMap<>();
+        albumes = new ArrayList<>();
         listasDefecto = new HashMap<>();
     }
 
@@ -38,7 +38,7 @@ public class Genero {
         }
     }
 
-    public void setAlbumes(HashMap<String, Album> albumes) {
+    public void setAlbumes(ArrayList<Album> albumes) {
         this.albumes = albumes;
     }
 
@@ -46,7 +46,7 @@ public class Genero {
         this.listasDefecto = listasDefecto;
     }
 
-    public HashMap<String, Album> getAlbumes() {
+    public ArrayList<Album> getAlbumes() {
         return albumes;
     }
 
@@ -106,10 +106,8 @@ public class Genero {
 
     public ArrayList<DtAlbum> obtenerAlbumes() {
         ArrayList<DtAlbum> res = new ArrayList<>();
-        Iterator it = albumes.entrySet().iterator();
-        while (it.hasNext()) {
-            Album album = (Album) ((Map.Entry) it.next()).getValue();
-            res.add(new DtAlbum(album.getArtista().getNickname(), album.getNombre(), album.getAnio()/*,album.getImagen()*/));
+        for (Album a : albumes) {
+            res.add(new DtAlbum(a.getNickArtista(), a.getNombre(), a.getAnio()/*,album.getImagen()*/));
         }
         return res;
     }
@@ -127,5 +125,9 @@ public class Genero {
     public DtLista seleccionarLista(String nombreL) {
         ListaDefecto ld = this.listasDefecto.get(nombreL);
         return new DtListaDefecto(ld.getGenero().getData(), ld.getNombre(), ld.getTemas());
+    }
+
+    public void cargarAlbum(Album a) {
+        albumes.add(a);
     }
 }

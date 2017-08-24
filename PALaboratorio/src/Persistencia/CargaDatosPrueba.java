@@ -393,6 +393,72 @@ public class CargaDatosPrueba {
             return null;
         }
     }
+
+    public ArrayList<DtAlbum> cargarAlbumes() {
+        try {
+            ArrayList<DtAlbum> dtas = new ArrayList<>();
+
+            PreparedStatement query = conexion.prepareStatement("SELECT nicknameArtista, nombre, anio FROM album");
+            ResultSet rs = query.executeQuery();
+            while (rs.next()) {
+                dtas.add(new DtAlbum(rs.getString(1), rs.getString(2), rs.getInt(3)));
+            }
+
+            rs.close();
+            query.close();
+
+            return dtas;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<String> cargarGenerosAlbum(String nicknameArtista, String nombre) {
+        try {
+            ArrayList<String> generos = new ArrayList<>();
+            int idAlbum = getIdAlbum(nicknameArtista, nombre);
+
+            PreparedStatement query = conexion.prepareStatement("SELECT nombreGenero FROM clasificacionalbum WHERE idAlbum = ? AND nickname = ?");
+            query.setInt(1, idAlbum);
+            query.setString(2, nicknameArtista);
+
+            ResultSet rs = query.executeQuery();
+            while (rs.next()) {
+                generos.add(rs.getString(1));
+            }
+
+            rs.close();
+            query.close();
+
+            return generos;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private int getIdAlbum(String nicknameArtista, String nombre) {
+        try {
+            PreparedStatement query = conexion.prepareStatement("SELECT idAlbum FROM album WHERE nicknameArtista = ? AND nombre = ?");
+            query.setString(1, nicknameArtista);
+            query.setString(2, nombre);
+
+            ResultSet rs = query.executeQuery();
+            int idAlbum = 0;
+            while (rs.next()) {
+                idAlbum = rs.getInt(1);
+            }
+
+            rs.close();
+            query.close();
+
+            return idAlbum;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
     // Funciones para insertar Datos de Prueba a la BD
 
     public boolean insertarDatosPrueba() {

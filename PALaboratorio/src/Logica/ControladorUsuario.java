@@ -291,8 +291,13 @@ public class ControladorUsuario implements IUsuario {
     public DtLista selectListaCli(String nombreL) {
         return ((Cliente) this.usuarioRecordado).seleccionarLista(nombreL);
     }
-    
-    public ArrayList<DtLista> listarLisReproduccion(String nickCliente){
-    return ((Cliente)obtenerUsuario(nickCliente)).listarLisReproduccion();
+
+    public ArrayList<DtLista> listarLisReproduccion(String nickCliente) {
+        return ((Cliente) obtenerUsuario(nickCliente)).listarLisReproduccion();
+    }
+
+    public void cargarAlbum(Album a) {
+        Usuario u = usuarios.get(a.getNickArtista());
+        ((Artista) u).cargarAlbum(a);
     }
 }
