@@ -326,13 +326,13 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String nickArtista;
         String nomAlbum;
-        DtAlbumContenido albCont;
 
         if (btnConsultaGenero.isSelected()) {
             if (generos.getSelectionPath() == null) {
                 JOptionPane.showMessageDialog(this, "Debe de seleccionar un Genero");
                 return;
             }
+
         } else if (btnConsultaArtista.isSelected()) {
             if (tablaArtistas.getSelectionModel().isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe de seleccionar un Artista");
@@ -349,12 +349,10 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
         nomAlbum = tablaAlbumes.getValueAt(tablaAlbumes.getSelectedRow(), 0).toString();
 
         try {
-            albCont = iUsuario.obtenerAlbumContenido(nickArtista, nomAlbum);
-            AlbumContenido albc = new AlbumContenido((DtAlbumContenido) albCont);
+            AlbumContenido albc = new AlbumContenido(iUsuario.obtenerAlbumContenido(nickArtista, nomAlbum));
             this.getParent().add(albc);
             centrar(albc);
             albc.show();
-
         } catch (UnsupportedOperationException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }

@@ -2,6 +2,7 @@ package Logica;
 
 import Persistencia.CargaDatosPrueba;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Fabrica {
 
@@ -88,6 +89,19 @@ public class Fabrica {
             a.setGeneros(albumGeneros);
 
             // Cargar Temas del album
+            HashMap<String, Tema> temas = new HashMap<>();
+            for (DtTema dtt : cdp.cargarTemasAlbum(dta.getNickArtista(), dta.getNombre())) {
+                if (dtt instanceof DtTemaLocal) {
+                    DtTemaLocal dttl = (DtTemaLocal) dtt;
+                    temas.put(dttl.getNombre(), new TemaLocal(dttl.getDirectorio(), dttl.getNombre(), dttl.getDuracion(), dttl.getUbicacion()));
+                } else {
+                    DtTemaRemoto dttr = (DtTemaRemoto) dtt;
+                    temas.put(dttr.getNombre(), new TemaRemoto(dttr.getNombre(), dttr.getDuracion(), dttr.getUbicacion(), dttr.getUrl()));
+                }
+            }
+            a.setTemas(temas);
+
+            // Ingregas album al controlador
             iu.cargarAlbum(a);
         }
     }

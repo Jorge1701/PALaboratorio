@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -146,6 +148,26 @@ public class BDAlbum {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean insertarTemaDeAlbum(String nickArtista, int idAlbum, String nombre, Time duracion, int ubicacion, String tipo, String link) {
+        try {
+            PreparedStatement insert = conexion.prepareStatement("INSERT INTO tema (nicknameArtista, idAlbum, nombre, duracion, ubicacion, tipo, link) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            insert.setString(1, nickArtista);
+            insert.setInt(2, idAlbum);
+            insert.setString(3, nombre);
+            insert.setTime(4, duracion);
+            insert.setInt(5, ubicacion);
+            insert.setString(6, tipo);
+            insert.setString(7, link);
+            insert.executeUpdate();
+            insert.close();
+
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
             return false;
         }
     }

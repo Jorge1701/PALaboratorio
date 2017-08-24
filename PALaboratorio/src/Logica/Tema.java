@@ -1,7 +1,7 @@
 package Logica;
 
 public class Tema {
-    
+
     private int id;
     private String nombre;
     private DtTime duracion;
@@ -20,13 +20,11 @@ public class Tema {
     public void setId(int id) {
         this.id = id;
     }
-    
-    
 
     public DtTema getData() {
         return new DtTema(nombre, duracion, ubicacion);
     }
-    
+
     public String getNombre() {
         return nombre;
     }

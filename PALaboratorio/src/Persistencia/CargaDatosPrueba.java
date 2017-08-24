@@ -4,6 +4,10 @@ import Logica.DtAlbum;
 import Logica.DtArtista;
 import Logica.DtCliente;
 import Logica.DtFecha;
+import Logica.DtTema;
+import Logica.DtTemaLocal;
+import Logica.DtTemaRemoto;
+import Logica.DtTime;
 import Logica.DtUsuario;
 import java.sql.Connection;
 import java.sql.Date;
@@ -193,7 +197,7 @@ public class CargaDatosPrueba {
         {"VIO", "T131", "Violeta", "1", "56", "1"}
     };
 
-    // Archivos y Streams de Musica (Album ref, Ref, Archivo, Stream)
+    // Archivos y Streams de Musica (Album ref, Ref Tema, Archivo, Stream)
     private String[][] archivosYStreams = {
         {"VPL", "T11", "", "bit.ly/SCvpymca"},
         {"VPL", "T12", "picosong.com/download/zf8T", ""},
@@ -438,6 +442,36 @@ public class CargaDatosPrueba {
         }
     }
 
+    public ArrayList<DtTema> cargarTemasAlbum(String nicknameArtista, String nombreAlbum) {
+        try {
+            ArrayList<DtTema> temas = new ArrayList<>();
+            PreparedStatement query = conexion.prepareStatement("SELECT nombre, duracion, ubicacion, tipo, link FROM tema WHERE nicknameArtista = ? AND idAlbum = ?");
+            query.setString(1, nicknameArtista);
+            query.setInt(2, obtenerIdAlbum(nicknameArtista, nombreAlbum));
+
+            ResultSet rs = query.executeQuery();
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                Time duracion = rs.getTime("duracion");
+                int ubicacion = rs.getInt("ubicacion");
+
+                if (rs.getString("tipo").equals("A")) {
+                    temas.add(new DtTemaLocal(rs.getString("link"), nombre, new DtTime(duracion.getHours(), duracion.getMinutes(), duracion.getSeconds()), ubicacion));
+                } else {
+                    temas.add(new DtTemaRemoto(rs.getString("link"), nombre, new DtTime(duracion.getHours(), duracion.getMinutes(), duracion.getSeconds()), ubicacion));
+                }
+            }
+
+            rs.close();
+            query.close();
+
+            return temas;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private int getIdAlbum(String nicknameArtista, String nombre) {
         try {
             PreparedStatement query = conexion.prepareStatement("SELECT idAlbum FROM album WHERE nicknameArtista = ? AND nombre = ?");
@@ -459,8 +493,8 @@ public class CargaDatosPrueba {
             return 0;
         }
     }
-    // Funciones para insertar Datos de Prueba a la BD
 
+    // Funciones para insertar Datos de Prueba a la BD
     public boolean insertarDatosPrueba() {
         if (!insertarUsuarios()) {
             return false;
@@ -474,46 +508,9 @@ public class CargaDatosPrueba {
         if (!insertarAlbumes()) {
             return false;
         }
-        /*
         if (!insertarTemas()) {
-          return false;
-        }*/
-        return true;
-    }
-
-    /*
-    // Albumes (Ref artista, Ref album, Nombre, Generos, Anio, Imagen)
-    private String[][] albumes = {
-        {"VP", "VPL", "Village People Live and Sleazy", "DIS,DPO,PCL", "1980", ""},*/
-    private boolean insertarAlbumes() {
-        BDAlbum bda = new BDAlbum();
-
-        for (String[] album : albumes) {
-            String nickArtista = "";
-
-            for (String[] perfil : perfiles) {
-                if (perfil[0] == album[0]) {
-                    nickArtista = perfil[1];
-                    break;
-                }
-            }
-
-            int idAlbum = bda.insertarAlbum(new DtAlbum(nickArtista, album[2], Integer.parseInt(album[4])));
-
-            for (String refGenero : album[3].split(",")) {
-                String nombreGenero = "";
-
-                for (String[] genero : generos) {
-                    if (refGenero.equals(genero[0])) {
-                        nombreGenero = genero[1];
-                        break;
-                    }
-                }
-
-                bda.insertarGeneroDeAlbum(idAlbum, nickArtista, nombreGenero);
-            }
+            return false;
         }
-
         return true;
     }
 
@@ -549,6 +546,143 @@ public class CargaDatosPrueba {
             }
         }
         return res;
+    }
+
+    private boolean insertarSeguidores() {
+        BDCliente bdc = new BDCliente();
+
+        for (String[] seguidor : seguidores) {
+            String codC = seguidor[0];
+            String codU = seguidor[1];
+
+            String nickC = "";
+            String nickU = "";
+
+            for (String[] usuario : perfiles) {
+                if (usuario[0] == codC) {
+                    nickC = usuario[1];
+                }
+
+                if (usuario[0] == codU) {
+                    nickU = usuario[1];
+                }
+            }
+
+            if (!bdc.seguirUsuario(nickC, nickU)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean insertarGeneros() {
+        String nombre = "";
+        String padre = "";
+        String pRef = "";
+        BDGenero bdg = new BDGenero();
+        bdg.ingresarGeneros("Generos", null);
+
+        for (String[] genero : generos) {
+            nombre = genero[1];
+            pRef = genero[2];
+
+            if ("".equals(pRef)) {
+                padre = "Generos";
+            } else {
+                for (String[] generoPadre : generos) {
+                    if (pRef.equals(generoPadre[0])) {
+                        padre = generoPadre[1];
+                        break;
+                    }
+                }
+            }
+            if (!bdg.ingresarGeneros(nombre, padre)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean insertarAlbumes() {
+        BDAlbum bda = new BDAlbum();
+
+        for (String[] album : albumes) {
+            String nickArtista = "";
+
+            for (String[] perfil : perfiles) {
+                if (perfil[0] == album[0]) {
+                    nickArtista = perfil[1];
+                    break;
+                }
+            }
+
+            int idAlbum = bda.insertarAlbum(new DtAlbum(nickArtista, album[2], Integer.parseInt(album[4])));
+
+            for (String refGenero : album[3].split(",")) {
+                String nombreGenero = "";
+
+                for (String[] genero : generos) {
+                    if (refGenero.equals(genero[0])) {
+                        nombreGenero = genero[1];
+                        break;
+                    }
+                }
+
+                bda.insertarGeneroDeAlbum(idAlbum, nickArtista, nombreGenero);
+            }
+        }
+
+        return true;
+    }
+
+    // Archivos y Streams de Musica (Album ref, Ref Tema, Archivo, Stream)
+    // Temas de los Albumes (Ref album, Ref tema, Nombre, Minutos, Segundos, Ubicacion)
+    // Albumes (Ref artista, Ref album, Nombre, Generos, Anio, Imagen)
+    // Pefiles (Ref, Nickname, Correo, Nombre, Apellido, FechaNac, Tipo)
+    private boolean insertarTemas() {
+        BDAlbum bda = new BDAlbum();
+
+        for (String[] tema : temas) {
+            String nickArtista = "";
+            String nombreAlbum = "";
+
+            for (String[] album : albumes) {
+                if (album[1] == tema[0]) {
+                    nombreAlbum = album[2];
+
+                    for (String[] usuario : perfiles) {
+                        if (usuario[0] == album[0]) {
+                            nickArtista = usuario[1];
+                        }
+                    }
+                }
+            }
+
+            int idAlbum = obtenerIdAlbum(nickArtista, nombreAlbum);
+            String nombre = tema[2];
+            Time duracion = new Time(0, Integer.parseInt(tema[4]), Integer.parseInt(tema[5]));
+            int ubicacion = Integer.parseInt(tema[5]);
+
+            String tipo = "";
+            String link = "";
+
+            for (String[] as : archivosYStreams) {
+                if (as[0] == tema[0] && as[1] == tema[1]) {
+                    if (tema[3] != "") {
+                        tipo = "A";
+                        link = as[2];
+                    } else {
+                        tipo = "S";
+                        link = as[3];
+                    }
+                }
+            }
+
+            bda.insertarTemaDeAlbum(nickArtista, idAlbum, nombre, duracion, ubicacion, tipo, link);
+        }
+
+        return true;
     }
 
     private boolean CargarListaPorDefecto() {
@@ -627,103 +761,6 @@ public class CargaDatosPrueba {
         return false;
     }
 
-    private boolean insertarSeguidores() {
-        BDCliente bdc = new BDCliente();
-
-        for (String[] seguidor : seguidores) {
-            String codC = seguidor[0];
-            String codU = seguidor[1];
-
-            String nickC = "";
-            String nickU = "";
-
-            for (String[] usuario : perfiles) {
-                if (usuario[0] == codC) {
-                    nickC = usuario[1];
-                }
-
-                if (usuario[0] == codU) {
-                    nickU = usuario[1];
-                }
-            }
-
-            if (!bdc.seguirUsuario(nickC, nickU)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private boolean insertarGeneros() {
-        String nombre = "";
-        String padre = "";
-        String pRef = "";
-        BDGenero bdg = new BDGenero();
-        bdg.ingresarGeneros("Géneros", null);
-
-        for (String[] genero : generos) {
-            nombre = genero[1];
-            pRef = genero[2];
-
-            if ("".equals(pRef)) {
-                padre = "Generos";
-            } else {
-                for (String[] generoPadre : generos) {
-                    if (pRef.equals(generoPadre[0])) {
-                        padre = generoPadre[1];
-                        break;
-                    }
-                }
-            }
-            if (!bdg.ingresarGeneros(nombre, padre)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean insertarTemas() {
-        for (String[] tema : temas) {
-            try {
-                String nickArtista = "";
-                String nombreAlbum = "";
-
-                for (String[] album : albumes) {
-                    if (album[1] == tema[0]) {
-                        nombreAlbum = album[2];
-
-                        for (String[] usuario : perfiles) {
-                            if (usuario[0] == album[0]) {
-                                nickArtista = usuario[1];
-                            }
-                        }
-                    }
-                }
-
-                int idAlbum = obtenerIdAlbum(nickArtista, nombreAlbum);
-                String nombre = tema[2];
-                Time duracion = new Time(0, Integer.parseInt(nombre), 0);
-                int ubicacion = Integer.parseInt(tema[5]);
-
-                PreparedStatement insert = conexion.prepareStatement("INSERT INTO tema (nickArtista, idAlbum, nombre, duracion, ubicacion) VALUES (?, ?, ?, ?, ?)");
-                insert.setString(1, nickArtista);
-                insert.setInt(2, idAlbum);
-                insert.setString(3, nombre);
-                insert.setTime(4, duracion);
-                insert.setInt(5, ubicacion);
-                insert.executeUpdate();
-                insert.close();
-
-                return true;
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                return false;
-            }
-        }
-        return true;
-    }
-
     private int obtenerIdAlbum(String nickArtista, String nombreAlbum) {
         try {
             PreparedStatement query = conexion.prepareStatement("SELECT idAlbum FROM album WHERE nombre = ? AND nicknameArtista = ?");
@@ -772,6 +809,7 @@ public class CargaDatosPrueba {
             PreparedStatement truncate = conexion.prepareStatement("DELETE FROM " + nombre);
             truncate.executeUpdate();
             truncate.close();
+
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
