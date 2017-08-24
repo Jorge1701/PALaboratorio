@@ -22,6 +22,7 @@ public class Fabrica {
     public static void inicializarControladores() {
         ControladorUsuario.cargarInstancia();
         ControladorContenido.cargarInstancia();
+        getIControladorContenido().setIUsuario(getIControladorUsuario());
     }
 
     public static void cargaDatosPrueba() throws Exception {

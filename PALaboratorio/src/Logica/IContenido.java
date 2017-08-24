@@ -22,6 +22,7 @@ public interface IContenido {
     public boolean quitarTema(String nombreT,String nombre,String nombreUser);
     public List<DtTema> selecLista(String nick,String nomL);
     public boolean publicarLista(String nick,String nomL);
+    public void setIUsuario(IUsuario iUsuario);
     public ArrayList<DtLista> listarLisReproduccionGen(String nomGen);
     public DtLista selecListGen(String nombreL);
     public DtGenero selecGenero(String nomGenero);

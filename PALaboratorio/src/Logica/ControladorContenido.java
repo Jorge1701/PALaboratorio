@@ -267,8 +267,10 @@ public class ControladorContenido implements IContenido {
            this.listasDefecto.put(lis.getNombre(), (ListaDefecto) lis);
            return true;
        }else if(bd){
-       ListaParticular lis2 = new ListaParticular(true, dtl.getNombre(), null);
+       ListaParticular lis2 = new ListaParticular(dtl.getNombre());
         this.listasParticular.put(lis2.getNombre(), lis2);
+        Cliente cl = (Cliente) iUsuario.obtenerUsuario(nickCliente);
+           cl.agregarLista(lis2);
         return true;
        }else{
        return false;
@@ -394,7 +396,7 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public boolean publicarLista(String nick, String nomL) {
-        Cliente us = (Cliente) ControladorUsuario.getInstance().getUsuario(nick);
+        Cliente us = (Cliente) iUsuario.obtenerUsuario(nick);
 
         if (us == null) {
             throw new UnsupportedOperationException("No existe el usuario" + nick + " en el sistema.");
@@ -407,7 +409,7 @@ public class ControladorContenido implements IContenido {
         }
 
         l.setPrivada(false);
-
+        bdLista.publicarLista(l);
         return true;
     }
 

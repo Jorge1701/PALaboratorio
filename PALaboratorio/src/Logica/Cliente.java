@@ -47,6 +47,10 @@ public class Cliente extends Usuario {
             temasfav.add(t);
         }
     }
+    
+    public void agregarLista(Lista l){
+     this.listasParticulares.put(l.getNombre(), (ListaParticular) l);
+    }
 
     public void eliminarAlbumFav(int i) {
         if (albumesfav.size() >= i) {
