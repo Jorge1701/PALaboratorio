@@ -137,7 +137,7 @@ public class BDAlbum {
 
     public boolean insertarGeneroDeAlbum(int idAlbum, String nickname, String nombreGenero) {
         try {
-            PreparedStatement insert = conexion.prepareStatement("INSERT INTO clasificacionalbum (idAlbum, nickname, nombreGenero) VALUES (?, ?, ?)");
+            PreparedStatement insert = conexion.prepareStatement("INSERT INTO clasificacionalbum (idAlbum, nicknameArtista, nombreGenero) VALUES (?, ?, ?)");
             insert.setInt(1, idAlbum);
             insert.setString(2, nickname);
             insert.setString(3, nombreGenero);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import javax.swing.JOptionPane;
 
 public class Genero {
 
@@ -35,6 +36,22 @@ public class Genero {
                 Genero g = (Genero) ((Map.Entry) i.next()).getValue();
                 g.agregarGenero(padre, nombre);
             }
+        }
+    }
+
+    public boolean existe(String nombre) {
+        if (getNombre().equals(nombre)) {
+            return true;
+        } else {
+            Iterator i = subgeneros.entrySet().iterator();
+            boolean existe = false;
+
+            while (i.hasNext()) {
+                Genero g = (Genero) ((Map.Entry) i.next()).getValue();
+                existe = existe || g.existe(nombre);
+            }
+
+            return existe;
         }
     }
 

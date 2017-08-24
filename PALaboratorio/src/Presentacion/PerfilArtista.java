@@ -35,7 +35,8 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
                 dtc.getNombre(),
                 dtc.getApellido(),
                 dtc.getEmail(),
-                dtc.getFechaNac().toString(),};
+                dtc.getFechaNac().toString()
+            };
             dtmSeguidores.addRow(data);
         }
 
@@ -44,8 +45,9 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
 
         for (DtAlbum dta : dtPerfilArtista.getAlbumes()) {
             Object[] data = {
-                dta.getNombre(),};
-            dtmSeguidores.addRow(data);
+                dta.getNombre()
+            };
+            dtmAlbumes.addRow(data);
         }
 
         // Carga de imagen

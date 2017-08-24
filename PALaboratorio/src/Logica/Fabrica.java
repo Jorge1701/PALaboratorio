@@ -3,12 +3,14 @@ package Logica;
 import Persistencia.CargaDatosPrueba;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 public class Fabrica {
 
     public static void inicializarControladores() {
         ControladorUsuario.cargarInstancia();
         ControladorContenido.cargarInstancia();
+        getIControladorContenido().setIUsuario(getIControladorUsuario());
     }
 
     public static void cargaDatosPrueba() throws Exception {
@@ -55,9 +57,15 @@ public class Fabrica {
         }
 
         // Cargar Generos
-        ArrayList< String[]> generos = cdp.cargarGeneros();
-        for (String[] genero : generos) {
-            ic.cargarGenero(genero[0], genero[1]);
+        ArrayList<String[]> generos = cdp.cargarGeneros();
+        while (generos.size() > 0) {
+            for (int i = 0; i < generos.size(); i++) {
+                String[] genero = generos.get(i);
+                if (ic.existeGenero(genero[1])) {
+                    ic.cargarGenero(genero[0], genero[1]);
+                    generos.remove(i);
+                }
+            }
         }
 
         // Cargar Albumes

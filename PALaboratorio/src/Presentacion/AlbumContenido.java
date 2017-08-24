@@ -29,7 +29,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame {
 
         //Cargar tabla de Temas
         DefaultTableModel dtm = (DefaultTableModel) tablaTemas.getModel();
-        //dtm.setRowCount(0);
+        dtm.setRowCount(0);
 
         String pathoUrl;
 
@@ -44,7 +44,8 @@ public class AlbumContenido extends javax.swing.JInternalFrame {
                 ((DtTema) dtt).getNombre(),
                 ((DtTema) dtt).getDuracion().getHoras() + ":" + ((DtTema) dtt).getDuracion().getMinutos() + ":" + ((DtTema) dtt).getDuracion().getSegundos(),
                 ((DtTema) dtt).getUbicacion(),
-                pathoUrl,};
+                pathoUrl
+            };
             dtm.addRow(data);
         }
 

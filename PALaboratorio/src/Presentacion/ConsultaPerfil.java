@@ -20,6 +20,7 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
 
     public ConsultaPerfil(String tipo) {
         initComponents();
+        setTitle(getTitle() + " " + tipo);
         this.tipo = tipo;
 
         iUsuario = Fabrica.getIControladorUsuario();

@@ -300,7 +300,10 @@ public class menu extends javax.swing.JFrame {
             Fabrica.cargaDatosPrueba();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            return;
         }
+        
+        JOptionPane.showMessageDialog(this, "Los Datos de Prueba fueron cargados con exito");
     }//GEN-LAST:event_cargarDatosActionPerformed
 
     private void altaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaAlbumActionPerformed
