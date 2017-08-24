@@ -378,7 +378,7 @@ public class CargaDatosPrueba {
         }
     }
 
-    public ArrayList<String[]> cagarGeneros() {
+    public ArrayList<String[]> cargarGeneros() {
         try {
             ArrayList<String[]> res = new ArrayList<>();
             PreparedStatement query = conexion.prepareStatement("SELECT * FROM genero");
@@ -647,10 +647,6 @@ public class CargaDatosPrueba {
         return true;
     }
 
-    // Archivos y Streams de Musica (Album ref, Ref Tema, Archivo, Stream)
-    // Temas de los Albumes (Ref album, Ref tema, Nombre, Minutos, Segundos, Ubicacion)
-    // Albumes (Ref artista, Ref album, Nombre, Generos, Anio, Imagen)
-    // Pefiles (Ref, Nickname, Correo, Nombre, Apellido, FechaNac, Tipo)
     private boolean insertarTemas() {
         BDAlbum bda = new BDAlbum();
 

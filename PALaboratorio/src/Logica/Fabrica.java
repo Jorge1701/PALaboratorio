@@ -6,20 +6,6 @@ import java.util.HashMap;
 
 public class Fabrica {
 
-    //SINGLETON
-    /* private static Fabrica instancia;
-
-    public static Fabrica getInstance() {
-        if (instancia == null) {
-            instancia = new Fabrica();
-        }
-        return instancia;
-    }
-
-    private Fabrica() {
-        levantarDatos();
-    }
-     */
     public static void inicializarControladores() {
         ControladorUsuario.cargarInstancia();
         ControladorContenido.cargarInstancia();
@@ -69,7 +55,7 @@ public class Fabrica {
         }
 
         // Cargar Generos
-        ArrayList< String[]> generos = cdp.cagarGeneros();
+        ArrayList< String[]> generos = cdp.cargarGeneros();
         for (String[] genero : generos) {
             ic.cargarGenero(genero[0], genero[1]);
         }
