@@ -17,7 +17,6 @@ public class Genero {
         this.subgeneros = subgeneros;
         this.albumes = albumes;
         this.listasDefecto = listasDefecto;
-        
     }
 
     public Genero(String nombre) {
@@ -26,7 +25,7 @@ public class Genero {
         albumes = new HashMap<>();
         listasDefecto = new HashMap<>();
     }
-    
+
     public void agregarGenero(String padre, String nombre) {
         if (this.nombre.equals(padre)) {
             subgeneros.put(nombre, new Genero(nombre));
@@ -54,7 +53,7 @@ public class Genero {
     public ListaDefecto getListaDefecto(String nombre) {
         return listasDefecto.get(nombre);
     }
-    
+
     public HashMap<String, ListaDefecto> getListasDefecto() {
         return listasDefecto;
     }
@@ -115,18 +114,18 @@ public class Genero {
         return res;
     }
 
-    public ArrayList<DtLista> listarLisReproduccion(){
+    public ArrayList<DtLista> listarLisReproduccion() {
         ArrayList<DtLista> res = new ArrayList<>();
         Iterator it = listasDefecto.entrySet().iterator();
         while (it.hasNext()) {
             ListaDefecto ld = (ListaDefecto) ((Map.Entry) it.next()).getValue();
-            res.add(new DtLista(ld.getNombre(),ld.getTemas()));
+            res.add(new DtLista(ld.getNombre(), ld.getTemas()));
         }
         return res;
     }
-    
-    public DtLista seleccionarLista(String nombreL){
+
+    public DtLista seleccionarLista(String nombreL) {
         ListaDefecto ld = this.listasDefecto.get(nombreL);
-        return new DtListaDefecto(ld.getGenero().getData(),ld.getNombre(),ld.getTemas());
+        return new DtListaDefecto(ld.getGenero().getData(), ld.getNombre(), ld.getTemas());
     }
 }

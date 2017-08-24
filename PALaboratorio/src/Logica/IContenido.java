@@ -26,5 +26,5 @@ public interface IContenido {
     public ArrayList<DtLista> listarLisReproduccionGen(String nomGen);
     public DtLista selecListGen(String nombreL);
         
-    
+    public void cargarGenero(String nombre, String padre);
 }
