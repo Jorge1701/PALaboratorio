@@ -14,64 +14,55 @@ public class BDLista {
 
     protected Connection conexion = new ConexionBD().getConexion();
 
-    public boolean altaLista(DtLista dtl,String nickCliente) {
-
-        if (dtl instanceof DtListaDefecto) {
-            try {
-                String sql = "INSERT INTO lista" + "(nombre) VALUES (?)";
-                PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-                statament.setString(1, dtl.getNombre());
-                statament.executeUpdate();
-                ResultSet rs = statament.getGeneratedKeys();
-                rs.next();
-                int idLista = Integer.parseInt(rs.getString(1));
-                statament.close();
-
+    public boolean altaLista(DtLista dtl, String nickCliente) {
+        try {
+            String sql = "INSERT INTO lista" + "(nombre) VALUES (?)";
+            PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            statament.setString(1, dtl.getNombre());
+            statament.executeUpdate();
+            ResultSet rs = statament.getGeneratedKeys();
+            rs.next();
+            int idLista = Integer.parseInt(rs.getString(1));
+            //statament.close();
+            
+            if (dtl instanceof DtListaDefecto) {
+                
                 PreparedStatement statament2 = conexion.prepareStatement("INSERT INTO listapordefecto"
-                        + " VALUES (?,?,?)");
-
+                        +"(nombre,idLista,nombreGenero) VALUES (?,?,?)");
+                
                 statament2.setString(1, dtl.getNombre());
                 statament2.setInt(2, idLista);
                 statament2.setString(3, ((DtListaDefecto) dtl).getGenero().getNombre());
                 statament2.executeUpdate();
+                //
+                statament.close();
                 statament2.close();
                 return true;
-            } catch (SQLException ex) {
-                Logger.getLogger(BDLista.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
-            }
+                
+            } else {
 
-        } else {
-
-            try {
-                String sql = "INSERT INTO lista" + "(nombre) VALUES (?)";
-                String publica ="";
-                PreparedStatement statament3 = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-                statament3.setString(1, dtl.getNombre());
-                statament3.executeUpdate();
-                ResultSet rs = statament3.getGeneratedKeys();
-                rs.next();
-                int idLista = Integer.parseInt(rs.getString(1));
-                statament3.close();
-                if(((DtListaParticular)dtl).isPrivada()){
-                publica="N";
-                }else{
-                publica="S";
+                String publica = "";
+                if (((DtListaParticular) dtl).isPrivada()) {
+                    publica = "N";
+                } else {
+                    publica = "S";
                 }
                 PreparedStatement statament4 = conexion.prepareStatement("INSERT INTO listaparticular"
                         + " VALUES (?,?,?,?)");
-
+                
                 statament4.setString(1, dtl.getNombre());
                 statament4.setInt(2, idLista);
                 statament4.setString(3, nickCliente);
                 statament4.setString(4, publica);
                 statament4.executeUpdate();
                 statament4.close();
+                statament.close();//
                 return true;
-            } catch (SQLException ex) {
-                Logger.getLogger(BDUsuario.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
+                
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(BDLista.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
 

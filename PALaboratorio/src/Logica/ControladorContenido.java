@@ -39,8 +39,7 @@ public class ControladorContenido implements IContenido {
     }
 
     private ControladorContenido() {
-        //Colección genérica común
-        //this.personas=new ArrayList<Persona>();
+        this.listasParticular = new HashMap<String, ListaParticular>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
         genero = new Genero("Géneros");
         this.bdLista = new BDLista();
@@ -259,13 +258,21 @@ public class ControladorContenido implements IContenido {
     }
 
     @Override
-    public boolean crearListaReproduccion(DtLista lista,String nickCliente) {
-
-        if (! bdLista.altaLista(lista,nickCliente)){
-            return false;
-        } else {
-            return true;
-        }
+    public boolean crearListaReproduccion(DtLista dtl, String nickCliente) {
+     
+        boolean bd = bdLista.altaLista(dtl,nickCliente);
+       if(bd && dtl instanceof DtListaDefecto){
+         Genero g = this.genero.obtener(((DtListaDefecto) dtl).getGenero().getNombre());
+          ListaDefecto lis = new ListaDefecto(g, dtl.getNombre(), null);
+           this.listasDefecto.put(lis.getNombre(), (ListaDefecto) lis);
+           return true;
+       }else if(bd){
+       ListaParticular lis2 = new ListaParticular(true, dtl.getNombre(), null);
+        this.listasParticular.put(lis2.getNombre(), lis2);
+        return true;
+       }else{
+       return false;
+       }       
     }
 
     @Override
