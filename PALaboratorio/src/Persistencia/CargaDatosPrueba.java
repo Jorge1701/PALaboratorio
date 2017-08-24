@@ -376,7 +376,8 @@ public class CargaDatosPrueba {
         }
         if (!insertarGeneros()) {
             return false;
-        }/*
+        }
+        /*
         if (!insertarTemas()) {
           return false;
         }*/

@@ -1,8 +1,6 @@
 package Presentacion;
 
-import Logica.DtArtista;
 import Logica.DtUsuario;
-import Logica.DtCliente;
 import Logica.DtPerfilArtista;
 import Logica.DtPerfilCliente;
 import Logica.DtPerfilUsuario;
@@ -10,7 +8,6 @@ import Logica.Fabrica;
 import Logica.IUsuario;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,54 +16,43 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
 
     private IUsuario iUsuario;
     private String tipo;
+    private ArrayList<DtUsuario> datos;
 
     public ConsultaPerfil(String tipo) {
         initComponents();
         this.tipo = tipo;
 
         iUsuario = Fabrica.getIControladorUsuario();
-        ArrayList<DtUsuario> dtc = null;
-
-        ArrayList<DtUsuario> dta = null;
 
         if (tipo.equals("Cliente")) {
-            dtc = iUsuario.listarClientes();
-            if (dtc.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
-            }
+            datos = iUsuario.listarClientes();
+            cargarDatos(datos, "");
+        } else if (tipo.equals("Artista")) {
+            datos = iUsuario.listarArtistas();
+            cargarDatos(datos, "");
+        }
 
-            DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
-            dtm.setRowCount(0);
-            for (DtUsuario dtUsuario : dtc) {
+    }
+
+    private void cargarDatos(ArrayList<DtUsuario> dtu, String filtro) {
+        if (dtu.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
+        }
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
+        dtm.setRowCount(0);
+        for (DtUsuario dtUsuario : dtu) {
+            if (dtUsuario.getNickname().contains(filtro)) {
                 Object[] data = {
-                    ((DtCliente) dtUsuario).getNickname(),
-                    ((DtCliente) dtUsuario).getNombre(),
-                    ((DtCliente) dtUsuario).getApellido(),
-                    ((DtCliente) dtUsuario).getEmail(),
-                    ((DtCliente) dtUsuario).getFechaNac().toString()
+                    dtUsuario.getNickname(),
+                    dtUsuario.getNombre(),
+                    dtUsuario.getApellido(),
+                    dtUsuario.getEmail(),
+                    dtUsuario.getFechaNac().toString()
                 };
                 dtm.addRow(data);
             }
-        } else if (tipo.equals("Artista")) {
-            dta = iUsuario.listarArtistas();
-            if (dta.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No hay ningun artista registrado");
-            }
-
-            DefaultTableModel dtm2 = (DefaultTableModel) tablaClientes.getModel();
-            dtm2.setRowCount(0);
-            for (DtUsuario dtUsuario : dta) {
-                Object[] data = {
-                    ((DtArtista) dtUsuario).getNickname(),
-                    ((DtArtista) dtUsuario).getNombre(),
-                    ((DtArtista) dtUsuario).getApellido(),
-                    ((DtArtista) dtUsuario).getEmail(),
-                    ((DtArtista) dtUsuario).getFechaNac().toString()
-                };
-                dtm2.addRow(data);
-            }
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -78,6 +64,8 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        txtNick = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -103,14 +91,20 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
             }
         });
 
-        btnCancelar.setBackground(new java.awt.Color(255, 0, 0));
-        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
+
+        txtNick.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtNickCaretUpdate(evt);
+            }
+        });
+
+        jLabel2.setText("Nickname:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,20 +119,29 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAceptar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar)))
+                        .addComponent(btnCancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNick, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -192,11 +195,17 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    private void txtNickCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtNickCaretUpdate
+        cargarDatos(datos, txtNick.getText());
+    }//GEN-LAST:event_txtNickCaretUpdate
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaClientes;
+    private javax.swing.JTextField txtNick;
     // End of variables declaration//GEN-END:variables
 }

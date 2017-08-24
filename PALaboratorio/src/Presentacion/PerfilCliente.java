@@ -32,7 +32,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         txtEmail.setEditable(false);
         txtFechaNac.setEditable(false);
         tablaSeguidos.setEnabled(false);
-        tablaSeguidores .setEnabled(false);
+        tablaSeguidores.setEnabled(false);
 
         setTitle(getTitle() + dtPerfilCliente.getInfo().getNickname());
 
@@ -45,7 +45,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
         // Cargar imagen
         try {
-            BufferedImage img = ImageIO.read(PerfilCliente.class.getResource("/Recursos/Imagenes/Usuarios/aaasaa.jpg"));
+            BufferedImage img = ImageIO.read(PerfilCliente.class.getResource("/Recursos/Imagenes/tierra.jpg"));
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
             pImg.setBounds(0, 0, 100, 160);
@@ -62,10 +62,8 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         for (DtCliente dtc : dtPerfilCliente.getSeguidores()) {
             Object[] data = {
                 dtc.getNickname(),
-                dtc.getNombre(),
-                dtc.getApellido(),
-                dtc.getEmail(),
-                dtc.getFechaNac().toString(),};
+                dtc.getNombre() + " " + dtc.getApellido()
+            };
             dtmSeguidores.addRow(data);
         }
 
@@ -77,6 +75,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         for (DtUsuario dtc : dtPerfilCliente.getSeguidos()) {
             Object[] data = {
                 dtc.getNickname(),
+                dtc.getNombre() + " " + dtc.getApellido(),
                 (dtc instanceof DtCliente ? "Cliente" : "Artista")
             };
             dtmSeguidos.addRow(data);
@@ -272,7 +271,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nickname"
+                "Nickname", "Nombre"
             }
         ));
         jScrollPane2.setViewportView(tablaSeguidores);
@@ -297,16 +296,28 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nickname", "Tipo"
+                "Nickname", "Nombre", "Tipo"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tablaSeguidos);
+        if (tablaSeguidos.getColumnModel().getColumnCount() > 0) {
+            tablaSeguidos.getColumnModel().getColumn(0).setResizable(false);
+            tablaSeguidos.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         javax.swing.GroupLayout panelSeguidosLayout = new javax.swing.GroupLayout(panelSeguidos);
         panelSeguidos.setLayout(panelSeguidosLayout);
         panelSeguidosLayout.setHorizontalGroup(
             panelSeguidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
         );
         panelSeguidosLayout.setVerticalGroup(
             panelSeguidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -362,7 +373,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         panelListasFavs.setLayout(panelListasFavsLayout);
         panelListasFavsLayout.setHorizontalGroup(
             panelListasFavsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
         );
         panelListasFavsLayout.setVerticalGroup(
             panelListasFavsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -416,7 +427,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         panelTemas.setLayout(panelTemasLayout);
         panelTemasLayout.setHorizontalGroup(
             panelTemasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
         );
         panelTemasLayout.setVerticalGroup(
             panelTemasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
