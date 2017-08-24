@@ -18,7 +18,7 @@ public class Cliente extends Usuario {
         super(nickname, nombre, apellido, email, fechaNac, imagen);
 
         this.seguidos = new HashMap();
-        this.listasParticulares = new HashMap();
+        this.listasParticulares = new HashMap<String, ListaParticular>();
         this.albumesfav = new ArrayList<>();
         this.listasfav = new ArrayList<>();
         this.temasfav = new ArrayList<>();
@@ -177,7 +177,7 @@ public class Cliente extends Usuario {
         Iterator it = listasParticulares.entrySet().iterator();
         while (it.hasNext()) {
             ListaParticular lp = (ListaParticular) ((Map.Entry) it.next()).getValue();
-            if (!(lp.isPrivada())) {
+            if (lp.isPrivada()) {
                 res.add(new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas()));
             }
         }

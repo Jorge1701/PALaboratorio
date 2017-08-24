@@ -290,6 +290,8 @@ public class ControladorUsuario implements IUsuario {
     }
     
     public ArrayList<DtLista> listarLisReproduccion(String nickCliente){
-    return ((Cliente)obtenerUsuario(nickCliente)).listarLisReproduccion();
+     ArrayList<DtLista> res=((Cliente)obtenerUsuario(nickCliente)).listarLisReproduccion();
+     
+     return res;
     }
 }
