@@ -10,12 +10,12 @@ public class Album {
     public String nickArtista;
     public String nombre;
     public int anio;
-    public Imagen imagen;
+    public String imagen;
     public HashMap<String, Tema> temas;
     public ArrayList<Genero> generos;
     public Artista artista;
 
-    public Album(String nickArtista, String nombre, int anio, Imagen imagen, HashMap<String, Tema> temas, ArrayList<Genero> generos) {
+    public Album(String nickArtista, String nombre, int anio, String imagen, HashMap<String, Tema> temas, ArrayList<Genero> generos) {
         this.nickArtista = nickArtista;
         this.nombre = nombre;
         this.anio = anio;
@@ -40,7 +40,7 @@ public class Album {
         return anio;
     }
 
-    public Imagen getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
@@ -64,7 +64,7 @@ public class Album {
         this.anio = anio;
     }
 
-    public void setImagen(Imagen imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 

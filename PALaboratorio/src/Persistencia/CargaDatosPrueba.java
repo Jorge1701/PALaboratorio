@@ -324,7 +324,8 @@ public class CargaDatosPrueba {
                 Date fecha = artistas.getDate(5);
                 String biografia = artistas.getString(6);
                 String web = artistas.getString(7);
-                usuarios.add(new DtArtista(nickName, nombre, apellido, correo, new DtFecha(fecha.getDay(), fecha.getMonth(), fecha.getYear()), biografia, web));
+                String imagen = artistas.getString(8);
+                usuarios.add(new DtArtista(nickName, nombre, apellido, correo, new DtFecha(fecha.getDay(), fecha.getMonth(), fecha.getYear()), imagen, biografia, web));
             }
 
             usuario.close();
@@ -339,7 +340,8 @@ public class CargaDatosPrueba {
                 String apellido = clientes.getString(3);
                 String correo = clientes.getString(4);
                 Date fecha = clientes.getDate(5);
-                usuarios.add(new DtCliente(nickName, nombre, apellido, correo, new DtFecha(fecha.getDay(), fecha.getMonth(), fecha.getYear())));
+                String imagen = clientes.getString(6);
+                usuarios.add(new DtCliente(nickName, nombre, apellido, correo, new DtFecha(fecha.getDay(), fecha.getMonth(), fecha.getYear()), imagen));
             }
 
             usuario1.close();
@@ -459,21 +461,30 @@ public class CargaDatosPrueba {
             String nombre = usuario[3];
             String apellido = usuario[4];
             String correo = usuario[2];
+            String imagen = "";
             DtFecha fecha = new DtFecha(Integer.parseInt(usuario[5]), Integer.parseInt(usuario[6]), Integer.parseInt(usuario[7]));
             if (usuario[8] == "A") {
 
                 String bio = "";
                 String web = "";
+
                 for (String[] info : infoArtistas) {
                     if (info[0] == usuario[0]) {
+                        imagen = info[1];
                         bio = info[2];
                         web = info[3];
                     }
                 }
-                dtu = new DtArtista(nickName, nombre, apellido, correo, fecha, bio, web);
+                dtu = new DtArtista(nickName, nombre, apellido, correo, fecha, imagen, bio, web);
 
             } else {
-                dtu = new DtCliente(nickName, nombre, apellido, correo, fecha);
+                for (String[] info : infoClientes) {
+                    if (info[0] == usuario[0]) {
+                        imagen = info[1];
+                    }
+                }
+
+                dtu = new DtCliente(nickName, nombre, apellido, correo, fecha, imagen);
             }
             res = bdu.ingresarUsuario(dtu);
             if (res == false) {
