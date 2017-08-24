@@ -41,20 +41,8 @@ public class ControladorContenido implements IContenido {
         //Colección genérica común
         //this.personas=new ArrayList<Persona>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
-        genero = new Genero("Géneros");
-        
-        //this.dbPersona=new DBPersona();
-        this.genero.agregarGenero("Géneros", "Rock");
-        this.genero.agregarGenero("Rock", "Rock clásico");
-        this.genero.agregarGenero("Géneros", "Electrónica");
-        this.genero.agregarGenero("Electrónica", "Electro house");
-        this.genero.agregarGenero("Géneros", "Pop");
-        this.genero.agregarGenero("Géneros", "Cumbia");
-        this.genero.agregarGenero("Cumbia", "Cumbia cheta");
-        this.genero.agregarGenero("Cumbia", "Cumbia de negro");
+        genero = new Genero("Generos");
     }
-    
- 
 
     @Override
     public void indicarCliente(String nick) {
@@ -261,8 +249,6 @@ public class ControladorContenido implements IContenido {
     @Override
     public void crearListaReproduccionDefecto(String nombre, String genero) {
 
-
-       
     }
 
     @Override
@@ -342,28 +328,29 @@ public class ControladorContenido implements IContenido {
     }
 
     @Override
-    public boolean quitarTema(String nombreT, String nombre,String nombreUser) {
+    public boolean quitarTema(String nombreT, String nombre, String nombreUser) {
         Cliente u = (Cliente) ControladorUsuario.getInstance().getUsuario(nombreUser);
-        if(nombreUser==null){
-        Lista lista = (ListaDefecto) listasDefecto.get(nombre);
+        if (nombreUser == null) {
+            Lista lista = (ListaDefecto) listasDefecto.get(nombre);
 
-        if (lista == null) {
-            throw new UnsupportedOperationException("No existe la lista");
+            if (lista == null) {
+                throw new UnsupportedOperationException("No existe la lista");
+            }
+
+            return lista.quitarTema(nombreT);
+        } else {
+            if (nombreUser != null && !(u instanceof Cliente)) {
+                Lista lista = (ListaParticular) listasParticular.get(nombre);
+
+                if (lista == null) {
+                    throw new UnsupportedOperationException("No existe la lista");
+                }
+                if (u.getLista(nombre).quitarTema(nombreT) && this.quitarTema(nombreT, nombre, nombreUser)) {
+                    return true;
+                }
+            }
         }
 
-        return lista.quitarTema(nombreT);
-    }else{
-        if(nombreUser!=null && !(u instanceof Cliente)){
-           Lista lista = (ListaParticular) listasParticular.get(nombre);
-           
-           if(lista==null){
-           throw new UnsupportedOperationException("No existe la lista");
-           }
-           if(u.getLista(nombre).quitarTema(nombreT)&& this.quitarTema(nombreT, nombre, nombreUser))
-           return true;
-        }
-        }
- 
         return false;
     }
 
@@ -403,5 +390,9 @@ public class ControladorContenido implements IContenido {
         l.setPrivada(false);
 
         return true;
+    }
+
+    public void cargarGenero(String nombre, String padre) {
+        this.genero.agregarGenero(padre.isEmpty() ? genero.getNombre() : padre, nombre);
     }
 }

@@ -379,9 +379,7 @@ public class CargaDatosPrueba {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                if (rs.getString(2) == null) {
-                    res.add(new String[]{rs.getString(1), "NULL"});
-                } else {
+                if (rs.getString(2) != null) {
                     res.add(new String[]{rs.getString(1), rs.getString(2)});
                 }
             }

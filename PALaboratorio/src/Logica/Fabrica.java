@@ -70,10 +70,17 @@ public class Fabrica {
         // Cargar Generos
         ArrayList< String[]> generos = cdp.cagarGeneros();
         for (String[] genero : generos) {
-            if (genero[1].equals("NULL")) {
-                System.out.println("NNNUUULLLLLLLL");
-            }
-            System.out.println(genero[0] + " | " + genero[1]);
+            ic.cargarGenero(genero[0], genero[1]);
+        }
+
+        DtGenero g = ic.listarGenero();
+        a(g, "");
+    }
+
+    private static void a(DtGenero g, String esp) {
+        System.out.println(esp + " " + g.getNombre());
+        for (DtGenero g2 : g.getSubGeneros()) {
+            a(g2, esp + " -");
         }
     }
 
