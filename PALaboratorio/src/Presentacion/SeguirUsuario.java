@@ -13,34 +13,68 @@ import javax.swing.table.DefaultTableModel;
 public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSelectionListener {
 
     private final IUsuario iUsuario;
+    private ArrayList<DtUsuario> dtcs;
+    private String nickCliente;
+    private ArrayList<DtUsuario> dtus;
 
     public SeguirUsuario() {
         initComponents();
         iUsuario = Fabrica.getIControladorUsuario();
 
-        cargarDatos();
+        // Obtiene todo los clientes
+        dtcs = iUsuario.listarClientes();
+
+        cargarClientes(dtcs, "");
 
         // Hace que al hacer click en una fila de la tablaClientes se llame al metodo valueChanged()
         tablaClientes.getSelectionModel().addListSelectionListener(this);
     }
 
-    private void cargarDatos() {
-        // Obtiene todo los clientes
-        ArrayList<DtUsuario> dtcs = iUsuario.listarClientes();
-
+    private void cargarClientes(ArrayList<DtUsuario> dtcs, String filtro) {
         // Obtiene el modelo de la tablaClientes y borra su contenido
         DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
         dtm.setRowCount(0);
 
         // Agrega los clientes a la tablaClientes
         for (DtUsuario dtu : dtcs) {
-            Object[] data = {
-                dtu.getNickname(),
-                dtu.getNombre(),
-                dtu.getApellido(),
-                dtu.getEmail()
-            };
-            dtm.addRow(data);
+            if (dtu.getNickname().contains(filtro)) {
+                Object[] data = {
+                    dtu.getNickname(),
+                    dtu.getNombre(),
+                    dtu.getApellido(),
+                    dtu.getEmail()
+                };
+                dtm.addRow(data);
+            }
+        }
+    }
+
+    private void cargarUsuarios(ArrayList<DtUsuario> usuarios, String nickCliente, String filtro) {
+        DefaultTableModel dtm = (DefaultTableModel) tablaUsuarios.getModel();
+        dtm.setRowCount(0);
+
+        for (DtUsuario dtu : usuarios) {
+            String nick = dtu.getNickname();
+            boolean esta = false;
+
+            for (DtUsuario d : iUsuario.listarSeguidosDe(nickCliente)) {
+                if (d.getNickname() == dtu.getNickname()) {
+                    esta = true;
+                }
+            }
+
+            if (nick != nickCliente && !esta) {
+                if (dtu.getNickname().contains(filtro)) {
+                    Object[] data = {
+                        nick,
+                        dtu.getNombre(),
+                        dtu.getApellido(),
+                        dtu.getEmail(),
+                        (dtu instanceof DtArtista ? "Artista" : "Cliente")
+                    };
+                    dtm.addRow(data);
+                }
+            }
         }
     }
 
@@ -53,6 +87,8 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
+        txtUsuario = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         botonAceptar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
@@ -60,6 +96,8 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
+        txtCliente = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -85,15 +123,34 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
         ));
         jScrollPane2.setViewportView(tablaUsuarios);
 
+        txtUsuario.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtUsuarioCaretUpdate(evt);
+            }
+        });
+
+        jLabel3.setText("Nickname:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
         );
 
         jSplitPane2.setTopComponent(jPanel2);
@@ -105,8 +162,6 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
             }
         });
 
-        botonCancelar.setBackground(new java.awt.Color(255, 0, 0));
-        botonCancelar.setForeground(new java.awt.Color(255, 255, 255));
         botonCancelar.setText("Cancelar");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,15 +211,34 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
         ));
         jScrollPane1.setViewportView(tablaClientes);
 
+        txtCliente.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtClienteCaretUpdate(evt);
+            }
+        });
+
+        jLabel2.setText("Nickname:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -183,33 +257,13 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
     }
 
     private void clienteSeleccionado(String nickCliente) {
+        this.nickCliente = nickCliente;
+        txtUsuario.setText("");
+
         //Lista en tablaUsuarios los usuarios que el cliente nickCliente puede seguir
-        ArrayList<DtUsuario> usuarios = iUsuario.listarUsuarios();
+        dtus = iUsuario.listarUsuarios();
 
-        DefaultTableModel dtm = (DefaultTableModel) tablaUsuarios.getModel();
-        dtm.setRowCount(0);
-
-        for (DtUsuario dtu : usuarios) {
-            String nick = dtu.getNickname();
-            boolean esta = false;
-
-            for (DtUsuario d : iUsuario.listarSeguidosDe(nickCliente)) {
-                if (d.getNickname() == dtu.getNickname()) {
-                    esta = true;
-                }
-            }
-
-            if (nick != nickCliente && !esta) {
-                Object[] data = {
-                    nick,
-                    dtu.getNombre(),
-                    dtu.getApellido(),
-                    dtu.getEmail(),
-                    (dtu instanceof DtArtista ? "Artista" : "Cliente")
-                };
-                dtm.addRow(data);
-            }
-        }
+        cargarUsuarios(dtus, nickCliente, txtUsuario.getText());
     }
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
@@ -242,17 +296,27 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
-        cargarDatos();
+        cargarClientes(dtcs, txtCliente.getText());
 
         DefaultTableModel dtm = (DefaultTableModel) tablaUsuarios.getModel();
         dtm.setRowCount(0);
     }//GEN-LAST:event_botonAceptarActionPerformed
+
+    private void txtClienteCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtClienteCaretUpdate
+        cargarClientes(dtcs, txtCliente.getText());
+    }//GEN-LAST:event_txtClienteCaretUpdate
+
+    private void txtUsuarioCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtUsuarioCaretUpdate
+        cargarUsuarios(dtus, nickCliente, txtUsuario.getText());
+    }//GEN-LAST:event_txtUsuarioCaretUpdate
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -262,5 +326,7 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTable tablaClientes;
     private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTextField txtCliente;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

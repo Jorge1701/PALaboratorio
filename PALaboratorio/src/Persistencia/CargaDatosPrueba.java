@@ -1,6 +1,5 @@
 package Persistencia;
 
-import Logica.DtAlbum;
 import Logica.DtArtista;
 import Logica.DtCliente;
 import Logica.DtFecha;
@@ -375,9 +374,10 @@ public class CargaDatosPrueba {
         if (!insertarSeguidores()) {
             return false;
         }
-        /*if (!insertarGeneros()) {
+        if (!insertarGeneros()) {
             return false;
         }
+        /*
         if (!insertarTemas()) {
           return false;
         }*/
@@ -418,79 +418,83 @@ public class CargaDatosPrueba {
         return res;
     }
 
-    
-    private boolean CargarListaPorDefecto(){
-    BDLista bdl = new BDLista();
-    for(String[] listaPordefecto : listarPorDefecto){
-        String refLista = listaPordefecto[0];
-        String nombre = listaPordefecto[1];
-        String genero = listaPordefecto[2];
-        
-    String nombreListaD="";
-    String nombreTema="";
-    
-    for(String[] listapordefecto : listarPorDefecto){
-        if(listapordefecto[0]==refLista ){
-        nombreListaD=listapordefecto[1];
+    private boolean CargarListaPorDefecto() {
+        BDLista bdl = new BDLista();
+        for (String[] listaPordefecto : listarPorDefecto) {
+            String refLista = listaPordefecto[0];
+            String nombre = listaPordefecto[1];
+            String genero = listaPordefecto[2];
+
+            String nombreListaD = "";
+            String nombreTema = "";
+
+            for (String[] listapordefecto : listarPorDefecto) {
+                if (listapordefecto[0] == refLista) {
+                    nombreListaD = listapordefecto[1];
+                }
+            }
+            for (String[] temaLista : temasDeListas) {
+                if (temaLista[0] == refLista) {
+                    String refTema = temaLista[2];
+
+                    for (String[] tema : temas) {
+                        if (tema[1] == refTema) {
+                            nombreTema = tema[2];
+                        }
+                    }
+                    if (!bdl.altaLista(nombreListaD, nombreTema, null, genero)) {
+                        return false;
+                    } else {
+                        return false;
+                    }
+
+                }
+            }
         }
-    }
-    for(String[] temaLista : temasDeListas){
-    if(temaLista[0]==refLista){
-       String refTema = temaLista[2];
-       
-     for(String[] tema : temas){
-     if(tema[1] == refTema ){
-     nombreTema = tema[2];
-     }
-     }
-    if(!bdl.altaLista(nombreListaD, nombreTema,null, genero)){
-     return false; 
-    }else return false;
-  
-    }
-    }
-    }
-     return true;
-    }
-    // Listas de Reproduccion Particulares (Ref cliente, Ref, Nombre, Publica, Imagen)
-    private boolean CargarListaParticular(){
-    BDLista bdl = new BDLista();
-    for(String[] listaParticular : listasParticulares){
-    String refCliente = listaParticular[0];
-    String refLista = listaParticular[1];
-    String nombreLista = listaParticular[2];
-    String publica = listaParticular[3];
-  
-    String nombreCliente="";
-    String  nombretema="";
-    String refTema="";
-    for(String[] cliente : perfiles){
-    if(cliente[0]==refCliente){
-     nombreCliente=cliente[1];   
-    }
-    
-    for(String[] temalista: temasDeListas){
-        
-    if(temalista[0]==refLista){
-    refTema = temalista[2];
-    }   
-    
-    for(String[] tema : temas){
-    if(tema[0]==refTema){
-    nombretema=tema[2];
-    }
-    }
-    if(!bdl.altaLista(nombreLista, nombretema, nombreCliente,null)){
-     return false;
-    }else return true;
-    }
+        return true;
     }
 
-    }
+    // Listas de Reproduccion Particulares (Ref cliente, Ref, Nombre, Publica, Imagen)
+    private boolean CargarListaParticular() {
+        BDLista bdl = new BDLista();
+        for (String[] listaParticular : listasParticulares) {
+            String refCliente = listaParticular[0];
+            String refLista = listaParticular[1];
+            String nombreLista = listaParticular[2];
+            String publica = listaParticular[3];
+
+            String nombreCliente = "";
+            String nombretema = "";
+            String refTema = "";
+            for (String[] cliente : perfiles) {
+                if (cliente[0] == refCliente) {
+                    nombreCliente = cliente[1];
+                }
+
+                for (String[] temalista : temasDeListas) {
+
+                    if (temalista[0] == refLista) {
+                        refTema = temalista[2];
+                    }
+
+                    for (String[] tema : temas) {
+                        if (tema[0] == refTema) {
+                            nombretema = tema[2];
+                        }
+                    }
+                    if (!bdl.altaLista(nombreLista, nombretema, nombreCliente, null)) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            }
+
+        }
         return false;
     }
- 
-    private boolean insertarSeguidores(){
+
+    private boolean insertarSeguidores() {
         BDCliente bdc = new BDCliente();
 
         for (String[] seguidor : seguidores) {
@@ -518,7 +522,7 @@ public class CargaDatosPrueba {
         return true;
     }
 
-     private boolean insertarGeneros() {
+    private boolean insertarGeneros() {
         String nombre = "";
         String padre = "";
         String pRef = "";
@@ -545,7 +549,7 @@ public class CargaDatosPrueba {
         }
         return true;
     }
-    
+
     private boolean insertarTemas() {
         for (String[] tema : temas) {
             try {
@@ -586,7 +590,6 @@ public class CargaDatosPrueba {
         }
         return true;
     }
-
 
     private int obtenerIdAlbum(String nickArtista, String nombreAlbum) {
         try {
@@ -642,7 +645,5 @@ public class CargaDatosPrueba {
             return false;
         }
     }
-    
-
 
 }

@@ -1,65 +1,49 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Presentacion;
 
 import Logica.DtAlbum;
-import Logica.DtArtista;
 import Logica.DtCliente;
 import Logica.DtPerfilArtista;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author brian
- */
 public class PerfilArtista extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form PerfilArtista
-     */
     public PerfilArtista(DtPerfilArtista dtPerfilArtista) {
         initComponents();
-        setTitle(getTitle() + dtPerfilArtista.getInfo().getNickname());
+        setTitle(getTitle() + " " + dtPerfilArtista.getInfo().getNickname());
+
         txtNickname.setText(dtPerfilArtista.getInfo().getNickname());
         txtNombre.setText(dtPerfilArtista.getInfo().getNombre());
         txtApellido.setText(dtPerfilArtista.getInfo().getApellido());
         txtEmail.setText(dtPerfilArtista.getInfo().getEmail());
-        txtFechaNac.setText(dtPerfilArtista.getInfo().getFechaNac().toString()); 
+        txtFechaNac.setText(dtPerfilArtista.getInfo().getFechaNac().toString());
         textBiografia.setText(dtPerfilArtista.getInfoArtista().getBiografia());
         txtSitioWeb.setText(dtPerfilArtista.getInfoArtista().getWeb());
 
-        
         ((TitledBorder) PanelSeguidores.getBorder()).setTitle("Seguidores (" + dtPerfilArtista.getSeguidores().size() + "):");
-        
+
         DefaultTableModel dtmSeguidores = (DefaultTableModel) tablaSeguidores.getModel();
         dtmSeguidores.setRowCount(0);
-        
+
         for (DtCliente dtc : dtPerfilArtista.getSeguidores()) {
             Object[] data = {
                 dtc.getNickname(),
                 dtc.getNombre(),
                 dtc.getApellido(),
                 dtc.getEmail(),
-                dtc.getFechaNac().toString(),
-            };
+                dtc.getFechaNac().toString(),};
             dtmSeguidores.addRow(data);
         }
-        
+
         DefaultTableModel dtmAlbumes = (DefaultTableModel) TablaAlbum.getModel();
         dtmAlbumes.setRowCount(0);
-        
+
         for (DtAlbum dta : dtPerfilArtista.getAlbumes()) {
             Object[] data = {
-                dta.getNombre(),
-            };
+                dta.getNombre(),};
             dtmSeguidores.addRow(data);
         }
-        
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -240,6 +224,7 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
 
         textBiografia.setEditable(false);
         textBiografia.setColumns(20);
+        textBiografia.setLineWrap(true);
         textBiografia.setRows(5);
         jScrollPane3.setViewportView(textBiografia);
 
@@ -267,7 +252,7 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
                         .addComponent(txtFechaNac)
                         .addComponent(txtSitioWeb))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelInfo7Layout.setVerticalGroup(
             PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
