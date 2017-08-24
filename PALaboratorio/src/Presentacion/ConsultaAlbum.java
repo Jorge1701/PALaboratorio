@@ -342,6 +342,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
 
         if (tablaAlbumes.getSelectionModel().isSelectionEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe de seleccionar un Album");
+            return;
         }
 
         nickArtista = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 1).toString();
