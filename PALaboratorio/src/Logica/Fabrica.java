@@ -77,7 +77,7 @@ public class Fabrica {
         // Cargar Albumes
         ArrayList<DtAlbum> dtas = cdp.cargarAlbumes();
         for (DtAlbum dta : dtas) {
-            Album a = new Album(dta.getNickArtista(), dta.getNombre(), dta.getAnio(), null);
+            Album a = new Album(dta.getNickArtista(), dta.getNombre(), dta.getAnio(), "");
 
             // Cargar Generos del album
             ArrayList<Genero> albumGeneros = new ArrayList<>();
