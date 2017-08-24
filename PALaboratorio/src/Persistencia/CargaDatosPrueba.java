@@ -1,5 +1,6 @@
 package Persistencia;
 
+import Logica.DtAlbum;
 import Logica.DtArtista;
 import Logica.DtCliente;
 import Logica.DtFecha;
@@ -189,7 +190,8 @@ public class CargaDatosPrueba {
         {"PAM", "T101", "No Quiero Estudiar", "2", "12", "1"},
         {"AMA", "T111", "Por Ese Hombre", "4", "45", "1"},
         {"LOC", "T121", "Por Ese Hombre", "5", "13", "1"},
-        {"VIO", "T131", "Violeta", "1", "56", "1"},};
+        {"VIO", "T131", "Violeta", "1", "56", "1"}
+    };
 
     // Archivos y Streams de Musica (Album ref, Ref, Archivo, Stream)
     private String[][] archivosYStreams = {
@@ -219,7 +221,8 @@ public class CargaDatosPrueba {
     private String[][] listarPorDefecto = {
         {"LD1", "Noche De La Nostalgia", "PCL", "bit.ly/laNocheNostalgia"},
         {"LD2", "Rock En Español", "RKL", ""},
-        {"LD3", "Cusica Clasica", "CLA", "bit.ly/musicaCla"},};
+        {"LD3", "Cusica Clasica", "CLA", "bit.ly/musicaCla"}
+    };
 
     // Listas de Reproduccion Particulares (Ref cliente, Ref, Nombre, Publica, Imagen)
     private String[][] listasParticulares = {
@@ -228,7 +231,8 @@ public class CargaDatosPrueba {
         {"WW", "LP3", "Para Cocinar", "N", "bit.ly/ParaCocinar"},
         {"ML", "LP4", "Para Las Chicas", "S", ""},
         {"CB", "LP5", "Fiesteras", "S", "bit.ly/fiestaFiesta"},
-        {"CB", "LP6", "Mis FAvoritas", "N", ""},};
+        {"CB", "LP6", "Mis FAvoritas", "N", ""}
+    };
 
     // Temas De Listas (Ref Lista, Ref Album, Ref Tema)
     private String[][] temasDeListas = {
@@ -306,6 +310,7 @@ public class CargaDatosPrueba {
 
     protected Connection conexion = new ConexionBD().getConexion();
 
+    // Funciones para levantar datos de la BD
     public ArrayList<DtUsuario> cargarUsuarios() {
         try {
             ArrayList<DtUsuario> usuarios = new ArrayList<>();
@@ -367,6 +372,31 @@ public class CargaDatosPrueba {
         }
     }
 
+    public ArrayList<String[]> cagarGeneros() {
+        try {
+            ArrayList<String[]> res = new ArrayList<>();
+            PreparedStatement query = conexion.prepareStatement("SELECT * FROM genero");
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getString(2) == null) {
+                    res.add(new String[]{rs.getString(1), "NULL"});
+                } else {
+                    res.add(new String[]{rs.getString(1), rs.getString(2)});
+                }
+            }
+
+            rs.close();
+            query.close();
+
+            return res;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    // Funciones para insertar Datos de Prueba a la BD
+
     public boolean insertarDatosPrueba() {
         if (!insertarUsuarios()) {
             return false;
@@ -377,10 +407,49 @@ public class CargaDatosPrueba {
         if (!insertarGeneros()) {
             return false;
         }
+        if (!insertarAlbumes()) {
+            return false;
+        }
         /*
         if (!insertarTemas()) {
           return false;
         }*/
+        return true;
+    }
+
+    /*
+    // Albumes (Ref artista, Ref album, Nombre, Generos, Anio, Imagen)
+    private String[][] albumes = {
+        {"VP", "VPL", "Village People Live and Sleazy", "DIS,DPO,PCL", "1980", ""},*/
+    private boolean insertarAlbumes() {
+        BDAlbum bda = new BDAlbum();
+
+        for (String[] album : albumes) {
+            String nickArtista = "";
+
+            for (String[] perfil : perfiles) {
+                if (perfil[0] == album[0]) {
+                    nickArtista = perfil[1];
+                    break;
+                }
+            }
+
+            int idAlbum = bda.insertarAlbum(new DtAlbum(nickArtista, album[2], Integer.parseInt(album[4])));
+
+            for (String refGenero : album[3].split(",")) {
+                String nombreGenero = "";
+
+                for (String[] genero : generos) {
+                    if (refGenero.equals(genero[0])) {
+                        nombreGenero = genero[1];
+                        break;
+                    }
+                }
+
+                bda.insertarGeneroDeAlbum(idAlbum, nickArtista, nombreGenero);
+            }
+        }
+
         return true;
     }
 

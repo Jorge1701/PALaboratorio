@@ -42,7 +42,9 @@ public class Fabrica {
     public static void levantarDatos() throws Exception {
         CargaDatosPrueba cdp = new CargaDatosPrueba();
         IUsuario iu = getIControladorUsuario();
+        IContenido ic = getIControladorContenido();
 
+        // Cargar Usuarios (Clientes y Artistas)
         ArrayList<DtUsuario> usuarios = cdp.cargarUsuarios();
         if (usuarios == null) {
             throw new Exception("Error : Los usuarios no puedieron ser cargados");
@@ -53,6 +55,7 @@ public class Fabrica {
             iu.levantarUsuario(dtu);
         }
 
+        // Cargar Inforamacion de quien sigue a quien
         ArrayList<String[]> relaciones = cdp.loadFollowers();
         if (relaciones == null) {
             throw new Exception("Error : Las relaciones de seguimiento no pudieron ser cargadas");
@@ -62,6 +65,15 @@ public class Fabrica {
             Usuario cliente = iu.obtenerUsuario(r[0]);
             Usuario usuario = iu.obtenerUsuario(r[1]);
             ((Cliente) cliente).agregar(usuario);
+        }
+
+        // Cargar Generos
+        ArrayList< String[]> generos = cdp.cagarGeneros();
+        for (String[] genero : generos) {
+            if (genero[1].equals("NULL")) {
+                System.out.println("NNNUUULLLLLLLL");
+            }
+            System.out.println(genero[0] + " | " + genero[1]);
         }
     }
 
