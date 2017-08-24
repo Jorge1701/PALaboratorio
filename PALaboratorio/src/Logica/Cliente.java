@@ -14,7 +14,7 @@ public class Cliente extends Usuario {
     private ArrayList<Lista> listasfav;
     private ArrayList<Tema> temasfav;
 
-    public Cliente(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, Imagen imagen) {
+    public Cliente(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, String imagen) {
         super(nickname, nombre, apellido, email, fechaNac, imagen);
 
         this.seguidos = new HashMap();
@@ -80,7 +80,7 @@ public class Cliente extends Usuario {
 
     @Override
     public DtCliente getData() {
-        return new DtCliente(getNickname(), getNombre(), getApellido(), getEmail(), getFechaNac());
+        return new DtCliente(getNickname(), getNombre(), getApellido(), getEmail(), getFechaNac(),getImagen());
     }
 
     @Override

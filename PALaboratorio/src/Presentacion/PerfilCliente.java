@@ -45,10 +45,17 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
         // Cargar imagen
         try {
-            BufferedImage img = ImageIO.read(PerfilCliente.class.getResource("/Recursos/Imagenes/tierra.jpg"));
+            String imagen = dtPerfilCliente.getInfo().getImagen();
+            BufferedImage img;
+           if (imagen == null || imagen.isEmpty()) {
+                img = ImageIO.read(PerfilCliente.class.getResource("/Recursos/Imagenes/Usuarios/userDefaullt.png"));
+            } else {
+                img = ImageIO.read(PerfilCliente.class.getResource(imagen));
+            }
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
-            pImg.setBounds(0, 0, 100, 160);
+            pImg.setBounds(0, 0, 140, 160);
+
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen del usuario");
@@ -58,8 +65,11 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         ((TitledBorder) panelSeguidores.getBorder()).setTitle("Seguidores (" + dtPerfilCliente.getSeguidores().size() + "):");
 
         DefaultTableModel dtmSeguidores = (DefaultTableModel) tablaSeguidores.getModel();
-        dtmSeguidores.setRowCount(0);
-        for (DtCliente dtc : dtPerfilCliente.getSeguidores()) {
+
+        dtmSeguidores.setRowCount(
+                0);
+        for (DtCliente dtc
+                : dtPerfilCliente.getSeguidores()) {
             Object[] data = {
                 dtc.getNickname(),
                 dtc.getNombre() + " " + dtc.getApellido()
@@ -71,8 +81,11 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         ((TitledBorder) panelSeguidos.getBorder()).setTitle("Seguidos (" + dtPerfilCliente.getSeguidos().size() + "):");
 
         DefaultTableModel dtmSeguidos = (DefaultTableModel) tablaSeguidos.getModel();
-        dtmSeguidos.setRowCount(0);
-        for (DtUsuario dtc : dtPerfilCliente.getSeguidos()) {
+
+        dtmSeguidos.setRowCount(
+                0);
+        for (DtUsuario dtc
+                : dtPerfilCliente.getSeguidos()) {
             Object[] data = {
                 dtc.getNickname(),
                 dtc.getNombre() + " " + dtc.getApellido(),
@@ -85,8 +98,11 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         ((TitledBorder) panelListasCreadas.getBorder()).setTitle("Listas Creadas (" + dtPerfilCliente.getListasCreadas().size() + "):");
 
         DefaultTableModel dtmListasCreadas = (DefaultTableModel) tablaListasCreadas.getModel();
-        dtmListasCreadas.setRowCount(0);
-        for (DtListaParticular dtlp : dtPerfilCliente.getListasCreadas()) {
+
+        dtmListasCreadas.setRowCount(
+                0);
+        for (DtListaParticular dtlp
+                : dtPerfilCliente.getListasCreadas()) {
             Object[] data = {
                 dtlp.getNombre(),
                 dtlp.getTemas().size()
@@ -98,8 +114,11 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         ((TitledBorder) panelListasFavs.getBorder()).setTitle("Listas Favoritas (" + dtPerfilCliente.getListasFavoritas().size() + "):");
 
         DefaultTableModel dtmListasFavs = (DefaultTableModel) tablaListasFavs.getModel();
-        dtmListasFavs.setRowCount(0);
-        for (DtLista dtl : dtPerfilCliente.getListasFavoritas()) {
+
+        dtmListasFavs.setRowCount(
+                0);
+        for (DtLista dtl
+                : dtPerfilCliente.getListasFavoritas()) {
             Object[] data = {
                 dtl.getNombre(),
                 dtl.getTemas().size()
@@ -111,8 +130,11 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         ((TitledBorder) panelAlbumes.getBorder()).setTitle("Albumes Favoritos (" + dtPerfilCliente.getAlbumes().size() + "):");
 
         DefaultTableModel dtmAlbumes = (DefaultTableModel) tablaAlbumes.getModel();
-        dtmAlbumes.setRowCount(0);
-        for (DtAlbum dta : dtPerfilCliente.getAlbumes()) {
+
+        dtmAlbumes.setRowCount(
+                0);
+        for (DtAlbum dta
+                : dtPerfilCliente.getAlbumes()) {
             Object[] data = {
                 dta.getNickArtista(),
                 dta.getNombre(),
@@ -125,8 +147,11 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         ((TitledBorder) panelTemas.getBorder()).setTitle("Temas Favoritos (" + dtPerfilCliente.getTemas().size() + "):");
 
         DefaultTableModel dtmTemas = (DefaultTableModel) tablaTemas.getModel();
-        dtmTemas.setRowCount(0);
-        for (DtTema dtt : dtPerfilCliente.getTemas()) {
+
+        dtmTemas.setRowCount(
+                0);
+        for (DtTema dtt
+                : dtPerfilCliente.getTemas()) {
             Object[] data = {
                 dtt.getNombre(),
                 dtt.getDuracion()

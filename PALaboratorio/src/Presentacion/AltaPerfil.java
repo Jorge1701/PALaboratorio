@@ -321,10 +321,10 @@ private IUsuario IU;
         }else{
         
         if(cliente.isSelected() == true){
-            dtu = new DtCliente(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())));
+            dtu = new DtCliente(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())),"");
         }else{
             
-            dtu = new DtArtista(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())),biografia.getText(),web.getText());
+            dtu = new DtArtista(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())),biografia.getText(),web.getText(),"");
         }
         
         boolean ok=IU.ingresarUsuario(dtu);
