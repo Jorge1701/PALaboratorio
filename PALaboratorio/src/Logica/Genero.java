@@ -124,7 +124,7 @@ public class Genero {
     public ArrayList<DtAlbum> obtenerAlbumes() {
         ArrayList<DtAlbum> res = new ArrayList<>();
         for (Album a : albumes) {
-            res.add(new DtAlbum(a.getNickArtista(), a.getNombre(), a.getAnio()/*,album.getImagen()*/));
+            res.add(new DtAlbum(a.getNickArtista(), a.getNombre(), a.getAnio(), a.getImagen()));
         }
         return res;
     }
@@ -142,6 +142,16 @@ public class Genero {
     public DtLista seleccionarLista(String nombreL) {
         ListaDefecto ld = this.listasDefecto.get(nombreL);
         return new DtListaDefecto(ld.getGenero().getData(), ld.getNombre(), ld.getTemas());
+    }
+
+    public DtAlbumContenido obtenerAlbumContenido(String nomAlbum, String nickArtista) {
+        for (Album album : albumes) {
+            if (album.getNickArtista().equals(nickArtista) && album.getNombre().equals(nomAlbum)) {
+                return album.obtenerAlbumContenido();
+            }
+        }
+
+        return null;
     }
 
     public void cargarAlbum(Album a) {

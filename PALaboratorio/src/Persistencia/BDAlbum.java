@@ -113,11 +113,12 @@ public class BDAlbum {
 
     public int insertarAlbum(DtAlbum dta) {
         try {
-            PreparedStatement insert = conexion.prepareStatement("INSERT INTO album (idAlbum, nicknameArtista, nombre, anio) VALUES (?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement insert = conexion.prepareStatement("INSERT INTO album (idAlbum, nicknameArtista, nombre, anio, imagen) VALUES (?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             insert.setNull(1, Types.INTEGER);
             insert.setString(2, dta.getNickArtista());
             insert.setString(3, dta.getNombre());
             insert.setInt(4, dta.getAnio());
+            insert.setString(5, dta.getImagen());
             insert.executeUpdate();
 
             int idAlbum = 0;

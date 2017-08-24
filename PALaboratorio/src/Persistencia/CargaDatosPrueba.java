@@ -402,10 +402,10 @@ public class CargaDatosPrueba {
         try {
             ArrayList<DtAlbum> dtas = new ArrayList<>();
 
-            PreparedStatement query = conexion.prepareStatement("SELECT nicknameArtista, nombre, anio FROM album");
+            PreparedStatement query = conexion.prepareStatement("SELECT nicknameArtista, nombre, anio, imagen FROM album");
             ResultSet rs = query.executeQuery();
             while (rs.next()) {
-                dtas.add(new DtAlbum(rs.getString(1), rs.getString(2), rs.getInt(3)));
+                dtas.add(new DtAlbum(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4)));
             }
 
             rs.close();
@@ -626,7 +626,7 @@ public class CargaDatosPrueba {
                 }
             }
 
-            int idAlbum = bda.insertarAlbum(new DtAlbum(nickArtista, album[2], Integer.parseInt(album[4])));
+            int idAlbum = bda.insertarAlbum(new DtAlbum(nickArtista, album[2], Integer.parseInt(album[4]), album[5]));
 
             for (String refGenero : album[3].split(",")) {
                 String nombreGenero = "";
@@ -674,12 +674,12 @@ public class CargaDatosPrueba {
 
             for (String[] as : archivosYStreams) {
                 if (as[0] == tema[0] && as[1] == tema[1]) {
-                    if (tema[3] != "") {
-                        tipo = "A";
-                        link = as[2];
-                    } else {
+                    if (as[3] != "") {
                         tipo = "S";
                         link = as[3];
+                    } else {
+                        tipo = "A";
+                        link = as[2];
                     }
                 }
             }

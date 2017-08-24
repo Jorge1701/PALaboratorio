@@ -90,7 +90,7 @@ public class Album {
     }
 
     public DtAlbum getData() {
-        return new DtAlbum(nickArtista, nombre, anio);
+        return new DtAlbum(nickArtista, nombre, anio, imagen);
     }
 
     public DtAlbumContenido obtenerAlbumContenido() {

@@ -394,6 +394,10 @@ public class ControladorContenido implements IContenido {
         return true;
     }
 
+    public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista) {
+        return genero.obtener(nomGenero).obtenerAlbumContenido(nomAlbum, nickArtista);
+    }
+
     public void cargarGenero(String nombre, String padre) {
         this.genero.agregarGenero(padre.isEmpty() ? genero.getNombre() : padre, nombre);
     }

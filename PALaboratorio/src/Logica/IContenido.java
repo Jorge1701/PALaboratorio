@@ -25,6 +25,7 @@ public interface IContenido {
     public boolean publicarLista(String nick,String nomL);
     public ArrayList<DtLista> listarLisReproduccionGen(String nomGen);
     public DtLista selecListGen(String nombreL);
+    public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista);
         
     public void cargarGenero(String nombre, String padre);
     public boolean existeGenero(String nombre);

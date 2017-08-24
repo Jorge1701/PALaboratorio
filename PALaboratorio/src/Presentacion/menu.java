@@ -1,4 +1,5 @@
 package Presentacion;
+
 import Logica.Fabrica;
 import java.io.File;
 import java.awt.Dimension;
@@ -9,9 +10,6 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-
-
-
 
 public class menu extends javax.swing.JFrame {
 
@@ -296,14 +294,25 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_ConsultaPerfilArtistaActionPerformed
 
     private void cargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarDatosActionPerformed
-        try {
-            Fabrica.cargaDatosPrueba();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            return;
-        }
-        
-        JOptionPane.showMessageDialog(this, "Los Datos de Prueba fueron cargados con exito");
+        BarraCargando ba = new BarraCargando();
+        PanelMenu.add(ba);
+        centrar(ba);
+        ba.show();
+        menu m = this;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Fabrica.cargaDatosPrueba();
+                    ba.dispose();
+                    JOptionPane.showMessageDialog(m, "Los Datos de Prueba fueron cargados con exito");
+                } catch (Exception ex) {
+                    ba.dispose();
+                    JOptionPane.showMessageDialog(m, "Los Datos de Prueba no pudieron ser cargados: \n\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }).start();
     }//GEN-LAST:event_cargarDatosActionPerformed
 
     private void altaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaAlbumActionPerformed
