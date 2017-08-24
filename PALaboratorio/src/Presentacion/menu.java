@@ -1,4 +1,5 @@
 package Presentacion;
+
 import Logica.Fabrica;
 import java.awt.Dimension;
 import java.sql.SQLException;
@@ -7,9 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-
-
-
 
 public class menu extends javax.swing.JFrame {
 
@@ -99,6 +97,11 @@ public class menu extends javax.swing.JFrame {
         jMenu1.add(altaGenero);
 
         crearListaRep.setText("Crear Lista de Reproduccion");
+        crearListaRep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearListaRepActionPerformed(evt);
+            }
+        });
         jMenu1.add(crearListaRep);
 
         publicarLista.setText("Publicar Lista");
@@ -321,6 +324,14 @@ public class menu extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_altaGeneroActionPerformed
+
+    private void crearListaRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearListaRepActionPerformed
+        CrearListaReproduccion clr = new CrearListaReproduccion();
+        PanelMenu.add(clr);
+        centrar(clr);
+        clr.show();
+
+    }//GEN-LAST:event_crearListaRepActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

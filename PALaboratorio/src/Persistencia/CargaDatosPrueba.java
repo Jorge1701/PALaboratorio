@@ -443,10 +443,7 @@ public class CargaDatosPrueba {
      nombreTema = tema[2];
      }
      }
-    if(!bdl.altaLista(nombreListaD, nombreTema,null, genero)){
-     return false; 
-    }else return false;
-  
+    
     }
     }
     }
@@ -480,9 +477,7 @@ public class CargaDatosPrueba {
     nombretema=tema[2];
     }
     }
-    if(!bdl.altaLista(nombreLista, nombretema, nombreCliente,null)){
-     return false;
-    }else return true;
+   
     }
     }
 

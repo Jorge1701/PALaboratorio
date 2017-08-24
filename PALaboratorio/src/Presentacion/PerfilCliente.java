@@ -45,10 +45,10 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
         // Cargar imagen
         try {
-            BufferedImage img = ImageIO.read(new File("C:/Users/Luis/Pictures/user_profile.png"));
+            BufferedImage img = ImageIO.read(new File("C:/Users/Luis/Pictures/darlene.jpg"));
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
-            pImg.setBounds(0, 0, 100, 160);
+            pImg.setBounds(0, 0, 150, 150);
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen del usuario");

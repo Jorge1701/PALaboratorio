@@ -1,70 +1,103 @@
 package Persistencia;
-import Logica.Tema;
+
+import Logica.DtLista;
+import Logica.DtListaDefecto;
+import Logica.DtListaParticular;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BDLista {
-    
+
     protected Connection conexion = new ConexionBD().getConexion();
-    public boolean altaLista(String nombreList,String NombreTema, String NombreCliente,String Genero){
-        try{
-            
-        String sql = "INSERT INTO lista VALUES(?,?)"; 
-        PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-        statament.setString(1, nombreList);
-        statament.setString(2, NombreTema);
-        statament.executeUpdate();
-        statament.close();
-        if(Genero==null){
-            if(altaListaParticular(nombreList, nombreList, NombreTema, sql)){
+
+    public boolean altaLista(DtLista dtl,String nickCliente) {
+
+        if (dtl instanceof DtListaDefecto) {
+            try {
+                String sql = "INSERT INTO lista" + "(nombre) VALUES (?)";
+                PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                statament.setString(1, dtl.getNombre());
+                statament.executeUpdate();
+                ResultSet rs = statament.getGeneratedKeys();
+                rs.next();
+                int idLista = Integer.parseInt(rs.getString(1));
+                statament.close();
+
+                PreparedStatement statament2 = conexion.prepareStatement("INSERT INTO listapordefecto"
+                        + " VALUES (?,?,?)");
+
+                statament2.setString(1, dtl.getNombre());
+                statament2.setInt(2, idLista);
+                statament2.setString(3, ((DtListaDefecto) dtl).getGenero().getNombre());
+                statament2.executeUpdate();
+                statament2.close();
                 return true;
-            }else return false;      
-        }else{
-            if(altaListaPorDefecto(nombreList, Genero, NombreTema)){
+            } catch (SQLException ex) {
+                Logger.getLogger(BDLista.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+
+        } else {
+
+            try {
+                String sql = "INSERT INTO lista" + "(nombre) VALUES (?)";
+                String publica ="";
+                PreparedStatement statament3 = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                statament3.setString(1, dtl.getNombre());
+                statament3.executeUpdate();
+                ResultSet rs = statament3.getGeneratedKeys();
+                rs.next();
+                int idLista = Integer.parseInt(rs.getString(1));
+                statament3.close();
+                if(((DtListaParticular)dtl).isPrivada()){
+                publica="N";
+                }else{
+                publica="S";
+                }
+                PreparedStatement statament4 = conexion.prepareStatement("INSERT INTO listaparticular"
+                        + " VALUES (?,?,?,?)");
+
+                statament4.setString(1, dtl.getNombre());
+                statament4.setInt(2, idLista);
+                statament4.setString(3, nickCliente);
+                statament4.setString(4, publica);
+                statament4.executeUpdate();
+                statament4.close();
                 return true;
-            }else return false;
-        } 
+            } catch (SQLException ex) {
+                Logger.getLogger(BDUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
         }
-        catch(SQLException e) {
+    }
+
+    public boolean quitarTemaLista(String NomUser, String NomLista, String NomTema) {
+        try {
+            if (NomUser == null) {
+                String sql = "DELETE INTO listapordefecto WHERE " + "WHERE nombre=? and nomTema=?";
+                PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                statament.setString(1, NomUser);
+                statament.setString(2, NomTema);
+                statament.executeUpdate();
+                statament.close();
+            } else {
+                String sql = "DELETE INTO listapordefecto WHERE " + "WHERE nombre=? and nomTema=? and nickname=?";
+                PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                statament.setString(1, NomLista);
+                statament.setString(2, NomTema);
+                statament.setString(2, NomUser);
+                statament.executeUpdate();
+                statament.close();
+            }
+            return true;
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-    }
-    public boolean altaListaPorDefecto(String nombreLista, String genero, String NombreTema){
-     
-    return true;
-    }
-    public boolean altaListaParticular(String nombreLista, String nombreCliente, String nombreTema, String Publica ){
-    return true;
-    }
-    
-    public boolean quitarTemaLista(String NomUser,String NomLista, String NomTema){
-    try{
-        if(NomUser==null){
-        String sql= "DELETE INTO listapordefecto WHERE "+"WHERE nombre=? and nomTema=?";
-         PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-         statament.setString(1, NomUser);
-         statament.setString(2, NomTema);
-         statament.executeUpdate();
-         statament.close();
-        }else{
-         String sql= "DELETE INTO listapordefecto WHERE "+"WHERE nombre=? and nomTema=? and nickname=?";
-         PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-         statament.setString(1, NomLista);
-         statament.setString(2, NomTema);
-         statament.setString(2, NomUser);
-         statament.executeUpdate();
-         statament.close();
-        }
-        return true;
-    }    
-    catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-   
+
     }
 }

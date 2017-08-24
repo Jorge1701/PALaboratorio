@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class ControladorContenido implements IContenido {
 
     private static ControladorContenido instancia;
+    private BDLista bdLista = null;
 
     public static void cargarInstancia() {
         instancia = new ControladorContenido();
@@ -42,7 +43,8 @@ public class ControladorContenido implements IContenido {
         //this.personas=new ArrayList<Persona>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
         genero = new Genero("Géneros");
-        
+        this.bdLista = new BDLista();
+
         //this.dbPersona=new DBPersona();
         this.genero.agregarGenero("Géneros", "Rock");
         this.genero.agregarGenero("Rock", "Rock clásico");
@@ -53,8 +55,6 @@ public class ControladorContenido implements IContenido {
         this.genero.agregarGenero("Cumbia", "Cumbia cheta");
         this.genero.agregarGenero("Cumbia", "Cumbia de negro");
     }
-    
- 
 
     @Override
     public void indicarCliente(String nick) {
@@ -259,15 +259,13 @@ public class ControladorContenido implements IContenido {
     }
 
     @Override
-    public void crearListaReproduccionDefecto(String nombre, String genero) {
+    public boolean crearListaReproduccion(DtLista lista,String nickCliente) {
 
-
-       
-    }
-
-    @Override
-    public void crearListaReproduccionParticular(String nombre, String nick) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (! bdLista.altaLista(lista,nickCliente)){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override
@@ -342,28 +340,29 @@ public class ControladorContenido implements IContenido {
     }
 
     @Override
-    public boolean quitarTema(String nombreT, String nombre,String nombreUser) {
+    public boolean quitarTema(String nombreT, String nombre, String nombreUser) {
         Cliente u = (Cliente) ControladorUsuario.getInstance().getUsuario(nombreUser);
-        if(nombreUser==null){
-        Lista lista = (ListaDefecto) listasDefecto.get(nombre);
+        if (nombreUser == null) {
+            Lista lista = (ListaDefecto) listasDefecto.get(nombre);
 
-        if (lista == null) {
-            throw new UnsupportedOperationException("No existe la lista");
+            if (lista == null) {
+                throw new UnsupportedOperationException("No existe la lista");
+            }
+
+            return lista.quitarTema(nombreT);
+        } else {
+            if (nombreUser != null && !(u instanceof Cliente)) {
+                Lista lista = (ListaParticular) listasParticular.get(nombre);
+
+                if (lista == null) {
+                    throw new UnsupportedOperationException("No existe la lista");
+                }
+                if (u.getLista(nombre).quitarTema(nombreT) && this.quitarTema(nombreT, nombre, nombreUser)) {
+                    return true;
+                }
+            }
         }
 
-        return lista.quitarTema(nombreT);
-    }else{
-        if(nombreUser!=null && !(u instanceof Cliente)){
-           Lista lista = (ListaParticular) listasParticular.get(nombre);
-           
-           if(lista==null){
-           throw new UnsupportedOperationException("No existe la lista");
-           }
-           if(u.getLista(nombre).quitarTema(nombreT)&& this.quitarTema(nombreT, nombre, nombreUser))
-           return true;
-        }
-        }
- 
         return false;
     }
 
@@ -403,5 +402,10 @@ public class ControladorContenido implements IContenido {
         l.setPrivada(false);
 
         return true;
+    }
+
+    @Override
+    public DtGenero selecGenero(String nomGenero) {
+        return this.genero.obtener(nomGenero).getData();
     }
 }
