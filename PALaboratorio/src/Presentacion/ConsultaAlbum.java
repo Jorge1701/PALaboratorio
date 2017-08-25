@@ -27,7 +27,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
         initComponents();
         tablaAlbumes.getColumnModel().getColumn(0).setMinWidth(0);
         tablaAlbumes.getColumnModel().getColumn(0).setMaxWidth(0);
-        
+
         this.iUsuario = Fabrica.getIControladorUsuario();
         this.iContenido = Fabrica.getIControladorContenido();
 
@@ -368,8 +368,8 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
                 return;
             }
 
-            nickArtista = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 1).toString();
-            nomAlbum = tablaAlbumes.getValueAt(tablaAlbumes.getSelectedRow(), 0).toString();
+            nickArtista = tablaAlbumes.getValueAt(tablaAlbumes.getSelectedRow(), 0).toString();
+            nomAlbum = tablaAlbumes.getValueAt(tablaAlbumes.getSelectedRow(), 1).toString();
 
             try {
                 AlbumContenido albc = new AlbumContenido(iUsuario.obtenerAlbumContenido(nickArtista, nomAlbum));
@@ -395,7 +395,9 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
 
         for (DtAlbum dtAlbum : dta) {
             Object[] data = {
-                ((DtAlbum) dtAlbum).getNombre(),};
+                nickArtista,
+                dtAlbum.getNombre()
+            };
             dtm.addRow(data);
         }
 

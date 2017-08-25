@@ -30,7 +30,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class AlbumContenido extends javax.swing.JInternalFrame implements ListSelectionListener {
-
+    
     public AlbumContenido(DtAlbumContenido dtac) {
         initComponents();
         btnAbrirNavegador.setVisible(false);
@@ -55,7 +55,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
             pImg.setBounds(0, 0, 136, 126);
-
+            
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen del usuario");
@@ -64,7 +64,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         //Cargar tabla de Temas
         DefaultTableModel dtm = (DefaultTableModel) tablaTemas.getModel();
         dtm.setRowCount(0);
-
+        
         for (DtTema dtt : dtac.getTemas()) {
             Object[] data = {
                 dtt instanceof DtTemaLocal ? "A" : "S",
@@ -80,19 +80,19 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(tablaTemas.getModel());
         tablaTemas.setRowSorter(sorter);
         ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<>();
-
+        
         int columnIndexToSort = 3;
         sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
-
+        
         sorter.setSortKeys(sortKeys);
         sorter.sort();
 
         //Cargar lista de generos
         ArrayList<String> generos = dtac.getGeneros();
-
+        
         DefaultListModel<String> model = new DefaultListModel<>();
         lstGeneros.setModel(model);
-
+        
         for (String g : generos) {
             model.addElement(g);
         }
@@ -100,7 +100,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         // Hace que al hacer click en una fila de la tablaClientes se llame al metodo valueChanged()
         tablaTemas.getSelectionModel().addListSelectionListener(this);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -319,18 +319,19 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             JOptionPane.showMessageDialog(this, "Debe de seleccionar un tema");
             return;
         }
-
+        
         String link = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 4).toString();
         if (btnDescargar.getText().equals("Descargar")) {
-
+            
             JFileChooser fc = new JFileChooser();
-
+            
             fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int o = fc.showOpenDialog(this);
             if (o == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fc.getSelectedFile();
                 String path = selectedFile.getAbsolutePath();
                 File archivo = new File(link);
+                JOptionPane.showMessageDialog(this, link);
                 if (!archivo.renameTo(new File(path + "\\" + archivo.getName()))) {
                     JOptionPane.showMessageDialog(this, "No se pudo descargar el archivo", "Error!", JOptionPane.ERROR_MESSAGE);
                 }
@@ -350,9 +351,9 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             JOptionPane.showMessageDialog(this, "Debe de seleccionar un tema");
             return;
         }
-
+        
         String link = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 4).toString();
-
+        
         if (Desktop.isDesktopSupported()) {
             try {
                 Desktop.getDesktop().browse(new URI("http://" + link));
@@ -396,5 +397,5 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             btnAbrirNavegador.setVisible(true);
         }
     }
-
+    
 }

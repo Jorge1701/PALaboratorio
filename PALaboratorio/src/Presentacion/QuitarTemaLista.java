@@ -15,7 +15,6 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
     public QuitarTemaLista() {
         initComponents();
 
-      
     }
 
     @SuppressWarnings("unchecked")
@@ -233,13 +232,6 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void seleccionarPestaña() {
-        if (btnListaDefecto.isSelected()) {
-            Pestania.setSelectedIndex(0);
-        } else {
-            Pestania.setSelectedIndex(1);
-        }
-    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
