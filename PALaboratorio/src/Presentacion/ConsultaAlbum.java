@@ -25,6 +25,9 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
 
     public ConsultaAlbum() {
         initComponents();
+        tablaAlbumes.getColumnModel().getColumn(0).setMinWidth(0);
+        tablaAlbumes.getColumnModel().getColumn(0).setMaxWidth(0);
+        
         this.iUsuario = Fabrica.getIControladorUsuario();
         this.iContenido = Fabrica.getIControladorContenido();
 
@@ -161,11 +164,11 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
 
             },
             new String [] {
-                "Nombre"
+                "Artista", "Nombre"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -289,7 +292,9 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
 
         for (DtAlbum dtAlbum : dta) {
             Object[] data = {
-                ((DtAlbum) dtAlbum).getNombre(),};
+                dtAlbum.getNickArtista(),
+                ((DtAlbum) dtAlbum).getNombre()
+            };
             dtm.addRow(data);
         }
 
@@ -324,6 +329,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
     }
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        String nombGenero;
         String nickArtista;
         String nomAlbum;
 
@@ -333,28 +339,46 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
                 return;
             }
 
+            if (tablaAlbumes.getSelectionModel().isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe de seleccionar un Album");
+                return;
+            }
+
+            DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
+            nombGenero = selectedElement.getUserObject().toString();
+            nomAlbum = tablaAlbumes.getValueAt(tablaAlbumes.getSelectedRow(), 1).toString();
+            nickArtista = tablaAlbumes.getValueAt(tablaAlbumes.getSelectedRow(), 0).toString();
+
+            try {
+                AlbumContenido albc = new AlbumContenido(iContenido.obtenerAlbumContenido(nombGenero, nomAlbum, nickArtista));
+                this.getParent().add(albc);
+                centrar(albc);
+                albc.show();
+            } catch (UnsupportedOperationException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
         } else if (btnConsultaArtista.isSelected()) {
             if (tablaArtistas.getSelectionModel().isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe de seleccionar un Artista");
                 return;
             }
-        }
 
-        if (tablaAlbumes.getSelectionModel().isSelectionEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe de seleccionar un Album");
-            return;
-        }
+            if (tablaAlbumes.getSelectionModel().isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe de seleccionar un Album");
+                return;
+            }
 
-        nickArtista = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 1).toString();
-        nomAlbum = tablaAlbumes.getValueAt(tablaAlbumes.getSelectedRow(), 0).toString();
+            nickArtista = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 1).toString();
+            nomAlbum = tablaAlbumes.getValueAt(tablaAlbumes.getSelectedRow(), 0).toString();
 
-        try {
-            AlbumContenido albc = new AlbumContenido(iUsuario.obtenerAlbumContenido(nickArtista, nomAlbum));
-            this.getParent().add(albc);
-            centrar(albc);
-            albc.show();
-        } catch (UnsupportedOperationException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            try {
+                AlbumContenido albc = new AlbumContenido(iUsuario.obtenerAlbumContenido(nickArtista, nomAlbum));
+                this.getParent().add(albc);
+                centrar(albc);
+                albc.show();
+            } catch (UnsupportedOperationException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 

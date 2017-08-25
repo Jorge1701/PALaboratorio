@@ -26,7 +26,7 @@ public class Artista extends Usuario {
         Iterator it = albumes.entrySet().iterator();
         while (it.hasNext()) {
             Album album = (Album) ((Map.Entry) it.next()).getValue();
-            res.add(new DtAlbum(this.getNickname(), album.getNombre(), album.getAnio()/*,album.getImagen()*/));
+            res.add(new DtAlbum(this.getNickname(), album.getNombre(), album.getAnio(), album.getImagen()));
         }
         return res;
     }
