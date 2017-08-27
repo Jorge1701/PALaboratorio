@@ -293,6 +293,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         if (consultaGenero.isSelected()) {
             if (generos.getSelectionPath() == null) {
                 JOptionPane.showMessageDialog(this, "Debe de seleccionar un Genero");
+                return;
             } else {
                 DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
                 String generoSeleccionado = selectedElement.getUserObject().toString();
@@ -300,6 +301,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
                 if (nomLista == null) {
                     JOptionPane.showMessageDialog(this, "Debe de seleccionar una Lista");
+                    return;
                 } else {
                     try {
                         lista = iContenido.selecListGen(nomLista);
@@ -314,10 +316,12 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         } else if (consultaCliente.isSelected()) {
             if (tablaClientes.getSelectionModel().isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe de seleccionar un Cliente");
+                return;
             } else {
                 nomLista = lstListasRep.getSelectedValue();
                 if (nomLista == null) {
                     JOptionPane.showMessageDialog(this, "Debe de seleccionar una Lista");
+                    return;
                 } else {
                     nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString();
                     try {
