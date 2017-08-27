@@ -11,12 +11,18 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -30,7 +36,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class AlbumContenido extends javax.swing.JInternalFrame implements ListSelectionListener {
-    
+
     public AlbumContenido(DtAlbumContenido dtac) {
         initComponents();
         btnAbrirNavegador.setVisible(false);
@@ -55,7 +61,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
             pImg.setBounds(0, 0, 136, 126);
-            
+
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen del usuario");
@@ -64,7 +70,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         //Cargar tabla de Temas
         DefaultTableModel dtm = (DefaultTableModel) tablaTemas.getModel();
         dtm.setRowCount(0);
-        
+
         for (DtTema dtt : dtac.getTemas()) {
             Object[] data = {
                 dtt instanceof DtTemaLocal ? "A" : "S",
@@ -80,19 +86,19 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(tablaTemas.getModel());
         tablaTemas.setRowSorter(sorter);
         ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<>();
-        
+
         int columnIndexToSort = 3;
         sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
-        
+
         sorter.setSortKeys(sortKeys);
         sorter.sort();
 
         //Cargar lista de generos
         ArrayList<String> generos = dtac.getGeneros();
-        
+
         DefaultListModel<String> model = new DefaultListModel<>();
         lstGeneros.setModel(model);
-        
+
         for (String g : generos) {
             model.addElement(g);
         }
@@ -100,7 +106,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         // Hace que al hacer click en una fila de la tablaClientes se llame al metodo valueChanged()
         tablaTemas.getSelectionModel().addListSelectionListener(this);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -319,25 +325,39 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             JOptionPane.showMessageDialog(this, "Debe de seleccionar un tema");
             return;
         }
-        
+
         String link = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 4).toString();
         if (btnDescargar.getText().equals("Descargar")) {
-            
-            JFileChooser fc = new JFileChooser();
-            
-            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int o = fc.showOpenDialog(this);
+
+            JFileChooser seleccionarRuta = new JFileChooser();
+            seleccionarRuta.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int o = seleccionarRuta.showOpenDialog(this);
+            String nombreTema = link.split("/")[3];
             if (o == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fc.getSelectedFile();
-                String path = selectedFile.getAbsolutePath();
-                File archivo = new File(link);
-                JOptionPane.showMessageDialog(this, link);
-                if (!archivo.renameTo(new File(path + "\\" + archivo.getName()))) {
-                    JOptionPane.showMessageDialog(this, "No se pudo descargar el archivo", "Error!", JOptionPane.ERROR_MESSAGE);
+                try {
+                    File carpetaSeleccionada = seleccionarRuta.getSelectedFile();
+                    String rutaDescarga = carpetaSeleccionada.getAbsolutePath();
+                    String rutaDCompleta = rutaDescarga + "\\" + nombreTema;
+                    InputStream is = getClass().getResourceAsStream(link);
+                    OutputStream outstream = new FileOutputStream(rutaDCompleta);
+                    byte[] buffer = new byte[4096];
+                    int len;
+
+                    if (is != null) {
+                        while ((len = is.read(buffer)) > 0) {
+                            outstream.write(buffer, 0, len);
+                        }
+                        JOptionPane.showMessageDialog(this, "Tema descargado exitosamente en: " + rutaDCompleta, "Información", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        throw new FileNotFoundException();
+                    }
+                } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(this, "El tema " + "\"" + nombreTema + "\"" + " ya no se encuentra disponible para descargar.", "Error", JOptionPane.WARNING_MESSAGE);
+                } catch (IOException ex) {
+                    Logger.getLogger(AltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "No selecciono una carpeta", "Error!", JOptionPane.ERROR_MESSAGE);
             }
+
         } else {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             StringSelection data = new StringSelection(link);
@@ -351,9 +371,9 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             JOptionPane.showMessageDialog(this, "Debe de seleccionar un tema");
             return;
         }
-        
+
         String link = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 4).toString();
-        
+
         if (Desktop.isDesktopSupported()) {
             try {
                 Desktop.getDesktop().browse(new URI("http://" + link));
@@ -397,5 +417,5 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             btnAbrirNavegador.setVisible(true);
         }
     }
-    
+
 }
