@@ -20,10 +20,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
      */
     public QuitarTemaLista() {
         initComponents();
-        defecto.setSelected(true);
         this.IC = Fabrica.getIControladorContenido();
-        TXTusuario.setVisible(false);
-        usuario.setVisible(false);
     }
 
     /**
@@ -39,7 +36,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
         tipo = new javax.swing.JLabel();
         defecto = new javax.swing.JRadioButton();
         particular = new javax.swing.JRadioButton();
-        usuario = new javax.swing.JTextField();
+        TXTUsuario = new javax.swing.JTextField();
         nombre = new javax.swing.JTextField();
         TXTusuario = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -49,27 +46,18 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
         aceptar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
 
+        setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
+        setTitle("Quitar Tema Lista");
 
         tipo.setText("Tipo de Lista:");
 
         TipoLista.add(defecto);
         defecto.setText("Defecto");
-        defecto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                defectoActionPerformed(evt);
-            }
-        });
 
         TipoLista.add(particular);
         particular.setText("Particular");
-        particular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                particularActionPerformed(evt);
-            }
-        });
 
         TXTusuario.setText("Usuario:");
 
@@ -78,25 +66,10 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(lista);
 
         cargar.setText("Cargar");
-        cargar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cargarActionPerformed(evt);
-            }
-        });
 
         aceptar.setText("Aceptar");
-        aceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aceptarActionPerformed(evt);
-            }
-        });
 
         cancelar.setText("Cancelar");
-        cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,19 +78,21 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel3)
-                        .addComponent(TXTusuario))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(tipo)))
-                .addGap(40, 40, 40)
+                        .addComponent(tipo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(TXTusuario))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TXTUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
@@ -131,7 +106,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
                                 .addComponent(defecto)
                                 .addGap(18, 18, 18)
                                 .addComponent(particular)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(63, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cargar)
@@ -149,7 +124,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TXTUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TXTusuario))
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -160,7 +135,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
                         .addComponent(cargar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aceptar)
                     .addComponent(cancelar))
@@ -169,64 +144,10 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void defectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defectoActionPerformed
-                    usuario.setVisible(false);
-        TXTusuario.setVisible(false);       // TODO add your handling code here:
-    }//GEN-LAST:event_defectoActionPerformed
-
-    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        // TODO add your handling code here:
-        dispose();
-    }//GEN-LAST:event_cancelarActionPerformed
-
-    private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
-        // TODO add your handling code here:
-        boolean ok=false ;
-        if(defecto.isSelected()){
-         ok = IC.quitarTema(lista.getSelectedValue(), nombre.getText(),null);
-
-        }
-        else
-         ok = IC.quitarTema(lista.getSelectedValue(), nombre.getText(),usuario.getText());    
-        if (ok) {
-            javax.swing.JOptionPane.showMessageDialog(null, "El tema fue removido con éxito", "Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(null, "Hubo un error al tratar de quitar el tema", "Ha ocurrido un error!", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_aceptarActionPerformed
-
-    private void cargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarActionPerformed
-        // TODO add your handling code here:
-        List<DtTema> temas;
-        if (defecto.isSelected() == true) {
-
-            temas = IC.selecListaDef(nombre.getText());
-            DefaultTableModel modelo = (DefaultTableModel) lista.getModel();
-            modelo.setRowCount(0);
-            for (int i = 0; i < temas.size(); i++) {
-                DtTema t = (DtTema) temas.get(i);
-                Object[] dat = {
-                    t.getNombre(),
-                    t.getDuracion(),
-                    t.getUbicacion()
-                };
-                modelo.addRow(dat);
-            }
-        } else {
-            temas = IC.selecLista(usuario.getText(),nombre.getText());            
-       
-        }
-    }//GEN-LAST:event_cargarActionPerformed
-
-    private void particularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_particularActionPerformed
-     if(particular.isSelected()){
-         usuario.setVisible(true);
-         TXTusuario.setVisible(true);
-    }//GEN-LAST:event_particularActionPerformed
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField TXTUsuario;
     private javax.swing.JLabel TXTusuario;
     private javax.swing.ButtonGroup TipoLista;
     private javax.swing.JButton aceptar;
@@ -239,6 +160,5 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
     private javax.swing.JTextField nombre;
     public static javax.swing.JRadioButton particular;
     private javax.swing.JLabel tipo;
-    private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }
