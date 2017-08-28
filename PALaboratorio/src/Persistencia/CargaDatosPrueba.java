@@ -664,7 +664,7 @@ public class CargaDatosPrueba {
     private boolean insertarAlbumes() {
         BDAlbum bda = new BDAlbum();
 
-        for (String[] album : albumes) {
+        for (String[] album : albumes) {    // comentario
             String nickArtista = "";
 
             for (String[] perfil : perfiles) {
