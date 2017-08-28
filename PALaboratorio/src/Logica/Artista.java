@@ -70,11 +70,8 @@ public class Artista extends Usuario {
             Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
             bdAlbum = new BDAlbum();
             Iterator i = temas.entrySet().iterator();
-            boolean res = true;
-            while(i.hasNext() && res==true){
-             res = this.bdAlbum.altaAlbum(album.getNickArtista(),album.getNombre(),album.getAnio(),i.getClass().getName());
-            }
-            //boolean res = true;
+            
+            boolean res = this.bdAlbum.altaAlbum(album);
             if (res) {
                 this.albumes.put(nom, album);
             } else {

@@ -32,16 +32,15 @@ public class BDAlbum {
     
    protected Connection conexion = new ConexionBD().getConexion();
     
-    public boolean altaAlbum(String nickArtista,String nombreAlbum,int anio,String genero){
+    public boolean altaAlbum(Album album){
         
         try {
             
-            String sql = "INSERT INTO album" + "(nicknameArtista, nombre, anio) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO album" + "(nicknameArtista, nombre, anio) VALUES (?,?,?)";
             PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            statament.setString(1,nickArtista);
-            statament.setString(2, nombreAlbum);
-            statament.setInt(3, anio);
-            statament.setString(4,genero);
+            statament.setString(1,album.getNickArtista());
+            statament.setString(2,album.getNombre());
+            statament.setInt(3, album.getAnio());   
             statament.executeUpdate();
             ResultSet rs = statament.getGeneratedKeys();
             rs.next();
@@ -103,7 +102,7 @@ public class BDAlbum {
                 statament4.executeUpdate();
                 statament4.close();
              } 
-             */
+            
             return true;
 
         } catch (SQLException e) {

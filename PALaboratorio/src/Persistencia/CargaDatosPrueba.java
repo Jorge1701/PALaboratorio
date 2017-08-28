@@ -5,6 +5,7 @@ import Logica.DtAlbum;
 import Logica.DtArtista;
 import Logica.DtCliente;
 import Logica.DtFecha;
+import Logica.DtLista;
 import Logica.DtTema;
 import Logica.DtTemaLocal;
 import Logica.DtTemaRemoto;
@@ -631,7 +632,9 @@ public class CargaDatosPrueba {
      nombreTema = tema[2];
      }
      }
-    if(!bdl.altaLista(nombre, nombreTema,null,nombreGenero)){
+     DtLista lista = new DtLista(nombre,null);
+     
+    if(!bdl.altaLista(lista,null )){
      return false; 
     }else return false;
   
@@ -668,7 +671,8 @@ public class CargaDatosPrueba {
     nombretema=tema[2];
     }
     }
-    if(!bdl.altaLista(nombreLista, nombretema, nombreCliente,null)){
+    DtLista lista = new DtLista(nombreLista,null);
+    if(!bdl.altaLista(lista,nombreCliente)){
      return false;
     }else return true;
     }
