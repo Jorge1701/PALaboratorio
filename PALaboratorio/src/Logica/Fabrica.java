@@ -43,6 +43,7 @@ public class Fabrica {
     public static void levantarDatos() throws Exception {
         CargaDatosPrueba cdp = new CargaDatosPrueba();
         IUsuario iu = getIControladorUsuario();
+        IContenido ic = getIControladorContenido();
 
         ArrayList<DtUsuario> usuarios = cdp.cargarUsuarios();
         if (usuarios == null) {
@@ -64,6 +65,22 @@ public class Fabrica {
             Usuario usuario = iu.obtenerUsuario(r[1]);
             ((Cliente) cliente).agregar(usuario);
         }
+
+        ArrayList<String[]> listasParticulares = cdp.cargarListasParticulares();
+
+        if (listasParticulares == null) {
+            throw new Exception("Error : Las listas particulares no puedieron ser cargadas");
+        } else {
+            ic.levantarListas(listasParticulares);
+        }
+
+        /*ArrayList<String[]> listasDefecto = cdp.cargarListasDefecto();
+        if (listasDefecto == null) {
+            throw new Exception("Error : Las listas por defecto no puedieron ser cargadas");
+        } else {
+            ic.levantarListas(listasDefecto);
+        }*/
+
     }
 
     public static IUsuario getIControladorUsuario() {
