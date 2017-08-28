@@ -560,6 +560,12 @@ public class CargaDatosPrueba {
         if (!insertarTemas()) {
             return false;
         }
+        if(!insertarListaParticular()){
+            return false;
+        }
+        if(!insertarListaPorDefecto()){
+            return false;
+        }
         return true;
     }
 
@@ -648,29 +654,15 @@ public class CargaDatosPrueba {
     BDLista bdl = new BDLista();
     for(String[] listaParticular : listasParticulares){
     String refCliente = listaParticular[0];
-    String refLista = listaParticular[1];
     String nombreLista = listaParticular[2];
-    String publica = listaParticular[3];
-  
+    
     String nombreCliente="";
-    String  nombretema="";
-    String refTema="";
+    
     for(String[] cliente : perfiles){
     if(cliente[0]==refCliente){
      nombreCliente=cliente[1];   
     }
-    
-    for(String[] temalista: temasDeListas){
-        
-    if(temalista[0]==refLista){
-    refTema = temalista[2];
-    }   
-    
-    for(String[] tema : temas){
-    if(tema[0]==refTema){
-    nombretema=tema[2];
-    }
-    }
+
     DtLista lista = new DtLista(nombreLista,null);
     if(!bdl.altaLista(lista,nombreCliente)){
      return false;
@@ -678,7 +670,7 @@ public class CargaDatosPrueba {
     }
     }
 
-    }
+    
         return false;
     }
  
