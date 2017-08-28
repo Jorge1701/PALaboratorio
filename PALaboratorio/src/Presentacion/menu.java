@@ -3,10 +3,15 @@ package Presentacion;
 import Logica.Fabrica;
 import java.io.File;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -23,6 +28,16 @@ public class menu extends javax.swing.JFrame {
             Fabrica.levantarDatos();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    public void paint(Graphics g) {
+        try {
+            super.paint(g);
+            BufferedImage img = ImageIO.read(menu.class.getResource("/Recursos/Imagenes/Albumes/albumDefault.png"));
+            g.drawImage(img, 0, 62, getWidth(), getHeight() - 62, null);
+        } catch (IOException ex) {
+            Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
