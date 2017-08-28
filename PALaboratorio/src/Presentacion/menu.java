@@ -28,8 +28,8 @@ public class menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelMenu = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        PanelMenu = new DesktopFondo();
+        barra = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         altaPerfil = new javax.swing.JMenuItem();
         altaAlbum = new javax.swing.JMenuItem();
@@ -71,7 +71,7 @@ public class menu extends javax.swing.JFrame {
             .addGap(0, 335, Short.MAX_VALUE)
         );
 
-        jMenuBar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        barra.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jMenu1.setText("Registros");
 
@@ -116,7 +116,7 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu1.add(publicarLista);
 
-        jMenuBar1.add(jMenu1);
+        barra.add(jMenu1);
 
         jMenu2.setText("Consultas");
 
@@ -152,7 +152,7 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu2.add(consultaListaRep);
 
-        jMenuBar1.add(jMenu2);
+        barra.add(jMenu2);
 
         jMenu3.setText("Relaciones");
 
@@ -183,7 +183,7 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu3.add(quitarTemaLista);
 
-        jMenuBar1.add(jMenu3);
+        barra.add(jMenu3);
 
         jMenu4.setText("Favoritos");
 
@@ -193,7 +193,7 @@ public class menu extends javax.swing.JFrame {
         eliminarTLA.setText("Eliminar Tema/Lista/Album");
         jMenu4.add(eliminarTLA);
 
-        jMenuBar1.add(jMenu4);
+        barra.add(jMenu4);
 
         jMenu5.setText("Datos de Prueba");
 
@@ -205,9 +205,9 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu5.add(cargarDatos);
 
-        jMenuBar1.add(jMenu5);
+        barra.add(jMenu5);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(barra);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -391,6 +391,7 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem altaAlbum;
     private javax.swing.JMenuItem altaGenero;
     private javax.swing.JMenuItem altaPerfil;
+    private javax.swing.JMenuBar barra;
     private javax.swing.JMenuItem cargarDatos;
     private javax.swing.JMenuItem consultaAlbum;
     private javax.swing.JMenuItem consultaListaRep;
@@ -404,7 +405,6 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem publicarLista;
     private javax.swing.JMenuItem quitarTemaLista;
     private javax.swing.JMenuItem seguirUsuario;
