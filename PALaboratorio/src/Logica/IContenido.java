@@ -31,4 +31,5 @@ public interface IContenido {
     public boolean existeGenero(String nombre);
     public Genero obtenerGenero(String nombre);
     public void setIUsuario(IUsuario iUsuario);
+    public ArrayList<DtLista> listarLisReproduccionDef();
 }

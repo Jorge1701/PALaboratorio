@@ -1,8 +1,14 @@
 package Presentacion;
 
+import Logica.DtCliente;
+import Logica.DtLista;
+import Logica.DtListaDefecto;
 import Logica.DtTema;
+import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IContenido;
+import Logica.IUsuario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -10,10 +16,15 @@ import javax.swing.table.DefaultTableModel;
 
 public class QuitarTemaLista extends javax.swing.JInternalFrame {
 
-    private IContenido IC;
+    private IUsuario iUsuario;
+    private IContenido iContenido;
 
     public QuitarTemaLista() {
         initComponents();
+
+        iUsuario = Fabrica.getIControladorUsuario();
+        iContenido = Fabrica.getIControladorContenido();
+        PestaniaMouseClicked(null);
 
     }
 
@@ -23,8 +34,8 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
 
         TipoLista = new javax.swing.ButtonGroup();
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jSplitPane2 = new javax.swing.JSplitPane();
         Pestania = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
@@ -47,18 +58,37 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
 
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancelar");
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         jSplitPane2.setDividerLocation(280);
         jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane2.setPreferredSize(new java.awt.Dimension(559, 597));
+
+        Pestania.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                PestaniaStateChanged(evt);
+            }
+        });
+        Pestania.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PestaniaMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                PestaniaMouseReleased(evt);
+            }
+        });
 
         jSplitPane3.setDividerLocation(140);
         jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
@@ -143,7 +173,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre"
+                "Nombre", "Genero"
             }
         ));
         jScrollPane4.setViewportView(tablaListDefecto);
@@ -210,9 +240,9 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(207, 207, 207)
-                        .addComponent(jButton1)
+                        .addComponent(btnAceptar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2))
+                        .addComponent(btnCancelar))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -224,8 +254,8 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
                 .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnAceptar)
+                    .addComponent(btnCancelar))
                 .addContainerGap())
         );
 
@@ -233,17 +263,65 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void PestaniaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PestaniaMouseReleased
+
+    }//GEN-LAST:event_PestaniaMouseReleased
+
+    private void PestaniaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_PestaniaStateChanged
+
+    }//GEN-LAST:event_PestaniaStateChanged
+
+    private void PestaniaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PestaniaMouseClicked
+
+        if (Pestania.getSelectedIndex() == 0) {
+
+            ArrayList<DtUsuario> dtc = iUsuario.listarClientes();
+
+            DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
+            dtm.setRowCount(0);
+
+            for (DtUsuario dtu : dtc) {
+
+                Object[] data = {
+                    dtu.getNickname(),
+                    dtu.getNombre(),
+                    dtu.getApellido()
+                };
+                dtm.addRow(data);
+            }
+
+        } else {
+
+            ArrayList<DtLista> dtld = iContenido.listarLisReproduccionDef();
+
+            DefaultTableModel dtm = (DefaultTableModel) tablaListDefecto.getModel();
+            dtm.setRowCount(0);
+
+            for (DtLista lista : dtld) {
+                Object[] data = {
+                    lista.getNombre(),
+                    ((DtListaDefecto) lista).getGenero().getNombre()
+                };
+                dtm.addRow(data);
+            }
+        }
+    }//GEN-LAST:event_PestaniaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane Pestania;
     private javax.swing.ButtonGroup TipoLista;
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

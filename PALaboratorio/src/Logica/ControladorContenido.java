@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 public class ControladorContenido implements IContenido {
@@ -408,5 +409,20 @@ public class ControladorContenido implements IContenido {
 
     public Genero obtenerGenero(String nombre) {
         return genero.obtener(nombre);
+    }
+
+    @Override
+    public ArrayList<DtLista> listarLisReproduccionDef() {
+        ArrayList<DtLista> res = new ArrayList<>();
+
+        Iterator i = listasDefecto.entrySet().iterator();
+
+        while (i.hasNext()) {
+            ListaDefecto dtld = (ListaDefecto) ((Map.Entry) i.next()).getValue();
+            res.add(dtld.getData());
+
+        }
+        return res;
+
     }
 }
