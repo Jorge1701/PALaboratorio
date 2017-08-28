@@ -112,7 +112,6 @@ public class Fabrica {
         } else {
             ic.levantarListas(listasDefecto);
         }*/
-
     }
 
     public static IUsuario getIControladorUsuario() {

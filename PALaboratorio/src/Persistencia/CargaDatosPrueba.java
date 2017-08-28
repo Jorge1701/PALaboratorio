@@ -5,7 +5,10 @@ import Logica.DtAlbum;
 import Logica.DtArtista;
 import Logica.DtCliente;
 import Logica.DtFecha;
+import Logica.DtGenero;
 import Logica.DtLista;
+import Logica.DtListaDefecto;
+import Logica.DtListaParticular;
 import Logica.DtTema;
 import Logica.DtTemaLocal;
 import Logica.DtTemaRemoto;
@@ -500,19 +503,11 @@ public class CargaDatosPrueba {
     public ArrayList<String[]> cargarListasParticulares() {
         try {
             ArrayList<String[]> res = new ArrayList<>();
-            PreparedStatement l = conexion.prepareStatement("SELECT * FROM lista");
+            PreparedStatement l = conexion.prepareStatement("select l.nombre, lp.nickname, lp.Publica, l.imagen from lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista");
             ResultSet listas = l.executeQuery();
 
             while (listas.next()) {
-                PreparedStatement p = conexion.prepareStatement("SELECT * FROM listaparticular WHERE idLista=?");
-                p.setInt(1, listas.getInt(1));
-                ResultSet lp = p.executeQuery();
-                if (listas.getString(3).equals("P")) {
-                    while (lp.next()) {
-                        res.add(new String[]{listas.getString(2), listas.getString(3), listas.getString(4), lp.getString(2), lp.getString(3)});
-                        listas.next();
-                    }
-                }
+                res.add(new String[]{listas.getString(1), listas.getString(2), listas.getString(3), listas.getString(4)});
 
             }
 
@@ -560,10 +555,10 @@ public class CargaDatosPrueba {
         if (!insertarTemas()) {
             return false;
         }
-        if(!insertarListaParticular()){
+        if (!insertarListaParticular()) {
             return false;
         }
-        if(!insertarListaPorDefecto()){
+        if (!insertarListaPorDefecto()) {
             return false;
         }
         return true;
@@ -612,93 +607,55 @@ public class CargaDatosPrueba {
         return res;
     }
 
-    
-    private boolean insertarListaPorDefecto(){
-    BDLista bdl = new BDLista();
-    for(String[] listaPordefecto : listarPorDefecto){
-        String refLista = listaPordefecto[0];
-        String nombre = listaPordefecto[1];
-        String refGenero = listaPordefecto[2];
-        
+    private boolean insertarListaPorDefecto() {
+        BDLista bdl = new BDLista();
+        for (String[] listaPordefecto : listarPorDefecto) {
 
-    String nombreTema="";
-    String nombreGenero="";
-    
-    for(String[] genero : generos ){
-        if(genero[0]== refGenero ){
-        nombreGenero=genero[1];
+            String nombre = listaPordefecto[1];
+            String refGenero = listaPordefecto[2];
+
+            String nombreGenero = "";
+
+            for (String[] genero : generos) {
+                if (genero[0] == refGenero) {
+                    nombreGenero = genero[1];
+                }
+            }
+            DtLista lista = new DtListaDefecto(new DtGenero(nombreGenero, null), nombre, null);
+
+            if (!bdl.altaLista(lista, "")) {
+                return false;
+            }
         }
+        return true;
     }
-    for(String[] temaLista : temasDeListas){
-    if(temaLista[0]==refLista){
-       String refTema = temaLista[2];
-       
-     for(String[] tema : temas){
-     if(tema[1] == refTema ){
-     nombreTema = tema[2];
-     }
-     }
-     DtLista lista = new DtLista(nombre,null);
-     
-    if(!bdl.altaLista(lista,null )){
-     return false; 
-    }else return false;
-  
-    }
-    }
-    }
-     return true;
-    }
+
     // Listas de Reproduccion Particulares (Ref cliente, Ref, Nombre, Publica, Imagen)
-    private boolean insertarListaParticular(){
-    BDLista bdl = new BDLista();
-    for(String[] listaParticular : listasParticulares){
-    String refCliente = listaParticular[0];
-    String nombreLista = listaParticular[2];
-    
-    String nombreCliente="";
-    
-    for(String[] cliente : perfiles){
-    if(cliente[0]==refCliente){
-     nombreCliente=cliente[1];   
+    private boolean insertarListaParticular() {
+        BDLista bdl = new BDLista();
+        for (String[] listaParticular : listasParticulares) {
+            String refCliente = listaParticular[0];
+            String nombreLista = listaParticular[2];
+
+            String nombreCliente = "";
+
+            for (String[] cliente : perfiles) {
+                if (cliente[0] == refCliente) {
+                    nombreCliente = cliente[1];
+                }
+
+            }
+            DtLista lista = new DtListaParticular(false, nombreLista, null);
+            if (!bdl.altaLista(lista, nombreCliente)) {
+                return false;
+            }
+
+        }
+
+        return true;
     }
 
-    DtLista lista = new DtLista(nombreLista,null);
-    if(!bdl.altaLista(lista,nombreCliente)){
-     return false;
-    }else return true;
-    }
-    }
-
-    
-        return false;
-    }
- 
-    // Albumes (Ref artista, Ref album, Nombre, Generos, Anio, Imagen)
-    private boolean insertarAlbum(){
-    BDAlbum bda = new BDAlbum();
-    
-    for(String[] album : albumes){
-    String refArtista = album[0];
-    String refAlbum = album[1];
-    String NombreAlbum = album[2];
-    String Genero = album[3];
-    int anio = Integer.parseInt(album[4]);
-    
-    String nombreArtista =""; 
-    for(String[] artista : perfiles){
-    if(refArtista == artista[0]){
-       nombreArtista=artista[1];
-    }
-    }
-
-    }
-    
-    
-    
-    return false;
-    }
-    private boolean insertarSeguidores(){
+    private boolean insertarSeguidores() {
         BDCliente bdc = new BDCliente();
 
         for (String[] seguidor : seguidores) {

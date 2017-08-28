@@ -25,31 +25,30 @@ public class BDLista {
             }
             String sql = "INSERT INTO lista" + "(nombre,tipo) VALUES (?,?)";
             PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            statament.setString(1 ,dtl.getNombre());
-            statament.setString(2 ,tipo);
+            statament.setString(1, dtl.getNombre());
+            statament.setString(2, tipo);
             statament.executeUpdate();
             ResultSet rs = statament.getGeneratedKeys();
             rs.next();
             int idLista = Integer.parseInt(rs.getString(1));
+            System.out.println("Persistencia.BDLista.altaLista()" + idLista);
+            System.out.println("Persistencia.BDLista.altaLista()" + nickCliente);
+
             //statament.close();
-
             if (dtl instanceof DtListaDefecto) {
-
-                PreparedStatement statament2 = conexion.prepareStatement("INSERT INTO listapordefecto"
-                        + "(idLista,nombreGenero) VALUES (?,?)");
+                System.out.println("Persistencia.BDLista.altaLista()" + ((DtListaDefecto) dtl).getGenero().getNombre());
+                PreparedStatement statament2 = conexion.prepareStatement("INSERT INTO listapordefecto(idLista,nombreGenero) VALUES (?,?)");
 
                 statament2.setInt(1, idLista);
-                statament2.setString(2, ((DtListaDefecto) dtl).getGenero().getNombre() );
+                statament2.setString(2, ((DtListaDefecto) dtl).getGenero().getNombre());
                 statament2.executeUpdate();
-                //
-                statament.close();
                 statament2.close();
+                statament.close();
+
                 return true;
 
             } else {
-                PreparedStatement statament4 = conexion.prepareStatement("INSERT INTO listaparticular"
-                        + " VALUES (?,?,?)");
-                
+                PreparedStatement statament4 = conexion.prepareStatement("INSERT INTO listaparticular (idLista,nickname,Publica) VALUES (?,?,?)");
                 statament4.setInt(1, idLista);
                 statament4.setString(2, nickCliente);
                 statament4.setString(3, "N");
@@ -64,15 +63,15 @@ public class BDLista {
             return false;
         }
     }
-    
-    public boolean publicarLista(Lista l){
-        
+
+    public boolean publicarLista(Lista l) {
+
         try {
             PreparedStatement sql = conexion.prepareStatement("SELECT idLista FROM lista WHERE nombre = '" + l.getNombre() + "'");
             ResultSet id = sql.executeQuery();
             id.next();
             int idLista = id.getInt(1);
-            PreparedStatement sql2 = conexion.prepareStatement("UPDATE listaparticular SET Publica='S' WHERE idLista = '"+ idLista +"'");
+            PreparedStatement sql2 = conexion.prepareStatement("UPDATE listaparticular SET Publica='S' WHERE idLista = '" + idLista + "'");
             sql2.executeUpdate();
             sql.close();
             sql2.close();

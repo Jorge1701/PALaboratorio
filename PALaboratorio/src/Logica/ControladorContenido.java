@@ -415,17 +415,23 @@ public class ControladorContenido implements IContenido {
         Lista l;
         boolean flag;
 
+        for (String[] strings : lista) {
+            for (String string : strings) {
+        System.out.println(string);
+            }
+        System.out.println();
+        }
         for (String[] str : lista) {
             if (str[1].equals("D")) {
                 l = new ListaDefecto(this.genero.obtener(str[2]), str[0], new ArrayList<>());
                 this.listasDefecto.put(l.getNombre(), (ListaDefecto) l);
                 ListaDefecto p = this.listasDefecto.get(l.getNombre());
-                if(p == null){
-                return false;
+                if (p == null) {
+                    return false;
                 }
             } else {
                 boolean privada;
-                if (str[3].equals("N")) {
+                if (str[4].equals("N")) {
                     privada = true;
                 } else {
                     privada = false;
@@ -436,8 +442,8 @@ public class ControladorContenido implements IContenido {
                 cl.agregarLista(l);
                 ListaParticular q = this.listasParticular.get(l.getNombre());
                 Lista r = cl.getLista(l.getNombre());
-                if(q == null || r==null){
-                return false;
+                if (q == null || r == null) {
+                    return false;
                 }
             }
         }//for
