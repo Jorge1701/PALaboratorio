@@ -33,7 +33,7 @@ public class menu extends javax.swing.JFrame {
     public void paint(Graphics g) {
         try {
             super.paint(g);
-            BufferedImage img = ImageIO.read(menu.class.getResource("/Recursos/Imagenes/Albumes/albumDefault.png"));
+            BufferedImage img = ImageIO.read(menu.class.getResource("/Recursos/Imagenes/wallpaper.jpg"));
             g.drawImage(img, 0, 62, getWidth(), getHeight() - 62, null);
         } catch (IOException ex) {
             Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
