@@ -25,8 +25,11 @@ public interface IContenido {
     public void setIUsuario(IUsuario iUsuario);
     public ArrayList<DtLista> listarLisReproduccionGen(String nomGen);
     public DtLista selecListGen(String nombreL);
+    public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista);
     public DtGenero selecGenero(String nomGenero);
     public boolean levantarListas(ArrayList<String[]> lista);
-        
-    
+    public void cargarGenero(String nombre, String padre);
+    public boolean existeGenero(String nombre);
+    public Genero obtenerGenero(String nombre);
+    public ArrayList<DtLista> listarLisReproduccionDef();
 }

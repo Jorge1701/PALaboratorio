@@ -14,6 +14,4 @@ public class DtTemaRemoto extends DtTema {
     public String getUrl() {
         return url;
     }
-    
-    
 }

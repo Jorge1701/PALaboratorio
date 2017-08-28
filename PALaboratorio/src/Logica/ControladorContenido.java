@@ -8,6 +8,7 @@ import java.util.Map;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JOptionPane;
 
 public class ControladorContenido implements IContenido {
 
@@ -35,6 +36,7 @@ public class ControladorContenido implements IContenido {
 
     private IUsuario iUsuario;
 
+    @Override
     public void setIUsuario(IUsuario iUsuario) {
         this.iUsuario = iUsuario;
     }
@@ -42,18 +44,7 @@ public class ControladorContenido implements IContenido {
     private ControladorContenido() {
         this.listasParticular = new HashMap<String, ListaParticular>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
-        genero = new Genero("Géneros");
-        this.bdLista = new BDLista();
-
-        //this.dbPersona=new DBPersona();
-        this.genero.agregarGenero("Géneros", "Rock");
-        this.genero.agregarGenero("Rock", "Rock clásico");
-        this.genero.agregarGenero("Géneros", "Electrónica");
-        this.genero.agregarGenero("Electrónica", "Electro house");
-        this.genero.agregarGenero("Géneros", "Pop");
-        this.genero.agregarGenero("Géneros", "Cumbia");
-        this.genero.agregarGenero("Cumbia", "Cumbia cheta");
-        this.genero.agregarGenero("Cumbia", "Cumbia de negro");
+        genero = new Genero("Generos");
     }
 
     @Override
@@ -451,5 +442,36 @@ public class ControladorContenido implements IContenido {
             }
         }//for
         return true;
+    }
+
+    public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista) {
+        return genero.obtener(nomGenero).obtenerAlbumContenido(nomAlbum, nickArtista);
+    }
+
+    public void cargarGenero(String nombre, String padre) {
+        this.genero.agregarGenero(padre.isEmpty() ? genero.getNombre() : padre, nombre);
+    }
+
+    public boolean existeGenero(String nombre) {
+        return genero.existe(nombre);
+    }
+
+    public Genero obtenerGenero(String nombre) {
+        return genero.obtener(nombre);
+    }
+
+    @Override
+    public ArrayList<DtLista> listarLisReproduccionDef() {
+        ArrayList<DtLista> res = new ArrayList<>();
+
+        Iterator i = listasDefecto.entrySet().iterator();
+
+        while (i.hasNext()) {
+            ListaDefecto dtld = (ListaDefecto) ((Map.Entry) i.next()).getValue();
+            res.add(dtld.getData());
+
+        }
+        return res;
+
     }
 }

@@ -12,10 +12,10 @@ public abstract class Usuario {
     private String apellido;
     private String email;
     private DtFecha fechaNac;
-    private Imagen imagen;
+    private String imagen;
     private HashMap<String,Cliente> seguidores;
     
-    public Usuario(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, Imagen imagen) {
+    public Usuario(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, String imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -65,8 +65,12 @@ public abstract class Usuario {
         this.fechaNac = fechaNac;
     }
 
-    public void setImagen(Imagen imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public String getImagen() {
+        return imagen;
     }
     
      public void setSeguidores(HashMap<String,Cliente> seguidores) {

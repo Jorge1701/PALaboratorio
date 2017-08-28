@@ -1,14 +1,15 @@
 package Presentacion;
 
-
 import Logica.DtGenero;
 import Logica.DtLista;
 import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IContenido;
 import Logica.IUsuario;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -292,6 +293,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         if (consultaGenero.isSelected()) {
             if (generos.getSelectionPath() == null) {
                 JOptionPane.showMessageDialog(this, "Debe de seleccionar un Genero");
+                return;
             } else {
                 DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
                 String generoSeleccionado = selectedElement.getUserObject().toString();
@@ -299,6 +301,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
                 if (nomLista == null) {
                     JOptionPane.showMessageDialog(this, "Debe de seleccionar una Lista");
+                    return;
                 } else {
                     try {
                         lista = iContenido.selecListGen(nomLista);
@@ -313,16 +316,19 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         } else if (consultaCliente.isSelected()) {
             if (tablaClientes.getSelectionModel().isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe de seleccionar un Cliente");
+                return;
             } else {
                 nomLista = lstListasRep.getSelectedValue();
                 if (nomLista == null) {
                     JOptionPane.showMessageDialog(this, "Debe de seleccionar una Lista");
+                    return;
                 } else {
                     nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString();
                     try {
                         lista = iUsuario.selectListaCli(nomLista);
                         InfoListaReproduccion l = new InfoListaReproduccion(lista, nickCliente);
                         this.getParent().add(l);
+                        centrar(l);
                         l.show();
                     } catch (UnsupportedOperationException e) {
                         JOptionPane.showMessageDialog(this, e.getMessage());
@@ -332,6 +338,15 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnAceptarActionPerformed
     }
+
+    public void centrar(JInternalFrame cpc) {
+        Dimension jInternalFrameSize = cpc.getSize();
+        int width = (1382 - jInternalFrameSize.width) / 2;
+        int height = (634 - jInternalFrameSize.height) / 2;
+        cpc.setLocation(width, height);
+
+    }
+
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed

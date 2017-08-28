@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -73,6 +74,8 @@ public class BDUsuario {
         String nombre = dtu.getNombre();
         String apellido = dtu.getApellido();
         String correo = dtu.getEmail();
+        String imagen = dtu.getImagen();
+
         Date fecha = new Date(dtu.getFechaNac().getAnio(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getDia());
         //java.sql.Date.valueOf(dtu.getFechaNac().getAnio() + "-" + dtu.getFechaNac().getMes() + "-" + dtu.getFechaNac().getDia());
 
@@ -82,7 +85,7 @@ public class BDUsuario {
                 String web = ((DtArtista) dtu).getWeb();
 
                 PreparedStatement insertar = conexion.prepareStatement("INSERT INTO artista "
-                        + "(nickname, nombre, apellido,correo,fecha_nac,biografia,sitio_web) values(?,?,?,?,?,?,?)");
+                        + "(nickname, nombre, apellido,correo,fecha_nac,biografia,sitio_web,imagen) values(?,?,?,?,?,?,?,?)");
                 insertar.setString(1, nickName);
                 insertar.setString(2, nombre);
                 insertar.setString(3, apellido);
@@ -90,6 +93,11 @@ public class BDUsuario {
                 insertar.setDate(5, fecha);
                 insertar.setString(6, biografia);
                 insertar.setString(7, web);
+               // if (imagen == null || imagen == "") {
+               //     insertar.setNull(8, Types.VARCHAR);
+               // } else {
+                    insertar.setString(8, imagen);
+               // }
                 insertar.executeUpdate();
                 insertar.close();
             } catch (SQLException ex) {
@@ -101,12 +109,17 @@ public class BDUsuario {
 
             try {
                 PreparedStatement insertar = conexion.prepareStatement("INSERT INTO cliente "
-                        + "(nickname, correo, nombre, apellido, fecha_nac) values(?,?,?,?,?)");
+                        + "(nickname, correo, nombre, apellido, fecha_nac,imagen) values(?,?,?,?,?,?)");
                 insertar.setString(1, nickName);
                 insertar.setString(2, nombre);
                 insertar.setString(3, apellido);
                 insertar.setString(4, correo);
                 insertar.setDate(5, fecha);
+                //if (imagen == null || imagen == "") {
+                //    insertar.setNull(6, Types.VARCHAR);
+               // } else {
+                    insertar.setString(6, imagen);
+                //}
                 insertar.executeUpdate();
                 insertar.close();
             } catch (SQLException ex) {

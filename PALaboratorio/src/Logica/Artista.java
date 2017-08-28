@@ -13,7 +13,7 @@ public class Artista extends Usuario {
     private HashMap<String, Album> albumes;
     private BDAlbum bdAlbum = null;
 
-    public Artista(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, Imagen imagen, String biografia, String web) {
+    public Artista(String nickname, String nombre, String apellido, String email, DtFecha fechaNac, String imagen, String biografia, String web) {
         super(nickname, nombre, apellido, email, fechaNac, imagen); //LLama al constructor de Usuario
         this.biografia = biografia;
         this.web = web;
@@ -26,7 +26,7 @@ public class Artista extends Usuario {
         Iterator it = albumes.entrySet().iterator();
         while (it.hasNext()) {
             Album album = (Album) ((Map.Entry) it.next()).getValue();
-            res.add(new DtAlbum(this.getNickname(), album.getNombre(), album.getAnio()/*,album.getImagen()*/));
+            res.add(new DtAlbum(this.getNickname(), album.getNombre(), album.getAnio(), album.getImagen()));
         }
         return res;
     }
@@ -35,7 +35,7 @@ public class Artista extends Usuario {
         DtAlbumContenido dtac;
         Album album = albumes.get(nomAlbum);
         dtac = album.obtenerAlbumContenido();
-       
+
         return dtac;
     }
 
@@ -48,16 +48,15 @@ public class Artista extends Usuario {
         DtUsuario info = getData();
         ArrayList<DtCliente> dtSeguidores = getSeguidores();
         ArrayList<DtAlbum> dtAlbumes = new ArrayList<>();
-        
+
         Iterator i = this.albumes.entrySet().iterator();
-        
-        while(i.hasNext()){
-        Album a = (Album)((Map.Entry) i.next()).getValue();
-        dtAlbumes.add(a.getData());
+
+        while (i.hasNext()) {
+            Album a = (Album) ((Map.Entry) i.next()).getValue();
+            dtAlbumes.add(a.getData());
         }
-        
-        
-        return new DtPerfilArtista(dtAlbumes,info,dtSeguidores,biografia,web);
+
+        return new DtPerfilArtista(dtAlbumes, info, dtSeguidores, biografia, web);
 
     }
 
@@ -66,7 +65,6 @@ public class Artista extends Usuario {
         if (this.albumes.get(nom) != null) {
             throw new UnsupportedOperationException("Ya existe Albun con ese nombre");
         } else {
-           
 
             //Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
             Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
@@ -82,18 +80,17 @@ public class Artista extends Usuario {
 
         }
 
-
     }
 
     @Override
     public String getTipo() {
-        
+
         return "Artista";
     }
 
     @Override
     public DtArtista getData() {
-        return new DtArtista(getNickname(), getNombre(), getApellido(), getEmail(), getFechaNac(), biografia, web);
+        return new DtArtista(getNickname(), getNombre(), getApellido(), getEmail(), getFechaNac(), getImagen(), getBiografia(), getWeb());
     }
 
     public String getBiografia() {
@@ -114,5 +111,9 @@ public class Artista extends Usuario {
 
     public void setAlbumes(HashMap<String, Album> albumes) {
         this.albumes = albumes;
+    }
+
+    public void cargarAlbum(Album a) {
+        albumes.put(a.getNombre(), a);
     }
 }

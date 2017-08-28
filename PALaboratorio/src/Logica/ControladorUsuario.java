@@ -86,9 +86,9 @@ public class ControladorUsuario implements IUsuario {
     public void levantarUsuario(DtUsuario dtu) {
         Usuario u;
         if (dtu instanceof DtCliente) {
-            u = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null);
+            u = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), dtu.getImagen());
         } else {
-            u = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null, ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
+            u = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), dtu.getImagen(), ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
         }
         usuarios.put(u.getNickname(), u);
     }
@@ -288,10 +288,13 @@ public class ControladorUsuario implements IUsuario {
     public DtLista selectListaCli(String nombreL) {
         return ((Cliente) this.usuarioRecordado).seleccionarLista(nombreL);
     }
-    
-    public ArrayList<DtLista> listarLisReproduccion(String nickCliente){
-     ArrayList<DtLista> res=((Cliente)obtenerUsuario(nickCliente)).listarLisReproduccion();
-     
-     return res;
+
+    public ArrayList<DtLista> listarLisReproduccion(String nickCliente) {
+        return ((Cliente) obtenerUsuario(nickCliente)).listarLisReproduccion();
+    }
+
+    public void cargarAlbum(Album a) {
+        Usuario u = usuarios.get(a.getNickArtista());
+        ((Artista) u).cargarAlbum(a);
     }
 }
