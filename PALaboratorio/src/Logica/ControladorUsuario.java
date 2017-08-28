@@ -23,13 +23,10 @@ public class ControladorUsuario implements IUsuario {
     }
     private final HashMap<String, Usuario> usuarios;
     private Usuario usuarioRecordado;
-    //private DBPersona dbPersona=null;
 
     private BDUsuario bdUsuario = null;
 
     private ControladorUsuario() {
-        //Colección genérica común
-        //this.personas=new ArrayList<Persona>();
         this.usuarios = new HashMap();
         this.usuarioRecordado = null;
         this.bdUsuario = new BDUsuario();

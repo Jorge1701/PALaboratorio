@@ -19,12 +19,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Luis
  */
 public class PublicarLista extends javax.swing.JInternalFrame implements ListSelectionListener {
+
     private IContenido iContenido;
     private final IUsuario iUsuario;
-    
-    /**
-     * Creates new form PublicarLista
-     */
+
     public PublicarLista() {
         initComponents();
         iUsuario = Fabrica.getIControladorUsuario();
@@ -33,8 +31,8 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
         // Hace que al hacer click en una fila de la tablaClientes se llame al metodo valueChanged()
         tablaClientes.getSelectionModel().addListSelectionListener(this);
     }
-    
-     private void cargarDatos() {
+
+    private void cargarDatos() {
         // Obtiene todo los clientes
         ArrayList<DtUsuario> dtcs = iUsuario.listarClientes();
 
@@ -48,35 +46,33 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
                 dtu.getNickname(),
                 dtu.getNickname(),
                 dtu.getApellido(),
-                dtu.getEmail()
-            };
+                dtu.getEmail(),};
             dtm.addRow(data);
         }
     }
-     
-      @Override
+
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         // Obtiene el nick del cliente seleccionado y se lo pasa a la funcion cliente seleccionado
         if (tablaClientes.getSelectedRow() != -1) {
             clienteSeleccionado(tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString());
         }
     }
-     
-      private void clienteSeleccionado(String nickCliente) {
+
+    private void clienteSeleccionado(String nickCliente) {
         //Lista en tablaUsuarios los usuarios que el cliente nickCliente puede seguir
         ArrayList<DtLista> listas = iUsuario.listarLisReproduccion(nickCliente);
-
+        if (listas.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El usuario " + nickCliente + " no tiene listas");
+            return;
+        }
         DefaultTableModel dtm = (DefaultTableModel) tablaListas.getModel();
         dtm.setRowCount(0);
 
-        for (DtLista dtu : listas) {
-            
-            if (((DtListaParticular)dtu).isPrivada()) {
-                Object[] data = {
-                    dtu.getNombre()
-                };
-                dtm.addRow(data);
-            }
+        for (DtLista dtl : listas) {
+            Object[] data = {
+                dtl.getNombre(),};
+            dtm.addRow(data);
         }
     }
 
@@ -145,7 +141,7 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
         );
 
         jSplitPane2.setTopComponent(jPanel2);
@@ -187,7 +183,7 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
                     .addComponent(botonAceptar)
                     .addComponent(botonCancelar)
                     .addComponent(jLabel1))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jSplitPane2.setRightComponent(jPanel3);
@@ -244,7 +240,7 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
         String lista = tablaListas.getValueAt(tablaListas.getSelectedRow(), 0).toString();
 
         try {
-            //IUsuario.seguirUsuario(cliente, usuario);
+            iContenido.publicarLista(cliente,lista);
             JOptionPane.showMessageDialog(this, "La lista " + lista + "del cliente " + cliente + "se hizo pública");
         } catch (UnsupportedOperationException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());

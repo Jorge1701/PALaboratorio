@@ -30,6 +30,17 @@ public abstract class Lista {
         return temas;
     }
 
+    public ArrayList<Tema> obtenerTemas() {
+        ArrayList<Tema> temas = new ArrayList<>();
+        
+        for (Tema t : this.temas)
+            if(t instanceof TemaLocal)
+            temas.add(t);
+        else
+            temas.add(t);  
+        
+        return temas;
+    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

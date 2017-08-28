@@ -18,11 +18,10 @@ public class Cliente extends Usuario {
         super(nickname, nombre, apellido, email, fechaNac, imagen);
 
         this.seguidos = new HashMap();
-        this.listasParticulares = new HashMap();
+        this.listasParticulares = new HashMap<String, ListaParticular>();
         this.albumesfav = new ArrayList<>();
         this.listasfav = new ArrayList<>();
         this.temasfav = new ArrayList<>();
-
     }
 
     public void agregarAlbumFav(Album a) {
@@ -47,6 +46,10 @@ public class Cliente extends Usuario {
         } else {
             temasfav.add(t);
         }
+    }
+    
+    public void agregarLista(Lista l){
+     this.listasParticulares.put(l.getNombre(), (ListaParticular) l);
     }
 
     public void eliminarAlbumFav(int i) {
@@ -178,7 +181,7 @@ public class Cliente extends Usuario {
         Iterator it = listasParticulares.entrySet().iterator();
         while (it.hasNext()) {
             ListaParticular lp = (ListaParticular) ((Map.Entry) it.next()).getValue();
-            if (!(lp.isPrivada())) {
+            if (lp.isPrivada()) {
                 res.add(new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas()));
             }
         }

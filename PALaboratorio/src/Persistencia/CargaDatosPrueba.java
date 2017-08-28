@@ -495,6 +495,53 @@ public class CargaDatosPrueba {
     }
 
     // Funciones para insertar Datos de Prueba a la BD
+    public ArrayList<String[]> cargarListasParticulares() {
+        try {
+            ArrayList<String[]> res = new ArrayList<>();
+            PreparedStatement l = conexion.prepareStatement("SELECT * FROM lista");
+            ResultSet listas = l.executeQuery();
+
+            while (listas.next()) {
+                PreparedStatement p = conexion.prepareStatement("SELECT * FROM listaparticular WHERE idLista=?");
+                p.setInt(1, listas.getInt(1));
+                ResultSet lp = p.executeQuery();
+                if (listas.getString(3).equals("P")) {
+                    while (lp.next()) {
+                        res.add(new String[]{listas.getString(2), listas.getString(3), listas.getString(4), lp.getString(2), lp.getString(3)});
+                        listas.next();
+                    }
+                }
+
+            }
+
+            return res;
+        } catch (SQLException ex) {
+            Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+
+    public ArrayList<String[]> cargarListasDefecto() {
+        ArrayList<String[]> res = new ArrayList<>();
+        try {
+            PreparedStatement l = conexion.prepareStatement("SELECT * FROM lista");
+            ResultSet listas = l.executeQuery();
+            while (listas.next()) {
+                if (listas.getString("tipo").equals("P")) {
+                    PreparedStatement q = conexion.prepareStatement("SELECT * FROM listapordefecto WHERE idLista = " + listas.getInt(1));
+                    ResultSet ld = q.executeQuery();
+                    res.add(new String[]{listas.getString("nombre"), listas.getString("tipo"), ld.getString("nombreGenero")});
+                }
+            }
+            listas.close();
+            return res;
+        } catch (SQLException ex) {
+            Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
+            return res;
+        }
+    }
+
     public boolean insertarDatosPrueba() {
         if (!insertarUsuarios()) {
             return false;
@@ -557,6 +604,7 @@ public class CargaDatosPrueba {
         return res;
     }
 
+   
     private boolean insertarSeguidores() {
         BDCliente bdc = new BDCliente();
 
@@ -714,12 +762,13 @@ public class CargaDatosPrueba {
                             nombreTema = tema[2];
                         }
                     }
+                    /*
                     if (!bdl.altaLista(nombreListaD, nombreTema, null, genero)) {
                         return false;
                     } else {
                         return false;
                     }
-
+                     */
                 }
             }
         }
@@ -754,11 +803,13 @@ public class CargaDatosPrueba {
                             nombretema = tema[2];
                         }
                     }
+                    /*
                     if (!bdl.altaLista(nombreLista, nombretema, nombreCliente, null)) {
                         return false;
                     } else {
                         return true;
                     }
+                     */
                 }
             }
 

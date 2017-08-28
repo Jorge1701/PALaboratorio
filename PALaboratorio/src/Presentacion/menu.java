@@ -1,14 +1,13 @@
 package Presentacion;
 
 import Logica.Fabrica;
-import java.io.File;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.awt.Toolkit;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -20,8 +19,8 @@ public class menu extends javax.swing.JFrame {
 
     public menu() {
         initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
 
+        this.setExtendedState(MAXIMIZED_BOTH);
         Fabrica.inicializarControladores();
 
         try {
@@ -70,6 +69,10 @@ public class menu extends javax.swing.JFrame {
         cargarDatos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Espotify");
+        setBackground(new java.awt.Color(51, 153, 0));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(menu.class.getResource("/Recursos/Imagenes/icono.png")));
+        setName("Espotify"); // NOI18N
 
         PanelMenu.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -77,11 +80,11 @@ public class menu extends javax.swing.JFrame {
         PanelMenu.setLayout(PanelMenuLayout);
         PanelMenuLayout.setHorizontalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 623, Short.MAX_VALUE)
+            .addGap(0, 660, Short.MAX_VALUE)
         );
         PanelMenuLayout.setVerticalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 335, Short.MAX_VALUE)
         );
 
         jMenuBar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -114,6 +117,11 @@ public class menu extends javax.swing.JFrame {
         jMenu1.add(altaGenero);
 
         crearListaRep.setText("Crear Lista de Reproduccion");
+        crearListaRep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearListaRepActionPerformed(evt);
+            }
+        });
         jMenu1.add(crearListaRep);
 
         publicarLista.setText("Publicar Lista");
@@ -221,7 +229,7 @@ public class menu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelMenu, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(PanelMenu)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,7 +268,6 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_altaPerfilActionPerformed
 
     private void quitarTemaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarTemaListaActionPerformed
-        // TODO add your handling code here:
         QuitarTemaLista qtl = new QuitarTemaLista();
         PanelMenu.add(qtl);
         centrar(qtl);
@@ -268,7 +275,6 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_quitarTemaListaActionPerformed
 
     private void publicarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicarListaActionPerformed
-        // TODO add your handling code here:
         PublicarLista pt = new PublicarLista();
         PanelMenu.add(pt);
         centrar(pt);
@@ -279,11 +285,6 @@ public class menu extends javax.swing.JFrame {
         PanelMenu.add(cpc);
         centrar(cpc);
         cpc.show();
-
-        /*AlbumContenido cpc = new AlbumContenido(new DtAlbumContenido(new DtAlbum("asd", "asd", 19), new ArrayList<String>(), new ArrayList<DtTema>()));
-        PanelMenu.add(cpc);
-        cpc.show();*/
-
     }//GEN-LAST:event_consultaAlbumActionPerformed
 
     public void centrar(JInternalFrame cpc) {
@@ -301,7 +302,6 @@ public class menu extends javax.swing.JFrame {
         clr.show();
     }//GEN-LAST:event_consultaListaRepActionPerformed
     private void ConsultaPerfilArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaPerfilArtistaActionPerformed
-        // TODO add your handling code here:
         ConsultaPerfil cpc = new ConsultaPerfil("Artista");
         PanelMenu.add(cpc);
         centrar(cpc);
@@ -350,6 +350,14 @@ public class menu extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_altaGeneroActionPerformed
+
+    private void crearListaRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearListaRepActionPerformed
+        CrearListaReproduccion clr = new CrearListaReproduccion();
+        PanelMenu.add(clr);
+        centrar(clr);
+        clr.show();
+
+    }//GEN-LAST:event_crearListaRepActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

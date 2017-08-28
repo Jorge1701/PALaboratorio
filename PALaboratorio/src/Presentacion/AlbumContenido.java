@@ -11,12 +11,18 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -323,20 +329,35 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         String link = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 4).toString();
         if (btnDescargar.getText().equals("Descargar")) {
 
-            JFileChooser fc = new JFileChooser();
-
-            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int o = fc.showOpenDialog(this);
+            JFileChooser seleccionarRuta = new JFileChooser();
+            seleccionarRuta.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int o = seleccionarRuta.showOpenDialog(this);
+            String nombreTema = link.split("/")[3];
             if (o == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fc.getSelectedFile();
-                String path = selectedFile.getAbsolutePath();
-                File archivo = new File(link);
-                if (!archivo.renameTo(new File(path + "\\" + archivo.getName()))) {
-                    JOptionPane.showMessageDialog(this, "No se pudo descargar el archivo", "Error!", JOptionPane.ERROR_MESSAGE);
+                try {
+                    File carpetaSeleccionada = seleccionarRuta.getSelectedFile();
+                    String rutaDescarga = carpetaSeleccionada.getAbsolutePath();
+                    String rutaDCompleta = rutaDescarga + "\\" + nombreTema;
+                    InputStream is = getClass().getResourceAsStream(link);
+                    OutputStream outstream = new FileOutputStream(rutaDCompleta);
+                    byte[] buffer = new byte[4096];
+                    int len;
+
+                    if (is != null) {
+                        while ((len = is.read(buffer)) > 0) {
+                            outstream.write(buffer, 0, len);
+                        }
+                        JOptionPane.showMessageDialog(this, "Tema descargado exitosamente en: " + rutaDCompleta, "Información", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        throw new FileNotFoundException();
+                    }
+                } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(this, "El tema " + "\"" + nombreTema + "\"" + " ya no se encuentra disponible para descargar.", "Error", JOptionPane.WARNING_MESSAGE);
+                } catch (IOException ex) {
+                    Logger.getLogger(AltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "No selecciono una carpeta", "Error!", JOptionPane.ERROR_MESSAGE);
             }
+
         } else {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             StringSelection data = new StringSelection(link);

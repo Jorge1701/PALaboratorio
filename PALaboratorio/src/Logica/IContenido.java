@@ -16,19 +16,20 @@ public interface IContenido {
     public boolean selectArtista(String nick);
     public DtGenero listarGenero();
     public ArrayList<DtAlbum> listarAlbumesGenero(String nombre);
-    public void crearListaReproduccionDefecto(String nombre, String genero);
-    public void crearListaReproduccionParticular(String nombre, String nick);
+    public boolean crearListaReproduccion(DtLista lista,String nickCliente);
     public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, /*Imagen img*/ ArrayList<DtTema> temas);
     public List<DtTema> selecListaDef(String nombre);
     public boolean quitarTema(String nombreT,String nombre,String nombreUser);
     public List<DtTema> selecLista(String nick,String nomL);
     public boolean publicarLista(String nick,String nomL);
+    public void setIUsuario(IUsuario iUsuario);
     public ArrayList<DtLista> listarLisReproduccionGen(String nomGen);
     public DtLista selecListGen(String nombreL);
     public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista);
-        
+    public DtGenero selecGenero(String nomGenero);
+    public boolean levantarListas(ArrayList<String[]> lista);
     public void cargarGenero(String nombre, String padre);
     public boolean existeGenero(String nombre);
     public Genero obtenerGenero(String nombre);
-    public void setIUsuario(IUsuario iUsuario);
+    public ArrayList<DtLista> listarLisReproduccionDef();
 }

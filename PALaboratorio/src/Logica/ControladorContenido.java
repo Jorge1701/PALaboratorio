@@ -7,11 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 public class ControladorContenido implements IContenido {
 
     private static ControladorContenido instancia;
+    private BDLista bdLista = null;
 
     public static void cargarInstancia() {
         instancia = new ControladorContenido();
@@ -40,8 +42,7 @@ public class ControladorContenido implements IContenido {
     }
 
     private ControladorContenido() {
-        //Colección genérica común
-        //this.personas=new ArrayList<Persona>();
+        this.listasParticular = new HashMap<String, ListaParticular>();
         this.listasDefecto = new HashMap<String, ListaDefecto>();
         genero = new Genero("Generos");
     }
@@ -249,13 +250,23 @@ public class ControladorContenido implements IContenido {
     }
 
     @Override
-    public void crearListaReproduccionDefecto(String nombre, String genero) {
+    public boolean crearListaReproduccion(DtLista dtl, String nickCliente) {
 
-    }
-
-    @Override
-    public void crearListaReproduccionParticular(String nombre, String nick) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean bd = bdLista.altaLista(dtl, nickCliente);
+        if (bd && dtl instanceof DtListaDefecto) {
+            Genero g = this.genero.obtener(((DtListaDefecto) dtl).getGenero().getNombre());
+            ListaDefecto lis = new ListaDefecto(g, dtl.getNombre(), null);
+            this.listasDefecto.put(lis.getNombre(), (ListaDefecto) lis);
+            return true;
+        } else if (bd) {
+            ListaParticular lis2 = new ListaParticular(dtl.getNombre());
+            this.listasParticular.put(lis2.getNombre(), lis2);
+            Cliente cl = (Cliente) iUsuario.obtenerUsuario(nickCliente);
+            cl.agregarLista(lis2);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -331,7 +342,7 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public boolean quitarTema(String nombreT, String nombre, String nombreUser) {
-        Cliente u = (Cliente) ControladorUsuario.getInstance().getUsuario(nombreUser);
+        Cliente u = (Cliente) iUsuario.obtenerUsuario(nombreUser);
         if (nombreUser == null) {
             Lista lista = (ListaDefecto) listasDefecto.get(nombre);
 
@@ -358,7 +369,7 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public ArrayList<DtTema> selecLista(String nick, String nomL) {
-        Cliente us = (Cliente) ControladorUsuario.getInstance().getUsuario(nick);
+        Cliente us = (Cliente) iUsuario.obtenerUsuario(nick);
 
         if (us == null) {
             throw new UnsupportedOperationException("No existe el usuario" + nick + " en el sistema.");
@@ -377,7 +388,7 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public boolean publicarLista(String nick, String nomL) {
-        Cliente us = (Cliente) ControladorUsuario.getInstance().getUsuario(nick);
+        Cliente us = (Cliente) iUsuario.obtenerUsuario(nick);
 
         if (us == null) {
             throw new UnsupportedOperationException("No existe el usuario" + nick + " en el sistema.");
@@ -390,7 +401,46 @@ public class ControladorContenido implements IContenido {
         }
 
         l.setPrivada(false);
+        bdLista.publicarLista(l);
+        return true;
+    }
 
+    @Override
+    public DtGenero selecGenero(String nomGenero) {
+        return this.genero.obtener(nomGenero).getData();
+    }
+
+    @Override
+    public boolean levantarListas(ArrayList<String[]> lista) {
+        Lista l;
+        boolean flag;
+
+        for (String[] str : lista) {
+            if (str[1].equals("D")) {
+                l = new ListaDefecto(this.genero.obtener(str[2]), str[0], new ArrayList<>());
+                this.listasDefecto.put(l.getNombre(), (ListaDefecto) l);
+                ListaDefecto p = this.listasDefecto.get(l.getNombre());
+                if(p == null){
+                return false;
+                }
+            } else {
+                boolean privada;
+                if (str[3].equals("N")) {
+                    privada = true;
+                } else {
+                    privada = false;
+                }
+                l = new ListaParticular(privada, str[0], new ArrayList<>());
+                this.listasParticular.put(l.getNombre(), (ListaParticular) l);
+                Cliente cl = (Cliente) iUsuario.obtenerUsuario(str[2]);
+                cl.agregarLista(l);
+                ListaParticular q = this.listasParticular.get(l.getNombre());
+                Lista r = cl.getLista(l.getNombre());
+                if(q == null || r==null){
+                return false;
+                }
+            }
+        }//for
         return true;
     }
 
@@ -408,5 +458,20 @@ public class ControladorContenido implements IContenido {
 
     public Genero obtenerGenero(String nombre) {
         return genero.obtener(nombre);
+    }
+
+    @Override
+    public ArrayList<DtLista> listarLisReproduccionDef() {
+        ArrayList<DtLista> res = new ArrayList<>();
+
+        Iterator i = listasDefecto.entrySet().iterator();
+
+        while (i.hasNext()) {
+            ListaDefecto dtld = (ListaDefecto) ((Map.Entry) i.next()).getValue();
+            res.add(dtld.getData());
+
+        }
+        return res;
+
     }
 }

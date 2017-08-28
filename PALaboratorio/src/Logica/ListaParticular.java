@@ -13,6 +13,10 @@ public class ListaParticular extends Lista {
         this.privada = privada;
     }
     
+    public ListaParticular(String nombre){ super (nombre,new ArrayList<>());
+        this.privada=true;
+    }
+    
     @Override
     public DtLista getData() {
         return new DtListaParticular(isPrivada(), getNombre(), getTemas());
