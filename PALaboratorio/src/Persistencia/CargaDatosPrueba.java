@@ -230,7 +230,8 @@ public class CargaDatosPrueba {
     private String[][] listasPorDefecto = {
         {"LD1", "Noche De La Nostalgia", "PCL", "/Recursos/Imagenes/Listas/Noche De La Nostalgia.jpg"},
         {"LD2", "Rock En Español", "RKL", ""},
-        {"LD3", "Musica Clasica", "CLA", "/Recursos/Imagenes/Listas/Musica Clasica.jpg"},};
+        {"LD3", "Musica Clasica", "CLA", "/Recursos/Imagenes/Listas/Musica Clasica.jpg"}
+    };
 
     // Listas de Reproduccion Particulares (Ref cliente, Ref, Nombre, Publica, Imagen)
     private String[][] listasParticulares = {
@@ -239,7 +240,8 @@ public class CargaDatosPrueba {
         {"WW", "LP3", "Para Cocinar", "N", "/Recursos/Imagenes/Listas/Para Cocinar.jpg"},
         {"ML", "LP4", "Para Las Chicas", "S", ""},
         {"CB", "LP5", "Fiesteras", "S", "/Recursos/Imagenes/Listas/Fiesteras.jpg"},
-        {"CB", "LP6", "Mis Favoritas", "N", ""},};
+        {"CB", "LP6", "Mis Favoritas", "N", ""}
+    };
 
     // Temas De Listas (Ref Lista, Ref Album, Ref Tema)
     private String[][] temasDeListas = {
@@ -480,11 +482,11 @@ public class CargaDatosPrueba {
     public ArrayList<String[]> cargarListasParticulares() {
         try {
             ArrayList<String[]> res = new ArrayList<>();
-            PreparedStatement l = conexion.prepareStatement("SELECT l.nombre, lp.nickname, lp.Publica, l.imagen FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista");
+            PreparedStatement l = conexion.prepareStatement("SELECT l.idLista, l.nombre, lp.nickname, lp.Publica, l.imagen FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista");
             ResultSet listas = l.executeQuery();
 
             while (listas.next()) {
-                res.add(new String[]{listas.getString(1), listas.getString(2), listas.getString(3), listas.getString(4)});
+                res.add(new String[]{String.valueOf(listas.getInt(1)), listas.getString(2), listas.getString(3), listas.getString(4), listas.getString(5)});
             }
 
             return res;
@@ -493,6 +495,34 @@ public class CargaDatosPrueba {
             return null;
         }
 
+    }
+
+    public ArrayList<DtTema> cargarTemasLista(int idLista) {
+        try {
+            ArrayList<DtTema> temas = new ArrayList<>();
+
+            PreparedStatement query = conexion.prepareStatement("SELECT t.nombre, t.duracion, t.ubicacion, t.tipo, t.link FROM listatienetemas AS ltt, tema AS t WHERE ltt.idLista = ? AND ltt.idTema = t.idTema");
+            query.setInt(1, idLista);
+
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                DtTime dtt = new DtTime(rs.getTime(2).getHours(), rs.getTime(2).getMinutes(), rs.getTime(2).getSeconds());
+                if (rs.getString(4).equals("A")) {
+                    temas.add(new DtTemaLocal(rs.getString(5), rs.getString(1), dtt, rs.getInt(3)));
+                } else {
+                    temas.add(new DtTemaRemoto(rs.getString(5), rs.getString(1), dtt, rs.getInt(3)));
+                }
+            }
+
+            rs.close();
+            query.close();
+
+            return temas;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public ArrayList<String[]> cargarListasDefecto() {
@@ -840,23 +870,27 @@ public class CargaDatosPrueba {
 
     private boolean insertarListaParticular() {
         BDLista bdl = new BDLista();
+        BDCliente bdc = new BDCliente();
+
         for (String[] listaParticular : listasParticulares) {
             String refCliente = listaParticular[0];
             String nombreLista = listaParticular[2];
 
-            String nombreCliente = "";
+            String nickCliente = "";
 
             for (String[] cliente : perfiles) {
                 if (cliente[0] == refCliente) {
-                    nombreCliente = cliente[1];
+                    nickCliente = cliente[1];
                 }
-
             }
             DtLista lista = new DtListaParticular(false, nombreLista, null);
-            if (!bdl.altaLista(lista, nombreCliente)) {
+            if (!bdl.altaLista(lista, nickCliente)) {
                 return false;
             }
 
+            if (!bdc.asociarListaACliente(obtenerIdListaParticular(nickCliente, nombreLista), nickCliente)) {
+                return false;
+            }
         }
 
         return true;

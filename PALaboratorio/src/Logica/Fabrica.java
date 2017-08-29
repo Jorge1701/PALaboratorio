@@ -102,19 +102,19 @@ public class Fabrica {
         // Cargar Listas Particulares
         ArrayList<String[]> listasParticulares = cdp.cargarListasParticulares();
 
-        if (listasParticulares == null) {
-            throw new Exception("Error : Las listas particulares no puedieron ser cargadas");
-        }
-        
-        for (String[] lp : listasParticulares) {
-        }
+        for (String[] lista : listasParticulares) {
+            ArrayList<Tema> temas = new ArrayList<>();
 
-        /*ArrayList<String[]> listasDefecto = cdp.cargarListasDefecto();
-        if (listasDefecto == null) {
-            throw new Exception("Error : Las listas por defecto no puedieron ser cargadas");
-        } else {
-            ic.levantarListas(listasDefecto);
-        }*/
+            for (DtTema dtt : cdp.cargarTemasLista(Integer.parseInt(lista[0]))) {
+                if (dtt instanceof DtTemaLocal) {
+                    temas.add(new TemaLocal(((DtTemaLocal) dtt).getDirectorio(), dtt.getNombre(), dtt.getDuracion(), dtt.getUbicacion()));
+                } else {
+                    temas.add(new TemaRemoto(dtt.getNombre(), dtt.getDuracion(), dtt.getUbicacion(), ((DtTemaRemoto) dtt).getUrl()));
+                }
+            }
+
+            iu.cargarLista(new ListaParticular(lista[3].equals("N") ? true : false, lista[1], temas), lista[2]);
+        }
     }
 
     public static IUsuario getIControladorUsuario() {

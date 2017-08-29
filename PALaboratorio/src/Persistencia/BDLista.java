@@ -106,7 +106,6 @@ public class BDLista {
 
     public boolean insertarTemaALista(String nickArtista, int idAlbum, int idTema, int idLista) {
         try {
-            System.out.println("Persistencia.BDLista.insertarTemaALista()" + " | " + nickArtista + " | " + idAlbum + " | " + idTema + " | " + idLista);
             PreparedStatement insert = conexion.prepareStatement("INSERT INTO listatienetemas (nickname, idAlbum, idTema, idLista) VALUES (?, ?, ?, ?)");
             insert.setString(1, nickArtista);
             insert.setInt(2, idAlbum);
