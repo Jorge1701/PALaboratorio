@@ -47,9 +47,9 @@ public class Cliente extends Usuario {
             temasfav.add(t);
         }
     }
-    
-    public void agregarLista(Lista l){
-     this.listasParticulares.put(l.getNombre(), (ListaParticular) l);
+
+    public void agregarLista(Lista l) {
+        this.listasParticulares.put(l.getNombre(), (ListaParticular) l);
     }
 
     public void eliminarAlbumFav(int i) {
@@ -83,7 +83,7 @@ public class Cliente extends Usuario {
 
     @Override
     public DtCliente getData() {
-        return new DtCliente(getNickname(), getNombre(), getApellido(), getEmail(), getFechaNac(),getImagen());
+        return new DtCliente(getNickname(), getNombre(), getApellido(), getEmail(), getFechaNac(), getImagen());
     }
 
     @Override
@@ -202,5 +202,9 @@ public class Cliente extends Usuario {
             dtu.add(u.getData());
         }
         return dtu;
+    }
+
+    public void cargarLista(ListaParticular lp) {
+        listasParticulares.put(lp.getNombre(), lp);
     }
 }

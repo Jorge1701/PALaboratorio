@@ -410,40 +410,6 @@ public class ControladorContenido implements IContenido {
         return this.genero.obtener(nomGenero).getData();
     }
 
-    @Override
-    public boolean levantarListas(ArrayList<String[]> lista) {
-        Lista l;
-        boolean flag;
-
-        for (String[] str : lista) {
-            if (str[1].equals("D")) {
-                l = new ListaDefecto(this.genero.obtener(str[2]), str[0], new ArrayList<>());
-                this.listasDefecto.put(l.getNombre(), (ListaDefecto) l);
-                ListaDefecto p = this.listasDefecto.get(l.getNombre());
-                if(p == null){
-                return false;
-                }
-            } else {
-                boolean privada;
-                if (str[3].equals("N")) {
-                    privada = true;
-                } else {
-                    privada = false;
-                }
-                l = new ListaParticular(privada, str[0], new ArrayList<>());
-                this.listasParticular.put(l.getNombre(), (ListaParticular) l);
-                Cliente cl = (Cliente) iUsuario.obtenerUsuario(str[2]);
-                cl.agregarLista(l);
-                ListaParticular q = this.listasParticular.get(l.getNombre());
-                Lista r = cl.getLista(l.getNombre());
-                if(q == null || r==null){
-                return false;
-                }
-            }
-        }//for
-        return true;
-    }
-
     public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista) {
         return genero.obtener(nomGenero).obtenerAlbumContenido(nomAlbum, nickArtista);
     }

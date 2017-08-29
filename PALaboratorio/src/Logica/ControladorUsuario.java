@@ -297,4 +297,8 @@ public class ControladorUsuario implements IUsuario {
         Usuario u = usuarios.get(a.getNickArtista());
         ((Artista) u).cargarAlbum(a);
     }
+
+    public void cargarLista(ListaParticular lp, String nickcliente) {
+        ((Cliente) usuarios.get(nickcliente)).cargarLista(lp);
+    }
 }

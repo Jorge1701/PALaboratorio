@@ -98,12 +98,15 @@ public class Fabrica {
             // Ingregas album al controlador
             iu.cargarAlbum(a);
         }
+
+        // Cargar Listas Particulares
         ArrayList<String[]> listasParticulares = cdp.cargarListasParticulares();
 
         if (listasParticulares == null) {
             throw new Exception("Error : Las listas particulares no puedieron ser cargadas");
-        } else {
-            ic.levantarListas(listasParticulares);
+        }
+        
+        for (String[] lp : listasParticulares) {
         }
 
         /*ArrayList<String[]> listasDefecto = cdp.cargarListasDefecto();
@@ -112,7 +115,6 @@ public class Fabrica {
         } else {
             ic.levantarListas(listasDefecto);
         }*/
-
     }
 
     public static IUsuario getIControladorUsuario() {
