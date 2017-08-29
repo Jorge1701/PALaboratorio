@@ -225,6 +225,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         }
         repaint();
     }
+
     private void consultaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaGeneroActionPerformed
         this.mostrar();
         generos.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -270,7 +271,6 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
     }
     private void generosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_generosValueChanged
-
         DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
         String generoSeleccionado = selectedElement.getUserObject().toString();
 
@@ -282,7 +282,6 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         for (DtLista dta : dtl) {
             model.addElement(dta.getNombre());
         }
-
     }//GEN-LAST:event_generosValueChanged
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed

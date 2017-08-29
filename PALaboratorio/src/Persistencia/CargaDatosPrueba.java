@@ -526,22 +526,23 @@ public class CargaDatosPrueba {
     }
 
     public ArrayList<String[]> cargarListasDefecto() {
-        ArrayList<String[]> res = new ArrayList<>();
         try {
-            PreparedStatement l = conexion.prepareStatement("SELECT * FROM lista");
+            ArrayList<String[]> res = new ArrayList<>();
+
+            PreparedStatement l = conexion.prepareStatement("SELECT l.idLista, ld.nombreGenero, l.nombre, l.imagen FROM listapordefecto AS ld, lista AS l WHERE ld.idLista = l.idLista");
+
             ResultSet listas = l.executeQuery();
             while (listas.next()) {
-                if (listas.getString("tipo").equals("P")) {
-                    PreparedStatement q = conexion.prepareStatement("SELECT * FROM listapordefecto WHERE idLista = " + listas.getInt(1));
-                    ResultSet ld = q.executeQuery();
-                    res.add(new String[]{listas.getString("nombre"), listas.getString("tipo"), ld.getString("nombreGenero")});
-                }
+                res.add(new String[]{String.valueOf(listas.getString(1)), listas.getString(2), listas.getString(3), listas.getString(4)});
             }
+
+            l.close();
             listas.close();
+
             return res;
         } catch (SQLException ex) {
             Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
-            return res;
+            return null;
         }
     }
 

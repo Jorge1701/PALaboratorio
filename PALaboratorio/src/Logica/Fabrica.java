@@ -3,31 +3,30 @@ package Logica;
 import Persistencia.CargaDatosPrueba;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.JOptionPane;
 
 public class Fabrica {
-
+    
     public static void inicializarControladores() {
         ControladorUsuario.cargarInstancia();
         ControladorContenido.cargarInstancia();
         getIControladorContenido().setIUsuario(getIControladorUsuario());
     }
-
+    
     public static void cargaDatosPrueba() throws Exception {
         CargaDatosPrueba cdp = new CargaDatosPrueba();
         if (!cdp.borrarTodosLosDatos()) {
             throw new Exception("Error : no se puedieron borrar los datos previos");
         }
-
+        
         inicializarControladores();
-
+        
         if (!cdp.insertarDatosPrueba()) {
             throw new Exception("Error : no se puedieron levantar los datos de la BD");
         }
-
+        
         levantarDatos();
     }
-
+    
     public static void levantarDatos() throws Exception {
         CargaDatosPrueba cdp = new CargaDatosPrueba();
         IUsuario iu = getIControladorUsuario();
@@ -37,9 +36,9 @@ public class Fabrica {
         ArrayList<DtUsuario> usuarios = cdp.cargarUsuarios();
         if (usuarios == null) {
             throw new Exception("Error : Los usuarios no puedieron ser cargados");
-
+            
         }
-
+        
         for (DtUsuario dtu : usuarios) {
             iu.levantarUsuario(dtu);
         }
@@ -49,7 +48,7 @@ public class Fabrica {
         if (relaciones == null) {
             throw new Exception("Error : Las relaciones de seguimiento no pudieron ser cargadas");
         }
-
+        
         for (String[] r : relaciones) {
             Usuario cliente = iu.obtenerUsuario(r[0]);
             Usuario usuario = iu.obtenerUsuario(r[1]);
@@ -101,10 +100,10 @@ public class Fabrica {
 
         // Cargar Listas Particulares
         ArrayList<String[]> listasParticulares = cdp.cargarListasParticulares();
-
+        
         for (String[] lista : listasParticulares) {
             ArrayList<Tema> temas = new ArrayList<>();
-
+            
             for (DtTema dtt : cdp.cargarTemasLista(Integer.parseInt(lista[0]))) {
                 if (dtt instanceof DtTemaLocal) {
                     temas.add(new TemaLocal(((DtTemaLocal) dtt).getDirectorio(), dtt.getNombre(), dtt.getDuracion(), dtt.getUbicacion()));
@@ -112,16 +111,33 @@ public class Fabrica {
                     temas.add(new TemaRemoto(dtt.getNombre(), dtt.getDuracion(), dtt.getUbicacion(), ((DtTemaRemoto) dtt).getUrl()));
                 }
             }
-
+            
             iu.cargarLista(new ListaParticular(lista[3].equals("N") ? true : false, lista[1], temas), lista[2]);
         }
-    }
 
+        // Cargar Lista por Defecto
+        ArrayList<String[]> listarPorDefecto = cdp.cargarListasDefecto();
+        
+        for (String[] lista : listarPorDefecto) {
+            ArrayList<Tema> temas = new ArrayList();
+            
+            for (DtTema dtt : cdp.cargarTemasLista(Integer.parseInt(lista[0]))) {
+                if (dtt instanceof DtTemaLocal) {
+                    temas.add(new TemaLocal(((DtTemaLocal) dtt).getDirectorio(), dtt.getNombre(), dtt.getDuracion(), dtt.getUbicacion()));
+                } else {
+                    temas.add(new TemaRemoto(dtt.getNombre(), dtt.getDuracion(), dtt.getUbicacion(), ((DtTemaRemoto) dtt).getUrl()));
+                }
+            }
+            
+            ic.cargarLista(new ListaDefecto(ic.obtenerGenero(lista[1]), lista[2], temas), lista[1]);
+        }
+    }
+    
     public static IUsuario getIControladorUsuario() {
         IUsuario ICU = ControladorUsuario.getInstance();
         return ICU;
     }
-
+    
     public static IContenido getIControladorContenido() {
         IContenido ICC = ControladorContenido.getInstance();
         return ICC;

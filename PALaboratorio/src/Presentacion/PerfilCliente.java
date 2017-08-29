@@ -8,7 +8,6 @@ import Logica.DtPerfilCliente;
 import Logica.DtTema;
 import Logica.DtUsuario;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -47,7 +46,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         try {
             String imagen = dtPerfilCliente.getInfo().getImagen();
             BufferedImage img;
-           if (imagen == null || imagen.isEmpty()) {
+            if (imagen == null || imagen.isEmpty()) {
                 img = ImageIO.read(PerfilCliente.class.getResource("/Recursos/Imagenes/Usuarios/userDefaullt.png"));
             } else {
                 img = ImageIO.read(PerfilCliente.class.getResource(imagen));
