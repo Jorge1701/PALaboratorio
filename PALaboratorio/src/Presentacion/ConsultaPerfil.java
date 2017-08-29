@@ -81,6 +81,7 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
                 "Nickname", "Nombre", "Apellido", "Email", "Fecha Nac."
             }
         ));
+        tablaClientes.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaClientes);
 
         jLabel1.setText("Seleccione un usuario y presione 'Aceptar' para ver su perfil");

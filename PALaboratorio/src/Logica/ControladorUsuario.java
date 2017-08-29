@@ -299,6 +299,7 @@ public class ControladorUsuario implements IUsuario {
     }
 
     public void cargarLista(ListaParticular lp, String nickcliente) {
+
         ((Cliente) usuarios.get(nickcliente)).cargarLista(lp);
     }
 }
