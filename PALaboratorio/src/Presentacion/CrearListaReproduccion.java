@@ -1,7 +1,5 @@
 package Presentacion;
 
-import Logica.DtAlbum;
-import Logica.DtAlbumContenido;
 import Logica.DtGenero;
 import Logica.DtLista;
 import Logica.DtListaDefecto;
@@ -12,8 +10,6 @@ import Logica.IContenido;
 import Logica.IUsuario;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -54,7 +50,6 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         return padre;
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

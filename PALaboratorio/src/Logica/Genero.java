@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import javax.swing.JOptionPane;
 
 public class Genero {
 
@@ -132,6 +131,7 @@ public class Genero {
     public ArrayList<DtLista> listarLisReproduccion() {
         ArrayList<DtLista> res = new ArrayList<>();
         Iterator it = listasDefecto.entrySet().iterator();
+
         while (it.hasNext()) {
             ListaDefecto ld = (ListaDefecto) ((Map.Entry) it.next()).getValue();
             res.add(new DtLista(ld.getNombre(), ld.getTemas()));
@@ -156,5 +156,9 @@ public class Genero {
 
     public void cargarAlbum(Album a) {
         albumes.add(a);
+    }
+
+    public void cargarLista(ListaDefecto ld) {
+        listasDefecto.put(ld.getNombre(), ld);
     }
 }

@@ -440,4 +440,8 @@ public class ControladorContenido implements IContenido {
         return res;
 
     }
+
+    public void cargarLista(ListaDefecto ld, String nombreGenero) {
+        genero.obtener(nombreGenero).cargarLista(ld);
+    }
 }

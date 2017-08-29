@@ -8,7 +8,6 @@ import Logica.DtPerfilCliente;
 import Logica.DtTema;
 import Logica.DtUsuario;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -47,7 +46,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         try {
             String imagen = dtPerfilCliente.getInfo().getImagen();
             BufferedImage img;
-           if (imagen == null || imagen.isEmpty()) {
+            if (imagen == null || imagen.isEmpty()) {
                 img = ImageIO.read(PerfilCliente.class.getResource("/Recursos/Imagenes/Usuarios/userDefaullt.png"));
             } else {
                 img = ImageIO.read(PerfilCliente.class.getResource(imagen));
@@ -299,6 +298,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                 "Nickname", "Nombre"
             }
         ));
+        tablaSeguidores.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaSeguidores);
 
         javax.swing.GroupLayout panelSeguidoresLayout = new javax.swing.GroupLayout(panelSeguidores);
@@ -332,6 +332,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaSeguidos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaSeguidos);
         if (tablaSeguidos.getColumnModel().getColumnCount() > 0) {
             tablaSeguidos.getColumnModel().getColumn(0).setResizable(false);
@@ -367,6 +368,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                 "Nombre", "Cant. Temas"
             }
         ));
+        tablaListasCreadas.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tablaListasCreadas);
 
         javax.swing.GroupLayout panelListasCreadasLayout = new javax.swing.GroupLayout(panelListasCreadas);
@@ -392,6 +394,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                 "Nombre", "Cant. Temas"
             }
         ));
+        tablaListasFavs.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(tablaListasFavs);
 
         javax.swing.GroupLayout panelListasFavsLayout = new javax.swing.GroupLayout(panelListasFavs);
@@ -421,6 +424,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                 "Artista", "Nombre", "Año"
             }
         ));
+        tablaAlbumes.getTableHeader().setReorderingAllowed(false);
         jScrollPane5.setViewportView(tablaAlbumes);
 
         javax.swing.GroupLayout panelAlbumesLayout = new javax.swing.GroupLayout(panelAlbumes);
@@ -446,6 +450,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                 "Nombre", "Duracion"
             }
         ));
+        tablaTemas.getTableHeader().setReorderingAllowed(false);
         jScrollPane6.setViewportView(tablaTemas);
 
         javax.swing.GroupLayout panelTemasLayout = new javax.swing.GroupLayout(panelTemas);
