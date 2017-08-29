@@ -311,9 +311,9 @@ public class CargaDatosPrueba {
         {"VC", "DMV"},
         {"VC", "LDC"},
         {"VC", "CPP"},
-        {"VC", "LDC"},
-        {"VC", "CPP"},
-        {"VC", "AMA"}
+        {"OK", "LDC"},
+        {"OK", "CPP"},
+        {"CB", "AMA"}
     };
     // Fin de datos de prueba
 
@@ -570,10 +570,10 @@ public class CargaDatosPrueba {
         }
     }
 
-    private int obtenerIdListaParticular(String nickCiente, String nombreLista) {
+    private int obtenerIdListaParticular(String nickCliente, String nombreLista) {
         try {
-            PreparedStatement query = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista AND nickname = ? AND nombre = ?");
-            query.setString(1, nickCiente);
+            PreparedStatement query = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista AND lp.nickname = ? AND l.nombre = ?");
+            query.setString(1, nickCliente);
             query.setString(2, nombreLista);
 
             int idLista = 0;
@@ -665,6 +665,15 @@ public class CargaDatosPrueba {
             return false;
         }
         if (!insertarTemasLista()) {
+            return false;
+        }
+        if (!insertarTemaFavorito()) {
+            return false;
+        }
+        if (!insertarAlbumFavorito()) {
+            return false;
+        }
+        if (!insertarListaFavorita()) {
             return false;
         }
         return true;
@@ -968,6 +977,144 @@ public class CargaDatosPrueba {
             }
         }
 
+        return true;
+    }
+
+    // Temas Favoritos (Ref Cliente, Ref Album, Ref Tema)
+    public boolean insertarTemaFavorito() {
+        BDFavorito bdf = new BDFavorito();
+        for (String[] temafav : refTemaFav) {
+            String refCliente = temafav[0];
+            String refAlbum = temafav[1];
+            String refTema = temafav[2];
+
+            String nicknameCliente = "";
+            String refArtista = "";
+            String nombreAlbum = "";
+            String nicknameArtista = "";
+            String nombreTema = "";
+
+            for (String[] cliente : perfiles) {
+                if (refCliente == cliente[0]) {
+                    nicknameCliente = cliente[1];
+                }
+            }
+            for (String[] album : albumes) {
+                if (refAlbum == album[1]) {
+                    refArtista = album[0];
+                    nombreAlbum = album[2];
+                }
+            }
+            for (String[] artista : perfiles) {
+                if (refArtista == artista[0]) {
+                    nicknameArtista = artista[1];
+                }
+            }
+            for (String[] tema : temas) {
+                if (refTema == tema[1]) {
+                    nombreTema = tema[2];
+                }
+            }
+            int idAlbum = obtenerIdAlbum(nicknameArtista, nombreAlbum);
+            int idTema = obtenerIdTema(nicknameArtista, idAlbum, nombreTema);
+
+            if (!bdf.altaTemaFavortio(nicknameCliente, idTema)) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    // Albumes Favoritos (Ref Cliente, Ref Album)
+    public boolean insertarAlbumFavorito() {
+        BDFavorito bdf = new BDFavorito();
+        for (String[] albumFav : refAlbumFav) {
+            String refCliente = albumFav[0];
+            String refAlbum = albumFav[1];
+
+            String nickCliente = "";
+            String nickArtista = "";
+            String nombreAlbum = "";
+            String refArtista = "";
+            for (String[] cliente : perfiles) {
+                if (refCliente == cliente[0]) {
+                    nickCliente = cliente[1];
+                }
+            }
+            for (String[] album : albumes) {
+                if (refAlbum == album[1]) {
+                    nombreAlbum = album[2];
+                    refArtista = album[0];
+                }
+            }
+            for (String[] artista : perfiles) {
+                if (refArtista == artista[0]) {
+                    nickArtista = artista[1];
+                }
+            }
+            int idalbum = obtenerIdAlbum(nickArtista, nombreAlbum);
+            if (!bdf.altaAlbumFavorito(idalbum, nickArtista, nickCliente)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Listas Favoritas (Ref Cliente, Ref Listas)
+    public boolean insertarListaFavorita() {
+        BDFavorito bdf = new BDFavorito();
+        for (String[] listafav : refListaFav) {
+            String refCliente = listafav[0];
+            String refLista = listafav[1];
+
+            String nickCliente = "";
+            String nickArtista = "";
+            String nombreLista = "";
+            String nombreGenero = "";
+            String refGenero = "";
+            String refArtista = "";
+            for (String[] cliente : perfiles) {
+                if (refCliente == cliente[0]) {
+                    nickCliente = cliente[1];
+                }
+            }
+            for (String[] listaD : listasPorDefecto) {
+                if (refLista == listaD[0]) {
+                    nombreLista = listaD[1];
+                    refGenero = listaD[2];
+                }
+            }
+            for (String[] listaP : listasParticulares) {
+                if (refLista == listaP[1]) {
+                    nombreLista = listaP[2];
+                    refArtista = listaP[0];
+                }
+            }
+            for (String[] artista : perfiles){
+            if(refArtista== artista[0]){
+                nickArtista=artista[1];
+            }
+            }
+
+            for (String[] genero : generos) {
+                if (refGenero == genero[0]) {
+                    nombreGenero = genero[1];
+                }
+            }
+            int idLista;
+            if (nombreGenero == "") {
+               
+                idLista = obtenerIdListaParticular(nickArtista, nombreLista);
+            } else {
+                
+                idLista = obtenerIdListaDefecto(nombreGenero, nombreLista);
+            }
+       
+            if (!bdf.altaListaFavorita(nickCliente, idLista)) {
+                return false;
+            }
+        }
         return true;
     }
 
