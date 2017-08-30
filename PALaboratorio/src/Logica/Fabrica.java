@@ -112,7 +112,7 @@ public class Fabrica {
                 }
             }
             
-            iu.cargarLista(new ListaParticular(lista[3].equals("N") ? true : false, lista[1], temas), lista[2]);
+            iu.cargarLista(new ListaParticular(lista[3].equals("N") ? true : false,temas,lista[]), lista[2]);
         }
 
         // Cargar Lista por Defecto
