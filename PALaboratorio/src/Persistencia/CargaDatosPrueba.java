@@ -546,101 +546,6 @@ public class CargaDatosPrueba {
         }
     }
 
-    public ArrayList<String[]> cargarAlbumesFavoritos() {
-        try {
-            ArrayList<String[]> res = new ArrayList<>();
-            String sql = "SELECT a.nombre, f.nicknameCliente,f.nicknameArtista FROM album as a , fava as f WHERE a.idAlbum = f.idAlbum";
-            PreparedStatement statament = conexion.prepareStatement(sql);
-            ResultSet favoritos = statament.executeQuery();
-
-            while (favoritos.next()) {
-
-                String nombreAlbum = favoritos.getString(1);
-                String nicknameCliente = favoritos.getString(2);
-                String nicknameArtista = favoritos.getString(3);
-                res.add(new String[]{nombreAlbum, nicknameCliente, nicknameArtista});
-
-            }
-            statament.close();
-            favoritos.close();
-            return res;
-        } catch (SQLException ex) {
-            Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
-    }
-
-    public ArrayList<String[]> cargaTemasFavoritos() {
-
-        try {
-            ArrayList<String[]> res = new ArrayList<>();
-            String sql = "SELECT f.nickname, t.nombre, a.nombre,t.nicknameArtista FROM favt as f , tema as t , album as a WHERE f.idTema=t.idTema and t.idAlbum=a.idAlbum";
-            PreparedStatement statament = conexion.prepareStatement(sql);
-            ResultSet favoritos = statament.executeQuery();
-            while (favoritos.next()) {
-                String nickname = favoritos.getString(1);
-                String nombreTema = favoritos.getString(2);
-                String nombreAlbum = favoritos.getString(3);
-                String nicknameArtista = favoritos.getString(4);
-                res.add(new String[]{nickname, nombreTema, nombreAlbum, nicknameArtista});
-            }
-            statament.close();
-            favoritos.close();
-            return res;
-        } catch (SQLException ex) {
-            Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
-    }
-
-    public ArrayList<String[]> cargaListasFavoritosP() {
-
-        try {
-            ArrayList<String[]> res = new ArrayList<>();
-            String sqlP = "SELECT f.nickname ,lp.nickname,l.nombre  FROM favl as f, listaparticular as lp , lista as l WHERE f.idLista=l.idLista and l.idLista = lp.idLista";
-            PreparedStatement statamentD = conexion.prepareStatement(sqlP);
-            ResultSet favoritosD = statamentD.executeQuery();
-            while (favoritosD.next()) {
-                String nickname = favoritosD.getString(1);
-                String nicknameCreador = favoritosD.getString(2);
-                String nombre = favoritosD.getString(3);
-                res.add(new String[]{nickname, nicknameCreador,nombre});
-            }
-            statamentD.close();
-            favoritosD.close();
-            return res;
-        } catch (SQLException ex) {
-            Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
-    }
-
-    public ArrayList<String[]> cargaListasFavoritosD() {
-
-        try {
-            ArrayList<String[]> res = new ArrayList<>();
-            String sqlD = "SELECT f.nickname ,ld.nombreGenero,l.nombre  FROM favl as f, listapordefecto as ld , lista as l WHERE f.idLista=l.idLista and l.idLista = ld.idLista";
-            PreparedStatement statamentD = conexion.prepareStatement(sqlD);
-            ResultSet favoritosD = statamentD.executeQuery();
-            while (favoritosD.next()) {
-                String nickname = favoritosD.getString(1);
-                String nombreGenero = favoritosD.getString(2);
-                String nombre = favoritosD.getString(3);
-                res.add(new String[]{nickname, nombreGenero,nombre});
-            }
-            statamentD.close();
-            favoritosD.close();
-            return res;
-        } catch (SQLException ex) {
-            Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
-    }
-
     // Obtener Id de cosas
     private int obtenerIdAlbum(String nickArtista, String nombreAlbum) {
         try {
@@ -1188,10 +1093,10 @@ public class CargaDatosPrueba {
                     refArtista = listaP[0];
                 }
             }
-            for (String[] artista : perfiles) {
-                if (refArtista == artista[0]) {
-                    nickArtista = artista[1];
-                }
+            for (String[] artista : perfiles){
+            if(refArtista== artista[0]){
+                nickArtista=artista[1];
+            }
             }
 
             for (String[] genero : generos) {
@@ -1201,13 +1106,13 @@ public class CargaDatosPrueba {
             }
             int idLista;
             if (nombreGenero == "") {
-
+               
                 idLista = obtenerIdListaParticular(nickArtista, nombreLista);
             } else {
-
+                
                 idLista = obtenerIdListaDefecto(nombreGenero, nombreLista);
             }
-
+       
             if (!bdf.altaListaFavorita(nickCliente, idLista)) {
                 return false;
             }

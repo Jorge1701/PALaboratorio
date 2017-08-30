@@ -175,10 +175,7 @@ public class Cliente extends Usuario {
             return l;
         }
     }
-    
-    
-    
-    
+
     public ArrayList<DtLista> listarLisReproduccion() {
         ArrayList<DtLista> res = new ArrayList<>();
         Iterator it = listasParticulares.entrySet().iterator();
