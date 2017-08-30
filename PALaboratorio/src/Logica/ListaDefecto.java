@@ -5,17 +5,17 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class ListaDefecto extends Lista {
-    
+
     private Genero genero;
 
-    public ListaDefecto(Genero genero, String nombre, ArrayList<Tema> temas) {
-        super(nombre, temas);
+    public ListaDefecto(Genero genero, String nombre, ArrayList<Tema> temas, String imagen) {
+        super(nombre, temas, imagen);
         this.genero = genero;
     }
-    
+
     @Override
     public DtLista getData() {
-        return new DtListaDefecto(genero.getData(), getNombre(), getTemas());
+        return new DtListaDefecto(genero.getData(), getNombre(), getTemas(), getImagen());
     }
 
     public Genero getGenero() {
@@ -25,17 +25,17 @@ public class ListaDefecto extends Lista {
     public void setGenero(Genero genero) {
         this.genero = genero;
     }
-    
-    public boolean quitarTema(String nombreT){
-        
+
+    public boolean quitarTema(String nombreT) {
+
         Iterator i = this.temas.iterator();
         while (i.hasNext()) {
             Tema t = (Tema) ((Map.Entry) i.next()).getValue();
-         if(t.getNombre().equals(nombreT)){
-         this.temas.remove(t);
-         return true;
-         }
+            if (t.getNombre().equals(nombreT)) {
+                this.temas.remove(t);
+                return true;
+            }
         }
-    return false;
+        return false;
     }
 }

@@ -304,8 +304,9 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
                 } else {
                     try {
                         lista = iContenido.selecListGen(nomLista);
-                        InfoListaReproduccion l = new InfoListaReproduccion(lista, generoSeleccionado);
+                        ListaReproduccionContenido l = new ListaReproduccionContenido(lista, generoSeleccionado);
                         this.getParent().add(l);
+                        centrar(l);
                         l.show();
                     } catch (UnsupportedOperationException e) {
                         JOptionPane.showMessageDialog(this, e.getMessage());
@@ -325,7 +326,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
                     nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString();
                     try {
                         lista = iUsuario.selectListaCli(nomLista);
-                        InfoListaReproduccion l = new InfoListaReproduccion(lista, nickCliente);
+                        ListaReproduccionContenido l = new ListaReproduccionContenido(lista, nickCliente);
                         this.getParent().add(l);
                         centrar(l);
                         l.show();

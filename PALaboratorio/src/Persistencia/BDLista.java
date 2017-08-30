@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,10 +23,11 @@ public class BDLista {
             } else {
                 tipo = "P";
             }
-            String sql = "INSERT INTO lista" + "(nombre,tipo) VALUES (?,?)";
+            String sql = "INSERT INTO lista" + "(nombre,tipo,imagen) VALUES (?,?,?)";
             PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statament.setString(1, dtl.getNombre());
             statament.setString(2, tipo);
+            statament.setString(3, dtl.getImagen());
             statament.executeUpdate();
             ResultSet rs = statament.getGeneratedKeys();
             rs.next();
