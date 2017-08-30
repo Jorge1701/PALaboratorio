@@ -14,8 +14,8 @@ import Presentacion.Validacion;
 
 public class AltaPerfil extends javax.swing.JInternalFrame {
 
-private IUsuario IU;
-    
+    private IUsuario IU;
+
     public AltaPerfil() {
         initComponents();
         biografia.setVisible(false);
@@ -23,8 +23,8 @@ private IUsuario IU;
         webTx.setVisible(false);
         bioTx.setVisible(false);
         cliente.setSelected(true);
-        this.IU=Fabrica.getIControladorUsuario();    
-        
+        this.IU = Fabrica.getIControladorUsuario();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -281,22 +281,22 @@ private IUsuario IU;
     }//GEN-LAST:event_apellidoActionPerformed
 
     private void biografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_biografiaActionPerformed
-       
+
     }//GEN-LAST:event_biografiaActionPerformed
 
     private void artistaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_artistaStateChanged
         // TODO add your handling code here:
-        if(artista.isSelected()){    
-        biografia.setVisible(true);
-        web.setVisible(true);
-        webTx.setVisible(true);
-        bioTx.setVisible(true);
-        
-        }else {
-        biografia.setVisible(false);
-        web.setVisible(false);
-        webTx.setVisible(false);
-        bioTx.setVisible(false);
+        if (artista.isSelected()) {
+            biografia.setVisible(true);
+            web.setVisible(true);
+            webTx.setVisible(true);
+            bioTx.setVisible(true);
+
+        } else {
+            biografia.setVisible(false);
+            web.setVisible(false);
+            webTx.setVisible(false);
+            bioTx.setVisible(false);
         }
     }//GEN-LAST:event_artistaStateChanged
 
@@ -309,47 +309,47 @@ private IUsuario IU;
     }//GEN-LAST:event_aceptarKeyTyped
 
     private void cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarMouseClicked
-      dispose();
+        dispose();
     }//GEN-LAST:event_cancelarMouseClicked
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         DtUsuario dtu;
-         
-        if(nick.getText().isEmpty() == true || nombre.getText().isEmpty() == true || apellido.getText().isEmpty() == true || correo.getText().isEmpty() == true || dia.getSelectedItem().equals("--") || mes.getSelectedItem().equals("--") || anio.getSelectedItem().equals("----") || Validacion.ValidarEmail(correo.getText())==false){
 
-        javax.swing.JOptionPane.showMessageDialog(null,"Hay algun campo sin completar","Advertencia",JOptionPane.WARNING_MESSAGE);
-        }else{
-        
-        if(cliente.isSelected() == true){
-            dtu = new DtCliente(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())),"");
-        }else{
-            
-            dtu = new DtArtista(nick.getText(),nombre.getText(),apellido.getText(),correo.getText(),new DtFecha(Integer.parseInt((String) dia.getSelectedItem()),Integer.parseInt((String) mes.getSelectedItem()),Integer.parseInt((String) anio.getSelectedItem())),biografia.getText(),web.getText(),"");
-        }
-        
-        boolean ok=IU.ingresarUsuario(dtu);
-        if (ok){
-            //javax.swing.JOptionPane.showMessageDialog(null,"Persona Dada de alta con éxito.");
-            javax.swing.JOptionPane.showMessageDialog(null,"El usuario fue ingresado con exito","Felicitaciones!",JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            //javax.swing.JOptionPane.showMessageDialog(null,"Error: La persona ya está registrada o faltaron campos obligatorios.");
-            javax.swing.JOptionPane.showMessageDialog(null,"El usuario que desea ingresar ya existe en el sistema","Ha ocurrido un error",JOptionPane.ERROR_MESSAGE);
-        }
-        this.nick.setText("");
-        this.nombre.setText(""); 
-        this.apellido.setText("");
-        this.correo.setText("");
-        this.biografia.setText("");
-        this.web.setText("");
-        this.cliente.setSelected(true);
-        this.dia.setSelectedIndex(0);
-        this.mes.setSelectedIndex(0);
-        this.anio.setSelectedIndex(0);
+        if (nick.getText().isEmpty() == true || nombre.getText().isEmpty() == true || apellido.getText().isEmpty() == true || correo.getText().isEmpty() == true || dia.getSelectedItem().equals("--") || mes.getSelectedItem().equals("--") || anio.getSelectedItem().equals("----") || Validacion.ValidarEmail(correo.getText()) == false) {
+
+            javax.swing.JOptionPane.showMessageDialog(null, "Hay algun campo sin completar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            if (cliente.isSelected() == true) {
+                dtu = new DtCliente(nick.getText(), nombre.getText(), apellido.getText(), correo.getText(), new DtFecha(Integer.parseInt((String) dia.getSelectedItem()), Integer.parseInt((String) mes.getSelectedItem()), Integer.parseInt((String) anio.getSelectedItem())), "");
+            } else {
+
+                dtu = new DtArtista(nick.getText(), nombre.getText(), apellido.getText(), correo.getText(), new DtFecha(Integer.parseInt((String) dia.getSelectedItem()), Integer.parseInt((String) mes.getSelectedItem()), Integer.parseInt((String) anio.getSelectedItem())), "", biografia.getText(), web.getText());
+            }
+
+            boolean ok = IU.ingresarUsuario(dtu);
+            if (ok) {
+                //javax.swing.JOptionPane.showMessageDialog(null,"Persona Dada de alta con éxito.");
+                javax.swing.JOptionPane.showMessageDialog(null, "El usuario fue ingresado con exito", "Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                //javax.swing.JOptionPane.showMessageDialog(null,"Error: La persona ya está registrada o faltaron campos obligatorios.");
+                javax.swing.JOptionPane.showMessageDialog(null, "El usuario que desea ingresar ya existe en el sistema", "Ha ocurrido un error", JOptionPane.ERROR_MESSAGE);
+            }
+            this.nick.setText("");
+            this.nombre.setText("");
+            this.apellido.setText("");
+            this.correo.setText("");
+            this.biografia.setText("");
+            this.web.setText("");
+            this.cliente.setSelected(true);
+            this.dia.setSelectedIndex(0);
+            this.mes.setSelectedIndex(0);
+            this.anio.setSelectedIndex(0);
         }
     }//GEN-LAST:event_aceptarActionPerformed
 
     private void nickKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nickKeyTyped
-            
+
     }//GEN-LAST:event_nickKeyTyped
 
     private void nickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nickActionPerformed
@@ -360,8 +360,8 @@ private IUsuario IU;
 
 // TODO add your handling code here:
     }//GEN-LAST:event_nombreKeyPressed
-    
-              
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.ButtonGroup Tipo;
     private javax.swing.JButton aceptar;
