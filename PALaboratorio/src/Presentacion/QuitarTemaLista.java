@@ -1,6 +1,5 @@
 package Presentacion;
 
-import Logica.DtCliente;
 import Logica.DtLista;
 import Logica.DtListaDefecto;
 import Logica.DtTema;
@@ -9,12 +8,11 @@ import Logica.Fabrica;
 import Logica.IContenido;
 import Logica.IUsuario;
 import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class QuitarTemaLista extends javax.swing.JInternalFrame {
+public class QuitarTemaLista extends javax.swing.JInternalFrame implements ListSelectionListener {
 
     private IUsuario iUsuario;
     private IContenido iContenido;
@@ -215,9 +213,10 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre", "Album", "Artista"
+                "Nombre", "Duración"
             }
         ));
+        tablaTemas.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tablaTemas);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -299,6 +298,8 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
                 dtm.addRow(data);
             }
 
+            tablaClientes.getSelectionModel().addListSelectionListener(this);
+
         } else {
 
             ArrayList<DtLista> dtld = iContenido.listarLisReproduccionDef();
@@ -313,8 +314,74 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
                 };
                 dtm.addRow(data);
             }
+
+            tablaListDefecto.getSelectionModel().addListSelectionListener(this);
         }
+
     }//GEN-LAST:event_PestaniaMouseClicked
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        // Obtiene el nombre de la listaDefecto seleccionada y se lo pasa a la funcion listaDefectoSeleccionada
+        if (Pestania.getSelectedIndex() == 1) {
+            listaDefectoSeleccionada(tablaListDefecto.getValueAt(tablaListDefecto.getSelectedRow(), 0).toString());
+        } else {
+            String nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
+            listasClienteSeleccionado(nickCliente);
+            if (nickCliente != null || nickCliente != "" && !tablaListParticular.getSelectionModel().isSelectionEmpty()) {
+                listaParticularSeleccionada(tablaListParticular.getValueAt(tablaListParticular.getSelectedRow(), 0).toString(), nickCliente);
+            }
+
+        }
+    }
+
+    public void listasClienteSeleccionado(String nickCliente) {
+        ArrayList<DtLista> listas = iUsuario.listarLisReproduccion(nickCliente);
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaListParticular.getModel();
+        dtm.setRowCount(0);
+
+        for (DtLista lista : listas) {
+            Object[] data = {
+                lista.getNombre()
+
+            };
+            dtm.addRow(data);
+        }
+        tablaListParticular.getSelectionModel().addListSelectionListener(this);
+    }
+
+    public void listaDefectoSeleccionada(String nombreLista) {
+
+        ArrayList<DtTema> temas = iContenido.selecListaDef(nombreLista);
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaTemas.getModel();
+        dtm.setRowCount(0);
+
+        for (DtTema tema : temas) {
+            Object[] data = {
+                tema.getNombre(),
+                tema.getDuracion().getHoras() + ":" + tema.getDuracion().getMinutos() + ":" + tema.getDuracion().getSegundos()
+            };
+            dtm.addRow(data);
+        }
+
+    }
+
+    public void listaParticularSeleccionada(String nombre, String nickCliente) {
+        ArrayList<DtTema> temas = iUsuario.listarTemasListaParticular(nombre, nickCliente);
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaTemas.getModel();
+        dtm.setRowCount(0);
+
+        for (DtTema tema : temas) {
+            Object[] data = {
+                tema.getNombre(),
+                tema.getDuracion().getHoras() + ":" + tema.getDuracion().getMinutos() + ":" + tema.getDuracion().getSegundos()
+            };
+            dtm.addRow(data);
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
