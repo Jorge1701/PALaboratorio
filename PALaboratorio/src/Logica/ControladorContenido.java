@@ -270,7 +270,7 @@ public class ControladorContenido implements IContenido {
     }
 
     @Override
-    public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, ArrayList<DtTema> temas) {
+    public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, String img, ArrayList<DtTema> temas) {
         ArrayList<Genero> lstGeneros = new ArrayList<>();
         HashMap<String, Tema> mapTemas = new HashMap<>();
 
@@ -302,7 +302,7 @@ public class ControladorContenido implements IContenido {
 
         }
 
-        this.artista.ingresarAlbum(nom, anio, lstGeneros, mapTemas);
+        this.artista.ingresarAlbum(nom, anio, lstGeneros, img, mapTemas);
 
         //set null artista seleccionado
         this.artista = null;
