@@ -111,8 +111,8 @@ public class Fabrica {
                     temas.add(new TemaRemoto(dtt.getNombre(), dtt.getDuracion(), dtt.getUbicacion(), ((DtTemaRemoto) dtt).getUrl()));
                 }
             }
-
-            iu.cargarLista(new ListaParticular(lista[3].equals("N") ? true : false, lista[1], temas, lista[4]), lista[2]);
+            
+            iu.cargarLista(new ListaParticular(lista[3].equals("N") ? true : false, lista[1], temas), lista[2]);
         }
 
         // Cargar Lista por Defecto
