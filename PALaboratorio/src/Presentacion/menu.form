@@ -143,8 +143,11 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="guardarTLA">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Guardar Tema/Lista/Album"/>
+                <Property name="text" type="java.lang.String" value="Agregar Tema/Lista/Album"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="guardarTLAActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="eliminarTLA">
               <Properties>

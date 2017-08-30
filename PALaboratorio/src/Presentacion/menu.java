@@ -8,8 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class menu extends javax.swing.JFrame {
 
@@ -28,7 +26,7 @@ public class menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelMenu = new DesktopFondo();
+        PanelMenu = new javax.swing.JDesktopPane();
         barra = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         altaPerfil = new javax.swing.JMenuItem();
@@ -187,7 +185,12 @@ public class menu extends javax.swing.JFrame {
 
         jMenu4.setText("Favoritos");
 
-        guardarTLA.setText("Guardar Tema/Lista/Album");
+        guardarTLA.setText("Agregar Tema/Lista/Album");
+        guardarTLA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarTLAActionPerformed(evt);
+            }
+        });
         jMenu4.add(guardarTLA);
 
         eliminarTLA.setText("Eliminar Tema/Lista/Album");
@@ -340,8 +343,14 @@ public class menu extends javax.swing.JFrame {
         PanelMenu.add(clr);
         centrar(clr);
         clr.show();
-
     }//GEN-LAST:event_crearListaRepActionPerformed
+
+    private void guardarTLAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarTLAActionPerformed
+        GuardarTLA gtla = new GuardarTLA();
+        PanelMenu.add(gtla);
+        centrar(gtla);
+        gtla.show();
+    }//GEN-LAST:event_guardarTLAActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
