@@ -120,7 +120,15 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
             new String [] {
                 "Nickname", "Nombre", "Apellido", "Correo", "Tipo"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tablaUsuarios);
 
         txtUsuario.addCaretListener(new javax.swing.event.CaretListener() {
@@ -208,7 +216,15 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
             new String [] {
                 "Nickname", "Nombre", "Apellido", "Correo"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tablaClientes);
 
         txtCliente.addCaretListener(new javax.swing.event.CaretListener() {

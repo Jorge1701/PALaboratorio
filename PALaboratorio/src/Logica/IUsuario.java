@@ -13,7 +13,7 @@ public interface IUsuario {
     public ArrayList<DtUsuario> listarArtistas();
     public DtPerfilUsuario obtenerPerfilArtista(String nickArtista);
     public DtPerfilUsuario obtenerPerfilCliente(String nickCliente);
-    public DtCliente getCliente();
+    public DtUsuario getDataUsuario(String nickUsuario);
     public void seguirUsuario(String nickC, String nickU);
     public void dejarSeguirUsuario(String nickSeguidor, String nickUsuario);
     public void cargarUsuarios();
@@ -24,7 +24,6 @@ public interface IUsuario {
     public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente);
     public DtLista selectListaCli(String nombreL);
     public ArrayList<DtLista> listarLisReproduccion(String nickCliente);
-    
     public void cargarAlbum(Album dta);
     public void cargarLista(ListaParticular lp, String nickcliente);
 }

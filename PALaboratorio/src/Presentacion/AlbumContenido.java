@@ -5,6 +5,9 @@ import Logica.DtAlbumContenido;
 import Logica.DtTema;
 import Logica.DtTemaLocal;
 import Logica.DtTemaRemoto;
+import Logica.DtUsuario;
+import Logica.Fabrica;
+import Logica.IUsuario;
 import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -37,16 +40,22 @@ import javax.swing.table.TableRowSorter;
 
 public class AlbumContenido extends javax.swing.JInternalFrame implements ListSelectionListener {
 
+    IUsuario iUsuario;
+
     public AlbumContenido(DtAlbumContenido dtac) {
         initComponents();
+        iUsuario = Fabrica.getIControladorUsuario();
+
         btnAbrirNavegador.setVisible(false);
+
         tablaTemas.getColumnModel().getColumn(0).setMinWidth(0);
         tablaTemas.getColumnModel().getColumn(0).setMaxWidth(0);
 
         //Cargar la informacion
         DtAlbum info = dtac.getInfo();
         txtNombre.setText(info.getNombre());
-        txtNickArtista.setText(info.getNickArtista());
+        DtUsuario dtu = iUsuario.getDataUsuario(info.getNickArtista());
+        txtNickArtista.setText(dtu.getNombre() + " " + dtu.getApellido() + " (" + dtu.getNickname() + ")");
         txtAnio.setText(Integer.toString(info.getAnio()));
 
         // Cargar imagen
@@ -60,7 +69,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             }
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
-            pImg.setBounds(0, 0, 136, 126);
+            pImg.setBounds(0, 0, 150, 150);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,17 +141,25 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
 
         setTitle("Informacion del album");
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel1.setText("Nombre:");
 
-        jLabel2.setText("Nickname del artista:");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabel2.setText("Artista:");
 
-        jLabel3.setText("Año de creacion:");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabel3.setText("Creado en:");
 
         txtNombre.setEditable(false);
+        txtNombre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
         txtNickArtista.setEditable(false);
+        txtNickArtista.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
         txtAnio.setEditable(false);
+        txtAnio.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -156,7 +173,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                     .addComponent(txtNickArtista)
                     .addComponent(txtAnio))
                 .addContainerGap())
@@ -195,17 +212,18 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
 
             },
             new String [] {
-                "Tipo", "Nombre", "Duracion", "Ubicacion", "Archivo"
+                "Tipo", "Nombre", "Duración", "Posición", "Archivo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tablaTemas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaTemas);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -219,7 +237,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
         );
 
         jSplitPane1.setLeftComponent(jPanel4);
@@ -236,7 +254,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
         );
 
         jSplitPane1.setRightComponent(jPanel5);
@@ -259,11 +277,11 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         imagenPanel.setLayout(imagenPanelLayout);
         imagenPanelLayout.setHorizontalGroup(
             imagenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 136, Short.MAX_VALUE)
+            .addGap(0, 150, Short.MAX_VALUE)
         );
         imagenPanelLayout.setVerticalGroup(
             imagenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 126, Short.MAX_VALUE)
+            .addGap(0, 150, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -272,33 +290,29 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSplitPane1)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(btnDescargar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAbrirNavegador)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)
-                        .addComponent(imagenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(25, 25, 25)
+                .addComponent(btnDescargar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAbrirNavegador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(imagenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imagenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 13, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 13, Short.MAX_VALUE)
-                        .addComponent(imagenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(22, 22, 22)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jSplitPane1)
