@@ -956,7 +956,8 @@ public class CargaDatosPrueba {
 
             String nombre = listaPordefecto[1];
             String refGenero = listaPordefecto[2];
-
+            String imagen = listaPordefecto[3];
+            
             String nombreGenero = "";
 
             for (String[] genero : generos) {
@@ -964,7 +965,7 @@ public class CargaDatosPrueba {
                     nombreGenero = genero[1];
                 }
             }
-            DtLista lista = new DtListaDefecto(new DtGenero(nombreGenero, null), nombre, null);
+            DtLista lista = new DtListaDefecto(new DtGenero(nombreGenero, null), nombre, null,imagen);
 
             if (!bdl.altaLista(lista, "")) {
                 return false;
@@ -980,6 +981,7 @@ public class CargaDatosPrueba {
         for (String[] listaParticular : listasParticulares) {
             String refCliente = listaParticular[0];
             String nombreLista = listaParticular[2];
+            String imagen = listaParticular[4];
 
             String nickCliente = "";
 
@@ -988,7 +990,7 @@ public class CargaDatosPrueba {
                     nickCliente = cliente[1];
                 }
             }
-            DtLista lista = new DtListaParticular(false, nombreLista, null);
+            DtLista lista = new DtListaParticular(false, nombreLista, null,imagen);
             if (!bdl.altaLista(lista, nickCliente)) {
                 return false;
             }

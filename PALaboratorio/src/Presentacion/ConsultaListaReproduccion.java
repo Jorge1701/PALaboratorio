@@ -97,9 +97,17 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre", "Nick"
+                "Nombre completo", "Nick"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaClientes.setDragEnabled(true);
         jScrollPane2.setViewportView(tablaClientes);
 
@@ -165,7 +173,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+            .addComponent(jSplitPane2)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -244,7 +252,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
         for (DtUsuario dtCliente : dtc) {
             Object[] data = {
-                dtCliente.getNombre(),
+                dtCliente.getNombre()+" "+dtCliente.getApellido(),
                 dtCliente.getNickname(),};
             dtm.addRow(data);
         }
@@ -285,7 +293,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_generosValueChanged
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nickCliente;
+        String nomCliente;
         String nomLista;
         DtLista lista;
 
@@ -304,8 +312,9 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
                 } else {
                     try {
                         lista = iContenido.selecListGen(nomLista);
-                        InfoListaReproduccion l = new InfoListaReproduccion(lista, generoSeleccionado);
+                        ListaReproduccionContenido l = new ListaReproduccionContenido(lista, generoSeleccionado);
                         this.getParent().add(l);
+                        centrar(l);
                         l.show();
                     } catch (UnsupportedOperationException e) {
                         JOptionPane.showMessageDialog(this, e.getMessage());
@@ -322,10 +331,10 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this, "Debe de seleccionar una Lista");
                     return;
                 } else {
-                    nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString();
+                    nomCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString()+" ("+tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString()+")";
                     try {
                         lista = iUsuario.selectListaCli(nomLista);
-                        InfoListaReproduccion l = new InfoListaReproduccion(lista, nickCliente);
+                        ListaReproduccionContenido l = new ListaReproduccionContenido(lista, nomCliente);
                         this.getParent().add(l);
                         centrar(l);
                         l.show();

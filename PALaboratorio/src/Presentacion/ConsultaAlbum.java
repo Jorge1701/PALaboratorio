@@ -135,9 +135,17 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
 
             },
             new String [] {
-                "Nombre", "Nick"
+                "Nombre completo", "Nick"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaArtistas.setDragEnabled(true);
         tablaArtistas.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaArtistas);
@@ -308,7 +316,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
 
         for (DtUsuario dtArtista : dta) {
             Object[] data = {
-                dtArtista.getNombre(),
+                dtArtista.getNombre() + " " + dtArtista.getApellido(),
                 dtArtista.getNickname(),};
             dtm.addRow(data);
         }

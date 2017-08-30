@@ -255,7 +255,7 @@ public class ControladorContenido implements IContenido {
         boolean bd = bdLista.altaLista(dtl, nickCliente);
         if (bd && dtl instanceof DtListaDefecto) {
             Genero g = this.genero.obtener(((DtListaDefecto) dtl).getGenero().getNombre());
-            ListaDefecto lis = new ListaDefecto(g, dtl.getNombre(), null);
+            ListaDefecto lis = new ListaDefecto(g, dtl.getNombre(), null,dtl.getImagen());
             this.listasDefecto.put(lis.getNombre(), (ListaDefecto) lis);
             return true;
         } else if (bd) {
@@ -441,7 +441,9 @@ public class ControladorContenido implements IContenido {
 
     }
 
+    @Override
     public void cargarLista(ListaDefecto ld, String nombreGenero) {
         genero.obtener(nombreGenero).cargarLista(ld);
+        listasDefecto.put(ld.getNombre(), ld);
     }
 }

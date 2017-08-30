@@ -113,7 +113,7 @@ public class Fabrica {
                 }
             }
 
-            iu.cargarLista(new ListaParticular(lista[3].equals("N") ? true : false, lista[1], temas), lista[2]);
+            iu.cargarLista(new ListaParticular(lista[3].equals("N") ? true : false, lista[1], temas, lista[4]), lista[2]);
         }
 
         // Cargar Lista por Defecto
@@ -130,7 +130,7 @@ public class Fabrica {
                 }
             }
 
-            ic.cargarLista(new ListaDefecto(ic.obtenerGenero(lista[1]), lista[2], temas), lista[1]);
+            ic.cargarLista(new ListaDefecto(ic.obtenerGenero(lista[1]), lista[2],temas,lista[4]),lista[1]);
         }
         //Cargar Albumes Favoritos
         ArrayList<String[]> albumesFavoritos = cdp.cargarAlbumesFavoritos();
