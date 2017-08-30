@@ -132,15 +132,7 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
             new String [] {
                 "Nickname", "Nombre", "Apellido", "Correo", "Tipo"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, true, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane2.setViewportView(tablaSeguidos);
 
         jLabel3.setText("Nickname:");
@@ -228,15 +220,7 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
             new String [] {
                 "Nickname", "Nombre", "Apellido", "Correo"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(tablaClientes);
 
         txtCliente.addCaretListener(new javax.swing.event.CaretListener() {
