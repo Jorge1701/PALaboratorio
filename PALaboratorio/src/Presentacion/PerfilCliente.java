@@ -153,7 +153,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                 : dtPerfilCliente.getTemas()) {
             Object[] data = {
                 dtt.getNombre(),
-                dtt.getDuracion()
+                dtt.getDuracion().getHoras()+":"+dtt.getDuracion().getMinutos()+":"+dtt.getDuracion().getSegundos(),
             };
             dtmTemas.addRow(data);
         }

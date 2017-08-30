@@ -131,7 +131,61 @@ public class Fabrica {
 
             ic.cargarLista(new ListaDefecto(ic.obtenerGenero(lista[1]), lista[2], temas, lista[3]), lista[1]);
         }
-    }
+    
+    
+    //Cargar Albumes Favoritos
+        ArrayList<String[]> albumesFavoritos = cdp.cargarAlbumesFavoritos();
+        for (String[] albumesF : albumesFavoritos) {
+            String nombreAlbum = albumesF[0];
+            String nickCliente = albumesF[1];
+            String nickArtista = albumesF[2];
+            Usuario cliente = iu.obtenerUsuario(nickCliente);
+            Usuario artista = iu.obtenerUsuario(nickArtista);
+            Album a = ((Artista) artista).getAlbum(nombreAlbum);
+            ((Cliente) cliente).agregarAlbumFav(a);
+
+        }
+        //Cargar Temas Favoritos 
+        ArrayList<String[]> temasFavoritos = cdp.cargaTemasFavoritos();
+        for (String[] temasF : temasFavoritos) {
+            String nicknameCliente = temasF[0];
+            String nombreTema = temasF[1];
+            String nombreAlbum = temasF[2];
+            String nicknameArtista = temasF[3];
+            Usuario cliente = iu.obtenerUsuario(nicknameCliente);
+            Usuario artista = iu.obtenerUsuario(nicknameArtista);
+            Tema t = ((Artista)artista).getAlbum(nombreAlbum).getTema(nombreTema);
+            ((Cliente)cliente).agregarTemaFav(t);
+        }
+    
+        //Cargar Listas Favoritas
+           ArrayList<String[]> listasFavoritasP = cdp.cargaListasFavoritosP();
+            for(String[] listasF : listasFavoritasP){
+            String nicknameCliente = listasF[0];
+            String nicknameCreador = listasF[1];
+            String nombreLista = listasF[2];
+            
+            Usuario creador = iu.obtenerUsuario(nicknameCreador);
+            Usuario cliente = iu.obtenerUsuario(nicknameCliente);
+            Lista l = ((Cliente)creador).getLista(nombreLista);
+            ((Cliente)cliente).agregarListaFav(l);
+            }
+            ArrayList<String[]> listasFavoritasD = cdp.cargaListasFavoritosD();
+            for(String[] listasF : listasFavoritasD){
+            String nicknameCliente = listasF[0];
+            String nombreGenero = listasF[1];
+            String nombreLista = listasF[2];
+            
+            Usuario cliente = iu.obtenerUsuario(nicknameCliente);
+            Genero g = ic.obtenerGenero(nombreGenero);
+            Lista l =((Genero)g).getListaDefecto(nombreLista);
+            ((Cliente)cliente).agregarListaFav(l);
+            }
+			
+    
+    
+    
+    }    
 
     public static IUsuario getIControladorUsuario() {
         IUsuario ICU = ControladorUsuario.getInstance();
