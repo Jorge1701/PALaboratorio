@@ -251,11 +251,11 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public boolean crearListaReproduccion(DtLista dtl, String nickCliente) {
-        boolean bd = bdLista.altaLista(dtl, nickCliente);
 
+        boolean bd = bdLista.altaLista(dtl, nickCliente);
         if (bd && dtl instanceof DtListaDefecto) {
             Genero g = this.genero.obtener(((DtListaDefecto) dtl).getGenero().getNombre());
-            ListaDefecto lis = new ListaDefecto(g, dtl.getNombre(), null, dtl.getImagen());
+            ListaDefecto lis = new ListaDefecto(g, dtl.getNombre(), null,dtl.getImagen());
             this.listasDefecto.put(lis.getNombre(), (ListaDefecto) lis);
             return true;
         } else if (bd) {

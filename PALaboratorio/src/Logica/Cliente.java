@@ -207,8 +207,4 @@ public class Cliente extends Usuario {
     public void cargarLista(ListaParticular lp) {
         listasParticulares.put(lp.getNombre(), lp);
     }
-    
-    public ArrayList<DtTema> listarTemasLista(String nombre){
-      return listasParticulares.get(nombre).getData().getTemas();
-    }
 }

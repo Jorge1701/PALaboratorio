@@ -289,7 +289,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             } else {
                 DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
                 nomGenero = selectedElement.getUserObject().toString();
-                lista = new DtListaDefecto(iContenido.selecGenero(nomGenero), nomLista, new ArrayList<>(), "");   // Agregar que se ingrese la imagen en el diseño.
+                lista = new DtListaDefecto(iContenido.selecGenero(nomGenero), nomLista, null, null);   // Agregar que se ingrese la imagen en el diseño.
                 if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
                     JOptionPane.showMessageDialog(this, "Ocurrió un error al ingresar la lista", "Mensaje", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -309,7 +309,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                 return;
 
             } else {
-                lista = new DtListaParticular(true, nomLista, new ArrayList<>(), "");  // Agregar que se ingrese la imagen en el diseño.
+                lista = new DtListaParticular(true, nomLista, null, null);  // Agregar que se ingrese la imagen en el diseño.
                 if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
                     JOptionPane.showMessageDialog(this, "Ocurrió un error al ingresar la lista", "Mensaje", JOptionPane.ERROR_MESSAGE);
                     return;

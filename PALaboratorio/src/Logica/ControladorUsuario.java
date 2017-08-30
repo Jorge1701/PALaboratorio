@@ -302,8 +302,4 @@ public class ControladorUsuario implements IUsuario {
 
         ((Cliente) usuarios.get(nickcliente)).cargarLista(lp);
     }
-
-    public ArrayList<DtTema> listarTemasListaParticular(String nombre, String nickCliente) {
-        return ((Cliente) usuarios.get(nickCliente)).listarTemasLista(nombre);
-    }
 }
