@@ -10,6 +10,7 @@ import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IContenido;
 import Logica.IUsuario;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,11 +53,12 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     String pathImage;
     DefaultTableModel dtm;
     private ArrayList<DtUsuario> datos;
+    PanelImagen pImg;
     
     public AltaAlbum() {
         initComponents();
         archivoTema = new JFileChooser();
-        archivoTema.setFileFilter(new FileNameExtensionFilter("mp3 files" , "mp3"));
+        archivoTema.setFileFilter(new FileNameExtensionFilter("mp3 files", "mp3"));
         archivoImg = new JFileChooser();
         archivoImg.setFileFilter(new FileNameExtensionFilter("Images files", "jpg", "png", "gif", "jpeg"));
         this.iContenido = Fabrica.getIControladorContenido();
@@ -67,7 +69,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         buttonStream.setSelected(true);
         mostrarTema();
         dtm = (DefaultTableModel) tableTemas.getModel();
-        dtm.setRowCount(0);
+        dtm.setRowCount(0);        
         pathMp3 = "";
         pathImage = null;
         datos = iUsuario.listarArtistas();
@@ -87,24 +89,24 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     private boolean exiteNombreTema(String nombreTema) {
         
         boolean retorno = false;
-        if (!this.temas.isEmpty()){
+        if (!this.temas.isEmpty()) {
             for (int i = 0; i < temas.size(); i++) {
                 DtTema dtT = (DtTema) temas.get(i);
-                if(dtT.getNombre().equals(nombreTema)){
+                if (dtT.getNombre().equals(nombreTema)) {
                     retorno = true;
                 }
             }
-        } 
+        }        
         
         return retorno;
-    
+        
     }
     
-    void mostrarGeneros() {    
-       
+    void mostrarGeneros() {        
+        
         jTreeGeneros.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         DtGenero g = iContenido.listarGenero();
-
+        
         DefaultTreeModel modelo = new DefaultTreeModel(getNodo(g));
         jTreeGeneros.setModel(modelo);
         
@@ -117,7 +119,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         if (dtu.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
         }
-
+        
         DefaultTableModel dtm = (DefaultTableModel) tablaArtistas.getModel();
         dtm.setRowCount(0);
         for (DtUsuario dtUsuario : dtu) {
@@ -135,16 +137,28 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     }
     
     void mostrarTema() {
-        if(buttonStream.isSelected()){
+        if (buttonStream.isSelected()) {
             txtStremTema.setEnabled(true);
             btnSelecMp3.setEnabled(false);
-        
+            
         } else if (buttonArch.isSelected()) {
             txtStremTema.setEnabled(false);
             btnSelecMp3.setEnabled(true);
         }
         
+    }
+    
+    private void setUbicacionTemas(){
         
+        for(int i=0; i<tableTemas.getRowCount(); i++){
+            String nom = tableTemas.getValueAt(i, 0).toString();
+            for (int e = 0; e < temas.size(); e++) {
+                DtTema dtT = (DtTema) temas.get(e);
+                if(dtT.getNombre().equals(nom)){
+                    dtT.setUbicacion(i+1);
+                }
+            }
+        }
     
     }
 
@@ -176,8 +190,6 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         buttonArch = new javax.swing.JRadioButton();
         buttonStream = new javax.swing.JRadioButton();
         btnAgregarTema = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        txtUbicacionTema = new javax.swing.JTextField();
         txtStremTema = new javax.swing.JTextField();
         Date date = new Date();
         SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
@@ -185,6 +197,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tableTemas = new javax.swing.JTable();
         btnSelecMp3 = new javax.swing.JButton();
+        btnEliminarTema = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaArtistas = new javax.swing.JTable();
         imagePanel = new javax.swing.JPanel();
@@ -308,8 +321,6 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel4.setText("Ubicacion");
-
         JSpinner.DateEditor de = new JSpinner.DateEditor(jSpinnerDuracion, "HH:mm:ss");
         jSpinnerDuracion.setEditor(de);
         jSpinnerDuracion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -317,13 +328,13 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
 
         tableTemas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Nombre", "Ubicacion", "Duración", "Path o Url"
+                "Nombre", "Duración", "Path o Url"
             }
         ));
         jScrollPane3.setViewportView(tableTemas);
@@ -332,6 +343,13 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         btnSelecMp3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSelecMp3ActionPerformed(evt);
+            }
+        });
+
+        btnEliminarTema.setText("Eliminar");
+        btnEliminarTema.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarTemaActionPerformed(evt);
             }
         });
 
@@ -344,21 +362,19 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(28, 28, 28))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(38, 38, 38))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnAgregarTema)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAgregarTema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminarTema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSpinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUbicacionTema, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSpinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(71, 71, 71)
@@ -396,15 +412,16 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                                 .addComponent(jSpinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel3))
                             .addComponent(txtStremTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtUbicacionTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(13, 13, 13))
-                    .addComponent(btnSelecMp3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnSelecMp3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarTema)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnAgregarTema)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminarTema))))
         );
 
         tablaArtistas.setModel(new javax.swing.table.DefaultTableModel(
@@ -496,7 +513,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -544,12 +561,16 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         try {
             iContenido.selectArtista(nickA);
             
-            //generos.add("Rock");
+            if (temas.isEmpty()) {
+                throw new UnsupportedOperationException("Debe de indicar al menos un Tema");
+            }
             
-            //DtTema dtT = new DtTema( "pista1", new DtTime(0, 2, 23), 1);
-            //ArrayList<DtTema> temas = new ArrayList<DtTema>();
-            //temas.add(dtT);
+            if (generos.isEmpty()) {
+                throw new UnsupportedOperationException("Debe de indicar al menos un Genero");
+            }
             
+            setUbicacionTemas();
+                       
             iContenido.ingresarAlbum(album, anio, generos, pathImage, temas);
             
             
@@ -562,9 +583,12 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         txtNick.setText("");
         txtNombreAlbum.setText("");
         dtm.setRowCount(0);
-        jListGros.removeAll();
+        DefaultListModel mListGros = (DefaultListModel)jListGros.getModel();
+        mListGros.removeAllElements();       
         pathImage = null;
-        imagePanel.removeAll();
+        //imagePanel.removeAll();
+        imagePanel.setBackground(Color.GRAY);
+        tablaArtistas.clearSelection();
         temas.removeAll(temas);
         generos.removeAll(generos);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -658,7 +682,6 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         Calendar cal = Calendar.getInstance();
         cal.setTime(time);
         DtTime dtTime = new DtTime(cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
-        String ubicacion = txtUbicacionTema.getText();
         String stream;
         String pathtArch;
         DtTema dtTema;
@@ -668,10 +691,6 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
             camposVacios += "Nombre Tema\n";
         }
         
-        if (ubicacion.isEmpty()) {
-            camposVacios += "Ubicacion Tema\n";
-        }
-                
         if (!camposVacios.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Hay campos obligatorios vacios:\n" + camposVacios);
             return;
@@ -687,10 +706,9 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Nombre de tema Duplicado");
                 return;  
             }
-            dtTema = new DtTemaRemoto(stream, nomTema, dtTime, Integer.parseInt(ubicacion));
+            dtTema = new DtTemaRemoto(stream, nomTema, dtTime, 0);
             Object[] data = {
                 nomTema,
-                ubicacion,
                 dtTime.getHoras() + ":" + dtTime.getMinutos() + ":" + dtTime.getSegundos(),                
                 stream,};
             dtm.addRow(data);
@@ -707,10 +725,9 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Nombre de tema Duplicado");
                 return;  
             }
-            dtTema = new DtTemaLocal(pathMp3, nomTema, dtTime, Integer.parseInt(ubicacion));
+            dtTema = new DtTemaLocal(pathMp3, nomTema, dtTime, 0);
             Object[] data = {
                 nomTema,
-                ubicacion,
                 dtTime.getHoras() + ":" + dtTime.getMinutos() + ":" + dtTime.getSegundos(),                
                 pathMp3,};
             dtm.addRow(data);
@@ -722,7 +739,6 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         }
         
         txtStremTema.setText("");
-        txtUbicacionTema.setText("");
         txtNomTema.setText("");
         
     }//GEN-LAST:event_btnAgregarTemaActionPerformed
@@ -753,7 +769,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
              }
              BufferedImage img;
              img = ImageIO.read(new File(pathImage));
-             PanelImagen pImg = new PanelImagen(img);
+             pImg = new PanelImagen(img);
              imagePanel.add(pImg);
              pImg.setBounds(0, 0, 200, 182);
              
@@ -763,12 +779,46 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnCargarImgActionPerformed
 
+    private void btnEliminarTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTemaActionPerformed
+        
+        int fila = tableTemas.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tableTemas.getModel();
+        System.out.println("fila" + fila);
+        if(fila>=0){
+            String nombre = tableTemas.getValueAt(fila, 0).toString();
+            if(!temas.isEmpty()){
+                
+                for (int i = 0; i < temas.size(); i++) {
+                    DtTema dtT = (DtTema) temas.get(i);
+                    if(dtT.getNombre().equals(nombre)){
+                        temas.remove(dtT);
+                    }
+                }    
+            }
+            
+            model.removeRow(fila);
+            /*        
+            if(!temas.isEmpty()){
+                
+                for (int i = 0; i < temas.size(); i++) {
+                    DtTema dtT = (DtTema) temas.get(i);
+                    System.out.println("nombre tema" + dtT.getNombre());
+                }    
+            } else {
+                System.out.println("lista tema vacia");
+            }
+            setUbicacionTemas();*/
+        }
+        
+    }//GEN-LAST:event_btnEliminarTemaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AlbumTx;
     private javax.swing.JLabel NombreTx;
     private javax.swing.JButton btnAgregarTema;
     private java.awt.Button btnCargarImg;
+    private javax.swing.JButton btnEliminarTema;
     private javax.swing.JButton btnQuitarGro;
     private javax.swing.JButton btnSelecMp3;
     private javax.swing.ButtonGroup btonGroupTema;
@@ -781,7 +831,6 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JList<String> jListGros;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -798,7 +847,6 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNomTema;
     private javax.swing.JTextField txtNombreAlbum;
     private javax.swing.JTextField txtStremTema;
-    private javax.swing.JTextField txtUbicacionTema;
     // End of variables declaration//GEN-END:variables
 }
 
