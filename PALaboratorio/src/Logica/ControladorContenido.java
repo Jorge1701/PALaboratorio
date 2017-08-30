@@ -441,7 +441,9 @@ public class ControladorContenido implements IContenido {
 
     }
 
+    @Override
     public void cargarLista(ListaDefecto ld, String nombreGenero) {
         genero.obtener(nombreGenero).cargarLista(ld);
+        listasDefecto.put(ld.getNombre(), ld);
     }
 }
