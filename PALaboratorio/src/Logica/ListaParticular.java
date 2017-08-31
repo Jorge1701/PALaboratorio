@@ -6,16 +6,23 @@ import java.util.Map;
 
 public class ListaParticular extends Lista {
 
+    private String nickDuenio;
     private boolean privada;
 
-    public ListaParticular(boolean privada, String nombre, ArrayList<Tema> temas, String imagen) {
+    public ListaParticular(String nickDuenio, boolean privada, String nombre, ArrayList<Tema> temas, String imagen) {
         super(nombre, temas, imagen);
         this.privada = privada;
+        this.nickDuenio = nickDuenio;
     }
 
-    public ListaParticular(String nombre) {
+    public ListaParticular(String nickCliente, String nombre) {
         super(nombre, new ArrayList<>(), null);
         this.privada = true;
+        this.nickDuenio = nickDuenio;
+    }
+
+    public String getDuenio() {
+        return nickDuenio;
     }
 
     @Override

@@ -79,7 +79,7 @@ public class Cliente extends Usuario {
         }
     }
 
-    public ArrayList<DtAlbum> obtenerAlbumesFav() {
+    public ArrayList<DtAlbum> obtenerDtAlbumesFav() {
         ArrayList<DtAlbum> favs = new ArrayList<>();
         for (Album album : albumesfav) {
             favs.add(album.getData());
@@ -87,7 +87,7 @@ public class Cliente extends Usuario {
         return favs;
     }
 
-    public ArrayList<DtLista> obtenerListasFav() {
+    public ArrayList<DtLista> obtenerDtListasFav() {
         ArrayList<DtLista> favs = new ArrayList<>();
         for (Lista lista : listasfav) {
             favs.add(lista.getData());
@@ -95,12 +95,24 @@ public class Cliente extends Usuario {
         return favs;
     }
 
-    public ArrayList<DtTema> obtenerTemasFav() {
+    public ArrayList<DtTema> obtenerDtTemasFav() {
         ArrayList<DtTema> favs = new ArrayList<>();
         for (Tema tema : temasfav) {
             favs.add(tema.getData());
         }
         return favs;
+    }
+
+    public ArrayList<Album> obtenerAlbumsFav() {
+        return albumesfav;
+    }
+
+    public ArrayList<Lista> obtenerListasFav() {
+        return listasfav;
+    }
+
+    public ArrayList<Tema> obtenerTemasFav() {
+        return temasfav;
     }
 
     @Override

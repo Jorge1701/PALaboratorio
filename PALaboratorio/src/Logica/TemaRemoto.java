@@ -4,9 +4,13 @@ public class TemaRemoto extends Tema {
 
     public String url;
 
+    public TemaRemoto(Album a, String nombre, DtTime duracion, int ubicacion, String url) {
+        super(a, nombre, duracion, ubicacion);
+        this.url = url;
+    }
+
     public TemaRemoto(String nombre, DtTime duracion, int ubicacion, String url) {
         super(nombre, duracion, ubicacion);
-        this.url = url;
     }
 
     public String getUrl() {

@@ -349,7 +349,7 @@ public class ControladorUsuario implements IUsuario {
 
     @Override
     public void eliminarAlbumFav(String nickCliente, int i) {
-        DtAlbum dta = ((Cliente) usuarios.get(nickCliente)).obtenerAlbumesFav().get(i);
+        DtAlbum dta = ((Cliente) usuarios.get(nickCliente)).obtenerDtAlbumesFav().get(i);
 
         BDCliente bdc = new BDCliente();
         if (!bdc.eliminarAlbumFav(dta.getNickArtista(), dta.getNombre(), nickCliente)) {
@@ -361,46 +361,46 @@ public class ControladorUsuario implements IUsuario {
 
     @Override
     public void eliminarListaFav(String nickCliente, int i) {
-        /*DtLista dtl = ((Cliente) usuarios.get(nickCliente)).obtenerListasFav().get(i);
+        Lista l = ((Cliente) usuarios.get(nickCliente)).obtenerListasFav().get(i);
 
         BDCliente bdc = new BDCliente();
-        if (dtl instanceof DtListaParticular) {
-            if (!bdc.eliminarListaParticularFav(nickDuenio, dtl.getNombre(), nickCliente)) {
+        if (l instanceof ListaParticular) {
+            if (!bdc.eliminarListaParticularFav(((ListaParticular) l).getDuenio(), l.getNombre(), nickCliente)) {
                 throw new UnsupportedOperationException("Error en la BD");
             }
-        } else if (dtl instanceof DtListaDefecto) {
-            if (!bdc.eliminarListaPorDefectoFav(nombreGenero, dtl.getNombre(), nickCliente)) {
+        } else if (l instanceof ListaDefecto) {
+            if (!bdc.eliminarListaPorDefectoFav(((ListaDefecto) l).getGenero().getNombre(), l.getNombre(), nickCliente)) {
                 throw new UnsupportedOperationException("Error en la BD");
             }
-        }*/
+        }
 
         ((Cliente) usuarios.get(nickCliente)).eliminarListaFav(i);
     }
 
     @Override
     public void eliminarTemaFav(String nickCliente, int i) {
-        /*DtTema dtt = ((Cliente) usuarios.get(nickCliente)).obtenerTemasFav().get(i);
+        Tema t = ((Cliente) usuarios.get(nickCliente)).obtenerTemasFav().get(i);
 
         BDCliente bdc = new BDCliente();
-        if (!bdc.eliminarTemaFav(nickArtista, nomAlbum, dtt.getNombre(), nickCliente)) {
+        if (!bdc.eliminarTemaFav(t.getAlbum().getNickArtista(), t.getAlbum().getNombre(), t.getNombre(), nickCliente)) {
             throw new UnsupportedOperationException("Error en la BD");
-        }*/
+        }
         ((Cliente) usuarios.get(nickCliente)).eliminarTemaFav(i);
     }
 
     @Override
     public ArrayList<DtAlbum> obtenerAlbumesFav(String nickCliente) {
-        return ((Cliente) usuarios.get(nickCliente)).obtenerAlbumesFav();
+        return ((Cliente) usuarios.get(nickCliente)).obtenerDtAlbumesFav();
     }
 
     @Override
     public ArrayList<DtLista> obtenerListasFav(String nickCliente) {
-        return ((Cliente) usuarios.get(nickCliente)).obtenerListasFav();
+        return ((Cliente) usuarios.get(nickCliente)).obtenerDtListasFav();
     }
 
     @Override
     public ArrayList<DtTema> obtenerTemasFav(String nickCliente) {
-        return ((Cliente) usuarios.get(nickCliente)).obtenerTemasFav();
+        return ((Cliente) usuarios.get(nickCliente)).obtenerDtTemasFav();
     }
 
     @Override
