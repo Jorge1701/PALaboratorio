@@ -24,7 +24,6 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
     private ArrayList<DtUsuario> clientes;
     private ArrayList<DtUsuario> artistas;
 
-    // //
     public GuardarTLA() {
         initComponents();
 
