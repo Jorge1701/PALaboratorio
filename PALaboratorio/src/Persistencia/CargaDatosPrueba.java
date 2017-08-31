@@ -75,7 +75,7 @@ public class CargaDatosPrueba {
         {"OK", "benKenobi.png"},
         {"ML", "lachiqui.jpg"},
         {"CB", "cbochinche.jpg"},
-        {"EL", "/Eleven11.jpg"}
+        {"EL", "Eleven11.jpg"}
     };
 
     // Seguidores (Seguidor, Seguido)
