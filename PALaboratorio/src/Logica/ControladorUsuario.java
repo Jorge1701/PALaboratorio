@@ -26,6 +26,12 @@ public class ControladorUsuario implements IUsuario {
 
     private BDUsuario bdUsuario = null;
 
+    private IContenido iContenido;
+
+    public void setIContenido(IContenido iContenido) {
+        this.iContenido = iContenido;
+    }
+
     private ControladorUsuario() {
         this.usuarios = new HashMap();
         this.usuarioRecordado = null;
@@ -291,6 +297,22 @@ public class ControladorUsuario implements IUsuario {
 
     public ArrayList<DtLista> listarLisReproduccion(String nickCliente) {
         return ((Cliente) obtenerUsuario(nickCliente)).listarLisReproduccion();
+    }
+
+    public void agregarAlbumFav(String nickCliente, String nickArtista, String nomAlbum) {
+        ((Cliente) usuarios.get(nickCliente)).agregarAlbumFav(((Artista) usuarios.get(nickArtista)).getAlbum(nomAlbum));
+    }
+
+    public void agregarLPFav(String nickCliente, String nickClienteDuenio, String nomLista) {
+        ((Cliente) usuarios.get(nickCliente)).agregarListaFav(((Cliente) usuarios.get(nickClienteDuenio)).getLista(nomLista));
+    }
+
+    public void agregarLDFav(String nickCliente, String nomGenero, String nomLista) {
+        ((Cliente) usuarios.get(nickCliente)).agregarListaFav(iContenido.obtenerGenero(nomGenero).getListaDefecto(nomLista));
+    }
+
+    public void agregarTemaFav(String nickCliente, String nickArtista, String nomAlbum, String nomTema) {
+        ((Cliente) usuarios.get(nickCliente)).agregarTemaFav(((Artista) usuarios.get(nickArtista)).getAlbum(nomAlbum).getTema(nomTema));
     }
 
     public void cargarAlbum(Album a) {
