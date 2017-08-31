@@ -1,7 +1,7 @@
 package Logica;
 
 public class DtTema {
-    
+
     private String nombre;
     private DtTime duracion;
     private int ubicacion;

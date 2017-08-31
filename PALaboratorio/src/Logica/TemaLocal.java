@@ -18,6 +18,6 @@ public class TemaLocal extends Tema {
     }
 
     public DtTemaLocal getData() {
-        return new DtTemaLocal(this.getDirectorio(),this.getNombre(),this.getDuracion(),this.getUbicacion());
+        return new DtTemaLocal(this.getDirectorio(), this.getNombre(), this.getDuracion(), this.getUbicacion());
     }
 }

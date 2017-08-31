@@ -24,27 +24,30 @@ public class Cliente extends Usuario {
         this.temasfav = new ArrayList<>();
     }
 
-    public void agregarAlbumFav(Album a) {
+    public int agregarAlbumFav(Album a) {
         if (albumesfav.contains(a)) {
             throw new UnsupportedOperationException("Album ya en favoritos");
         } else {
             albumesfav.add(a);
+            return albumesfav.indexOf(a);
         }
     }
 
-    public void agregarListaFav(Lista l) {
+    public int agregarListaFav(Lista l) {
         if (listasfav.contains(l)) {
             throw new UnsupportedOperationException("Lista ya en favoritos");
         } else {
             listasfav.add(l);
+            return listasfav.indexOf(l);
         }
     }
 
-    public void agregarTemaFav(Tema t) {
+    public int agregarTemaFav(Tema t) {
         if (temasfav.contains(t)) {
             throw new UnsupportedOperationException("Tema ya en favoritos");
         } else {
             temasfav.add(t);
+            return temasfav.indexOf(t);
         }
     }
 
