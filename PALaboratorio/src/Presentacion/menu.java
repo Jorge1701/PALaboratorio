@@ -195,6 +195,11 @@ public class menu extends javax.swing.JFrame {
         jMenu4.add(guardarTLA);
 
         eliminarTLA.setText("Eliminar Tema/Lista/Album");
+        eliminarTLA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarTLAActionPerformed(evt);
+            }
+        });
         jMenu4.add(eliminarTLA);
 
         barra.add(jMenu4);
@@ -352,6 +357,13 @@ public class menu extends javax.swing.JFrame {
         centrar(gtla);
         gtla.show();
     }//GEN-LAST:event_guardarTLAActionPerformed
+
+    private void eliminarTLAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarTLAActionPerformed
+        EliminarTLA etla = new EliminarTLA();
+        PanelMenu.add(etla);
+        centrar(etla);
+        etla.show();
+    }//GEN-LAST:event_eliminarTLAActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

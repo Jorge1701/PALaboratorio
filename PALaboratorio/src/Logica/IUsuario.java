@@ -31,6 +31,14 @@ public interface IUsuario {
     public void agregarLDFav(String nickCliente, String nomGenero, String nomLista);
     public void agregarTemaFav(String nickCliente, String nickArtista, String nomAlbum, String nomTema);
     
+    public void eliminarAlbumFav(String nickCliente, int i);
+    public void eliminarListaFav(String nickCliente, int i);
+    public void eliminarTemaFav(String nickCliente, int i);
+    
+    public ArrayList<DtAlbum> obtenerAlbumesFav(String nickCliente);
+    public ArrayList<DtLista> obtenerListasFav(String nickCliente);
+    public ArrayList<DtTema> obtenerTemasFav(String nickCliente);
+    
     public void cargarAlbum(Album dta);
     public void cargarLista(ListaParticular lp, String nickcliente);
 }

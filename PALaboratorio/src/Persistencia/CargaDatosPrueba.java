@@ -544,10 +544,6 @@ public class CargaDatosPrueba {
             return null;
         }
     }
-    
-    
-    
-
 
     public ArrayList<String[]> cargarAlbumesFavoritos() {
         try {
@@ -609,7 +605,7 @@ public class CargaDatosPrueba {
                 String nickname = favoritosD.getString(1);
                 String nicknameCreador = favoritosD.getString(2);
                 String nombre = favoritosD.getString(3);
-                res.add(new String[]{nickname, nicknameCreador,nombre});
+                res.add(new String[]{nickname, nicknameCreador, nombre});
             }
             statamentD.close();
             favoritosD.close();
@@ -632,7 +628,7 @@ public class CargaDatosPrueba {
                 String nickname = favoritosD.getString(1);
                 String nombreGenero = favoritosD.getString(2);
                 String nombre = favoritosD.getString(3);
-                res.add(new String[]{nickname, nombreGenero,nombre});
+                res.add(new String[]{nickname, nombreGenero, nombre});
             }
             statamentD.close();
             favoritosD.close();
@@ -643,9 +639,6 @@ public class CargaDatosPrueba {
         }
 
     }
-	
-    
-    
 
     // Obtener Id de cosas
     private int obtenerIdAlbum(String nickArtista, String nombreAlbum) {
@@ -963,7 +956,7 @@ public class CargaDatosPrueba {
             String nombre = listaPordefecto[1];
             String refGenero = listaPordefecto[2];
             String imagen = listaPordefecto[3];
-            
+
             String nombreGenero = "";
 
             for (String[] genero : generos) {
@@ -971,7 +964,7 @@ public class CargaDatosPrueba {
                     nombreGenero = genero[1];
                 }
             }
-            DtLista lista = new DtListaDefecto(new DtGenero(nombreGenero, null), nombre, null,imagen);
+            DtLista lista = new DtListaDefecto(new DtGenero(nombreGenero, null), nombre, null, imagen);
 
             if (!bdl.altaLista(lista, "")) {
                 return false;
@@ -996,7 +989,7 @@ public class CargaDatosPrueba {
                     nickCliente = cliente[1];
                 }
             }
-            DtLista lista = new DtListaParticular(false, nombreLista, null,imagen);
+            DtLista lista = new DtListaParticular(false, nombreLista, null, imagen);
             if (!bdl.altaLista(lista, nickCliente)) {
                 return false;
             }
@@ -1177,6 +1170,7 @@ public class CargaDatosPrueba {
             String nombreGenero = "";
             String refGenero = "";
             String refArtista = "";
+
             for (String[] cliente : perfiles) {
                 if (refCliente == cliente[0]) {
                     nickCliente = cliente[1];
@@ -1194,10 +1188,10 @@ public class CargaDatosPrueba {
                     refArtista = listaP[0];
                 }
             }
-            for (String[] artista : perfiles){
-            if(refArtista== artista[0]){
-                nickArtista=artista[1];
-            }
+            for (String[] artista : perfiles) {
+                if (refArtista == artista[0]) {
+                    nickArtista = artista[1];
+                }
             }
 
             for (String[] genero : generos) {
@@ -1205,15 +1199,16 @@ public class CargaDatosPrueba {
                     nombreGenero = genero[1];
                 }
             }
+
             int idLista;
             if (nombreGenero == "") {
-               
+
                 idLista = obtenerIdListaParticular(nickArtista, nombreLista);
             } else {
-                
+
                 idLista = obtenerIdListaDefecto(nombreGenero, nombreLista);
             }
-       
+
             if (!bdf.altaListaFavorita(nickCliente, idLista)) {
                 return false;
             }
@@ -1242,7 +1237,6 @@ public class CargaDatosPrueba {
         }
     }
 
-    
     private boolean borrarDatosTabla(String nombre) {
         try {
             PreparedStatement truncate = conexion.prepareStatement("DELETE FROM " + nombre);

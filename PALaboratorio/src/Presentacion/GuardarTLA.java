@@ -251,7 +251,6 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
-        setResizable(true);
         setTitle("Agregar a Favorito");
 
         txtNickname.addCaretListener(new javax.swing.event.CaretListener() {
