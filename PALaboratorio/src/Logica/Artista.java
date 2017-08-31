@@ -69,11 +69,15 @@ public class Artista extends Usuario {
             //Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
             Album album = new Album(super.getNickname(), nom, anio,  img, temas, generos);
             bdAlbum = new BDAlbum();
-            Iterator i = temas.entrySet().iterator();
+            
             
             boolean res = this.bdAlbum.altaAlbum(album);
             if (res) {
                 this.albumes.put(nom, album);
+                for (int i = 0; i < generos.size(); i++) {                
+                    Genero g = (Genero) generos.get(i);
+                    g.cargarAlbum(album);
+                }
             } else {
                 throw new UnsupportedOperationException("Error en Persistencia");
             }

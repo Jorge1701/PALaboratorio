@@ -23,4 +23,9 @@ public class DtTema {
     public int getUbicacion() {
         return ubicacion;
     }
+
+    public void setUbicacion(int ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+    
 }
