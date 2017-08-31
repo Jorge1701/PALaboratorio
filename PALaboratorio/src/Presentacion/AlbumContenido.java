@@ -65,9 +65,9 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             String path = pm.getProperty("pathImagenesAlbum");
             BufferedImage img;
             if (imagen == null || imagen.isEmpty()) {
-                img = ImageIO.read(new File("Recursos/Imagenes/Albumes/albumDefault.png"));
+                img = ImageIO.read(new  File("Recursos/Imagenes/Albumes/albumDefault.png"));
             } else {
-
+                //img = ImageIO.read((path+imagen));
                 img = ImageIO.read(new File(path + imagen));
             }
             PanelImagen pImg = new PanelImagen(img);
@@ -343,19 +343,19 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             return;
         }
 
-        String nombreTema = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 4).toString();
+        String link = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 4).toString();
         if (btnDescargar.getText().equals("Descargar")) {
 
             JFileChooser seleccionarRuta = new JFileChooser();
             seleccionarRuta.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int o = seleccionarRuta.showOpenDialog(this);
+            String nombreTema = link.split("/")[3];
             if (o == JFileChooser.APPROVE_OPTION) {
                 try {
                     File carpetaSeleccionada = seleccionarRuta.getSelectedFile();
                     String rutaDescarga = carpetaSeleccionada.getAbsolutePath();
                     String rutaDCompleta = rutaDescarga + "\\" + nombreTema;
-                    String path = pm.getProperty("pathMusica");
-                    InputStream is = new FileInputStream(path + nombreTema);
+                    InputStream is = getClass().getResourceAsStream(link);
                     OutputStream outstream = new FileOutputStream(rutaDCompleta);
                     byte[] buffer = new byte[4096];
                     int len;
@@ -377,9 +377,9 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
 
         } else {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            StringSelection data = new StringSelection(nombreTema);
+            StringSelection data = new StringSelection(link);
             clipboard.setContents(data, data);
-            JOptionPane.showMessageDialog(this, "Copiado al portapapeles: " + nombreTema);
+            JOptionPane.showMessageDialog(this, "Copiado al portapapeles: " + link);
         }
     }//GEN-LAST:event_btnDescargarActionPerformed
 

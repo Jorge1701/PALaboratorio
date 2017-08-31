@@ -4,6 +4,11 @@ public class TemaLocal extends Tema {
 
     public String directorio;
 
+    public TemaLocal(Album a, String directorio, String nombre, DtTime duracion, int ubicacion) {
+        super(a, nombre, duracion, ubicacion);
+        this.directorio = directorio;
+    }
+
     public TemaLocal(String directorio, String nombre, DtTime duracion, int ubicacion) {
         super(nombre, duracion, ubicacion);
         this.directorio = directorio;
@@ -18,6 +23,6 @@ public class TemaLocal extends Tema {
     }
 
     public DtTemaLocal getData() {
-        return new DtTemaLocal(this.getDirectorio(),this.getNombre(),this.getDuracion(),this.getUbicacion());
+        return new DtTemaLocal(this.getDirectorio(), this.getNombre(), this.getDuracion(), this.getUbicacion());
     }
 }

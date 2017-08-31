@@ -1,10 +1,13 @@
-
 package Logica;
 
-
 public class TemaRemoto extends Tema {
-   
+
     public String url;
+
+    public TemaRemoto(Album a, String nombre, DtTime duracion, int ubicacion, String url) {
+        super(a, nombre, duracion, ubicacion);
+        this.url = url;
+    }
 
     public TemaRemoto(String nombre, DtTime duracion, int ubicacion, String url) {
         super(nombre, duracion, ubicacion);
@@ -18,9 +21,9 @@ public class TemaRemoto extends Tema {
     public void setUrl(String url) {
         this.url = url;
     }
-    
-     public DtTemaRemoto getData() {
-        return new DtTemaRemoto(this.getUrl(),this.getNombre(),this.getDuracion(),this.getUbicacion());
+
+    public DtTemaRemoto getData() {
+        return new DtTemaRemoto(this.getUrl(), this.getNombre(), this.getDuracion(), this.getUbicacion());
     }
-    
+
 }
