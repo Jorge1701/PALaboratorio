@@ -11,6 +11,7 @@ public class TemaRemoto extends Tema {
 
     public TemaRemoto(String nombre, DtTime duracion, int ubicacion, String url) {
         super(nombre, duracion, ubicacion);
+        this.url = url;
     }
 
     public String getUrl() {
