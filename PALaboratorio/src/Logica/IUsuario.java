@@ -14,7 +14,7 @@ public interface IUsuario {
     public ArrayList<DtUsuario> listarArtistas();
     public DtPerfilUsuario obtenerPerfilArtista(String nickArtista);
     public DtPerfilUsuario obtenerPerfilCliente(String nickCliente);
-    public DtCliente getCliente();
+    public DtUsuario getDataUsuario(String nickUsuario);
     public void seguirUsuario(String nickC, String nickU);
     public void dejarSeguirUsuario(String nickSeguidor, String nickUsuario);
     public void cargarUsuarios();

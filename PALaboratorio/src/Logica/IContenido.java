@@ -17,7 +17,7 @@ public interface IContenido {
     public DtGenero listarGenero();
     public ArrayList<DtAlbum> listarAlbumesGenero(String nombre);
     public boolean crearListaReproduccion(DtLista lista,String nickCliente);
-    public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, /*Imagen img*/ ArrayList<DtTema> temas);
+    public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, String img, ArrayList<DtTema> temas);
     public List<DtTema> selecListaDef(String nombre);
     public boolean quitarTema(String nombreT,String nombre,String nombreUser);
     public List<DtTema> selecLista(String nick,String nomL);

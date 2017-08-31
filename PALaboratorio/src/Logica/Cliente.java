@@ -182,7 +182,7 @@ public class Cliente extends Usuario {
         while (it.hasNext()) {
             ListaParticular lp = (ListaParticular) ((Map.Entry) it.next()).getValue();
             if (lp.isPrivada()) {
-                res.add(new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas()));
+                res.add(new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(),lp.getImagen()));
             }
         }
         return res;
@@ -190,7 +190,7 @@ public class Cliente extends Usuario {
 
     public DtLista seleccionarLista(String nombreL) {
         ListaParticular lp = listasParticulares.get(nombreL);
-        return new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas());
+        return new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(),lp.getImagen());
     }
 
     public ArrayList<DtUsuario> obtenerSeguidos() {

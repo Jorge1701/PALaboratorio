@@ -254,7 +254,7 @@ public class ControladorContenido implements IContenido {
         boolean bd = bdLista.altaLista(dtl, nickCliente);
         if (bd && dtl instanceof DtListaDefecto) {
             Genero g = this.genero.obtener(((DtListaDefecto) dtl).getGenero().getNombre());
-            ListaDefecto lis = new ListaDefecto(g, dtl.getNombre(), null);
+            ListaDefecto lis = new ListaDefecto(g, dtl.getNombre(), null,dtl.getImagen());
             this.listasDefecto.put(lis.getNombre(), (ListaDefecto) lis);
             return true;
         } else if (bd) {
@@ -269,7 +269,7 @@ public class ControladorContenido implements IContenido {
     }
     
     @Override
-    public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, ArrayList<DtTema> temas) {
+    public void ingresarAlbum(String nom, int anio, ArrayList<String> generos, String img, ArrayList<DtTema> temas) {
         ArrayList<Genero> lstGeneros = new ArrayList<>();
         HashMap<String, Tema> mapTemas = new HashMap<>();
         
@@ -300,8 +300,8 @@ public class ControladorContenido implements IContenido {
             }
             
         }
-        
-        this.artista.ingresarAlbum(nom, anio, lstGeneros, mapTemas);
+
+        this.artista.ingresarAlbum(nom, anio, lstGeneros, img, mapTemas);
 
         //set null artista seleccionado
         this.artista = null;
@@ -439,8 +439,10 @@ public class ControladorContenido implements IContenido {
         return res;
         
     }
-    
+
+    @Override
     public void cargarLista(ListaDefecto ld, String nombreGenero) {
         genero.obtener(nombreGenero).cargarLista(ld);
+        listasDefecto.put(ld.getNombre(), ld);
     }
 }

@@ -69,6 +69,7 @@ public class menu extends javax.swing.JFrame {
             .addGap(0, 335, Short.MAX_VALUE)
         );
 
+        barra.setBackground(new java.awt.Color(255, 255, 255));
         barra.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jMenu1.setText("Registros");

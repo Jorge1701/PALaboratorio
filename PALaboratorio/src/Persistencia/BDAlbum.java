@@ -32,15 +32,16 @@ public class BDAlbum {
     
    protected Connection conexion = new ConexionBD().getConexion();
     
-    public boolean altaAlbum(Album album){
-        
+    public boolean altaAlbum(Album album) {
+
         try {
-            
-            String sql = "INSERT INTO album" + "(nicknameArtista, nombre, anio) VALUES (?,?,?)";
+
+            String sql = "INSERT INTO album" + "(nicknameArtista, nombre, anio, imagen) VALUES (?,?,?,?)";
             PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            statament.setString(1,album.getNickArtista());
-            statament.setString(2,album.getNombre());
-            statament.setInt(3, album.getAnio());   
+            statament.setString(1, album.getNickArtista());
+            statament.setString(2, album.getNombre());
+            statament.setInt(3, album.getAnio());
+            statament.setString(4, album.getImagen());
             statament.executeUpdate();
             ResultSet rs = statament.getGeneratedKeys();
             rs.next();
@@ -78,38 +79,24 @@ public class BDAlbum {
 
             }
 
-            Iterator i2 = temas.entrySet().iterator();
-            while (i2.hasNext()) {
-                String sqlT = "INSERT INTO temastienealbum(idTema, idAlbum, nicknameArtista) VALUES (?,?,?)";
-                PreparedStatement statament3 = conexion.prepareStatement(sqlT);
-                Tema t = (Tema) ((Map.Entry) i2.next()).getValue();
-                statament3.setInt(1, t.getId());
-                statament3.setInt(2, idAlbum);
-                statament3.setString(3, album.getNickArtista());
-                statament3.executeUpdate();
-                statament3.close();
-
-            }
-
             ArrayList<Genero> gros = album.getGeneros();
             for (int e = 0; e < gros.size(); e++) {
                 Genero g = gros.get(e);
-                String sqlT = "INSERT INTO clasificacionalbum(idAlbum, nickname, nombreGenero) VALUES (?,?,?)";
+                String sqlT = "INSERT INTO clasificacionalbum(idAlbum, nicknameArtista, nombreGenero) VALUES (?,?,?)";
                 PreparedStatement statament4 = conexion.prepareStatement(sqlT);
                 statament4.setInt(1, idAlbum);
                 statament4.setString(2, album.getNickArtista());
                 statament4.setString(3, g.getNombre());
                 statament4.executeUpdate();
                 statament4.close();
-             } 
-            
+            }
+
             return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-
     }
 
     public int insertarAlbum(DtAlbum dta) {

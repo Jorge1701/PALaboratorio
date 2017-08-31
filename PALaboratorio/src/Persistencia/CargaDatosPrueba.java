@@ -310,9 +310,9 @@ public class CargaDatosPrueba {
         {"VC", "DMV"},
         {"VC", "LDC"},
         {"VC", "CPP"},
-        {"VC", "LDC"},
-        {"VC", "CPP"},
-        {"VC", "AMA"}
+        {"OK", "LDC"},
+        {"OK", "CPP"},
+        {"CB", "AMA"}
     };
     // Fin de datos de prueba
 
@@ -544,6 +544,108 @@ public class CargaDatosPrueba {
             return null;
         }
     }
+    
+    
+    
+
+
+    public ArrayList<String[]> cargarAlbumesFavoritos() {
+        try {
+            ArrayList<String[]> res = new ArrayList<>();
+            String sql = "SELECT a.nombre, f.nicknameCliente,f.nicknameArtista FROM album as a , fava as f WHERE a.idAlbum = f.idAlbum";
+            PreparedStatement statament = conexion.prepareStatement(sql);
+            ResultSet favoritos = statament.executeQuery();
+
+            while (favoritos.next()) {
+
+                String nombreAlbum = favoritos.getString(1);
+                String nicknameCliente = favoritos.getString(2);
+                String nicknameArtista = favoritos.getString(3);
+                res.add(new String[]{nombreAlbum, nicknameCliente, nicknameArtista});
+
+            }
+            statament.close();
+            favoritos.close();
+            return res;
+        } catch (SQLException ex) {
+            Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+
+    public ArrayList<String[]> cargaTemasFavoritos() {
+
+        try {
+            ArrayList<String[]> res = new ArrayList<>();
+            String sql = "SELECT f.nickname, t.nombre, a.nombre,t.nicknameArtista FROM favt as f , tema as t , album as a WHERE f.idTema=t.idTema and t.idAlbum=a.idAlbum";
+            PreparedStatement statament = conexion.prepareStatement(sql);
+            ResultSet favoritos = statament.executeQuery();
+            while (favoritos.next()) {
+                String nickname = favoritos.getString(1);
+                String nombreTema = favoritos.getString(2);
+                String nombreAlbum = favoritos.getString(3);
+                String nicknameArtista = favoritos.getString(4);
+                res.add(new String[]{nickname, nombreTema, nombreAlbum, nicknameArtista});
+            }
+            statament.close();
+            favoritos.close();
+            return res;
+        } catch (SQLException ex) {
+            Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+
+    public ArrayList<String[]> cargaListasFavoritosP() {
+
+        try {
+            ArrayList<String[]> res = new ArrayList<>();
+            String sqlP = "SELECT f.nickname ,lp.nickname,l.nombre  FROM favl as f, listaparticular as lp , lista as l WHERE f.idLista=l.idLista and l.idLista = lp.idLista";
+            PreparedStatement statamentD = conexion.prepareStatement(sqlP);
+            ResultSet favoritosD = statamentD.executeQuery();
+            while (favoritosD.next()) {
+                String nickname = favoritosD.getString(1);
+                String nicknameCreador = favoritosD.getString(2);
+                String nombre = favoritosD.getString(3);
+                res.add(new String[]{nickname, nicknameCreador,nombre});
+            }
+            statamentD.close();
+            favoritosD.close();
+            return res;
+        } catch (SQLException ex) {
+            Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+
+    public ArrayList<String[]> cargaListasFavoritosD() {
+
+        try {
+            ArrayList<String[]> res = new ArrayList<>();
+            String sqlD = "SELECT f.nickname ,ld.nombreGenero,l.nombre  FROM favl as f, listapordefecto as ld , lista as l WHERE f.idLista=l.idLista and l.idLista = ld.idLista";
+            PreparedStatement statamentD = conexion.prepareStatement(sqlD);
+            ResultSet favoritosD = statamentD.executeQuery();
+            while (favoritosD.next()) {
+                String nickname = favoritosD.getString(1);
+                String nombreGenero = favoritosD.getString(2);
+                String nombre = favoritosD.getString(3);
+                res.add(new String[]{nickname, nombreGenero,nombre});
+            }
+            statamentD.close();
+            favoritosD.close();
+            return res;
+        } catch (SQLException ex) {
+            Logger.getLogger(CargaDatosPrueba.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+	
+    
+    
 
     // Obtener Id de cosas
     private int obtenerIdAlbum(String nickArtista, String nombreAlbum) {
@@ -569,10 +671,10 @@ public class CargaDatosPrueba {
         }
     }
 
-    private int obtenerIdListaParticular(String nickCiente, String nombreLista) {
+    private int obtenerIdListaParticular(String nickCliente, String nombreLista) {
         try {
-            PreparedStatement query = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista AND nickname = ? AND nombre = ?");
-            query.setString(1, nickCiente);
+            PreparedStatement query = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista AND lp.nickname = ? AND l.nombre = ?");
+            query.setString(1, nickCliente);
             query.setString(2, nombreLista);
 
             int idLista = 0;
@@ -664,6 +766,15 @@ public class CargaDatosPrueba {
             return false;
         }
         if (!insertarTemasLista()) {
+            return false;
+        }
+        if (!insertarTemaFavorito()) {
+            return false;
+        }
+        if (!insertarAlbumFavorito()) {
+            return false;
+        }
+        if (!insertarListaFavorita()) {
             return false;
         }
         return true;
@@ -851,7 +962,8 @@ public class CargaDatosPrueba {
 
             String nombre = listaPordefecto[1];
             String refGenero = listaPordefecto[2];
-
+            String imagen = listaPordefecto[3];
+            
             String nombreGenero = "";
 
             for (String[] genero : generos) {
@@ -859,7 +971,7 @@ public class CargaDatosPrueba {
                     nombreGenero = genero[1];
                 }
             }
-            DtLista lista = new DtListaDefecto(new DtGenero(nombreGenero, null), nombre, null);
+            DtLista lista = new DtListaDefecto(new DtGenero(nombreGenero, null), nombre, null,imagen);
 
             if (!bdl.altaLista(lista, "")) {
                 return false;
@@ -875,6 +987,7 @@ public class CargaDatosPrueba {
         for (String[] listaParticular : listasParticulares) {
             String refCliente = listaParticular[0];
             String nombreLista = listaParticular[2];
+            String imagen = listaParticular[4];
 
             String nickCliente = "";
 
@@ -883,7 +996,7 @@ public class CargaDatosPrueba {
                     nickCliente = cliente[1];
                 }
             }
-            DtLista lista = new DtListaParticular(false, nombreLista, null);
+            DtLista lista = new DtListaParticular(false, nombreLista, null,imagen);
             if (!bdl.altaLista(lista, nickCliente)) {
                 return false;
             }
@@ -970,6 +1083,144 @@ public class CargaDatosPrueba {
         return true;
     }
 
+    // Temas Favoritos (Ref Cliente, Ref Album, Ref Tema)
+    public boolean insertarTemaFavorito() {
+        BDFavorito bdf = new BDFavorito();
+        for (String[] temafav : refTemaFav) {
+            String refCliente = temafav[0];
+            String refAlbum = temafav[1];
+            String refTema = temafav[2];
+
+            String nicknameCliente = "";
+            String refArtista = "";
+            String nombreAlbum = "";
+            String nicknameArtista = "";
+            String nombreTema = "";
+
+            for (String[] cliente : perfiles) {
+                if (refCliente == cliente[0]) {
+                    nicknameCliente = cliente[1];
+                }
+            }
+            for (String[] album : albumes) {
+                if (refAlbum == album[1]) {
+                    refArtista = album[0];
+                    nombreAlbum = album[2];
+                }
+            }
+            for (String[] artista : perfiles) {
+                if (refArtista == artista[0]) {
+                    nicknameArtista = artista[1];
+                }
+            }
+            for (String[] tema : temas) {
+                if (refTema == tema[1]) {
+                    nombreTema = tema[2];
+                }
+            }
+            int idAlbum = obtenerIdAlbum(nicknameArtista, nombreAlbum);
+            int idTema = obtenerIdTema(nicknameArtista, idAlbum, nombreTema);
+
+            if (!bdf.altaTemaFavortio(nicknameCliente, idTema)) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    // Albumes Favoritos (Ref Cliente, Ref Album)
+    public boolean insertarAlbumFavorito() {
+        BDFavorito bdf = new BDFavorito();
+        for (String[] albumFav : refAlbumFav) {
+            String refCliente = albumFav[0];
+            String refAlbum = albumFav[1];
+
+            String nickCliente = "";
+            String nickArtista = "";
+            String nombreAlbum = "";
+            String refArtista = "";
+            for (String[] cliente : perfiles) {
+                if (refCliente == cliente[0]) {
+                    nickCliente = cliente[1];
+                }
+            }
+            for (String[] album : albumes) {
+                if (refAlbum == album[1]) {
+                    nombreAlbum = album[2];
+                    refArtista = album[0];
+                }
+            }
+            for (String[] artista : perfiles) {
+                if (refArtista == artista[0]) {
+                    nickArtista = artista[1];
+                }
+            }
+            int idalbum = obtenerIdAlbum(nickArtista, nombreAlbum);
+            if (!bdf.altaAlbumFavorito(idalbum, nickArtista, nickCliente)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Listas Favoritas (Ref Cliente, Ref Listas)
+    public boolean insertarListaFavorita() {
+        BDFavorito bdf = new BDFavorito();
+        for (String[] listafav : refListaFav) {
+            String refCliente = listafav[0];
+            String refLista = listafav[1];
+
+            String nickCliente = "";
+            String nickArtista = "";
+            String nombreLista = "";
+            String nombreGenero = "";
+            String refGenero = "";
+            String refArtista = "";
+            for (String[] cliente : perfiles) {
+                if (refCliente == cliente[0]) {
+                    nickCliente = cliente[1];
+                }
+            }
+            for (String[] listaD : listasPorDefecto) {
+                if (refLista == listaD[0]) {
+                    nombreLista = listaD[1];
+                    refGenero = listaD[2];
+                }
+            }
+            for (String[] listaP : listasParticulares) {
+                if (refLista == listaP[1]) {
+                    nombreLista = listaP[2];
+                    refArtista = listaP[0];
+                }
+            }
+            for (String[] artista : perfiles){
+            if(refArtista== artista[0]){
+                nickArtista=artista[1];
+            }
+            }
+
+            for (String[] genero : generos) {
+                if (refGenero == genero[0]) {
+                    nombreGenero = genero[1];
+                }
+            }
+            int idLista;
+            if (nombreGenero == "") {
+               
+                idLista = obtenerIdListaParticular(nickArtista, nombreLista);
+            } else {
+                
+                idLista = obtenerIdListaDefecto(nombreGenero, nombreLista);
+            }
+       
+            if (!bdf.altaListaFavorita(nickCliente, idLista)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // Borrar todos los datos de la BD
     public boolean borrarTodosLosDatos() {
         try {
@@ -991,6 +1242,7 @@ public class CargaDatosPrueba {
         }
     }
 
+    
     private boolean borrarDatosTabla(String nombre) {
         try {
             PreparedStatement truncate = conexion.prepareStatement("DELETE FROM " + nombre);
@@ -1002,85 +1254,5 @@ public class CargaDatosPrueba {
             e.printStackTrace();
             return false;
         }
-    }
-
-    // FINNNN
-    private boolean CargarListaPorDefecto() {
-        BDLista bdl = new BDLista();
-        for (String[] listaPordefecto : listasPorDefecto) {
-            String refLista = listaPordefecto[0];
-            String nombre = listaPordefecto[1];
-            String genero = listaPordefecto[2];
-
-            String nombreListaD = "";
-            String nombreTema = "";
-
-            for (String[] listapordefecto : listasPorDefecto) {
-                if (listapordefecto[0] == refLista) {
-                    nombreListaD = listapordefecto[1];
-                }
-            }
-            for (String[] temaLista : temasDeListas) {
-                if (temaLista[0] == refLista) {
-                    String refTema = temaLista[2];
-
-                    for (String[] tema : temas) {
-                        if (tema[1] == refTema) {
-                            nombreTema = tema[2];
-                        }
-                    }
-                    /*
-                    if (!bdl.altaLista(nombreListaD, nombreTema, null, genero)) {
-                        return false;
-                    } else {
-                        return false;
-                    }
-                     */
-                }
-            }
-        }
-        return true;
-    }
-
-    // Listas de Reproduccion Particulares (Ref cliente, Ref, Nombre, Publica, Imagen)
-    private boolean CargarListaParticular() {
-        BDLista bdl = new BDLista();
-        for (String[] listaParticular : listasParticulares) {
-            String refCliente = listaParticular[0];
-            String refLista = listaParticular[1];
-            String nombreLista = listaParticular[2];
-            String publica = listaParticular[3];
-
-            String nombreCliente = "";
-            String nombretema = "";
-            String refTema = "";
-            for (String[] cliente : perfiles) {
-                if (cliente[0] == refCliente) {
-                    nombreCliente = cliente[1];
-                }
-
-                for (String[] temalista : temasDeListas) {
-
-                    if (temalista[0] == refLista) {
-                        refTema = temalista[2];
-                    }
-
-                    for (String[] tema : temas) {
-                        if (tema[0] == refTema) {
-                            nombretema = tema[2];
-                        }
-                    }
-                    /*
-                    if (!bdl.altaLista(nombreLista, nombretema, nombreCliente, null)) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                     */
-                }
-            }
-
-        }
-        return false;
     }
 }

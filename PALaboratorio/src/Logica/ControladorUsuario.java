@@ -175,8 +175,8 @@ public class ControladorUsuario implements IUsuario {
     }
 
     @Override
-    public DtCliente getCliente() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public DtUsuario getDataUsuario(String nickUsuario) {
+        return usuarios.get(nickUsuario).getData();
     }
 
     @Override
@@ -321,6 +321,7 @@ public class ControladorUsuario implements IUsuario {
     }
 
     public void cargarLista(ListaParticular lp, String nickcliente) {
+
         ((Cliente) usuarios.get(nickcliente)).cargarLista(lp);
     }
 }

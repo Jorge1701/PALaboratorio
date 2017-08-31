@@ -60,14 +60,14 @@ public class Artista extends Usuario {
 
     }
 
-    public void ingresarAlbum(String nom, int anio, ArrayList<Genero> generos/*, Imagen img*/, HashMap<String, Tema> temas) {
+    public void ingresarAlbum(String nom, int anio, ArrayList<Genero> generos, String img, HashMap<String, Tema> temas) {
 
         if (this.albumes.get(nom) != null) {
             throw new UnsupportedOperationException("Ya existe Albun con ese nombre");
         } else {
 
             //Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
-            Album album = new Album(super.getNickname(), nom, anio, null, temas, generos);
+            Album album = new Album(super.getNickname(), nom, anio,  img, temas, generos);
             bdAlbum = new BDAlbum();
             Iterator i = temas.entrySet().iterator();
             
