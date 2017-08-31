@@ -41,11 +41,12 @@ import javax.swing.table.TableRowSorter;
 public class AlbumContenido extends javax.swing.JInternalFrame implements ListSelectionListener {
 
     IUsuario iUsuario;
+    PropertyManager pm;
 
     public AlbumContenido(DtAlbumContenido dtac) {
         initComponents();
         iUsuario = Fabrica.getIControladorUsuario();
-
+        pm = PropertyManager.getInstance();
         btnAbrirNavegador.setVisible(false);
 
         tablaTemas.getColumnModel().getColumn(0).setMinWidth(0);
@@ -61,11 +62,13 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         // Cargar imagen
         try {
             String imagen = dtac.getInfo().getImagen();
+            String path = pm.getProperty("pathImagenesAlbum");
             BufferedImage img;
             if (imagen == null || imagen.isEmpty()) {
-                img = ImageIO.read(PerfilCliente.class.getResource("/Recursos/Imagenes/Albumes/albumDefault.png"));
+                img = ImageIO.read(new  File("Recursos/Imagenes/Albumes/albumDefault.png"));
             } else {
-                img = ImageIO.read(PerfilCliente.class.getResource(imagen));
+                //img = ImageIO.read((path+imagen));
+                img = ImageIO.read(new File(path + imagen));
             }
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
