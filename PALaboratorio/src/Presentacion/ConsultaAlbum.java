@@ -1,7 +1,6 @@
 package Presentacion;
 
 import Logica.DtAlbum;
-import Logica.DtAlbumContenido;
 import Logica.DtGenero;
 import Logica.DtUsuario;
 import Logica.Fabrica;

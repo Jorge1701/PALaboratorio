@@ -60,12 +60,13 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
 
         // Cargar imagen
         try {
+            
             String imagen = dtac.getInfo().getImagen();
             BufferedImage img;
             if (imagen == null || imagen.isEmpty()) {
-                img = ImageIO.read(PerfilCliente.class.getResource("/Recursos/Imagenes/Albumes/albumDefault.png"));
+                img = ImageIO.read(new File("Recursos/Imagenes/Albumes/albumDefault.png"));
             } else {
-                img = ImageIO.read(PerfilCliente.class.getResource(imagen));
+               img = ImageIO.read(PerfilCliente.class.getResource(imagen));
             }
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);

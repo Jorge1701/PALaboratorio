@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public interface IUsuario {
     
+    public void setIContenido(IContenido iContenido);
     public Usuario obtenerUsuario(String nick);
     public Artista selectArtista(String nick);
     public ArrayList<DtUsuario> listarUsuarios();
@@ -24,6 +25,20 @@ public interface IUsuario {
     public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente);
     public DtLista selectListaCli(String nombreL);
     public ArrayList<DtLista> listarLisReproduccion(String nickCliente);
+    
+    public void agregarAlbumFav(String nickCliente, String nickArtista, String nomAlbum);
+    public void agregarLPFav(String nickCliente, String nickClienteDuenio, String nomLista);
+    public void agregarLDFav(String nickCliente, String nomGenero, String nomLista);
+    public void agregarTemaFav(String nickCliente, String nickArtista, String nomAlbum, String nomTema);
+    
+    public void eliminarAlbumFav(String nickCliente, int i);
+    public void eliminarListaFav(String nickCliente, int i);
+    public void eliminarTemaFav(String nickCliente, int i);
+    
+    public ArrayList<DtAlbum> obtenerAlbumesFav(String nickCliente);
+    public ArrayList<DtLista> obtenerListasFav(String nickCliente);
+    public ArrayList<DtTema> obtenerTemasFav(String nickCliente);
+    
     public void cargarAlbum(Album dta);
     public void cargarLista(ListaParticular lp, String nickcliente);
 }

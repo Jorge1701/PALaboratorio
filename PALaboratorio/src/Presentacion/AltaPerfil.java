@@ -7,10 +7,6 @@ import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IUsuario;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import Presentacion.Validacion;
 
 public class AltaPerfil extends javax.swing.JInternalFrame {
 
@@ -24,7 +20,6 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
         bioTx.setVisible(false);
         cliente.setSelected(true);
         this.IU = Fabrica.getIControladorUsuario();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -270,11 +265,11 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void anioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anioActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_anioActionPerformed
 
     private void diaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_diaActionPerformed
 
     private void apellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apellidoActionPerformed
@@ -291,7 +286,6 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
             web.setVisible(true);
             webTx.setVisible(true);
             bioTx.setVisible(true);
-
         } else {
             biografia.setVisible(false);
             web.setVisible(false);
@@ -358,7 +352,6 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
 
     private void nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyPressed
 
-// TODO add your handling code here:
     }//GEN-LAST:event_nombreKeyPressed
 
 

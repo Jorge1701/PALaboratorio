@@ -76,6 +76,30 @@ public class Cliente extends Usuario {
         }
     }
 
+    public ArrayList<DtAlbum> obtenerAlbumesFav() {
+        ArrayList<DtAlbum> favs = new ArrayList<>();
+        for (Album album : albumesfav) {
+            favs.add(album.getData());
+        }
+        return favs;
+    }
+
+    public ArrayList<DtLista> obtenerListasFav() {
+        ArrayList<DtLista> favs = new ArrayList<>();
+        for (Lista lista : listasfav) {
+            favs.add(lista.getData());
+        }
+        return favs;
+    }
+
+    public ArrayList<DtTema> obtenerTemasFav() {
+        ArrayList<DtTema> favs = new ArrayList<>();
+        for (Tema tema : temasfav) {
+            favs.add(tema.getData());
+        }
+        return favs;
+    }
+
     @Override
     public String getTipo() {
         return "Cliente";
@@ -182,7 +206,7 @@ public class Cliente extends Usuario {
         while (it.hasNext()) {
             ListaParticular lp = (ListaParticular) ((Map.Entry) it.next()).getValue();
             if (lp.isPrivada()) {
-                res.add(new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(),lp.getImagen()));
+                res.add(new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(), lp.getImagen()));
             }
         }
         return res;
@@ -190,7 +214,7 @@ public class Cliente extends Usuario {
 
     public DtLista seleccionarLista(String nombreL) {
         ListaParticular lp = listasParticulares.get(nombreL);
-        return new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(),lp.getImagen());
+        return new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(), lp.getImagen());
     }
 
     public ArrayList<DtUsuario> obtenerSeguidos() {

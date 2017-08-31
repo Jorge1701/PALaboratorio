@@ -1,11 +1,13 @@
 package Logica;
 
 import Persistencia.BDUsuario;
+import com.mysql.fabric.xmlrpc.Client;
 import java.util.HashMap;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import javax.swing.JOptionPane;
 
 public class ControladorUsuario implements IUsuario {
 
@@ -25,6 +27,12 @@ public class ControladorUsuario implements IUsuario {
     private Usuario usuarioRecordado;
 
     private BDUsuario bdUsuario = null;
+
+    private IContenido iContenido;
+
+    public void setIContenido(IContenido iContenido) {
+        this.iContenido = iContenido;
+    }
 
     private ControladorUsuario() {
         this.usuarios = new HashMap();
@@ -271,6 +279,7 @@ public class ControladorUsuario implements IUsuario {
         return u.getSeguidores();
     }
 
+    @Override
     public ArrayList<DtLista> listarListaReproduccionCli(String nickCliente) {
         Usuario c = this.usuarios.get(nickCliente);
         if (c == null) {
@@ -285,19 +294,74 @@ public class ControladorUsuario implements IUsuario {
         return ((Cliente) c).listarLisReproduccion();
     }
 
+    @Override
     public DtLista selectListaCli(String nombreL) {
         return ((Cliente) this.usuarioRecordado).seleccionarLista(nombreL);
     }
 
+    @Override
     public ArrayList<DtLista> listarLisReproduccion(String nickCliente) {
         return ((Cliente) obtenerUsuario(nickCliente)).listarLisReproduccion();
     }
 
+    @Override
+    public void agregarAlbumFav(String nickCliente, String nickArtista, String nomAlbum) {
+        ((Cliente) usuarios.get(nickCliente)).agregarAlbumFav(((Artista) usuarios.get(nickArtista)).getAlbum(nomAlbum));
+    }
+
+    @Override
+    public void agregarLPFav(String nickCliente, String nickClienteDuenio, String nomLista) {
+        ((Cliente) usuarios.get(nickCliente)).agregarListaFav(((Cliente) usuarios.get(nickClienteDuenio)).getLista(nomLista));
+    }
+
+    @Override
+    public void agregarLDFav(String nickCliente, String nomGenero, String nomLista) {
+        ((Cliente) usuarios.get(nickCliente)).agregarListaFav(iContenido.obtenerGenero(nomGenero).getListaDefecto(nomLista));
+    }
+
+    @Override
+    public void agregarTemaFav(String nickCliente, String nickArtista, String nomAlbum, String nomTema) {
+        ((Cliente) usuarios.get(nickCliente)).agregarTemaFav(((Artista) usuarios.get(nickArtista)).getAlbum(nomAlbum).getTema(nomTema));
+    }
+
+    @Override
+    public void eliminarAlbumFav(String nickCliente, int i) {
+        ((Cliente) usuarios.get(nickCliente)).eliminarAlbumFav(i);
+    }
+
+    @Override
+    public void eliminarListaFav(String nickCliente, int i) {
+        ((Cliente) usuarios.get(nickCliente)).eliminarListaFav(i);
+    }
+
+    @Override
+    public void eliminarTemaFav(String nickCliente, int i) {
+        System.err.println(nickCliente);
+        ((Cliente) usuarios.get(nickCliente)).eliminarTemaFav(i);
+    }
+
+    @Override
+    public ArrayList<DtAlbum> obtenerAlbumesFav(String nickCliente) {
+        return ((Cliente) usuarios.get(nickCliente)).obtenerAlbumesFav();
+    }
+
+    @Override
+    public ArrayList<DtLista> obtenerListasFav(String nickCliente) {
+        return ((Cliente) usuarios.get(nickCliente)).obtenerListasFav();
+    }
+
+    @Override
+    public ArrayList<DtTema> obtenerTemasFav(String nickCliente) {
+        return ((Cliente) usuarios.get(nickCliente)).obtenerTemasFav();
+    }
+
+    @Override
     public void cargarAlbum(Album a) {
         Usuario u = usuarios.get(a.getNickArtista());
         ((Artista) u).cargarAlbum(a);
     }
 
+    @Override
     public void cargarLista(ListaParticular lp, String nickcliente) {
 
         ((Cliente) usuarios.get(nickcliente)).cargarLista(lp);

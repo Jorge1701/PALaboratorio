@@ -10,6 +10,7 @@ public class Fabrica {
         ControladorUsuario.cargarInstancia();
         ControladorContenido.cargarInstancia();
         getIControladorContenido().setIUsuario(getIControladorUsuario());
+        getIControladorUsuario().setIContenido(getIControladorContenido());
     }
 
     public static void cargaDatosPrueba() throws Exception {

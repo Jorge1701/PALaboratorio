@@ -12,7 +12,7 @@ public class DesktopFondo extends JDesktopPane {
 
     public void paintComponent(Graphics g) {
         try {
-            BufferedImage img = ImageIO.read(menu.class.getResource("/Recursos/Imagenes/wallpaper3.jpg"));
+            BufferedImage img = ImageIO.read(menu.class.getResource("/Imagenes/wallpaper2.jpg"));
             g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
         } catch (IOException ex) {
             Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
