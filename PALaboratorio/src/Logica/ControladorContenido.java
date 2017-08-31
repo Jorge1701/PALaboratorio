@@ -259,7 +259,7 @@ public class ControladorContenido implements IContenido {
             this.listasDefecto.put(lis.getNombre(), (ListaDefecto) lis);
             return true;
         } else if (bd) {
-            ListaParticular lis2 = new ListaParticular(dtl.getNombre());
+            ListaParticular lis2 = new ListaParticular(dtl.getNombre(),dtl.getImagen());
             this.listasParticular.put(lis2.getNombre(), lis2);
             Cliente cl = (Cliente) iUsuario.obtenerUsuario(nickCliente);
             cl.agregarLista(lis2);

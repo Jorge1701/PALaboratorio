@@ -13,8 +13,8 @@ public class ListaParticular extends Lista {
         this.privada = privada;
     }
 
-    public ListaParticular(String nombre) {
-        super(nombre, new ArrayList<>(), null);
+    public ListaParticular(String nombre, String imagen) {
+        super(nombre, new ArrayList<>(), imagen);
         this.privada = true;
     }
 

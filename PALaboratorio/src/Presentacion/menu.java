@@ -55,7 +55,7 @@ public class menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Espotify");
         setBackground(new java.awt.Color(51, 153, 0));
-        setIconImage(Toolkit.getDefaultToolkit().getImage(menu.class.getResource("/Recursos/Imagenes/icono.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(menu.class.getResource("/Recursos/Imagenes/icono2.png")));
         setName("Espotify"); // NOI18N
 
         PanelMenu.setBackground(new java.awt.Color(204, 204, 255));
