@@ -20,9 +20,9 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
         txtNombre.setText(dtPerfilArtista.getInfo().getNombre());
         txtApellido.setText(dtPerfilArtista.getInfo().getApellido());
         txtEmail.setText(dtPerfilArtista.getInfo().getEmail());
-        txtFechaNac.setText(dtPerfilArtista.getInfo().getFechaNac().toString());
-        textBiografia.setText(dtPerfilArtista.getInfoArtista().getBiografia());
         txtSitioWeb.setText(dtPerfilArtista.getInfoArtista().getWeb());
+        textBiografia.setText(dtPerfilArtista.getInfoArtista().getBiografia());
+        txtFechaNac.setText(dtPerfilArtista.getInfo().getFechaNac().toString());
 
         ((TitledBorder) PanelSeguidores.getBorder()).setTitle("Seguidores (" + dtPerfilArtista.getSeguidores().size() + "):");
 
@@ -86,7 +86,7 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
         tablaSeguidores = new javax.swing.JTable();
         PanelInfo7 = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
-        txtFechaNac = new javax.swing.JTextField();
+        txtSitioWeb = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
@@ -97,7 +97,7 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
         txtNickname = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
-        txtSitioWeb = new javax.swing.JTextField();
+        txtFechaNac = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         textBiografia = new javax.swing.JTextArea();
         imagenPanel = new javax.swing.JPanel();
@@ -202,11 +202,11 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
 
         jLabel38.setText("Fecha de Nacimiento");
 
-        txtFechaNac.setEditable(false);
-        txtFechaNac.setBackground(new java.awt.Color(255, 255, 255));
-        txtFechaNac.addActionListener(new java.awt.event.ActionListener() {
+        txtSitioWeb.setEditable(false);
+        txtSitioWeb.setBackground(new java.awt.Color(255, 255, 255));
+        txtSitioWeb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaNacActionPerformed(evt);
+                txtSitioWebActionPerformed(evt);
             }
         });
 
@@ -244,8 +244,8 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
 
         jLabel43.setText("Sitio Web");
 
-        txtSitioWeb.setEditable(false);
-        txtSitioWeb.setBackground(new java.awt.Color(255, 255, 255));
+        txtFechaNac.setEditable(false);
+        txtFechaNac.setBackground(new java.awt.Color(255, 255, 255));
 
         textBiografia.setEditable(false);
         textBiografia.setColumns(20);
@@ -284,13 +284,13 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
                 .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelInfo7Layout.createSequentialGroup()
                         .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtNickname, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                                 .addComponent(txtNombre)
                                 .addComponent(txtApellido)
                                 .addComponent(txtEmail)
-                                .addComponent(txtFechaNac)))
+                                .addComponent(txtSitioWeb)))
                         .addGap(29, 29, 29)
                         .addComponent(imagenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -321,11 +321,11 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel38)
-                            .addComponent(txtSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel43)
-                            .addComponent(txtFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+                            .addComponent(txtSitioWeb, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
                         .addGap(22, 22, 22)))
                 .addGroup(PanelInfo7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,9 +348,9 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void txtFechaNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaNacActionPerformed
+    private void txtSitioWebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSitioWebActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaNacActionPerformed
+    }//GEN-LAST:event_txtSitioWebActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
