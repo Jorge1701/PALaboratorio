@@ -31,11 +31,9 @@ import javax.swing.table.DefaultTableModel;
 public class ListaReproduccionContenido extends javax.swing.JInternalFrame implements ListSelectionListener {
 
     PropertyManager pm;
-
     public ListaReproduccionContenido(DtLista lista, String gna) {
         initComponents();
         pm = PropertyManager.getInstance();
-
         //Ocultar comlumna de la tablaTemas
         tablaTemas.getColumnModel().getColumn(0).setMinWidth(0);
         tablaTemas.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -64,7 +62,7 @@ public class ListaReproduccionContenido extends javax.swing.JInternalFrame imple
         // Cargar imagen
         try {
             String imagen = lista.getImagen();
-            String path = pm.getProperty("pahtImagenesLista");
+            String path = pm.getProperty("pathImagenesLista");
             BufferedImage img;
             if (imagen == null || imagen.isEmpty()) {
                 img = ImageIO.read(new File("Recursos/Imagenes/Albumes/albumDefault.png"));
@@ -243,7 +241,7 @@ public class ListaReproduccionContenido extends javax.swing.JInternalFrame imple
             JFileChooser seleccionarRuta = new JFileChooser();
             seleccionarRuta.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int o = seleccionarRuta.showOpenDialog(this);
-
+            
             if (o == JFileChooser.APPROVE_OPTION) {
                 try {
                     File carpetaSeleccionada = seleccionarRuta.getSelectedFile();

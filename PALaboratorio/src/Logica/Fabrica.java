@@ -87,10 +87,10 @@ public class Fabrica {
             for (DtTema dtt : cdp.cargarTemasAlbum(dta.getNickArtista(), dta.getNombre())) {
                 if (dtt instanceof DtTemaLocal) {
                     DtTemaLocal dttl = (DtTemaLocal) dtt;
-                    temas.put(dttl.getNombre(), new TemaLocal(dttl.getDirectorio(), dttl.getNombre(), dttl.getDuracion(), dttl.getUbicacion()));
+                    temas.put(dttl.getNombre(), new TemaLocal(a, dttl.getDirectorio(), dttl.getNombre(), dttl.getDuracion(), dttl.getUbicacion()));
                 } else {
                     DtTemaRemoto dttr = (DtTemaRemoto) dtt;
-                    temas.put(dttr.getNombre(), new TemaRemoto(dttr.getNombre(), dttr.getDuracion(), dttr.getUbicacion(), dttr.getUrl()));
+                    temas.put(dttr.getNombre(), new TemaRemoto(a, dttr.getNombre(), dttr.getDuracion(), dttr.getUbicacion(), dttr.getUrl()));
                 }
             }
             a.setTemas(temas);
@@ -105,15 +105,11 @@ public class Fabrica {
         for (String[] lista : listasParticulares) {
             ArrayList<Tema> temas = new ArrayList<>();
 
-            for (DtTema dtt : cdp.cargarTemasLista(Integer.parseInt(lista[0]))) {
-                if (dtt instanceof DtTemaLocal) {
-                    temas.add(new TemaLocal(((DtTemaLocal) dtt).getDirectorio(), dtt.getNombre(), dtt.getDuracion(), dtt.getUbicacion()));
-                } else {
-                    temas.add(new TemaRemoto(dtt.getNombre(), dtt.getDuracion(), dtt.getUbicacion(), ((DtTemaRemoto) dtt).getUrl()));
-                }
+            for (String[] dtt : cdp.cargarTemasLista(Integer.parseInt(lista[0]))) {
+                temas.add(((Artista) iu.obtenerUsuario(dtt[0])).getAlbum(dtt[1]).getTema(dtt[2]));
             }
 
-            iu.cargarLista(new ListaParticular(lista[3].equals("N") ? true : false, lista[1], temas, lista[4]), lista[2]);
+            iu.cargarLista(new ListaParticular(lista[5], lista[3].equals("N") ? true : false, lista[1], temas, lista[4]), lista[2]);
         }
 
         // Cargar Lista por Defecto
@@ -122,19 +118,14 @@ public class Fabrica {
         for (String[] lista : listarPorDefecto) {
             ArrayList<Tema> temas = new ArrayList();
 
-            for (DtTema dtt : cdp.cargarTemasLista(Integer.parseInt(lista[0]))) {
-                if (dtt instanceof DtTemaLocal) {
-                    temas.add(new TemaLocal(((DtTemaLocal) dtt).getDirectorio(), dtt.getNombre(), dtt.getDuracion(), dtt.getUbicacion()));
-                } else {
-                    temas.add(new TemaRemoto(dtt.getNombre(), dtt.getDuracion(), dtt.getUbicacion(), ((DtTemaRemoto) dtt).getUrl()));
-                }
+            for (String[] dtt : cdp.cargarTemasLista(Integer.parseInt(lista[0]))) {
+                temas.add(((Artista) iu.obtenerUsuario(dtt[0])).getAlbum(dtt[1]).getTema(dtt[2]));
             }
 
             ic.cargarLista(new ListaDefecto(ic.obtenerGenero(lista[1]), lista[2], temas, lista[3]), lista[1]);
         }
-    
-    
-    //Cargar Albumes Favoritos
+
+        //Cargar Albumes Favoritos
         ArrayList<String[]> albumesFavoritos = cdp.cargarAlbumesFavoritos();
         for (String[] albumesF : albumesFavoritos) {
             String nombreAlbum = albumesF[0];
@@ -155,38 +146,35 @@ public class Fabrica {
             String nicknameArtista = temasF[3];
             Usuario cliente = iu.obtenerUsuario(nicknameCliente);
             Usuario artista = iu.obtenerUsuario(nicknameArtista);
-            Tema t = ((Artista)artista).getAlbum(nombreAlbum).getTema(nombreTema);
-            ((Cliente)cliente).agregarTemaFav(t);
+            Tema t = ((Artista) artista).getAlbum(nombreAlbum).getTema(nombreTema);
+            ((Cliente) cliente).agregarTemaFav(t);
         }
-    
+
         //Cargar Listas Favoritas
-           ArrayList<String[]> listasFavoritasP = cdp.cargaListasFavoritosP();
-            for(String[] listasF : listasFavoritasP){
+        ArrayList<String[]> listasFavoritasP = cdp.cargaListasFavoritosP();
+        for (String[] listasF : listasFavoritasP) {
             String nicknameCliente = listasF[0];
             String nicknameCreador = listasF[1];
             String nombreLista = listasF[2];
-            
+
             Usuario creador = iu.obtenerUsuario(nicknameCreador);
             Usuario cliente = iu.obtenerUsuario(nicknameCliente);
-            Lista l = ((Cliente)creador).getLista(nombreLista);
-            ((Cliente)cliente).agregarListaFav(l);
-            }
-            ArrayList<String[]> listasFavoritasD = cdp.cargaListasFavoritosD();
-            for(String[] listasF : listasFavoritasD){
+            Lista l = ((Cliente) creador).getLista(nombreLista);
+            ((Cliente) cliente).agregarListaFav(l);
+        }
+        ArrayList<String[]> listasFavoritasD = cdp.cargaListasFavoritosD();
+        for (String[] listasF : listasFavoritasD) {
             String nicknameCliente = listasF[0];
             String nombreGenero = listasF[1];
             String nombreLista = listasF[2];
-            
+
             Usuario cliente = iu.obtenerUsuario(nicknameCliente);
             Genero g = ic.obtenerGenero(nombreGenero);
-            Lista l =((Genero)g).getListaDefecto(nombreLista);
-            ((Cliente)cliente).agregarListaFav(l);
-            }
-			
-    
-    
-    
-    }    
+            Lista l = ((Genero) g).getListaDefecto(nombreLista);
+            ((Cliente) cliente).agregarListaFav(l);
+        }
+
+    }
 
     public static IUsuario getIControladorUsuario() {
         IUsuario ICU = ControladorUsuario.getInstance();

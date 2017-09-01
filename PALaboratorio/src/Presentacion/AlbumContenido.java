@@ -67,7 +67,6 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             if (imagen == null || imagen.isEmpty()) {
                 img = ImageIO.read(new File("Recursos/Imagenes/Albumes/albumDefault.png"));
             } else {
-
                 img = ImageIO.read(new File(path + imagen));
             }
             PanelImagen pImg = new PanelImagen(img);
@@ -349,6 +348,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             JFileChooser seleccionarRuta = new JFileChooser();
             seleccionarRuta.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int o = seleccionarRuta.showOpenDialog(this);
+
             if (o == JFileChooser.APPROVE_OPTION) {
                 try {
                     File carpetaSeleccionada = seleccionarRuta.getSelectedFile();

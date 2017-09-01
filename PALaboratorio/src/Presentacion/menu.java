@@ -26,7 +26,7 @@ public class menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelMenu = new DesktopFondo();
+        PanelMenu = new javax.swing.JDesktopPane();
         barra = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         altaPerfil = new javax.swing.JMenuItem();
@@ -53,7 +53,7 @@ public class menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Espotify");
         setBackground(new java.awt.Color(51, 153, 0));
-        setIconImage(Toolkit.getDefaultToolkit().getImage(menu.class.getResource("/Imagenes/icono2.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(menu.class.getResource("/Recursos/Imagenes/icono.png")));
         setName("Espotify"); // NOI18N
 
         PanelMenu.setBackground(new java.awt.Color(204, 204, 255));

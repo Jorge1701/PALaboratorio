@@ -481,11 +481,11 @@ public class CargaDatosPrueba {
     public ArrayList<String[]> cargarListasParticulares() {
         try {
             ArrayList<String[]> res = new ArrayList<>();
-            PreparedStatement l = conexion.prepareStatement("SELECT l.idLista, l.nombre, lp.nickname, lp.Publica, l.imagen FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista");
+            PreparedStatement l = conexion.prepareStatement("SELECT l.idLista, l.nombre, lp.nickname, lp.Publica, l.imagen, lp.nickname FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista");
             ResultSet listas = l.executeQuery();
 
             while (listas.next()) {
-                res.add(new String[]{String.valueOf(listas.getInt(1)), listas.getString(2), listas.getString(3), listas.getString(4), listas.getString(5)});
+                res.add(new String[]{String.valueOf(listas.getInt(1)), listas.getString(2), listas.getString(3), listas.getString(4), listas.getString(5), listas.getString(6)});
             }
 
             return res;
@@ -496,28 +496,23 @@ public class CargaDatosPrueba {
 
     }
 
-    public ArrayList<DtTema> cargarTemasLista(int idLista) {
+    public ArrayList<String[]> cargarTemasLista(int idLista) {
         try {
-            ArrayList<DtTema> temas = new ArrayList<>();
+            ArrayList<String[]> temasInfo = new ArrayList<>();
 
-            PreparedStatement query = conexion.prepareStatement("SELECT t.nombre, t.duracion, t.ubicacion, t.tipo, t.link FROM listatienetemas AS ltt, tema AS t WHERE ltt.idLista = ? AND ltt.idTema = t.idTema");
+            PreparedStatement query = conexion.prepareStatement("SELECT t.nombre, a.nicknameArtista, a.nombre AS 'album' FROM listatienetemas AS ltt, tema AS t, album AS a WHERE ltt.idTema = t.idTema AND t.idAlbum = a.idAlbum AND ltt.idLista = ?");
             query.setInt(1, idLista);
 
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                DtTime dtt = new DtTime(rs.getTime(2).getHours(), rs.getTime(2).getMinutes(), rs.getTime(2).getSeconds());
-                if (rs.getString(4).equals("A")) {
-                    temas.add(new DtTemaLocal(rs.getString(5), rs.getString(1), dtt, rs.getInt(3)));
-                } else {
-                    temas.add(new DtTemaRemoto(rs.getString(5), rs.getString(1), dtt, rs.getInt(3)));
-                }
+                temasInfo.add(new String[]{rs.getString("nicknameArtista"), rs.getString("album"), rs.getString("nombre")});
             }
 
             rs.close();
             query.close();
 
-            return temas;
+            return temasInfo;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

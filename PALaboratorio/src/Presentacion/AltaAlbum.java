@@ -1,4 +1,3 @@
-
 package Presentacion;
 
 import Logica.DtGenero;
@@ -38,10 +37,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
- 
-
 public class AltaAlbum extends javax.swing.JInternalFrame {
-    
+
     private IContenido iContenido;
     private IUsuario iUsuario;
     ArrayList<String> generos;
@@ -57,7 +54,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     private ArrayList<DtUsuario> datos;
     PanelImagen pImg;
     PropertyManager pm;
-    
+
     public AltaAlbum() {
         initComponents();
         archivoTema = new JFileChooser();
@@ -73,7 +70,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         mostrarTema();
         dtm = (DefaultTableModel) tableTemas.getModel();
         tableTemas.setModel(dtm);
-        dtm.setRowCount(0);        
+        dtm.setRowCount(0);
         pathMp3 = "";
         nameMp3 = "";
         pathImage = null;
@@ -81,9 +78,10 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         datos = iUsuario.listarArtistas();
         cargarDatos(datos, "");
         pm = PropertyManager.getInstance();
-        
+        cargarImagen(pm.getProperty("pathImagenesAlbum") + "albumDefault.png");
+
     }
-    
+
     private DefaultMutableTreeNode getNodo(DtGenero g) {
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode(g.getNombre());
         for (DtGenero dtg : g.getSubGeneros()) {
@@ -92,9 +90,9 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         }
         return padre;
     }
-    
+
     private boolean exiteNombreTema(String nombreTema) {
-        
+
         boolean retorno = false;
         if (!this.temas.isEmpty()) {
             for (int i = 0; i < temas.size(); i++) {
@@ -103,30 +101,30 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                     retorno = true;
                 }
             }
-        }        
-        
+        }
+
         return retorno;
-        
+
     }
-    
-    void mostrarGeneros() {        
-        
+
+    void mostrarGeneros() {
+
         jTreeGeneros.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         DtGenero g = iContenido.listarGenero();
-        
+
         DefaultTreeModel modelo = new DefaultTreeModel(getNodo(g));
         jTreeGeneros.setModel(modelo);
-        
+
         model = new DefaultListModel<>();
         jListGros.setModel(model);
         generos = new ArrayList<>();
     }
-    
+
     private void cargarDatos(ArrayList<DtUsuario> dtu, String filtro) {
         if (dtu.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
         }
-        
+
         DefaultTableModel dtm = (DefaultTableModel) tablaArtistas.getModel();
         dtm.setRowCount(0);
         for (DtUsuario dtUsuario : dtu) {
@@ -142,34 +140,33 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     void mostrarTema() {
         if (buttonStream.isSelected()) {
             txtStremTema.setEnabled(true);
             btnSelecMp3.setEnabled(false);
-            
+
         } else if (buttonArch.isSelected()) {
             txtStremTema.setEnabled(false);
             btnSelecMp3.setEnabled(true);
         }
-        
+
     }
-    
-    private void setUbicacionTemas(){
-        
-        for(int i=0; i<tableTemas.getRowCount(); i++){
+
+    private void setUbicacionTemas() {
+
+        for (int i = 0; i < tableTemas.getRowCount(); i++) {
             String nom = tableTemas.getValueAt(i, 0).toString();
             int ubicacion = Integer.parseInt(tableTemas.getValueAt(i, 1).toString());
             for (int e = 0; e < temas.size(); e++) {
                 DtTema dtT = (DtTema) temas.get(e);
-                if(dtT.getNombre().equals(nom)){
+                if (dtT.getNombre().equals(nom)) {
                     dtT.setUbicacion(ubicacion);
                 }
             }
         }
-    
-    }
 
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -546,7 +543,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
 
             pack();
         }// </editor-fold>//GEN-END:initComponents
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //String nickA = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString();
         if (tablaArtistas.getSelectedRow() == -1) {
@@ -556,52 +553,50 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         String nickA = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString();
         //System.out.println("nick:"  + nickA);
         String album = txtNombreAlbum.getText();
-        
-               
+
         String camposVacios = "";
-        
+
         if (album.isEmpty()) {
             camposVacios += "Nombre Album \n";
         }
-        
+
         if (!camposVacios.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Hay campos obligatorios vacios:\n" + camposVacios);
             return;
         }
-        
-        if (comboAnio.getSelectedItem().toString().equals("----")){
+
+        if (comboAnio.getSelectedItem().toString().equals("----")) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un año");
             return;
         }
         int anio = Integer.parseInt(comboAnio.getSelectedItem().toString());
-        
+
         try {
             iContenido.selectArtista(nickA);
-            
+
             if (temas.isEmpty()) {
                 throw new UnsupportedOperationException("Debe de indicar al menos un Tema");
             }
-            
+
             if (generos.isEmpty()) {
                 throw new UnsupportedOperationException("Debe de indicar al menos un Genero");
             }
-            
+
             setUbicacionTemas();
-                       
+
             iContenido.ingresarAlbum(album, anio, generos, nameImage, temas);
-            
-            
+
         } catch (UnsupportedOperationException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
             return;
         }
-        
+
         JOptionPane.showMessageDialog(this, "Se ingreso Album");
         txtNick.setText("");
         txtNombreAlbum.setText("");
         dtm.setRowCount(0);
-        DefaultListModel mListGros = (DefaultListModel)jListGros.getModel();
-        mListGros.removeAllElements();       
+        DefaultListModel mListGros = (DefaultListModel) jListGros.getModel();
+        mListGros.removeAllElements();
         pathImage = null;
         nameImage = null;
         comboAnio.setSelectedIndex(0);
@@ -610,22 +605,24 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         tablaArtistas.clearSelection();
         temas.removeAll(temas);
         generos.removeAll(generos);
+
+        cargarImagen(pm.getProperty("pathImagenesAlbum") + "albumDefault.png");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-    dispose();        // TODO add your handling code here:
+        dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jTreeGenerosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTreeGenerosValueChanged
         // TODO add your handling code here:
-              
+
     }//GEN-LAST:event_jTreeGenerosValueChanged
 
     private void jbtnAgregarGroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarGroActionPerformed
         // TODO add your handling code here:
-        
+
         DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) jTreeGeneros.getSelectionPath().getLastPathComponent();
-        
+
         if (selectedElement.isRoot()) {
             JOptionPane.showMessageDialog(this, "No puede seleccionar nodo Raiz:\n");
         } else {
@@ -636,59 +633,58 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                 generos.add(generoSeleccionado);
                 model.addElement(generoSeleccionado);
             }
-            
+
         }
-        
+
     }//GEN-LAST:event_jbtnAgregarGroActionPerformed
 
     private void btnQuitarGroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarGroActionPerformed
         // TODO add your handling code here:
-       
+
         String pos = jListGros.getSelectedValue();
-        if (pos != null){
+        if (pos != null) {
             generos.remove(pos);
-            model.removeElement(pos);        
-        } else{
+            model.removeElement(pos);
+        } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un genero:\n");
         }
-        
+
     }//GEN-LAST:event_btnQuitarGroActionPerformed
 
     private void btnSelecMp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecMp3ActionPerformed
         // TODO add your handling code here:
-        
-         try {
-             int retorno = archivoTema.showOpenDialog(this);        
-             File arch = archivoTema.getSelectedFile();
-             //pathMp3 = "src/Recursos/Musica/" + arch.getName();
-             pathMp3 = pm.getProperty("pathMusica") + arch.getName();
-             nameMp3 = arch.getName();
-             //System.out.println("Path: "+ pathMp3);
-             if (arch != null) {
-                  InputStream is = new FileInputStream(arch);
-                    OutputStream outstream = new FileOutputStream(new File(pathMp3));
-                    byte[] buffer = new byte[4096];
-                    int len;
-                    while ((len = is.read(buffer)) > 0) {
-                        outstream.write(buffer, 0, len);
-                    }
-                    outstream.close();
-                    JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "Información",JOptionPane.INFORMATION_MESSAGE);
-             
-             }
-             
-            
+
+        try {
+            int retorno = archivoTema.showOpenDialog(this);
+            File arch = archivoTema.getSelectedFile();
+            //pathMp3 = "src/Recursos/Musica/" + arch.getName();
+            pathMp3 = pm.getProperty("pathMusica") + arch.getName();
+            nameMp3 = arch.getName();
+            //System.out.println("Path: "+ pathMp3);
+            if (arch != null) {
+                InputStream is = new FileInputStream(arch);
+                OutputStream outstream = new FileOutputStream(new File(pathMp3));
+                byte[] buffer = new byte[4096];
+                int len;
+                while ((len = is.read(buffer)) > 0) {
+                    outstream.write(buffer, 0, len);
+                }
+                outstream.close();
+                JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+
         } catch (FileNotFoundException ex) {
-             JOptionPane.showMessageDialog(null, "El directorio o nombre de archivo incorrecto.","Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El directorio o nombre de archivo incorrecto.", "Error", JOptionPane.WARNING_MESSAGE);
         } catch (IOException ex) {
             Logger.getLogger(AltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
-        
+        }
+
+
     }//GEN-LAST:event_btnSelecMp3ActionPerformed
 
     private void buttonStreamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStreamActionPerformed
-       mostrarTema();
+        mostrarTema();
     }//GEN-LAST:event_buttonStreamActionPerformed
 
     private void buttonArchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonArchActionPerformed
@@ -696,141 +692,149 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buttonArchActionPerformed
 
     private void btnAgregarTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTemaActionPerformed
-        
+
         String nomTema = txtNomTema.getText();
         Date time = new Date();
-        time  = (Date) jSpinnerDuracion.getValue();
+        time = (Date) jSpinnerDuracion.getValue();
         Calendar cal = Calendar.getInstance();
         cal.setTime(time);
         DtTime dtTime = new DtTime(cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
         String stream;
         String pathtArch;
         DtTema dtTema;
-        
+
         String camposVacios = "";
         if (nomTema.isEmpty()) {
             camposVacios += "Nombre Tema\n";
         }
-        
+
         if (!camposVacios.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Hay campos obligatorios vacios:\n" + camposVacios);
             return;
         }
-        
-        if( txtStremTema.isEnabled()){
+
+        if (txtStremTema.isEnabled()) {
             stream = txtStremTema.getText();
-            if(stream.isEmpty()){
+            if (stream.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe indicar la url");
-                return;            
+                return;
             }
-            if(exiteNombreTema(nomTema)){
+            if (exiteNombreTema(nomTema)) {
                 JOptionPane.showMessageDialog(this, "Nombre de tema Duplicado");
-                return;  
+                return;
             }
             int ubicacion = tableTemas.getRowCount() + 1;
             dtTema = new DtTemaRemoto(stream, nomTema, dtTime, ubicacion);
             Object[] data = {
                 nomTema,
                 ubicacion,
-                dtTime.getHoras() + ":" + dtTime.getMinutos() + ":" + dtTime.getSegundos(),                
+                dtTime.getHoras() + ":" + dtTime.getMinutos() + ":" + dtTime.getSegundos(),
                 stream,};
             dtm.addRow(data);
             //System.out.println("Agrego tema" + nomTema);
             temas.add(dtTema);
-            
-        } else if(btnSelecMp3.isEnabled()){
-            
-            if(nameMp3 == ""){                
+
+        } else if (btnSelecMp3.isEnabled()) {
+
+            if (nameMp3 == "") {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un archivo");
-                return;              
+                return;
             }
-            if(exiteNombreTema(nomTema)){
+            if (exiteNombreTema(nomTema)) {
                 JOptionPane.showMessageDialog(this, "Nombre de tema Duplicado");
-                return;  
+                return;
             }
             int ubicacion = tableTemas.getRowCount() + 1;
             dtTema = new DtTemaLocal(nameMp3, nomTema, dtTime, ubicacion);
             Object[] data = {
                 nomTema,
                 ubicacion,
-                dtTime.getHoras() + ":" + dtTime.getMinutos() + ":" + dtTime.getSegundos(),                
+                dtTime.getHoras() + ":" + dtTime.getMinutos() + ":" + dtTime.getSegundos(),
                 nameMp3,};
             dtm.addRow(data);
             System.out.println("Agrego Tema" + nomTema);
             temas.add(dtTema);
             pathMp3 = "";
             nameMp3 = "";
-                    
+
         }
-        
+
         txtStremTema.setText("");
         txtNomTema.setText("");
-        
+
     }//GEN-LAST:event_btnAgregarTemaActionPerformed
 
     private void txtNickCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtNickCaretUpdate
         // TODO add your handling code here:
         cargarDatos(datos, txtNick.getText());
-        
+
     }//GEN-LAST:event_txtNickCaretUpdate
 
     private void btnCargarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImgActionPerformed
         try {
-             archivoImg.showOpenDialog(this);        
-             File arch = archivoImg.getSelectedFile();
-             //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
-             nameImage = arch.getName();
-             pathImage = pm.getProperty("pathImagenesAlbum") + arch.getName();
-             //System.out.println(pm.getProperty("pathImagenes"));
-             if (arch != null) {
-                    InputStream is = new FileInputStream(arch);
-                    OutputStream outstream = new FileOutputStream(new File(pathImage));
-                    byte[] buffer = new byte[4096];
-                    int len;
-                    while ((len = is.read(buffer)) > 0) {
-                        outstream.write(buffer, 0, len);
-                    }
-                    outstream.close();
-                    JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "Información",JOptionPane.INFORMATION_MESSAGE);
+            archivoImg.showOpenDialog(this);
+            File arch = archivoImg.getSelectedFile();
+            //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
+            nameImage = arch.getName();
+            pathImage = pm.getProperty("pathImagenesAlbum") + arch.getName();
+            //System.out.println(pm.getProperty("pathImagenes"));
+            if (arch != null) {
+                InputStream is = new FileInputStream(arch);
+                OutputStream outstream = new FileOutputStream(new File(pathImage));
+                byte[] buffer = new byte[4096];
+                int len;
+                while ((len = is.read(buffer)) > 0) {
+                    outstream.write(buffer, 0, len);
+                }
+                outstream.close();
+                JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 
-             }
-             BufferedImage img;
-             img = ImageIO.read(new File(pathImage));
-             pImg = new PanelImagen(img);
-             imagePanel.add(pImg);
-             pImg.setBounds(0, 0, 200, 182);
-             
+            }
+
+            cargarImagen(pathImage);
+
         } catch (Exception ex) {
-             ex.printStackTrace();
-             JOptionPane.showMessageDialog(null, "No se pudo cargar la Imagen.","Error", JOptionPane.WARNING_MESSAGE);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No se pudo cargar la Imagen.", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnCargarImgActionPerformed
 
+    private void cargarImagen(String pathImage) {
+        try {
+            BufferedImage img;
+            img = ImageIO.read(new File(pathImage));
+            pImg = new PanelImagen(img);
+            imagePanel.add(pImg);
+            pImg.setBounds(0, 0, 200, 182);
+        } catch (IOException ex) {
+            Logger.getLogger(AltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void btnEliminarTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTemaActionPerformed
-        
+
         int fila = tableTemas.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) tableTemas.getModel();
         System.out.println("fila" + fila);
-        if(fila>=0){
+        if (fila >= 0) {
             String nombre = tableTemas.getValueAt(fila, 0).toString();
-            if(!temas.isEmpty()){
-                
+            if (!temas.isEmpty()) {
+
                 for (int i = 0; i < temas.size(); i++) {
                     DtTema dtT = (DtTema) temas.get(i);
-                    if(dtT.getNombre().equals(nombre)){
+                    if (dtT.getNombre().equals(nombre)) {
                         temas.remove(dtT);
                     }
-                }    
+                }
             }
-            
+
             model.removeRow(fila);
-           
-        } else{
+
+        } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un tema");
             return;
-        
+
         }
-        
+
     }//GEN-LAST:event_btnEliminarTemaActionPerformed
 
 
@@ -870,5 +874,3 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtStremTema;
     // End of variables declaration//GEN-END:variables
 }
-
-

@@ -8,6 +8,7 @@ import Logica.DtPerfilCliente;
 import Logica.DtTema;
 import Logica.DtUsuario;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -16,8 +17,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class PerfilCliente extends javax.swing.JInternalFrame {
 
+    PropertyManager pm;
+
     public PerfilCliente(DtPerfilCliente dtPerfilCliente) {
         initComponents();
+        pm = PropertyManager.getInstance();
 
         txtNickname.setEnabled(true);
         txtNombre.setEnabled(true);
@@ -46,10 +50,12 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         try {
             String imagen = dtPerfilCliente.getInfo().getImagen();
             BufferedImage img;
+            String path = pm.getProperty("pathImagenesUsuario");
+
             if (imagen == null || imagen.isEmpty()) {
-                img = ImageIO.read(PerfilCliente.class.getResource("/Recursos/Imagenes/Usuarios/userDefaullt.png"));
+                img = ImageIO.read(new File(path + "userDefaullt.png"));
             } else {
-                img = ImageIO.read(PerfilCliente.class.getResource(imagen));
+                img = ImageIO.read(new File(path + imagen));
             }
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
@@ -153,8 +159,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                 : dtPerfilCliente.getTemas()) {
             Object[] data = {
                 dtt.getNombre(),
-                dtt.getDuracion().getHoras()+":"+dtt.getDuracion().getMinutos()+":"+dtt.getDuracion().getSegundos(),
-            };
+                dtt.getDuracion().getHoras() + ":" + dtt.getDuracion().getMinutos() + ":" + dtt.getDuracion().getSegundos(),};
             dtmTemas.addRow(data);
         }
     }
