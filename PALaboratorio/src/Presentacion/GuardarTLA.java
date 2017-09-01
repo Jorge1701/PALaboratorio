@@ -18,34 +18,34 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 public class GuardarTLA extends javax.swing.JInternalFrame {
-    
+
     private IUsuario iUsuario;
     private IContenido iContenido;
     private ArrayList<DtUsuario> clientes;
     private ArrayList<DtUsuario> artistas;
-    
+
     public GuardarTLA() {
         initComponents();
-        
+
         iUsuario = Fabrica.getIControladorUsuario();
         iContenido = Fabrica.getIControladorContenido();
-        
+
         clientes = iUsuario.listarClientes();
         artistas = iUsuario.listarArtistas();
-        
+
         cargarDatosClientes(clientes, "");
         cargarDatosAlbumesArtistas(artistas, "");
         cargarDatosLPClietes(clientes, "");
-        
+
         DefaultTreeModel modelo = new DefaultTreeModel(getNodo(iContenido.listarGenero()));
         treeLDGeneros.setModel(modelo);
-        
+
         tablaClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 cargarDatosLPClietes(clientes, txtLPCliente.getText());
             }
         });
-        
+
         tablaAlbumesArtistas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 tablaAlbumesTemas.getSelectionModel().clearSelection();
@@ -55,7 +55,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
                 }
             }
         });
-        
+
         tablaAlbumesAlbumes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 tablaAlbumesTemas.getSelectionModel().clearSelection();
@@ -64,7 +64,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
                 }
             }
         });
-        
+
         tablaLPClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (tablaLPClientes.getSelectedRow() != -1) {
@@ -73,12 +73,12 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             }
         });
     }
-    
+
     private void cargarDatosClientes(ArrayList<DtUsuario> dtu, String filtro) {
         if (dtu.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
         }
-        
+
         DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
         dtm.setRowCount(0);
         for (DtUsuario dtUsuario : dtu) {
@@ -94,12 +94,12 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     private void cargarDatosAlbumesArtistas(ArrayList<DtUsuario> artistas, String filtro) {
         if (artistas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
         }
-        
+
         DefaultTableModel dtm = (DefaultTableModel) tablaAlbumesArtistas.getModel();
         dtm.setRowCount(0);
         for (DtUsuario dtUsuario : artistas) {
@@ -114,7 +114,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     private void cargarDatosAlbumesAlbumes(ArrayList<DtAlbum> dtalbums, String filtro) {
         DefaultTableModel dtm = (DefaultTableModel) tablaAlbumesAlbumes.getModel();
         dtm.setRowCount(0);
@@ -128,7 +128,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     private void cargarDatosAlbumesTemas(DtAlbumContenido dtAlbumContenido, String filtro) {
         DefaultTableModel dtm = (DefaultTableModel) tablaAlbumesTemas.getModel();
         dtm.setRowCount(0);
@@ -142,10 +142,10 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     private void cargarDatosLDListas(ArrayList<DtLista> dtListas, String filtro) {
         DefaultTableModel dtm = (DefaultTableModel) tablaLDListas.getModel();
-        
+
         dtm.setRowCount(0);
         for (DtLista dtLista : dtListas) {
             if (dtLista.getNombre().contains(filtro)) {
@@ -156,14 +156,14 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     private void cargarDatosLPClietes(ArrayList<DtUsuario> dtu, String filtro) {
         if (tablaClientes.getSelectedRow() == -1) {
             return;
         }
-        
+
         String nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
-        
+
         DefaultTableModel dtm = (DefaultTableModel) tablaLPClientes.getModel();
         dtm.setRowCount(0);
         for (DtUsuario dtUsuario : dtu) {
@@ -179,10 +179,10 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     private void cargarDatosLPListas(ArrayList<DtLista> dtListas, String filtro) {
         DefaultTableModel dtm = (DefaultTableModel) tablaLPListas.getModel();
-        
+
         dtm.setRowCount(0);
         for (DtLista dtLista : dtListas) {
             if (dtLista.getNombre().contains(filtro)) {
@@ -193,7 +193,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     private DefaultMutableTreeNode getNodo(DtGenero g) {
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode(g.getNombre());
         for (DtGenero dtg : g.getSubGeneros()) {
@@ -202,7 +202,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
         }
         return padre;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -751,11 +751,11 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione un album");
             return;
         }
-        
+
         String nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
         String nickArtista = tablaAlbumesArtistas.getValueAt(tablaAlbumesArtistas.getSelectedRow(), 0).toString();
         String nombreAlbum = tablaAlbumesAlbumes.getValueAt(tablaAlbumesAlbumes.getSelectedRow(), 0).toString();
-        
+
         try {
             iUsuario.agregarAlbumFav(nickCliente, nickArtista, nombreAlbum);
             JOptionPane.showMessageDialog(this, "Album agregado a favoritos");
@@ -781,12 +781,12 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione un tema");
             return;
         }
-        
+
         String nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
         String nickArtista = tablaAlbumesArtistas.getValueAt(tablaAlbumesArtistas.getSelectedRow(), 0).toString();
         String nombreAlbum = tablaAlbumesAlbumes.getValueAt(tablaAlbumesAlbumes.getSelectedRow(), 0).toString();
         String nombreTema = tablaAlbumesTemas.getValueAt(tablaAlbumesTemas.getSelectedRow(), 0).toString();
-        
+
         try {
             iUsuario.agregarTemaFav(nickCliente, nickArtista, nombreAlbum, nombreTema);
             JOptionPane.showMessageDialog(this, "Tema agregado a favoritos");
@@ -798,14 +798,14 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
     private void treeLDGenerosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_treeLDGenerosValueChanged
         DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) treeLDGeneros.getSelectionPath().getLastPathComponent();
         String generoSeleccionado = selectedElement.getUserObject().toString();
-        
+
         cargarDatosLDListas(iContenido.listarLisReproduccionGen(generoSeleccionado), txtLDLista.getText());
     }//GEN-LAST:event_treeLDGenerosValueChanged
 
     private void txtLDListaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtLDListaCaretUpdate
         DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) treeLDGeneros.getSelectionPath().getLastPathComponent();
         String generoSeleccionado = selectedElement.getUserObject().toString();
-        
+
         cargarDatosLDListas(iContenido.listarLisReproduccionGen(generoSeleccionado), txtLDLista.getText());
     }//GEN-LAST:event_txtLDListaCaretUpdate
 
@@ -826,12 +826,12 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione una lista");
             return;
         }
-        
+
         String nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
         DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) treeLDGeneros.getSelectionPath().getLastPathComponent();
         String generoSeleccionado = selectedElement.getUserObject().toString();
         String nomLista = tablaLDListas.getValueAt(tablaLDListas.getSelectedRow(), 0).toString();
-        
+
         try {
             iUsuario.agregarLDFav(nickCliente, generoSeleccionado, nomLista);
             JOptionPane.showMessageDialog(this, "Lista agregada a favoritos");
@@ -865,11 +865,11 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione una lista");
             return;
         }
-        
+
         String nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
         String nickClienteAbajo = tablaLPClientes.getValueAt(tablaLPClientes.getSelectedRow(), 0).toString();
         String nombreLista = tablaLPListas.getValueAt(tablaLPListas.getSelectedRow(), 0).toString();
-        
+
         try {
             iUsuario.agregarLPFav(nickCliente, nickClienteAbajo, nombreLista);
             JOptionPane.showMessageDialog(this, "Lista agregada a favoritos");

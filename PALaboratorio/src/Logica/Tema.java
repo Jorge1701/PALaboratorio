@@ -2,15 +2,29 @@ package Logica;
 
 public class Tema {
 
+    private Album a;
     private int id;
     private String nombre;
     private DtTime duracion;
     private int ubicacion;
 
-    public Tema(String nombre, DtTime duracion, int ubicacion) {
+    public Tema(Album a, String nombre, DtTime duracion, int ubicacion) {
+        this.a = a;
         this.nombre = nombre;
         this.duracion = duracion;
         this.ubicacion = ubicacion;
+    }
+
+    public Tema(String nombre, DtTime duracion, int ubicacion) {
+        this(null, nombre, duracion, ubicacion);
+    }
+
+    public Album getAlbum() {
+        return a;
+    }
+
+    public void setAlbum(Album a) {
+        this.a = a;
     }
 
     public int getId() {

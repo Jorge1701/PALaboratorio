@@ -41,11 +41,12 @@ import javax.swing.table.TableRowSorter;
 public class AlbumContenido extends javax.swing.JInternalFrame implements ListSelectionListener {
 
     IUsuario iUsuario;
+    PropertyManager pm;
 
     public AlbumContenido(DtAlbumContenido dtac) {
         initComponents();
         iUsuario = Fabrica.getIControladorUsuario();
-
+        pm = PropertyManager.getInstance();
         btnAbrirNavegador.setVisible(false);
 
         tablaTemas.getColumnModel().getColumn(0).setMinWidth(0);
@@ -61,11 +62,12 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         // Cargar imagen
         try {
             String imagen = dtac.getInfo().getImagen();
+            String path = pm.getProperty("pathImagenesAlbum");
             BufferedImage img;
             if (imagen == null || imagen.isEmpty()) {
-                img = ImageIO.read(PerfilCliente.class.getResource("/Recursos/Imagenes/Albumes/albumDefault.png"));
+                img = ImageIO.read(new File("Recursos/Imagenes/Albumes/albumDefault.png"));
             } else {
-                img = ImageIO.read(PerfilCliente.class.getResource(imagen));
+                img = ImageIO.read(new File(path + imagen));
             }
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
@@ -340,19 +342,20 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             return;
         }
 
-        String link = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 4).toString();
+        String nombreTema = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 4).toString();
         if (btnDescargar.getText().equals("Descargar")) {
 
             JFileChooser seleccionarRuta = new JFileChooser();
             seleccionarRuta.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int o = seleccionarRuta.showOpenDialog(this);
-            String nombreTema = link.split("/")[3];
+
             if (o == JFileChooser.APPROVE_OPTION) {
                 try {
                     File carpetaSeleccionada = seleccionarRuta.getSelectedFile();
                     String rutaDescarga = carpetaSeleccionada.getAbsolutePath();
                     String rutaDCompleta = rutaDescarga + "\\" + nombreTema;
-                    InputStream is = getClass().getResourceAsStream(link);
+                    String path = pm.getProperty("pathMusica");
+                    InputStream is = new FileInputStream(path + nombreTema);
                     OutputStream outstream = new FileOutputStream(rutaDCompleta);
                     byte[] buffer = new byte[4096];
                     int len;
@@ -374,9 +377,9 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
 
         } else {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            StringSelection data = new StringSelection(link);
+            StringSelection data = new StringSelection(nombreTema);
             clipboard.setContents(data, data);
-            JOptionPane.showMessageDialog(this, "Copiado al portapapeles: " + link);
+            JOptionPane.showMessageDialog(this, "Copiado al portapapeles: " + nombreTema);
         }
     }//GEN-LAST:event_btnDescargarActionPerformed
 
