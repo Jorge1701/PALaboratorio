@@ -66,14 +66,14 @@ public class ControladorUsuario implements IUsuario {
         while (i.hasNext()) {
             Usuario u = (Usuario) ((Map.Entry) i.next()).getValue();
 
-            if (u.getNickname() == dtu.getNickname() || u.getEmail() == dtu.getEmail()) {
+            if (u.getNickname().equals(dtu.getNickname()) || u.getEmail().equals(dtu.getEmail())) {
                 return false;
             }
         }
 
         Usuario usr;
-        boolean res = this.bdUsuario.ingresarUsuario(dtu);
-        if (res) {
+        
+        if (this.bdUsuario.ingresarUsuario(dtu)) {
 
             if (dtu instanceof DtCliente) {
                 usr = new Cliente(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null);
@@ -81,13 +81,11 @@ public class ControladorUsuario implements IUsuario {
                 usr = new Artista(dtu.getNickname(), dtu.getNombre(), dtu.getApellido(), dtu.getEmail(), new DtFecha(dtu.getFechaNac().getDia(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getAnio()), null, ((DtArtista) dtu).getBiografia(), ((DtArtista) dtu).getWeb());
             }
             this.usuarios.put(usr.getNickname(), usr);
-
+            return true;
         } else {
-            throw new UnsupportedOperationException("No se pudo ingresar el usuario a la BD");
+            return false;
         }
-
-        return res;
-    }
+   }
 
     @Override
     public void levantarUsuario(DtUsuario dtu) {

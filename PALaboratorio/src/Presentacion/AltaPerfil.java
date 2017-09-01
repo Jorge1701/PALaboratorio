@@ -6,11 +6,29 @@ import Logica.DtFecha;
 import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IUsuario;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class AltaPerfil extends javax.swing.JInternalFrame {
 
     private IUsuario IU;
+    private final JFileChooser archivoImg;
+    String pathImage;
+    String nameImage;
+    PanelImagen pImg;
+    PropertyManager pm;
 
     public AltaPerfil() {
         initComponents();
@@ -19,7 +37,13 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
         webTx.setVisible(false);
         bioTx.setVisible(false);
         cliente.setSelected(true);
+        archivoImg = new JFileChooser();
+        archivoImg.setFileFilter(new FileNameExtensionFilter("Images files", "jpg", "png", "gif", "jpeg"));
         this.IU = Fabrica.getIControladorUsuario();
+        pathImage = null;
+        nameImage = null;
+        pm = PropertyManager.getInstance();
+        cargarImagen(pm.getProperty("pathImagenesUsuario") + "userDefaullt.png");
     }
 
     @SuppressWarnings("unchecked")
@@ -50,6 +74,8 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
         cancelar = new javax.swing.JButton();
         bioPanel = new javax.swing.JScrollPane();
         biografia = new javax.swing.JTextArea();
+        imagePanel = new javax.swing.JPanel();
+        btnCargarImg = new java.awt.Button();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -162,6 +188,26 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
         biografia.setRows(5);
         bioPanel.setViewportView(biografia);
 
+        imagePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
+        imagePanel.setLayout(imagePanelLayout);
+        imagePanelLayout.setHorizontalGroup(
+            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 198, Short.MAX_VALUE)
+        );
+        imagePanelLayout.setVerticalGroup(
+            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 180, Short.MAX_VALUE)
+        );
+
+        btnCargarImg.setLabel("Cargar Imagen");
+        btnCargarImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarImgActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,84 +215,99 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(nick, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(dia, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(mes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(anio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(cliente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(artista))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(webTx)
                             .addComponent(bioTx))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(aceptar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cancelar))
+                                .addComponent(web))
+                            .addComponent(bioPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(332, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(nick, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel4))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(aceptar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cancelar))
-                            .addComponent(web)
-                            .addComponent(bioPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(dia, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(mes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(anio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(cliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(artista)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cliente)
-                    .addComponent(artista))
-                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(cliente)
+                        .addComponent(artista))
+                    .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bioPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bioTx))
@@ -258,7 +319,7 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aceptar)
                     .addComponent(cancelar))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -309,37 +370,60 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         DtUsuario dtu;
 
-        if (nick.getText().isEmpty() == true || nombre.getText().isEmpty() == true || apellido.getText().isEmpty() == true || correo.getText().isEmpty() == true || dia.getSelectedItem().equals("--") || mes.getSelectedItem().equals("--") || anio.getSelectedItem().equals("----") || Validacion.ValidarEmail(correo.getText()) == false) {
+        String camposVacios = "";
 
-            javax.swing.JOptionPane.showMessageDialog(null, "Hay algun campo sin completar", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        } else {
-
-            if (cliente.isSelected() == true) {
-                dtu = new DtCliente(nick.getText(), nombre.getText(), apellido.getText(), correo.getText(), new DtFecha(Integer.parseInt((String) dia.getSelectedItem()), Integer.parseInt((String) mes.getSelectedItem()), Integer.parseInt((String) anio.getSelectedItem())), "");
-            } else {
-
-                dtu = new DtArtista(nick.getText(), nombre.getText(), apellido.getText(), correo.getText(), new DtFecha(Integer.parseInt((String) dia.getSelectedItem()), Integer.parseInt((String) mes.getSelectedItem()), Integer.parseInt((String) anio.getSelectedItem())), "", biografia.getText(), web.getText());
-            }
-
-            boolean ok = IU.ingresarUsuario(dtu);
-            if (ok) {
-                //javax.swing.JOptionPane.showMessageDialog(null,"Persona Dada de alta con éxito.");
-                javax.swing.JOptionPane.showMessageDialog(null, "El usuario fue ingresado con exito", "Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                //javax.swing.JOptionPane.showMessageDialog(null,"Error: La persona ya está registrada o faltaron campos obligatorios.");
-                javax.swing.JOptionPane.showMessageDialog(null, "El usuario que desea ingresar ya existe en el sistema", "Ha ocurrido un error", JOptionPane.ERROR_MESSAGE);
-            }
-            this.nick.setText("");
-            this.nombre.setText("");
-            this.apellido.setText("");
-            this.correo.setText("");
-            this.biografia.setText("");
-            this.web.setText("");
-            this.cliente.setSelected(true);
-            this.dia.setSelectedIndex(0);
-            this.mes.setSelectedIndex(0);
-            this.anio.setSelectedIndex(0);
+        if (nick.getText().isEmpty()) {
+            camposVacios += "Nickname \n";
         }
+
+        if (nombre.getText().isEmpty()) {
+            camposVacios += "Nombre \n";
+        }
+
+        if (apellido.getText().isEmpty()) {
+            camposVacios += "Apellido \n";
+        }
+
+        if (correo.getText().isEmpty()) {
+            camposVacios += "Correo \n";
+        }
+
+        if (dia.getSelectedItem().equals("--") || mes.getSelectedItem().equals("--") || anio.getSelectedItem().equals("----")) {
+            camposVacios += "Fecha Nac \n";
+        }
+
+        if (Validacion.ValidarEmail(correo.getText()) == false) {
+            camposVacios += "Formato Incorrecto del Correo  \n";
+        }
+
+        if (!camposVacios.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Hay campos obligatorios vacios:\n" + camposVacios);
+            return;
+        }
+
+        if (cliente.isSelected() == true) {
+            dtu = new DtCliente(nick.getText(), nombre.getText(), apellido.getText(), correo.getText(), new DtFecha(Integer.parseInt((String) dia.getSelectedItem()), Integer.parseInt((String) mes.getSelectedItem()), Integer.parseInt((String) anio.getSelectedItem())), nameImage);
+        } else {
+            dtu = new DtArtista(nick.getText(), nombre.getText(), apellido.getText(), correo.getText(), new DtFecha(Integer.parseInt((String) dia.getSelectedItem()), Integer.parseInt((String) mes.getSelectedItem()), Integer.parseInt((String) anio.getSelectedItem())), nameImage, biografia.getText(), web.getText());
+        }
+
+        if (IU.ingresarUsuario(dtu)) {
+            javax.swing.JOptionPane.showMessageDialog(null, "El usuario fue ingresado con exito", "Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(null, "El usuario que desea ingresar ya existe en el sistema", "Ha ocurrido un error", JOptionPane.ERROR_MESSAGE);
+        }
+        this.nick.setText("");
+        this.nombre.setText("");
+        this.apellido.setText("");
+        this.correo.setText("");
+        this.biografia.setText("");
+        this.web.setText("");
+        this.cliente.setSelected(true);
+        this.dia.setSelectedIndex(0);
+        this.mes.setSelectedIndex(0);
+        this.anio.setSelectedIndex(0);
+        this.imagePanel = new JPanel();
+
     }//GEN-LAST:event_aceptarActionPerformed
 
     private void nickKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nickKeyTyped
@@ -354,6 +438,45 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_nombreKeyPressed
 
+    private void btnCargarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImgActionPerformed
+        try {
+            archivoImg.showOpenDialog(this);
+            File arch = archivoImg.getSelectedFile();
+            //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
+            nameImage = arch.getName();
+            pathImage = pm.getProperty("pathImagenesUsuario") + arch.getName();
+            //System.out.println(pm.getProperty("pathImagenes"));
+            if (arch != null) {
+                InputStream is = new FileInputStream(arch);
+                OutputStream outstream = new FileOutputStream(new File(pathImage));
+                byte[] buffer = new byte[4096];
+                int len;
+                while ((len = is.read(buffer)) > 0) {
+                    outstream.write(buffer, 0, len);
+                }
+                outstream.close();
+                JOptionPane.showMessageDialog(null, "El archivo se ha guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+
+            cargarImagen(pathImage);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No se pudo cargar la Imagen.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCargarImgActionPerformed
+    private void cargarImagen(String pathImage) {
+        try {
+            BufferedImage img;
+            img = ImageIO.read(new File(pathImage));
+            pImg = new PanelImagen(img);
+            imagePanel.add(pImg);
+            pImg.setBounds(0, 0, 200, 182);
+        } catch (IOException ex) {
+            Logger.getLogger(AltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.ButtonGroup Tipo;
@@ -364,10 +487,12 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane bioPanel;
     private javax.swing.JLabel bioTx;
     private javax.swing.JTextArea biografia;
+    private java.awt.Button btnCargarImg;
     private javax.swing.JButton cancelar;
     private javax.swing.JRadioButton cliente;
     private javax.swing.JTextField correo;
     private javax.swing.JComboBox<String> dia;
+    private javax.swing.JPanel imagePanel;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
