@@ -38,4 +38,16 @@ public class ListaDefecto extends Lista {
         }
         return false;
     }
+    public boolean agregarTema(Tema tema){
+    Iterator i =  this.temas.iterator();
+    while(i.hasNext()){
+        Tema t = (Tema) ((Map.Entry) i.next()).getValue();
+        if(t.getNombre().equals(tema.getNombre())){
+        return false;
+        }
+    }
+    this.temas.add(tema);
+    return true;
+    }
+    
 }

@@ -1,6 +1,8 @@
 package Logica;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 public abstract class Lista {
 
@@ -23,7 +25,18 @@ public abstract class Lista {
     public String getNombre() {
         return nombre;
     }
-
+    
+    
+    public Tema getTema(String nombreT){
+        Iterator i = this.temas.iterator();
+       while(i.hasNext()){
+       Tema tema = (Tema)((Map.Entry) i.next()).getValue();
+       if(tema.getNombre().equals(nombreT)){
+       return tema;
+       }
+       }
+       return null;
+    }
     public ArrayList<DtTema> getTemas() {
         ArrayList<DtTema> temas = new ArrayList<>();
 
@@ -65,4 +78,5 @@ public abstract class Lista {
     }
 
     public abstract boolean quitarTema(String nombreT);
+    public abstract boolean agregarTema(Tema tema);
 }

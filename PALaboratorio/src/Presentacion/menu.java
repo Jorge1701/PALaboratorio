@@ -28,7 +28,7 @@ public class menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelMenu = new DesktopFondo();
+        PanelMenu = new javax.swing.JDesktopPane();
         barra = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         altaPerfil = new javax.swing.JMenuItem();
@@ -174,6 +174,11 @@ public class menu extends javax.swing.JFrame {
         jMenu3.add(dejarSeguirUsuario);
 
         agregarTemaLista.setText("Agregar Tema a Lista");
+        agregarTemaLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarTemaListaActionPerformed(evt);
+            }
+        });
         jMenu3.add(agregarTemaLista);
 
         quitarTemaLista.setText("Quitar Tema de Lista");
@@ -343,6 +348,13 @@ public class menu extends javax.swing.JFrame {
         clr.show();
 
     }//GEN-LAST:event_crearListaRepActionPerformed
+
+    private void agregarTemaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarTemaListaActionPerformed
+        AgregarTemaLista a = new AgregarTemaLista();
+        PanelMenu.add(a);
+        centrar(a);
+        a.show();
+    }//GEN-LAST:event_agregarTemaListaActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

@@ -255,7 +255,7 @@ public class ControladorContenido implements IContenido {
         boolean bd = bdLista.altaLista(dtl, nickCliente);
         if (bd && dtl instanceof DtListaDefecto) {
             Genero g = this.genero.obtener(((DtListaDefecto) dtl).getGenero().getNombre());
-            ListaDefecto lis = new ListaDefecto(g, dtl.getNombre(), null,dtl.getImagen());
+            ListaDefecto lis = new ListaDefecto(g, dtl.getNombre(), null, dtl.getImagen());
             this.listasDefecto.put(lis.getNombre(), (ListaDefecto) lis);
             return true;
         } else if (bd) {
@@ -353,7 +353,7 @@ public class ControladorContenido implements IContenido {
             return lista.quitarTema(nombreT);
         } else {
             if (nombreUser != null && !(u instanceof Cliente)) {
-                Lista lista = (ListaParticular) listasParticular.get(nombre);
+                Lista lista = (ListaParticular) u.getListaParticular(nombre);
 
                 if (lista == null) {
                     throw new UnsupportedOperationException("No existe la lista");
@@ -364,6 +364,43 @@ public class ControladorContenido implements IContenido {
             }
         }
 
+        return false;
+    }
+
+    public boolean agregarTema(String nombreT, String nombre, String nombreUser) {
+        Cliente u = (Cliente) iUsuario.obtenerUsuario(nombreUser);
+        if (nombreUser == null) {
+            Lista lista = (ListaDefecto) listasDefecto.get(nombre);
+
+            if (lista == null) {
+                throw new UnsupportedOperationException("No existe la lista");
+            }
+            Iterator i = this.listasDefecto.entrySet().iterator();
+            while (i.hasNext()) {
+                Lista l = (ListaDefecto) ((Map.Entry) i.next()).getValue();
+                if (l.getNombre().equals(nombreT)) {
+                    Tema tema = l.getTema(nombreT);
+                    return lista.agregarTema(tema);
+                }
+
+            }
+
+        } else {
+            Lista lista = (ListaParticular) u.getListaParticular(nombre);
+            if (lista == null) {
+                throw new UnsupportedOperationException("No existe la lista");
+            }
+            Iterator i = this.listasParticular.entrySet().iterator();
+            while (i.hasNext()) {
+                Lista l = (ListaParticular) ((Map.Entry) i.next()).getValue();
+                if (l.getNombre().equals(nombreT)) {
+                    Tema tema = l.getTema(nombreT);
+                    return lista.agregarTema(tema);
+                }
+
+            }
+
+        }
         return false;
     }
 
