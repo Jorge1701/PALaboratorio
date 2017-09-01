@@ -12,8 +12,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -23,7 +26,9 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
     private IUsuario IU;
     private final JFileChooser archivoImg;
     String pathImage;
+    String nameImage;
     PanelImagen pImg;
+    PropertyManager pm;
 
     public AltaPerfil() {
         initComponents();
@@ -36,6 +41,9 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
         archivoImg.setFileFilter(new FileNameExtensionFilter("Images files", "jpg", "png", "gif", "jpeg"));
         this.IU = Fabrica.getIControladorUsuario();
         pathImage = null;
+        nameImage = null;
+        pm = PropertyManager.getInstance();
+        cargarImagen(pm.getProperty("pathImagenesUsuario") + "userDefaullt.png");
     }
 
     @SuppressWarnings("unchecked")
@@ -394,12 +402,11 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
         }
 
         if (cliente.isSelected() == true) {
-            dtu = new DtCliente(nick.getText(), nombre.getText(), apellido.getText(), correo.getText(), new DtFecha(Integer.parseInt((String) dia.getSelectedItem()), Integer.parseInt((String) mes.getSelectedItem()), Integer.parseInt((String) anio.getSelectedItem())),pathImage);
+            dtu = new DtCliente(nick.getText(), nombre.getText(), apellido.getText(), correo.getText(), new DtFecha(Integer.parseInt((String) dia.getSelectedItem()), Integer.parseInt((String) mes.getSelectedItem()), Integer.parseInt((String) anio.getSelectedItem())), nameImage);
         } else {
-            dtu = new DtArtista(nick.getText(), nombre.getText(), apellido.getText(), correo.getText(), new DtFecha(Integer.parseInt((String) dia.getSelectedItem()), Integer.parseInt((String) mes.getSelectedItem()), Integer.parseInt((String) anio.getSelectedItem())),pathImage , biografia.getText(), web.getText());
+            dtu = new DtArtista(nick.getText(), nombre.getText(), apellido.getText(), correo.getText(), new DtFecha(Integer.parseInt((String) dia.getSelectedItem()), Integer.parseInt((String) mes.getSelectedItem()), Integer.parseInt((String) anio.getSelectedItem())), nameImage, biografia.getText(), web.getText());
         }
 
-       
         if (IU.ingresarUsuario(dtu)) {
             javax.swing.JOptionPane.showMessageDialog(null, "El usuario fue ingresado con exito", "Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -435,8 +442,10 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
         try {
             archivoImg.showOpenDialog(this);
             File arch = archivoImg.getSelectedFile();
-            pathImage = "src/Recursos/Imagenes/Usuarios/" + arch.getName();
-            //System.out.println("Path"+ pathMp3);
+            //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
+            nameImage = arch.getName();
+            pathImage = pm.getProperty("pathImagenesUsuario") + arch.getName();
+            //System.out.println(pm.getProperty("pathImagenes"));
             if (arch != null) {
                 InputStream is = new FileInputStream(arch);
                 OutputStream outstream = new FileOutputStream(new File(pathImage));
@@ -449,18 +458,25 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "El archivo se ha guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 
             }
-            BufferedImage img;
-            img = ImageIO.read(new File(pathImage));
-            pImg = new PanelImagen(img);
-            imagePanel.add(pImg);
-            pImg.setBounds(0, 0, 200, 182);
+
+            cargarImagen(pathImage);
 
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se pudo cargar la Imagen.", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnCargarImgActionPerformed
-
+    private void cargarImagen(String pathImage) {
+        try {
+            BufferedImage img;
+            img = ImageIO.read(new File(pathImage));
+            pImg = new PanelImagen(img);
+            imagePanel.add(pImg);
+            pImg.setBounds(0, 0, 200, 182);
+        } catch (IOException ex) {
+            Logger.getLogger(AltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.ButtonGroup Tipo;
