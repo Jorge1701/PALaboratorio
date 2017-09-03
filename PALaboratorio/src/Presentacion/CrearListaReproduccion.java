@@ -15,8 +15,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -30,7 +33,9 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
     IContenido iContenido;
     private final JFileChooser archivoImg;
     String pathImage;
+    String nameImage;
     PanelImagen pImg;
+    PropertyManager pm;
 
     public CrearListaReproduccion() {
         initComponents();
@@ -41,6 +46,9 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         archivoImg = new JFileChooser();
         archivoImg.setFileFilter(new FileNameExtensionFilter("Images files", "jpg", "png", "gif", "jpeg"));
         pathImage = null;
+        nameImage = null;
+        pm = PropertyManager.getInstance();
+        cargarImagen(pm.getProperty("pathImagenesLista") + "listaDefault.png");
     }
 
     private void mostrar() {
@@ -132,7 +140,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
         jSplitPane2.setLeftComponent(jPanel1);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Artistas"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Clientes"));
 
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -149,7 +157,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +184,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         imagePanel.setLayout(imagePanelLayout);
         imagePanelLayout.setHorizontalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 117, Short.MAX_VALUE)
+            .addGap(0, 138, Short.MAX_VALUE)
         );
         imagePanelLayout.setVerticalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,18 +205,15 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
+                .addGap(35, 35, 35)
                 .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(26, 26, 26))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,7 +221,10 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(jPanel3);
@@ -326,7 +334,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nickCliente = "", nomGenero = "",camposVacios = "";
+        String nickCliente = "", nomGenero = "", camposVacios = "";
         DtLista lista;
         if (btnListaDefecto.isSelected()) {
             if (generos.getSelectionPath() == null) {
@@ -344,7 +352,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
             DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
             nomGenero = selectedElement.getUserObject().toString();
-            lista = new DtListaDefecto(iContenido.selecGenero(nomGenero), nombre.getText(), new ArrayList<>(), pathImage);   // Agregar que se ingrese la imagen en el diseño.
+            lista = new DtListaDefecto(iContenido.selecGenero(nomGenero), nombre.getText(), new ArrayList<>(), nameImage);   // Agregar que se ingrese la imagen en el diseño.
             if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
                 JOptionPane.showMessageDialog(this, "La lista que intenta ingresar ya existe", "Mensaje", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -368,14 +376,18 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                 return;
             }
             nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString();
-            lista = new DtListaParticular(true, nombre.getText(), new ArrayList<>(), pathImage);  // Agregar que se ingrese la imagen en el diseño.
+            lista = new DtListaParticular(true, nombre.getText(), new ArrayList<>(), nameImage);  // Agregar que se ingrese la imagen en el diseño.
             if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
-                JOptionPane.showMessageDialog(this, "Ocurrió un error al ingresar la lista", "Mensaje", JOptionPane.ERROR_MESSAGE);
-             } else {
+                JOptionPane.showMessageDialog(this, "La lista que intenta ingresar ya existe", "Mensaje", JOptionPane.ERROR_MESSAGE);
+            } else {
                 JOptionPane.showMessageDialog(this, "La lista se ingresó correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-              }
+            }
 
         }
+        
+        pathImage = null;
+        nameImage = null;
+        cargarImagen(pm.getProperty("pathImagenesLista") + "listaDefault.png");
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -387,25 +399,24 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         try {
             archivoImg.showOpenDialog(this);
             File arch = archivoImg.getSelectedFile();
-            pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
-
+            //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
+            nameImage = arch.getName();
+            pathImage = pm.getProperty("pathImagenesLista") + arch.getName();
+            //System.out.println(pm.getProperty("pathImagenes"));
             if (arch != null) {
                 InputStream is = new FileInputStream(arch);
-                OutputStream outstream = new FileOutputStream(new File("src" + pathImage));
+                OutputStream outstream = new FileOutputStream(new File(pathImage));
                 byte[] buffer = new byte[4096];
                 int len;
                 while ((len = is.read(buffer)) > 0) {
                     outstream.write(buffer, 0, len);
                 }
                 outstream.close();
-                JOptionPane.showMessageDialog(null, "El archivo se ha guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El archivo se ha guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 
             }
-            BufferedImage img;
-            img = ImageIO.read(new File("src" + pathImage));
-            pImg = new PanelImagen(img);
-            imagePanel.add(pImg);
-            pImg.setBounds(0, 0, 200, 182);
+
+            cargarImagen(pathImage);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -413,6 +424,17 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnCargarImgActionPerformed
 
+    private void cargarImagen(String pathImage) {
+        try {
+            BufferedImage img;
+            img = ImageIO.read(new File(pathImage));
+            pImg = new PanelImagen(img);
+            imagePanel.add(pImg);
+            pImg.setBounds(0, 0, 140, 111);
+        } catch (IOException ex) {
+            Logger.getLogger(CrearListaReproduccion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
