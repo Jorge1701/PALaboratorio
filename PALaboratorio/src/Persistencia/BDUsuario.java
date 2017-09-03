@@ -1,16 +1,12 @@
 package Persistencia;
 
-import Logica.Artista;
 import Logica.DtArtista;
 import Logica.DtUsuario;
-import Logica.Usuario;
-import com.mysql.fabric.xmlrpc.base.Data;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -76,8 +72,8 @@ public class BDUsuario {
         String correo = dtu.getEmail();
         String imagen = dtu.getImagen();
 
-        Date fecha = new Date(dtu.getFechaNac().getAnio(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getDia());
-        //java.sql.Date.valueOf(dtu.getFechaNac().getAnio() + "-" + dtu.getFechaNac().getMes() + "-" + dtu.getFechaNac().getDia());
+        Date fecha = java.sql.Date.valueOf(dtu.getFechaNac().getAnio() + "-" + dtu.getFechaNac().getMes() + "-" + dtu.getFechaNac().getDia());
+        //new Date(dtu.getFechaNac().getAnio(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getDia());
 
         if (dtu instanceof DtArtista) {
             try {
@@ -93,11 +89,11 @@ public class BDUsuario {
                 insertar.setDate(5, fecha);
                 insertar.setString(6, biografia);
                 insertar.setString(7, web);
-               // if (imagen == null || imagen == "") {
-               //     insertar.setNull(8, Types.VARCHAR);
-               // } else {
-                    insertar.setString(8, imagen);
-               // }
+                // if (imagen == null || imagen == "") {
+                //     insertar.setNull(8, Types.VARCHAR);
+                // } else {
+                insertar.setString(8, imagen);
+                // }
                 insertar.executeUpdate();
                 insertar.close();
             } catch (SQLException ex) {
@@ -117,8 +113,8 @@ public class BDUsuario {
                 insertar.setDate(5, fecha);
                 //if (imagen == null || imagen == "") {
                 //    insertar.setNull(6, Types.VARCHAR);
-               // } else {
-                    insertar.setString(6, imagen);
+                // } else {
+                insertar.setString(6, imagen);
                 //}
                 insertar.executeUpdate();
                 insertar.close();

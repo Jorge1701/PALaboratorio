@@ -83,6 +83,7 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu1.add(altaPerfil);
 
+        altaAlbum.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         altaAlbum.setText("Alta Album");
         altaAlbum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +92,7 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu1.add(altaAlbum);
 
+        altaGenero.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         altaGenero.setText("Alta de Genero");
         altaGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +101,7 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu1.add(altaGenero);
 
+        crearListaRep.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         crearListaRep.setText("Crear Lista de Reproduccion");
         crearListaRep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,6 +209,7 @@ public class menu extends javax.swing.JFrame {
 
         jMenu5.setText("Datos de Prueba");
 
+        cargarDatos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SPACE, java.awt.event.InputEvent.CTRL_MASK));
         cargarDatos.setText("Cargar");
         cargarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

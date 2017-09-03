@@ -19,7 +19,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -332,10 +334,13 @@ public class CargaDatosPrueba {
                 String apellido = artistas.getString(3);
                 String correo = artistas.getString(4);
                 Date fecha = artistas.getDate(5);
+                Calendar cal = Calendar.getInstance();      //Las funciones getDay(), getYear() y getMonth() están obsoletas(retornan valores incorrectos), por eso se usa Calendar.
+                cal.setTime(fecha);
+                DtFecha dtFecha = new DtFecha(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
                 String biografia = artistas.getString(6);
                 String web = artistas.getString(7);
                 String imagen = artistas.getString(8);
-                usuarios.add(new DtArtista(nickName, nombre, apellido, correo, new DtFecha(fecha.getDay(), fecha.getMonth(), fecha.getYear()), imagen, biografia, web));
+                usuarios.add(new DtArtista(nickName, nombre, apellido, correo, dtFecha, imagen, biografia, web));
             }
 
             usuario.close();
@@ -349,9 +354,13 @@ public class CargaDatosPrueba {
                 String nombre = clientes.getString(2);
                 String apellido = clientes.getString(3);
                 String correo = clientes.getString(4);
-                Date fecha = clientes.getDate(5);
                 String imagen = clientes.getString(6);
-                usuarios.add(new DtCliente(nickName, nombre, apellido, correo, new DtFecha(fecha.getDay(), fecha.getMonth(), fecha.getYear()), imagen));
+                Date fecha = clientes.getDate(5);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(fecha);
+                DtFecha dtFecha = new DtFecha(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
+                usuarios.add(new DtCliente(nickName, nombre, apellido, correo, dtFecha, imagen));
+
             }
 
             usuario1.close();
