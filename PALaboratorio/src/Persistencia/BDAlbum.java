@@ -21,17 +21,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Diego
  */
 public class BDAlbum {
-    
-   protected Connection conexion = new ConexionBD().getConexion();
-    
+
+    protected Connection conexion = new ConexionBD().getConexion();
+
     public boolean altaAlbum(Album album) {
 
         try {

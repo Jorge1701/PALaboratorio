@@ -1,7 +1,7 @@
 package Logica;
 
 public class DtTema {
-    
+
     private String nombre;
     private DtTime duracion;
     private int ubicacion;
@@ -23,4 +23,9 @@ public class DtTema {
     public int getUbicacion() {
         return ubicacion;
     }
+
+    public void setUbicacion(int ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+    
 }

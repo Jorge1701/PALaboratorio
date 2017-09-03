@@ -1,4 +1,3 @@
-
 package Presentacion;
 
 import Logica.DtGenero;
@@ -10,6 +9,7 @@ import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IContenido;
 import Logica.IUsuario;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,10 +37,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
- 
-
 public class AltaAlbum extends javax.swing.JInternalFrame {
-    
+
     private IContenido iContenido;
     private IUsuario iUsuario;
     ArrayList<String> generos;
@@ -49,14 +47,18 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     private final JFileChooser archivoImg;
     ArrayList<DtTema> temas;
     String pathMp3;
+    String nameMp3;
     String pathImage;
+    String nameImage;
     DefaultTableModel dtm;
     private ArrayList<DtUsuario> datos;
-    
+    PanelImagen pImg;
+    PropertyManager pm;
+
     public AltaAlbum() {
         initComponents();
         archivoTema = new JFileChooser();
-        archivoTema.setFileFilter(new FileNameExtensionFilter("mp3 files" , "mp3"));
+        archivoTema.setFileFilter(new FileNameExtensionFilter("mp3 files", "mp3"));
         archivoImg = new JFileChooser();
         archivoImg.setFileFilter(new FileNameExtensionFilter("Images files", "jpg", "png", "gif", "jpeg"));
         this.iContenido = Fabrica.getIControladorContenido();
@@ -67,14 +69,19 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         buttonStream.setSelected(true);
         mostrarTema();
         dtm = (DefaultTableModel) tableTemas.getModel();
+        tableTemas.setModel(dtm);
         dtm.setRowCount(0);
         pathMp3 = "";
+        nameMp3 = "";
         pathImage = null;
+        nameImage = null;
         datos = iUsuario.listarArtistas();
         cargarDatos(datos, "");
-        
+        pm = PropertyManager.getInstance();
+        cargarImagen(pm.getProperty("pathImagenesAlbum") + "albumDefault.png");
+
     }
-    
+
     private DefaultMutableTreeNode getNodo(DtGenero g) {
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode(g.getNombre());
         for (DtGenero dtg : g.getSubGeneros()) {
@@ -83,36 +90,36 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         }
         return padre;
     }
-    
+
     private boolean exiteNombreTema(String nombreTema) {
-        
+
         boolean retorno = false;
-        if (!this.temas.isEmpty()){
+        if (!this.temas.isEmpty()) {
             for (int i = 0; i < temas.size(); i++) {
                 DtTema dtT = (DtTema) temas.get(i);
-                if(dtT.getNombre().equals(nombreTema)){
+                if (dtT.getNombre().equals(nombreTema)) {
                     retorno = true;
                 }
             }
-        } 
-        
+        }
+
         return retorno;
-    
+
     }
-    
-    void mostrarGeneros() {    
-       
+
+    void mostrarGeneros() {
+
         jTreeGeneros.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         DtGenero g = iContenido.listarGenero();
 
         DefaultTreeModel modelo = new DefaultTreeModel(getNodo(g));
         jTreeGeneros.setModel(modelo);
-        
+
         model = new DefaultListModel<>();
         jListGros.setModel(model);
         generos = new ArrayList<>();
     }
-    
+
     private void cargarDatos(ArrayList<DtUsuario> dtu, String filtro) {
         if (dtu.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
@@ -133,21 +140,33 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     void mostrarTema() {
-        if(buttonStream.isSelected()){
+        if (buttonStream.isSelected()) {
             txtStremTema.setEnabled(true);
             btnSelecMp3.setEnabled(false);
-        
+
         } else if (buttonArch.isSelected()) {
             txtStremTema.setEnabled(false);
             btnSelecMp3.setEnabled(true);
         }
-        
-        
-    
+
     }
 
+    private void setUbicacionTemas() {
+
+        for (int i = 0; i < tableTemas.getRowCount(); i++) {
+            String nom = tableTemas.getValueAt(i, 0).toString();
+            int ubicacion = Integer.parseInt(tableTemas.getValueAt(i, 1).toString());
+            for (int e = 0; e < temas.size(); e++) {
+                DtTema dtT = (DtTema) temas.get(e);
+                if (dtT.getNombre().equals(nom)) {
+                    dtT.setUbicacion(ubicacion);
+                }
+            }
+        }
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -176,8 +195,6 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         buttonArch = new javax.swing.JRadioButton();
         buttonStream = new javax.swing.JRadioButton();
         btnAgregarTema = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        txtUbicacionTema = new javax.swing.JTextField();
         txtStremTema = new javax.swing.JTextField();
         Date date = new Date();
         SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
@@ -185,6 +202,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tableTemas = new javax.swing.JTable();
         btnSelecMp3 = new javax.swing.JButton();
+        btnEliminarTema = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaArtistas = new javax.swing.JTable();
         imagePanel = new javax.swing.JPanel();
@@ -258,7 +276,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnQuitarGro)
@@ -308,214 +326,224 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel4.setText("Ubicacion");
-
         JSpinner.DateEditor de = new JSpinner.DateEditor(jSpinnerDuracion, "HH:mm:ss");
         jSpinnerDuracion.setEditor(de);
         jSpinnerDuracion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jSpinnerDuracion.setFocusable(false);
 
-        tableTemas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nombre", "Ubicacion", "Duración", "Path o Url"
-            }
-        ));
-        jScrollPane3.setViewportView(tableTemas);
+        tableTemas = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int col) {
+                switch (col) {
+                    case 1:
+                    return true;
+                    default:
+                    return false;
+                }
+            }};
+            tableTemas.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
 
-        btnSelecMp3.setText("Select .mp3..");
-        btnSelecMp3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelecMp3ActionPerformed(evt);
-            }
-        });
+                },
+                new String [] {
+                    "Nombre", "Ubicacion","Duración", "Path o Url"
+                }
+            ));
+            jScrollPane3.setViewportView(tableTemas);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            btnSelecMp3.setText("Select .mp3..");
+            btnSelecMp3.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnSelecMp3ActionPerformed(evt);
+                }
+            });
+
+            btnEliminarTema.setText("Eliminar");
+            btnEliminarTema.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnEliminarTemaActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+            jPanel2.setLayout(jPanel2Layout);
+            jPanel2Layout.setHorizontalGroup(
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnAgregarTema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnEliminarTema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(28, 28, 28))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnAgregarTema)
-                        .addGap(18, 18, 18)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSpinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUbicacionTema, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(71, 71, 71)
-                                .addComponent(buttonStream))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(txtStremTema, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(buttonArch)
-                            .addComponent(btnSelecMp3))
-                        .addGap(37, 37, 37))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtNomTema, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtNomTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buttonStream)
-                        .addComponent(buttonArch))
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jSpinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3))
-                            .addComponent(txtStremTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(71, 71, 71)
+                                    .addComponent(buttonStream))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(62, 62, 62)
+                                    .addComponent(txtStremTema, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(buttonArch)
+                                .addComponent(btnSelecMp3))
+                            .addGap(37, 37, 37))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(txtNomTema, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addContainerGap())))
+            );
+            jPanel2Layout.setVerticalGroup(
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(3, 3, 3)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtUbicacionTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(13, 13, 13))
-                    .addComponent(btnSelecMp3))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarTema)))
-        );
+                            .addComponent(txtNomTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonStream)
+                            .addComponent(buttonArch))
+                        .addComponent(jLabel1))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jSpinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addComponent(txtStremTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSelecMp3))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap())
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(45, 45, 45)
+                            .addComponent(btnAgregarTema)
+                            .addGap(30, 30, 30)
+                            .addComponent(btnEliminarTema)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            );
 
-        tablaArtistas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-            },
-            new String [] {
-                "Nickname", "Nombre", "Apellido", "Email", "Fecha Nac."
-            }
-        ));
-        jScrollPane4.setViewportView(tablaArtistas);
+            tablaArtistas.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                },
+                new String [] {
+                    "Nickname", "Nombre", "Apellido", "Email", "Fecha Nac."
+                }
+            ));
+            jScrollPane4.setViewportView(tablaArtistas);
 
-        imagePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+            imagePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
-        imagePanel.setLayout(imagePanelLayout);
-        imagePanelLayout.setHorizontalGroup(
-            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 198, Short.MAX_VALUE)
-        );
-        imagePanelLayout.setVerticalGroup(
-            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 180, Short.MAX_VALUE)
-        );
+            javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
+            imagePanel.setLayout(imagePanelLayout);
+            imagePanelLayout.setHorizontalGroup(
+                imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 198, Short.MAX_VALUE)
+            );
+            imagePanelLayout.setVerticalGroup(
+                imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 180, Short.MAX_VALUE)
+            );
 
-        btnCargarImg.setLabel("Cargar Imagen");
-        btnCargarImg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarImgActionPerformed(evt);
-            }
-        });
+            btnCargarImg.setLabel("Cargar Imagen");
+            btnCargarImg.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnCargarImgActionPerformed(evt);
+                }
+            });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jButton1)
-                        .addGap(191, 191, 191)
-                        .addComponent(jButton2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(AlbumTx)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(113, 113, 113)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(comboAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(NombreTx, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(92, 92, 92)
-                                .addComponent(txtNick, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane4))))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtNick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(NombreTx)
-                        .addComponent(txtNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(AlbumTx)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(101, 101, 101)
-                        .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(10, 10, 10)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(23, 23, 23)
                             .addComponent(jButton1)
-                            .addComponent(jButton2))
-                        .addGap(25, 25, 25))))
-        );
+                            .addGap(191, 191, 191)
+                            .addComponent(jButton2)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(AlbumTx)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(113, 113, 113)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(comboAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(NombreTx, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(92, 92, 92)
+                                    .addComponent(txtNick, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane4))))
+                    .addContainerGap())
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(51, 51, 51)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtNick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(NombreTx)
+                            .addComponent(txtNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AlbumTx)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(44, 44, 44)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(comboAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(101, 101, 101)
+                            .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(31, 31, 31)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(22, 22, 22)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton1)
+                                .addComponent(jButton2))
+                            .addGap(25, 25, 25))))
+            );
 
-        jPanel2.getAccessibleContext().setAccessibleName("Temas");
+            jPanel2.getAccessibleContext().setAccessibleName("Temas");
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-    
+            pack();
+        }// </editor-fold>//GEN-END:initComponents
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //String nickA = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString();
         if (tablaArtistas.getSelectedRow() == -1) {
@@ -525,64 +553,76 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
         String nickA = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString();
         //System.out.println("nick:"  + nickA);
         String album = txtNombreAlbum.getText();
-        int anio = Integer.parseInt(comboAnio.getSelectedItem().toString());
-        
-        
+
         String camposVacios = "";
-        if (nickA.isEmpty()) {
-            camposVacios += "Nick Artista\n";
-        }
+
         if (album.isEmpty()) {
             camposVacios += "Nombre Album \n";
         }
-        
+
         if (!camposVacios.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Hay campos obligatorios vacios:\n" + camposVacios);
             return;
         }
-        
+
+        if (comboAnio.getSelectedItem().toString().equals("----")) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un año");
+            return;
+        }
+        int anio = Integer.parseInt(comboAnio.getSelectedItem().toString());
+
         try {
             iContenido.selectArtista(nickA);
-            
-            //generos.add("Rock");
-            
-            //DtTema dtT = new DtTema( "pista1", new DtTime(0, 2, 23), 1);
-            //ArrayList<DtTema> temas = new ArrayList<DtTema>();
-            //temas.add(dtT);
-            
-            iContenido.ingresarAlbum(album, anio, generos, pathImage, temas);
-            
-            
+
+            if (temas.isEmpty()) {
+                throw new UnsupportedOperationException("Debe de indicar al menos un Tema");
+            }
+
+            if (generos.isEmpty()) {
+                throw new UnsupportedOperationException("Debe de indicar al menos un Genero");
+            }
+
+            setUbicacionTemas();
+
+            iContenido.ingresarAlbum(album, anio, generos, nameImage, temas);
+
         } catch (UnsupportedOperationException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
             return;
         }
-        
+
         JOptionPane.showMessageDialog(this, "Se ingreso Album");
         txtNick.setText("");
         txtNombreAlbum.setText("");
         dtm.setRowCount(0);
-        jListGros.removeAll();
+        DefaultListModel mListGros = (DefaultListModel) jListGros.getModel();
+        mListGros.removeAllElements();
         pathImage = null;
-        imagePanel.removeAll();
+        nameImage = null;
+        comboAnio.setSelectedIndex(0);
+        //imagePanel.repaint();
+        //imagePanel.setBackground(Color.GRAY);
+        tablaArtistas.clearSelection();
         temas.removeAll(temas);
         generos.removeAll(generos);
+
+        cargarImagen(pm.getProperty("pathImagenesAlbum") + "albumDefault.png");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-    dispose();        // TODO add your handling code here:
+        dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jTreeGenerosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTreeGenerosValueChanged
         // TODO add your handling code here:
-              
+
     }//GEN-LAST:event_jTreeGenerosValueChanged
 
     private void jbtnAgregarGroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarGroActionPerformed
         // TODO add your handling code here:
-        
+
         DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) jTreeGeneros.getSelectionPath().getLastPathComponent();
-        
+
         if (selectedElement.isRoot()) {
             JOptionPane.showMessageDialog(this, "No puede seleccionar nodo Raiz:\n");
         } else {
@@ -593,57 +633,58 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                 generos.add(generoSeleccionado);
                 model.addElement(generoSeleccionado);
             }
-            
+
         }
-        
+
     }//GEN-LAST:event_jbtnAgregarGroActionPerformed
 
     private void btnQuitarGroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarGroActionPerformed
         // TODO add your handling code here:
-       
+
         String pos = jListGros.getSelectedValue();
-        if (pos != null){
+        if (pos != null) {
             generos.remove(pos);
-            model.removeElement(pos);        
-        } else{
+            model.removeElement(pos);
+        } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un genero:\n");
         }
-        
+
     }//GEN-LAST:event_btnQuitarGroActionPerformed
 
     private void btnSelecMp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecMp3ActionPerformed
         // TODO add your handling code here:
-        
-         try {
-             int retorno = archivoTema.showOpenDialog(this);        
-             File arch = archivoTema.getSelectedFile();
-             pathMp3 = "src/Recursos/Musica/" + arch.getName();
-             System.out.println("Path"+ pathMp3);
-             if (arch != null) {
-                  InputStream is = new FileInputStream(arch);
-                    OutputStream outstream = new FileOutputStream(new File(pathMp3));
-                    byte[] buffer = new byte[4096];
-                    int len;
-                    while ((len = is.read(buffer)) > 0) {
-                        outstream.write(buffer, 0, len);
-                    }
-                    outstream.close();
-                    JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "Información",JOptionPane.INFORMATION_MESSAGE);
-             
-             }
-             
-            
+
+        try {
+            int retorno = archivoTema.showOpenDialog(this);
+            File arch = archivoTema.getSelectedFile();
+            //pathMp3 = "src/Recursos/Musica/" + arch.getName();
+            pathMp3 = pm.getProperty("pathMusica") + arch.getName();
+            nameMp3 = arch.getName();
+            //System.out.println("Path: "+ pathMp3);
+            if (arch != null) {
+                InputStream is = new FileInputStream(arch);
+                OutputStream outstream = new FileOutputStream(new File(pathMp3));
+                byte[] buffer = new byte[4096];
+                int len;
+                while ((len = is.read(buffer)) > 0) {
+                    outstream.write(buffer, 0, len);
+                }
+                outstream.close();
+                JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+
         } catch (FileNotFoundException ex) {
-             JOptionPane.showMessageDialog(null, "El directorio o nombre de archivo incorrecto.","Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El directorio o nombre de archivo incorrecto.", "Error", JOptionPane.WARNING_MESSAGE);
         } catch (IOException ex) {
             Logger.getLogger(AltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
-        
+        }
+
+
     }//GEN-LAST:event_btnSelecMp3ActionPerformed
 
     private void buttonStreamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStreamActionPerformed
-       mostrarTema();
+        mostrarTema();
     }//GEN-LAST:event_buttonStreamActionPerformed
 
     private void buttonArchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonArchActionPerformed
@@ -651,117 +692,150 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buttonArchActionPerformed
 
     private void btnAgregarTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTemaActionPerformed
-        
+
         String nomTema = txtNomTema.getText();
         Date time = new Date();
-        time  = (Date) jSpinnerDuracion.getValue();
+        time = (Date) jSpinnerDuracion.getValue();
         Calendar cal = Calendar.getInstance();
         cal.setTime(time);
         DtTime dtTime = new DtTime(cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
-        String ubicacion = txtUbicacionTema.getText();
         String stream;
         String pathtArch;
         DtTema dtTema;
-        
+
         String camposVacios = "";
         if (nomTema.isEmpty()) {
             camposVacios += "Nombre Tema\n";
         }
-        
-        if (ubicacion.isEmpty()) {
-            camposVacios += "Ubicacion Tema\n";
-        }
-                
+
         if (!camposVacios.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Hay campos obligatorios vacios:\n" + camposVacios);
             return;
         }
-        
-        if( txtStremTema.isEnabled()){
+
+        if (txtStremTema.isEnabled()) {
             stream = txtStremTema.getText();
-            if(stream.isEmpty()){
+            if (stream.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe indicar la url");
-                return;            
+                return;
             }
-            if(exiteNombreTema(nomTema)){
+            if (exiteNombreTema(nomTema)) {
                 JOptionPane.showMessageDialog(this, "Nombre de tema Duplicado");
-                return;  
+                return;
             }
-            dtTema = new DtTemaRemoto(stream, nomTema, dtTime, Integer.parseInt(ubicacion));
+            int ubicacion = tableTemas.getRowCount() + 1;
+            dtTema = new DtTemaRemoto(stream, nomTema, dtTime, ubicacion);
             Object[] data = {
                 nomTema,
                 ubicacion,
-                dtTime.getHoras() + ":" + dtTime.getMinutos() + ":" + dtTime.getSegundos(),                
+                dtTime.getHoras() + ":" + dtTime.getMinutos() + ":" + dtTime.getSegundos(),
                 stream,};
             dtm.addRow(data);
             //System.out.println("Agrego tema" + nomTema);
             temas.add(dtTema);
-            
-        } else if(btnSelecMp3.isEnabled()){
-            
-            if(pathMp3 == ""){                
+
+        } else if (btnSelecMp3.isEnabled()) {
+
+            if (nameMp3 == "") {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un archivo");
-                return;              
+                return;
             }
-            if(exiteNombreTema(nomTema)){
+            if (exiteNombreTema(nomTema)) {
                 JOptionPane.showMessageDialog(this, "Nombre de tema Duplicado");
-                return;  
+                return;
             }
-            dtTema = new DtTemaLocal(pathMp3, nomTema, dtTime, Integer.parseInt(ubicacion));
+            int ubicacion = tableTemas.getRowCount() + 1;
+            dtTema = new DtTemaLocal(nameMp3, nomTema, dtTime, ubicacion);
             Object[] data = {
                 nomTema,
                 ubicacion,
-                dtTime.getHoras() + ":" + dtTime.getMinutos() + ":" + dtTime.getSegundos(),                
-                pathMp3,};
+                dtTime.getHoras() + ":" + dtTime.getMinutos() + ":" + dtTime.getSegundos(),
+                nameMp3,};
             dtm.addRow(data);
             System.out.println("Agrego Tema" + nomTema);
             temas.add(dtTema);
             pathMp3 = "";
-            
-                    
+            nameMp3 = "";
+
         }
-        
+
         txtStremTema.setText("");
-        txtUbicacionTema.setText("");
         txtNomTema.setText("");
-        
+
     }//GEN-LAST:event_btnAgregarTemaActionPerformed
 
     private void txtNickCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtNickCaretUpdate
         // TODO add your handling code here:
         cargarDatos(datos, txtNick.getText());
-        
+
     }//GEN-LAST:event_txtNickCaretUpdate
 
     private void btnCargarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImgActionPerformed
         try {
-             archivoImg.showOpenDialog(this);        
-             File arch = archivoImg.getSelectedFile();
-             pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
-             //System.out.println("Path"+ pathMp3);
-             if (arch != null) {
-                    InputStream is = new FileInputStream(arch);
-                    OutputStream outstream = new FileOutputStream(new File(pathImage));
-                    byte[] buffer = new byte[4096];
-                    int len;
-                    while ((len = is.read(buffer)) > 0) {
-                        outstream.write(buffer, 0, len);
-                    }
-                    outstream.close();
-                    JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "Información",JOptionPane.INFORMATION_MESSAGE);
+            archivoImg.showOpenDialog(this);
+            File arch = archivoImg.getSelectedFile();
+            //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
+            nameImage = arch.getName();
+            pathImage = pm.getProperty("pathImagenesAlbum") + arch.getName();
+            //System.out.println(pm.getProperty("pathImagenes"));
+            if (arch != null) {
+                InputStream is = new FileInputStream(arch);
+                OutputStream outstream = new FileOutputStream(new File(pathImage));
+                byte[] buffer = new byte[4096];
+                int len;
+                while ((len = is.read(buffer)) > 0) {
+                    outstream.write(buffer, 0, len);
+                }
+                outstream.close();
+                JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 
-             }
-             BufferedImage img;
-             img = ImageIO.read(new File(pathImage));
-             PanelImagen pImg = new PanelImagen(img);
-             imagePanel.add(pImg);
-             pImg.setBounds(0, 0, 200, 182);
-             
+            }
+
+            cargarImagen(pathImage);
+
         } catch (Exception ex) {
-             ex.printStackTrace();
-             JOptionPane.showMessageDialog(null, "No se pudo cargar la Imagen.","Error", JOptionPane.WARNING_MESSAGE);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No se pudo cargar la Imagen.", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnCargarImgActionPerformed
+
+    private void cargarImagen(String pathImage) {
+        try {
+            BufferedImage img;
+            img = ImageIO.read(new File(pathImage));
+            pImg = new PanelImagen(img);
+            imagePanel.add(pImg);
+            pImg.setBounds(0, 0, 200, 182);
+        } catch (IOException ex) {
+            Logger.getLogger(AltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void btnEliminarTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTemaActionPerformed
+
+        int fila = tableTemas.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tableTemas.getModel();
+        System.out.println("fila" + fila);
+        if (fila >= 0) {
+            String nombre = tableTemas.getValueAt(fila, 0).toString();
+            if (!temas.isEmpty()) {
+
+                for (int i = 0; i < temas.size(); i++) {
+                    DtTema dtT = (DtTema) temas.get(i);
+                    if (dtT.getNombre().equals(nombre)) {
+                        temas.remove(dtT);
+                    }
+                }
+            }
+
+            model.removeRow(fila);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un tema");
+            return;
+
+        }
+
+    }//GEN-LAST:event_btnEliminarTemaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -769,6 +843,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     private javax.swing.JLabel NombreTx;
     private javax.swing.JButton btnAgregarTema;
     private java.awt.Button btnCargarImg;
+    private javax.swing.JButton btnEliminarTema;
     private javax.swing.JButton btnQuitarGro;
     private javax.swing.JButton btnSelecMp3;
     private javax.swing.ButtonGroup btonGroupTema;
@@ -781,7 +856,6 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JList<String> jListGros;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -798,8 +872,5 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNomTema;
     private javax.swing.JTextField txtNombreAlbum;
     private javax.swing.JTextField txtStremTema;
-    private javax.swing.JTextField txtUbicacionTema;
     // End of variables declaration//GEN-END:variables
 }
-
-

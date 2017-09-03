@@ -8,8 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class menu extends javax.swing.JFrame {
 
@@ -55,7 +53,7 @@ public class menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Espotify");
         setBackground(new java.awt.Color(51, 153, 0));
-        setIconImage(Toolkit.getDefaultToolkit().getImage(menu.class.getResource("/Recursos/Imagenes/icono.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(menu.class.getResource("/Imagenes/icono2.png")));
         setName("Espotify"); // NOI18N
 
         PanelMenu.setBackground(new java.awt.Color(204, 204, 255));
@@ -193,10 +191,20 @@ public class menu extends javax.swing.JFrame {
 
         jMenu4.setText("Favoritos");
 
-        guardarTLA.setText("Guardar Tema/Lista/Album");
+        guardarTLA.setText("Agregar Tema/Lista/Album");
+        guardarTLA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarTLAActionPerformed(evt);
+            }
+        });
         jMenu4.add(guardarTLA);
 
         eliminarTLA.setText("Eliminar Tema/Lista/Album");
+        eliminarTLA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarTLAActionPerformed(evt);
+            }
+        });
         jMenu4.add(eliminarTLA);
 
         barra.add(jMenu4);
@@ -223,7 +231,7 @@ public class menu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelMenu)
+            .addComponent(PanelMenu, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -346,14 +354,28 @@ public class menu extends javax.swing.JFrame {
         PanelMenu.add(clr);
         centrar(clr);
         clr.show();
-
     }//GEN-LAST:event_crearListaRepActionPerformed
 
+    private void guardarTLAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarTLAActionPerformed
+        GuardarTLA gtla = new GuardarTLA();
+        PanelMenu.add(gtla);
+        centrar(gtla);
+        gtla.show();
+    }//GEN-LAST:event_guardarTLAActionPerformed
+
+    private void eliminarTLAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarTLAActionPerformed
+        EliminarTLA etla = new EliminarTLA();
+        PanelMenu.add(etla);
+        centrar(etla);
+        etla.show();
+    }//GEN-LAST:event_eliminarTLAActionPerformed
+
     private void agregarTemaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarTemaListaActionPerformed
-        AgregarTemaLista a = new AgregarTemaLista();
-        PanelMenu.add(a);
-        centrar(a);
-        a.show();
+        AgregarTemaLista agr  = new AgregarTemaLista();
+        PanelMenu.add(agr);
+        centrar(agr);
+        agr.show();
+        // TODO add your handling code here:
     }//GEN-LAST:event_agregarTemaListaActionPerformed
 
     public static void main(String args[]) {

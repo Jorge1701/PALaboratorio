@@ -22,7 +22,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class CargaDatosPrueba {
 
@@ -53,30 +52,30 @@ public class CargaDatosPrueba {
 
     // Datos Opcionales de Artistas (Ref, Imagen, Bio, Web)
     private String[][] infoArtistas = {
-        {"VP", "/Recursos/Imagenes/Usuarios/vpeople.jpg", "Village People es una innovadora formación musical de estilo disco de finales de los años 70. Fue famosa tanto por sus peculiares disfraces, como por sus canciones pegadizas, con letras sugerentes y llenas de dobles sentidos.", "www.officialvillagepeople.com"},
-        {"DM", "/Recursos/Imagenes/Usuarios/dmode.jpg", "", "www.depechemode.com"},
-        {"CL", "/Recursos/Imagenes/Usuarios/clauper.png", "Cynthia Ann Stephanie Lauper, conocida simplemente como Cyndi Lauper, es una cantautora, actriz y empresaria estadounidense. Después de participaren el grupo musical, Blue Angel, en 1983 firmó con Portrait Records (filial de Epic Records) y lanzó su exitoso álbum debutShe&#39;s So Unusual a finales de ese mismo año. Siguió lanzando una serie de álbumes en los que encontró una inmensa popularidad, superando los límites de contenido de las letras de sus canciones.", "cyndilauper.com"},
-        {"BS", "/Recursos/Imagenes/Usuarios/bruceTheBoss.jpg", "", "brucespringsteen.net"},
+        {"VP", "vpeople.jpg", "Village People es una innovadora formación musical de estilo disco de finales de los años 70. Fue famosa tanto por sus peculiares disfraces, como por sus canciones pegadizas, con letras sugerentes y llenas de dobles sentidos.", "www.officialvillagepeople.com"},
+        {"DM", "dmode.jpg", "", "www.depechemode.com"},
+        {"CL", "clauper.png", "Cynthia Ann Stephanie Lauper, conocida simplemente como Cyndi Lauper, es una cantautora, actriz y empresaria estadounidense. Después de participaren el grupo musical, Blue Angel, en 1983 firmó con Portrait Records (filial de Epic Records) y lanzó su exitoso álbum debutShe&#39;s So Unusual a finales de ese mismo año. Siguió lanzando una serie de álbumes en los que encontró una inmensa popularidad, superando los límites de contenido de las letras de sus canciones.", "cyndilauper.com"},
+        {"BS", "bruceTheBoss.jpg", "", "brucespringsteen.net"},
         {"TJ", "", "Sir Thomas John, conocido por su nombre artístico de Tom Jones, es un cantante británico. Ha vendido más de 100 millones de discos en todo el mundo.1", "www.tomjones.com"},
-        {"TN", "/Recursos/Imagenes/Usuarios/tripleNelson.jpg", "La Triple Nelson es un grupo de rock uruguayo formado en enero de 1998 e integrado inicialmente por Christian Cary (guitarra y voz), Fernando &quot;Paco&quot; Pintos (bajo y coros) y Rubén Otonello (actualmente su nuevo baterista es Rafael Ugo).", ""},
+        {"TN", "tripleNelson.jpg", "La Triple Nelson es un grupo de rock uruguayo formado en enero de 1998 e integrado inicialmente por Christian Cary (guitarra y voz), Fernando &quot;Paco&quot; Pintos (bajo y coros) y Rubén Otonello (actualmente su nuevo baterista es Rafael Ugo).", ""},
         {"LL", "", "", ""},
         {"PT", "", "Piotr Ilich Chaikovski fue un compositor ruso del período del Romanticismo", ""},
-        {"NN", "/Recursos/Imagenes/Usuarios/nicoleneu.jpg", "", ""},
-        {"PI", "/Recursos/Imagenes/Usuarios/lospimpi.jpg", "", "www.pimpinela.net"},
+        {"NN", "nicoleneu.jpg", "", ""},
+        {"PI", "lospimpi.jpg", "", "www.pimpinela.net"},
         {"DY", "", "José Gómez Romero, conocido artísticamente como Dyango es un cantante español de música romántica.", ""},
         {"AL", "", "Su carrera comienza en 1976 cuando forma la banda Los Playeros junto a su hermano Víctor. Al poco tiempo se mudan a San Luis donde comienzan a hacerse conocidos en la escena musical. Su éxito a nivel nacional llega a comienzos de los años 1990 cuando desembarca en Buenos Aires y graba el éxito \"Violeta\", originalmente compuesta e interpretada en 1985 por el músico brasileño Luiz Caldas bajo el título «Fricote».", ""}
     };
 
     // Datos Opcionales de Clientes (Ref, Imagen,)
     private String[][] infoClientes = {
-        {"VC", "/Recursos/Imagenes/Usuarios/el_padrino.jpg"},
-        {"SO", "/Recursos/Imagenes/Usuarios/scarlettO.jpg"},
-        {"PA", "/Recursos/Imagenes/Usuarios/ppArgento.png"},
-        {"WW", "/Recursos/Imagenes/Usuarios/Heisenberg.jpg"},
-        {"OK", "/Recursos/Imagenes/Usuarios/benKenobi.png"},
-        {"ML", "/Recursos/Imagenes/Usuarios/lachiqui.jpg"},
-        {"CB", "/Recursos/Imagenes/Usuarios/cbochinche.jpg"},
-        {"EL", "/Recursos/Imagenes/Usuarios/Eleven11.jpg"}
+        {"VC", "el_padrino.jpg"},
+        {"SO", "scarlettO.jpg"},
+        {"PA", "ppArgento.png"},
+        {"WW", "Heisenberg.jpg"},
+        {"OK", "benKenobi.png"},
+        {"ML", "lachiqui.jpg"},
+        {"CB", "cbochinche.jpg"},
+        {"EL", "Eleven11.jpg"}
     };
 
     // Seguidores (Seguidor, Seguido)
@@ -165,17 +164,17 @@ public class CargaDatosPrueba {
     private String[][] albumes = {
         {"VP", "VPL", "Village People Live and Sleazy", "DIS,DPO,PCL", "1980", ""},
         {"DM", "DMV", "Violator", "EPO", "1990", ""},
-        {"CL", "CLU", "She’s So Unusual", "PCL,DPO", "1983", "/Recursos/Imagenes/Albumes/She’s So Unusual.PNG"},
+        {"CL", "CLU", "She’s So Unusual", "PCL,DPO", "1983", "She’s So Unusual.PNG"},
         {"BS", "USA", "Born In The U.S.A.", "RCL,RAR,PCL", "1984", ""},
-        {"TJ", "INU", "It’s Not Unusual", "RCL,PCL", "1965", "/Recursos/Imagenes/Albumes/It’s Not Unusual.jpeg"},
+        {"TJ", "INU", "It’s Not Unusual", "RCL,PCL", "1965", "It’s Not Unusual.jpeg"},
         {"TN", "AYS", "Agua Y Sal", "RKL", "2012", ""},
-        {"LL", "LLU", "MTV Unplugged", "RKL,PCL", "2001", "/Recursos/Imagenes/Albumes/MTV Unplugged.jpg"},
+        {"LL", "LLU", "MTV Unplugged", "RKL,PCL", "2001", "MTV Unplugged.jpg"},
         {"PT", "LDC", "El Lago De Los Cisnes", "CLA", "1875", ""},
         {"PT", "CPP", "Concierto Para Piano No. 1 En Si Menor, Opus 23", "CLA", "1875", ""},
         {"NN", "PAM", "Primer Amor", "EPO", "1994", ""},
         {"PI", "AMA", "Hay Amores Que Matan", "PCL,BAL", "1993", ""},
-        {"DY", "LOC", "Un Loco Como Yo", "PCL,BAL", "1993", "/Recursos/Imagenes/Albumes/Un Loco Como Yo.jpg"},
-        {"AL", "VIO", "20 Grandes Éxitos", "CUM", "1989", "/Recursos/Imagenes/Albumes/20 Grandes Éxitos.jpg"}
+        {"DY", "LOC", "Un Loco Como Yo", "PCL,BAL", "1993", "Un Loco Como Yo.jpg"},
+        {"AL", "VIO", "20 Grandes Éxitos", "CUM", "1989", "20 Grandes Éxitos.jpg"}
     };
 
     // Temas de los Albumes (Ref album, Ref tema, Nombre, Minutos, Segundos, Ubicacion)
@@ -205,41 +204,41 @@ public class CargaDatosPrueba {
     // Archivos y Streams de Musica (Album ref, Ref, Archivo, Stream)
     private String[][] archivosYStreams = {
         {"VPL", "T11", "", "bit.ly/SCvpymca"},
-        {"VPL", "T12", "/Recursos/Musica/Macho Man.mp3", ""},
+        {"VPL", "T12", "Macho Man.mp3", ""},
         {"VPL", "T13", "", "bit.ly/SCvpinthenavy"},
-        {"DMV", "T21", "/Recursos/Musica/Personal Jesus.mp3", ""},
-        {"DMV", "T22", "/Recursos/Musica/Enjoy The Silence.mp3", ""},
+        {"DMV", "T21", "Personal Jesus.mp3", ""},
+        {"DMV", "T22", "Enjoy The Silence.mp3", ""},
         {"CLU", "T31", "", "bit.ly/SCclgirlsjustwant"},
-        {"CLU", "T32", "/Recursos/Musica/Time After Time.mp3", ""},
+        {"CLU", "T32", "Time After Time.mp3", ""},
         {"USA", "T41", "", "bit.ly/SCbsborninusa"},
         {"USA", "T42", "", "bit.ly/SCbsglorydays"},
-        {"USA", "T43", "/Recursos/Musica/Dancing In The Dark.mp3", ""},
-        {"INU", "T51", "/Recursos/Musica/It's Not Unusual.mp3", ""},
+        {"USA", "T43", "Dancing In The Dark.mp3", ""},
+        {"INU", "T51", "It's Not Unusual.mp3", ""},
         {"AYS", "T61", "", "bit.ly/SCtnadagiopais"},
-        {"LLU", "T71", "/Recursos/Musica/El Duelo.mp3", ""},
-        {"LLU", "T72", "/Recursos/Musica/Mentira.mp3", ""},
+        {"LLU", "T71", "El Duelo.mp3", ""},
+        {"LLU", "T72", "Mentira.mp3", ""},
         {"LDC", "T81", "", "bit.ly/SCptswanlake"},
         {"CPP", "T91", "", "bit.ly/SCptpiano"},
-        {"PAM", "T101", "/Recursos/Musica/No Quiero Estudiar.mp3", ""},
-        {"AMA", "T111", "/Recursos/Musica/Por Ese Hombre.mp3", ""},
+        {"PAM", "T101", "No Quiero Estudiar.mp3", ""},
+        {"AMA", "T111", "Por Ese Hombre.mp3", ""},
         {"LOC", "T121", "", "bit.ly/SCdyporesehombre"},
         {"VIO", "T131", "", "bit.ly/SCvioleta"}
     };
 
     // Listas de Reproduccion por Defecto (Ref, Nombre, Genero, Imagen)
     private String[][] listasPorDefecto = {
-        {"LD1", "Noche De La Nostalgia", "PCL", "/Recursos/Imagenes/Listas/Noche De La Nostalgia.jpg"},
+        {"LD1", "Noche De La Nostalgia", "PCL", "Noche De La Nostalgia.jpg"},
         {"LD2", "Rock En Español", "RKL", ""},
-        {"LD3", "Musica Clasica", "CLA", "/Recursos/Imagenes/Listas/Musica Clasica.jpg"}
+        {"LD3", "Musica Clasica", "CLA", "Musica Clasica.jpg"}
     };
 
     // Listas de Reproduccion Particulares (Ref cliente, Ref, Nombre, Publica, Imagen)
     private String[][] listasParticulares = {
-        {"VC", "LP1", "Musica Inspiradora", "S", "/Recursos/Imagenes/Listas/Musica Inspiradora.jpg"},
+        {"VC", "LP1", "Musica Inspiradora", "S", "Musica Inspiradora.jpg"},
         {"SO", "LP2", "De Todo Un Poco", "S", ""},
-        {"WW", "LP3", "Para Cocinar", "N", "/Recursos/Imagenes/Listas/Para Cocinar.jpg"},
+        {"WW", "LP3", "Para Cocinar", "N", "Para Cocinar.jpg"},
         {"ML", "LP4", "Para Las Chicas", "S", ""},
-        {"CB", "LP5", "Fiesteras", "S", "/Recursos/Imagenes/Listas/Fiesteras.jpg"},
+        {"CB", "LP5", "Fiesteras", "S", "Fiesteras.jpg"},
         {"CB", "LP6", "Mis Favoritas", "N", ""}
     };
 
@@ -482,11 +481,11 @@ public class CargaDatosPrueba {
     public ArrayList<String[]> cargarListasParticulares() {
         try {
             ArrayList<String[]> res = new ArrayList<>();
-            PreparedStatement l = conexion.prepareStatement("SELECT l.idLista, l.nombre, lp.nickname, lp.Publica, l.imagen FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista");
+            PreparedStatement l = conexion.prepareStatement("SELECT l.idLista, l.nombre, lp.nickname, lp.Publica, l.imagen, lp.nickname FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista");
             ResultSet listas = l.executeQuery();
 
             while (listas.next()) {
-                res.add(new String[]{String.valueOf(listas.getInt(1)), listas.getString(2), listas.getString(3), listas.getString(4), listas.getString(5)});
+                res.add(new String[]{String.valueOf(listas.getInt(1)), listas.getString(2), listas.getString(3), listas.getString(4), listas.getString(5), listas.getString(6)});
             }
 
             return res;
@@ -497,28 +496,23 @@ public class CargaDatosPrueba {
 
     }
 
-    public ArrayList<DtTema> cargarTemasLista(int idLista) {
+    public ArrayList<String[]> cargarTemasLista(int idLista) {
         try {
-            ArrayList<DtTema> temas = new ArrayList<>();
+            ArrayList<String[]> temasInfo = new ArrayList<>();
 
-            PreparedStatement query = conexion.prepareStatement("SELECT t.nombre, t.duracion, t.ubicacion, t.tipo, t.link FROM listatienetemas AS ltt, tema AS t WHERE ltt.idLista = ? AND ltt.idTema = t.idTema");
+            PreparedStatement query = conexion.prepareStatement("SELECT t.nombre, a.nicknameArtista, a.nombre AS 'album' FROM listatienetemas AS ltt, tema AS t, album AS a WHERE ltt.idTema = t.idTema AND t.idAlbum = a.idAlbum AND ltt.idLista = ?");
             query.setInt(1, idLista);
 
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                DtTime dtt = new DtTime(rs.getTime(2).getHours(), rs.getTime(2).getMinutes(), rs.getTime(2).getSeconds());
-                if (rs.getString(4).equals("A")) {
-                    temas.add(new DtTemaLocal(rs.getString(5), rs.getString(1), dtt, rs.getInt(3)));
-                } else {
-                    temas.add(new DtTemaRemoto(rs.getString(5), rs.getString(1), dtt, rs.getInt(3)));
-                }
+                temasInfo.add(new String[]{rs.getString("nicknameArtista"), rs.getString("album"), rs.getString("nombre")});
             }
 
             rs.close();
             query.close();
 
-            return temas;
+            return temasInfo;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -545,10 +539,6 @@ public class CargaDatosPrueba {
             return null;
         }
     }
-    
-    
-    
-
 
     public ArrayList<String[]> cargarAlbumesFavoritos() {
         try {
@@ -610,7 +600,7 @@ public class CargaDatosPrueba {
                 String nickname = favoritosD.getString(1);
                 String nicknameCreador = favoritosD.getString(2);
                 String nombre = favoritosD.getString(3);
-                res.add(new String[]{nickname, nicknameCreador,nombre});
+                res.add(new String[]{nickname, nicknameCreador, nombre});
             }
             statamentD.close();
             favoritosD.close();
@@ -633,7 +623,7 @@ public class CargaDatosPrueba {
                 String nickname = favoritosD.getString(1);
                 String nombreGenero = favoritosD.getString(2);
                 String nombre = favoritosD.getString(3);
-                res.add(new String[]{nickname, nombreGenero,nombre});
+                res.add(new String[]{nickname, nombreGenero, nombre});
             }
             statamentD.close();
             favoritosD.close();
@@ -644,9 +634,6 @@ public class CargaDatosPrueba {
         }
 
     }
-	
-    
-    
 
     // Obtener Id de cosas
     private int obtenerIdAlbum(String nickArtista, String nombreAlbum) {
@@ -964,7 +951,7 @@ public class CargaDatosPrueba {
             String nombre = listaPordefecto[1];
             String refGenero = listaPordefecto[2];
             String imagen = listaPordefecto[3];
-            
+
             String nombreGenero = "";
 
             for (String[] genero : generos) {
@@ -972,7 +959,7 @@ public class CargaDatosPrueba {
                     nombreGenero = genero[1];
                 }
             }
-            DtLista lista = new DtListaDefecto(new DtGenero(nombreGenero, null), nombre, null,imagen);
+            DtLista lista = new DtListaDefecto(new DtGenero(nombreGenero, null), nombre, null, imagen);
 
             if (!bdl.altaLista(lista, "")) {
                 return false;
@@ -997,7 +984,7 @@ public class CargaDatosPrueba {
                     nickCliente = cliente[1];
                 }
             }
-            DtLista lista = new DtListaParticular(false, nombreLista, null,imagen);
+            DtLista lista = new DtListaParticular(false, nombreLista, null, imagen);
             if (!bdl.altaLista(lista, nickCliente)) {
                 return false;
             }
@@ -1178,6 +1165,7 @@ public class CargaDatosPrueba {
             String nombreGenero = "";
             String refGenero = "";
             String refArtista = "";
+
             for (String[] cliente : perfiles) {
                 if (refCliente == cliente[0]) {
                     nickCliente = cliente[1];
@@ -1195,10 +1183,10 @@ public class CargaDatosPrueba {
                     refArtista = listaP[0];
                 }
             }
-            for (String[] artista : perfiles){
-            if(refArtista== artista[0]){
-                nickArtista=artista[1];
-            }
+            for (String[] artista : perfiles) {
+                if (refArtista == artista[0]) {
+                    nickArtista = artista[1];
+                }
             }
 
             for (String[] genero : generos) {
@@ -1206,15 +1194,16 @@ public class CargaDatosPrueba {
                     nombreGenero = genero[1];
                 }
             }
+
             int idLista;
             if (nombreGenero == "") {
-               
+
                 idLista = obtenerIdListaParticular(nickArtista, nombreLista);
             } else {
-                
+
                 idLista = obtenerIdListaDefecto(nombreGenero, nombreLista);
             }
-       
+
             if (!bdf.altaListaFavorita(nickCliente, idLista)) {
                 return false;
             }
@@ -1243,7 +1232,6 @@ public class CargaDatosPrueba {
         }
     }
 
-    
     private boolean borrarDatosTabla(String nombre) {
         try {
             PreparedStatement truncate = conexion.prepareStatement("DELETE FROM " + nombre);

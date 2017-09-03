@@ -4,6 +4,7 @@ import Logica.DtAlbum;
 import Logica.DtCliente;
 import Logica.DtPerfilArtista;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -12,8 +13,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class PerfilArtista extends javax.swing.JInternalFrame {
 
+    PropertyManager pm;
+
     public PerfilArtista(DtPerfilArtista dtPerfilArtista) {
         initComponents();
+        pm = PropertyManager.getInstance();
         setTitle(getTitle() + " " + dtPerfilArtista.getInfo().getNickname());
 
         txtNickname.setText(dtPerfilArtista.getInfo().getNickname());
@@ -54,11 +58,12 @@ public class PerfilArtista extends javax.swing.JInternalFrame {
         try {
             String imagen = dtPerfilArtista.getInfo().getImagen();
             BufferedImage img;
+            String path = pm.getProperty("pathImagenesUsuario");
 
             if (imagen == null || imagen.isEmpty()) {
-                img = ImageIO.read(PerfilCliente.class.getResource("/Recursos/Imagenes/Usuarios/userDefaullt.png"));
+                img = ImageIO.read(new File(path + "userDefaullt.png"));
             } else {
-                img = ImageIO.read(PerfilCliente.class.getResource(imagen));
+                img = ImageIO.read(new File(path + imagen));
             }
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);

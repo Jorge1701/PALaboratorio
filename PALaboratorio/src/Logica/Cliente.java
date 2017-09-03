@@ -24,27 +24,30 @@ public class Cliente extends Usuario {
         this.temasfav = new ArrayList<>();
     }
 
-    public void agregarAlbumFav(Album a) {
+    public int agregarAlbumFav(Album a) {
         if (albumesfav.contains(a)) {
             throw new UnsupportedOperationException("Album ya en favoritos");
         } else {
             albumesfav.add(a);
+            return albumesfav.indexOf(a);
         }
     }
 
-    public void agregarListaFav(Lista l) {
+    public int agregarListaFav(Lista l) {
         if (listasfav.contains(l)) {
             throw new UnsupportedOperationException("Lista ya en favoritos");
         } else {
             listasfav.add(l);
+            return listasfav.indexOf(l);
         }
     }
 
-    public void agregarTemaFav(Tema t) {
+    public int agregarTemaFav(Tema t) {
         if (temasfav.contains(t)) {
             throw new UnsupportedOperationException("Tema ya en favoritos");
         } else {
             temasfav.add(t);
+            return temasfav.indexOf(t);
         }
     }
 
@@ -74,6 +77,42 @@ public class Cliente extends Usuario {
         } else {
             throw new UnsupportedOperationException("Tema no esta en favoritos");
         }
+    }
+
+    public ArrayList<DtAlbum> obtenerDtAlbumesFav() {
+        ArrayList<DtAlbum> favs = new ArrayList<>();
+        for (Album album : albumesfav) {
+            favs.add(album.getData());
+        }
+        return favs;
+    }
+
+    public ArrayList<DtLista> obtenerDtListasFav() {
+        ArrayList<DtLista> favs = new ArrayList<>();
+        for (Lista lista : listasfav) {
+            favs.add(lista.getData());
+        }
+        return favs;
+    }
+
+    public ArrayList<DtTema> obtenerDtTemasFav() {
+        ArrayList<DtTema> favs = new ArrayList<>();
+        for (Tema tema : temasfav) {
+            favs.add(tema.getData());
+        }
+        return favs;
+    }
+
+    public ArrayList<Album> obtenerAlbumsFav() {
+        return albumesfav;
+    }
+
+    public ArrayList<Lista> obtenerListasFav() {
+        return listasfav;
+    }
+
+    public ArrayList<Tema> obtenerTemasFav() {
+        return temasfav;
     }
 
     @Override
@@ -182,7 +221,7 @@ public class Cliente extends Usuario {
         while (it.hasNext()) {
             ListaParticular lp = (ListaParticular) ((Map.Entry) it.next()).getValue();
             if (lp.isPrivada()) {
-                res.add(new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(),lp.getImagen()));
+                res.add(new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(), lp.getImagen()));
             }
         }
         return res;
@@ -190,7 +229,7 @@ public class Cliente extends Usuario {
 
     public DtLista seleccionarLista(String nombreL) {
         ListaParticular lp = listasParticulares.get(nombreL);
-        return new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(),lp.getImagen());
+        return new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(), lp.getImagen());
     }
 
     public ArrayList<DtUsuario> obtenerSeguidos() {
