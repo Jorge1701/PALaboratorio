@@ -457,7 +457,7 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
                     outstream.write(buffer, 0, len);
                 }
                 outstream.close();
-                JOptionPane.showMessageDialog(null, "El archivo se ha guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El archivo se ha guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 
             }
 
@@ -476,7 +476,7 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
             imagePanel.add(pImg);
             pImg.setBounds(0, 0, 200, 182);
         } catch (IOException ex) {
-            Logger.getLogger(AltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AltaPerfil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

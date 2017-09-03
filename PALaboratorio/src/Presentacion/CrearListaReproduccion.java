@@ -205,18 +205,15 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
+                .addGap(19, 19, 19)
                 .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(27, 27, 27))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +221,10 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(jPanel3);
@@ -378,7 +378,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString();
             lista = new DtListaParticular(true, nombre.getText(), new ArrayList<>(), nameImage);  // Agregar que se ingrese la imagen en el diseño.
             if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
-                JOptionPane.showMessageDialog(this, "Ocurrió un error al ingresar la lista", "Mensaje", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "La lista que intenta ingresar ya existe", "Mensaje", JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "La lista se ingresó correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -412,7 +412,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                     outstream.write(buffer, 0, len);
                 }
                 outstream.close();
-                JOptionPane.showMessageDialog(null, "El archivo se ha guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El archivo se ha guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 
             }
 
@@ -430,9 +430,9 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             img = ImageIO.read(new File(pathImage));
             pImg = new PanelImagen(img);
             imagePanel.add(pImg);
-            pImg.setBounds(0, 0, 200, 182);
+            pImg.setBounds(0, 0, 199, 111);
         } catch (IOException ex) {
-            Logger.getLogger(AltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CrearListaReproduccion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
