@@ -844,14 +844,14 @@ public class CargaDatosPrueba {
         String padre = "";
         String pRef = "";
         BDGenero bdg = new BDGenero();
-        bdg.ingresarGeneros("Generos", null);
+        bdg.ingresarGeneros("Géneros", null);
 
         for (String[] genero : generos) {
             nombre = genero[1];
             pRef = genero[2];
 
             if ("".equals(pRef)) {
-                padre = "Generos";
+                padre = "Géneros";
             } else {
                 for (String[] generoPadre : generos) {
                     if (pRef.equals(generoPadre[0])) {

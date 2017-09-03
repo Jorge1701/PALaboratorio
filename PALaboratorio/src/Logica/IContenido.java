@@ -32,4 +32,5 @@ public interface IContenido {
     public Genero obtenerGenero(String nombre);
     public ArrayList<DtLista> listarLisReproduccionDef();
     public void cargarLista(ListaDefecto ld, String nombreGenero);
+    public void ingresarGenero(String nombre,String padre);
 }

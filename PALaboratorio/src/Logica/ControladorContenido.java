@@ -2,18 +2,16 @@ package Logica;
 
 //import Persistencia.BDUsuario;
 import Persistencia.BDCliente;
+import Persistencia.BDGenero;
 import Persistencia.BDLista;
 import java.util.HashMap;
 import java.util.Map;
-
 import java.util.ArrayList;
 import java.util.Iterator;
-import javax.swing.JOptionPane;
 
 public class ControladorContenido implements IContenido {
 
     private static ControladorContenido instancia;
-
 
     public static void cargarInstancia() {
         instancia = new ControladorContenido();
@@ -26,14 +24,12 @@ public class ControladorContenido implements IContenido {
         return instancia;
     }
 
-    private Map<String, ListaDefecto> listasDefecto;
-    private Map<String, ListaParticular> listasParticular;
+    private final Map<String, ListaDefecto> listasDefecto;
+    private final Map<String, ListaParticular> listasParticular;
     private Artista artista;
-    private Genero genero;
+    private final Genero genero;
     private Genero generoRecordado;
-
     private Cliente clienteFav;
-
     private IUsuario iUsuario;
 
     @Override
@@ -42,9 +38,9 @@ public class ControladorContenido implements IContenido {
     }
 
     private ControladorContenido() {
-        this.listasParticular = new HashMap<String, ListaParticular>();
-        this.listasDefecto = new HashMap<String, ListaDefecto>();
-        genero = new Genero("Generos");
+        this.listasParticular = new HashMap<>();
+        this.listasDefecto = new HashMap<>();
+        genero = new Genero("Géneros");
     }
 
     @Override
@@ -420,18 +416,23 @@ public class ControladorContenido implements IContenido {
         return this.genero.obtener(nomGenero).getData();
     }
 
+    @Override
     public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista) {
         return genero.obtener(nomGenero).obtenerAlbumContenido(nomAlbum, nickArtista);
     }
 
+    @Override
     public void cargarGenero(String nombre, String padre) {
-        this.genero.agregarGenero(padre.isEmpty() ? genero.getNombre() : padre, nombre);
+        // this.genero.agregarGenero(padre.isEmpty() ? genero.getNombre() : padre, nombre);
+        genero.agregarGenero(padre, nombre);
     }
 
+    @Override
     public boolean existeGenero(String nombre) {
         return genero.existe(nombre);
     }
 
+    @Override
     public Genero obtenerGenero(String nombre) {
         return genero.obtener(nombre);
     }
@@ -455,5 +456,17 @@ public class ControladorContenido implements IContenido {
     public void cargarLista(ListaDefecto ld, String nombreGenero) {
         genero.obtener(nombreGenero).cargarLista(ld);
         listasDefecto.put(ld.getNombre(), ld);
+    }
+
+    @Override
+    public void ingresarGenero(String nombre, String padre) {
+        if (existeGenero(nombre) == false) {
+            genero.agregarGenero(padre, nombre);
+            if (!new BDGenero().ingresarGeneros(nombre, padre)) {
+                throw new UnsupportedOperationException("No se pudo ingresar el genero a la BD");
+            }
+        } else {
+            throw new UnsupportedOperationException("El genero ya existe");
+        }
     }
 }

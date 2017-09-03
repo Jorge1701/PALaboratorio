@@ -331,17 +331,10 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_altaAlbumActionPerformed
 
     private void altaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaGeneroActionPerformed
-        AltaGenero cpc;
-        try {
-            cpc = new AltaGenero();
-            PanelMenu.add(cpc);
-            centrar(cpc);
-            cpc.show();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(menu.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
+        AltaGenero cpc = new AltaGenero();
+        PanelMenu.add(cpc);
+        centrar(cpc);
+        cpc.show();
     }//GEN-LAST:event_altaGeneroActionPerformed
 
     private void crearListaRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearListaRepActionPerformed
