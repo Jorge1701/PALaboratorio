@@ -2,8 +2,6 @@ package Presentacion;
 
 import Persistencia.BDGenero;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,6 +26,8 @@ public class AltaGenero extends javax.swing.JInternalFrame {
         btncancelar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+
+        setTitle("Alta de género");
 
         jLabel1.setText("genero");
 
@@ -119,14 +119,6 @@ public class AltaGenero extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btncancelarActionPerformed
 
-    private void ningunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ningunoActionPerformed
-        if (ninguno.isSelected() == true) { // si el check esta en true , oculto la lista 
-            tabla.setVisible(false);
-        } else {
-            tabla.setVisible(true);
-        } // TODO add your handling code here:
-    }//GEN-LAST:event_ningunoActionPerformed
-
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
 
         if ("".equals(txtnombre.getText())) // pregunto si la caja de texto es vacia 
@@ -170,6 +162,14 @@ public class AltaGenero extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void ningunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ningunoActionPerformed
+        if (ninguno.isSelected() == true) { // si el check esta en true , oculto la lista
+            tabla.setVisible(false);
+        } else {
+            tabla.setVisible(true);
+        } // TODO add your handling code here:
+    }//GEN-LAST:event_ningunoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
