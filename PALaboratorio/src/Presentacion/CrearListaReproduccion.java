@@ -15,8 +15,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -30,7 +33,9 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
     IContenido iContenido;
     private final JFileChooser archivoImg;
     String pathImage;
+    String nameImage;
     PanelImagen pImg;
+    PropertyManager pm;
 
     public CrearListaReproduccion() {
         initComponents();
@@ -41,6 +46,9 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         archivoImg = new JFileChooser();
         archivoImg.setFileFilter(new FileNameExtensionFilter("Images files", "jpg", "png", "gif", "jpeg"));
         pathImage = null;
+        nameImage = null;
+        pm = PropertyManager.getInstance();
+        cargarImagen(pm.getProperty("pathImagenesLista") + "listaDefault.png");
     }
 
     private void mostrar() {
@@ -326,7 +334,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nickCliente = "", nomGenero = "",camposVacios = "";
+        String nickCliente = "", nomGenero = "", camposVacios = "";
         DtLista lista;
         if (btnListaDefecto.isSelected()) {
             if (generos.getSelectionPath() == null) {
@@ -344,7 +352,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
             DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
             nomGenero = selectedElement.getUserObject().toString();
-            lista = new DtListaDefecto(iContenido.selecGenero(nomGenero), nombre.getText(), new ArrayList<>(), pathImage);   // Agregar que se ingrese la imagen en el diseño.
+            lista = new DtListaDefecto(iContenido.selecGenero(nomGenero), nombre.getText(), new ArrayList<>(), nameImage);   // Agregar que se ingrese la imagen en el diseño.
             if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
                 JOptionPane.showMessageDialog(this, "La lista que intenta ingresar ya existe", "Mensaje", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -368,14 +376,18 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                 return;
             }
             nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString();
-            lista = new DtListaParticular(true, nombre.getText(), new ArrayList<>(), pathImage);  // Agregar que se ingrese la imagen en el diseño.
+            lista = new DtListaParticular(true, nombre.getText(), new ArrayList<>(), nameImage);  // Agregar que se ingrese la imagen en el diseño.
             if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
                 JOptionPane.showMessageDialog(this, "Ocurrió un error al ingresar la lista", "Mensaje", JOptionPane.ERROR_MESSAGE);
-             } else {
+            } else {
                 JOptionPane.showMessageDialog(this, "La lista se ingresó correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-              }
+            }
 
         }
+        
+        pathImage = null;
+        nameImage = null;
+        cargarImagen(pm.getProperty("pathImagenesLista") + "listaDefault.png");
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -387,11 +399,13 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         try {
             archivoImg.showOpenDialog(this);
             File arch = archivoImg.getSelectedFile();
-            pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
-
+            //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
+            nameImage = arch.getName();
+            pathImage = pm.getProperty("pathImagenesLista") + arch.getName();
+            //System.out.println(pm.getProperty("pathImagenes"));
             if (arch != null) {
                 InputStream is = new FileInputStream(arch);
-                OutputStream outstream = new FileOutputStream(new File("src" + pathImage));
+                OutputStream outstream = new FileOutputStream(new File(pathImage));
                 byte[] buffer = new byte[4096];
                 int len;
                 while ((len = is.read(buffer)) > 0) {
@@ -401,11 +415,8 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "El archivo se ha guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 
             }
-            BufferedImage img;
-            img = ImageIO.read(new File("src" + pathImage));
-            pImg = new PanelImagen(img);
-            imagePanel.add(pImg);
-            pImg.setBounds(0, 0, 200, 182);
+
+            cargarImagen(pathImage);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -413,6 +424,17 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnCargarImgActionPerformed
 
+    private void cargarImagen(String pathImage) {
+        try {
+            BufferedImage img;
+            img = ImageIO.read(new File(pathImage));
+            pImg = new PanelImagen(img);
+            imagePanel.add(pImg);
+            pImg.setBounds(0, 0, 200, 182);
+        } catch (IOException ex) {
+            Logger.getLogger(AltaAlbum.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;

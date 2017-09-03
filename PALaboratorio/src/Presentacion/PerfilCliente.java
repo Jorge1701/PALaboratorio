@@ -49,9 +49,9 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         // Cargar imagen
         try {
             String imagen = dtPerfilCliente.getInfo().getImagen();
-            BufferedImage img;
             String path = pm.getProperty("pathImagenesUsuario");
-
+            BufferedImage img;
+            
             if (imagen == null || imagen.isEmpty()) {
                 img = ImageIO.read(new File(path + "userDefaullt.png"));
             } else {
@@ -63,7 +63,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen del usuario");
+
         }
 
         // Cargar Seguidores

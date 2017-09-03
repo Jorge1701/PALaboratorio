@@ -422,7 +422,9 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
         this.dia.setSelectedIndex(0);
         this.mes.setSelectedIndex(0);
         this.anio.setSelectedIndex(0);
-        this.imagePanel = new JPanel();
+        pathImage = null;
+        nameImage = null;
+        cargarImagen(pm.getProperty("pathImagenesUsuario") + "userDefaullt.png");
 
     }//GEN-LAST:event_aceptarActionPerformed
 
