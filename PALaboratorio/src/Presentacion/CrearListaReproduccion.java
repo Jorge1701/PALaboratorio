@@ -31,6 +31,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
     IUsuario iUsuario;
     IContenido iContenido;
+    private final ArrayList<DtUsuario> clientes;
     private final JFileChooser archivoImg;
     String pathImage;
     String nameImage;
@@ -41,6 +42,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         initComponents();
         this.iUsuario = Fabrica.getIControladorUsuario();
         this.iContenido = Fabrica.getIControladorContenido();
+        this.clientes = iUsuario.listarClientes();
         btnListaDefecto.setSelected(true);
         btnListaDefectoActionPerformed(null);
         archivoImg = new JFileChooser();
@@ -87,6 +89,8 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        txtCliente = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         nombre = new javax.swing.JTextField();
@@ -153,15 +157,34 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         tablaClientes.setDragEnabled(true);
         jScrollPane2.setViewportView(tablaClientes);
 
+        jLabel2.setText("Nickname:");
+
+        txtCliente.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtClienteCaretUpdate(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jSplitPane2.setRightComponent(jPanel2);
@@ -207,7 +230,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
                 .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -312,19 +335,29 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
     private void btnListaParticularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaParticularActionPerformed
         mostrar();
-        //Carga  los artistas en la tabla(tablaArtistas)
-        ArrayList<DtUsuario> dta = iUsuario.listarClientes();
+        //Carga  los clientes en la tabla(tablaClientes)
+       cargarClientes(clientes, "");
+    }//GEN-LAST:event_btnListaParticularActionPerformed
+
+    private void cargarClientes(ArrayList<DtUsuario> dtcs, String filtro) {
+        // Obtiene el modelo de la tablaClientes y borra su contenido
         DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
         dtm.setRowCount(0);
 
-        for (DtUsuario dtCliente : dta) {
-            Object[] data = {
-                dtCliente.getNombre(),
-                dtCliente.getNickname(),};
-            dtm.addRow(data);
+        // Agrega los clientes a la tablaClientes
+        for (DtUsuario dtu : dtcs) {
+            if (dtu.getNickname().contains(filtro)) {
+                Object[] data = {
+                    dtu.getNickname(),
+                    dtu.getNombre(),
+                    dtu.getApellido(),
+                    dtu.getEmail()
+                };
+                dtm.addRow(data);
+            }
         }
-    }//GEN-LAST:event_btnListaParticularActionPerformed
-
+    }
+    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -419,6 +452,10 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnCargarImgActionPerformed
 
+    private void txtClienteCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtClienteCaretUpdate
+        cargarClientes(clientes, txtCliente.getText());
+    }//GEN-LAST:event_txtClienteCaretUpdate
+
     private void cargarImagen(String pathImage) {
         try {
             BufferedImage img;
@@ -441,6 +478,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
     private javax.swing.JTree generos;
     private javax.swing.JPanel imagePanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -452,5 +490,6 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblSelec;
     private javax.swing.JTextField nombre;
     private javax.swing.JTable tablaClientes;
+    private javax.swing.JTextField txtCliente;
     // End of variables declaration//GEN-END:variables
 }
