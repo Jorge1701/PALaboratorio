@@ -29,6 +29,8 @@ public class AltaGenero extends javax.swing.JInternalFrame {
         generos = new javax.swing.JTree();
         btnAceptar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
         setTitle("Alta de género");
 
         jLabel1.setText("Nombre:");

@@ -3,9 +3,6 @@ package Presentacion;
 import Logica.Fabrica;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
