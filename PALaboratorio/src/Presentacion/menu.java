@@ -26,7 +26,7 @@ public class menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelMenu = new javax.swing.JDesktopPane();
+        PanelMenu = new DesktopFondo();
         barra = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         altaPerfil = new javax.swing.JMenuItem();
@@ -371,11 +371,10 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_eliminarTLAActionPerformed
 
     private void agregarTemaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarTemaListaActionPerformed
-        AgregarTemaLista agr  = new AgregarTemaLista();
-        PanelMenu.add(agr);
-        centrar(agr);
-        agr.show();
-        // TODO add your handling code here:
+       AgregarTemaLista agr = new AgregarTemaLista();
+       PanelMenu.add(agr);
+       centrar(agr);
+       agr.show();
     }//GEN-LAST:event_agregarTemaListaActionPerformed
 
     public static void main(String args[]) {

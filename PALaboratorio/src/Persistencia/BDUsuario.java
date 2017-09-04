@@ -76,9 +76,9 @@ public class BDUsuario {
         String correo = dtu.getEmail();
         String imagen = dtu.getImagen();
 
-        Date fecha = new Date(dtu.getFechaNac().getAnio(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getDia());
-        //java.sql.Date.valueOf(dtu.getFechaNac().getAnio() + "-" + dtu.getFechaNac().getMes() + "-" + dtu.getFechaNac().getDia());
-
+       // Date fecha = new Date(dtu.getFechaNac().getAnio(), dtu.getFechaNac().getMes(), dtu.getFechaNac().getDia());
+          Date fecha = new java.sql.Date(dtu.getFechaNac().getAnio(),dtu.getFechaNac().getMes(),dtu.getFechaNac().getDia());
+       
         if (dtu instanceof DtArtista) {
             try {
                 String biografia = ((DtArtista) dtu).getBiografia();
@@ -106,6 +106,10 @@ public class BDUsuario {
             }
 
         } else {
+        System.out.println("dia"+dtu.getFechaNac().getDia());
+        System.out.println("mes"+dtu.getFechaNac().getMes());
+        System.out.println("anio"+dtu.getFechaNac().getAnio());
+             System.out.println("Ingresar dia "+fecha.getDay()+" mes "+fecha.getMonth()+" anio "+fecha.getYear());
 
             try {
                 PreparedStatement insertar = conexion.prepareStatement("INSERT INTO cliente "

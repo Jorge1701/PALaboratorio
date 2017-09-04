@@ -36,26 +36,23 @@ public class BDLista {
             //statament.close();
             if (dtl instanceof DtListaDefecto) {
                 PreparedStatement statament2 = conexion.prepareStatement("INSERT INTO listapordefecto(idLista,nombreGenero) VALUES (?,?)");
-
                 statament2.setInt(1, idLista);
                 statament2.setString(2, ((DtListaDefecto) dtl).getGenero().getNombre());
                 statament2.executeUpdate();
                 statament2.close();
                 statament.close();
-
                 return true;
-
             } else {
-                PreparedStatement statament4 = conexion.prepareStatement("INSERT INTO listaparticular (idLista,nickname,Publica) VALUES (?,?,?)");
-                statament4.setInt(1, idLista);
-                statament4.setString(2, nickCliente);
-                statament4.setString(3, "N");
-                statament4.executeUpdate();
-                statament4.close();
-                statament.close();//
+                PreparedStatement statament3 = conexion.prepareStatement("INSERT INTO listaparticular(idLista,nickname,Publica) VALUES (?,?,?)");
+                statament3.setInt(1, idLista);
+                statament3.setString(2, nickCliente);
+                statament3.setString(3, "N");
+                statament3.executeUpdate();
+                statament3.close();
+                statament.close();
                 return true;
-
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(BDLista.class.getName()).log(Level.SEVERE, null, ex);
             return false;

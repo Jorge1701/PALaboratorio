@@ -8,11 +8,12 @@ import java.util.Map;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JOptionPane;
 
 public class ControladorContenido implements IContenido {
 
     private static ControladorContenido instancia;
-    private BDLista bdLista = null;
+
 
     public static void cargarInstancia() {
         instancia = new ControladorContenido();
@@ -250,21 +251,31 @@ public class ControladorContenido implements IContenido {
 
     @Override
     public boolean crearListaReproduccion(DtLista dtl, String nickCliente) {
+        BDLista bdLista = new BDLista();
+        if (dtl instanceof DtListaDefecto) {
+            if (listasDefecto.get(dtl.getNombre()) != null) {
+                return false;
+            }
+            if (bdLista.altaLista(dtl, nickCliente)) {
+                Lista ld = new ListaDefecto(this.genero.obtener(((DtListaDefecto) dtl).getGenero().getNombre()), dtl.getNombre(), new ArrayList<>(), dtl.getImagen());
+                this.listasDefecto.put(ld.getNombre(), (ListaDefecto) ld);
+                this.genero.obtener(((DtListaDefecto) dtl).getGenero().getNombre()).cargarLista((ListaDefecto) ld);
+                return true;
+            } else {
+                return false;
+            }
 
-        boolean bd = bdLista.altaLista(dtl, nickCliente);
-        if (bd && dtl instanceof DtListaDefecto) {
-            Genero g = this.genero.obtener(((DtListaDefecto) dtl).getGenero().getNombre());
-            ListaDefecto lis = new ListaDefecto(g, dtl.getNombre(), null, dtl.getImagen());
-            this.listasDefecto.put(lis.getNombre(), (ListaDefecto) lis);
-            return true;
-        } else if (bd) {
-            ListaParticular lis2 = new ListaParticular(nickCliente, dtl.getNombre());
-            this.listasParticular.put(lis2.getNombre(), lis2);
-            Cliente cl = (Cliente) iUsuario.obtenerUsuario(nickCliente);
-            cl.agregarLista(lis2);
-            return true;
         } else {
-            return false;
+            if (((Cliente) iUsuario.obtenerUsuario(nickCliente)).getListaParticular(dtl.getNombre()) != null) {
+                return false;
+            }
+            if (bdLista.altaLista(dtl, nickCliente)) {
+                Lista lp = new ListaParticular(dtl.getNombre(), dtl.getImagen());
+                ((Cliente) iUsuario.obtenerUsuario(nickCliente)).agregarLista(lp);
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -425,7 +436,7 @@ public class ControladorContenido implements IContenido {
     @Override
     public boolean publicarLista(String nick, String nomL) {
         Cliente us = (Cliente) iUsuario.obtenerUsuario(nick);
-
+        BDLista bdLista = new BDLista();
         if (us == null) {
             throw new UnsupportedOperationException("No existe el usuario" + nick + " en el sistema.");
         }

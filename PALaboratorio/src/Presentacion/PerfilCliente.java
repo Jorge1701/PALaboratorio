@@ -49,9 +49,9 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         // Cargar imagen
         try {
             String imagen = dtPerfilCliente.getInfo().getImagen();
-            BufferedImage img;
             String path = pm.getProperty("pathImagenesUsuario");
-
+            BufferedImage img;
+            
             if (imagen == null || imagen.isEmpty()) {
                 img = ImageIO.read(new File(path + "userDefaullt.png"));
             } else {
@@ -63,7 +63,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen del usuario");
+
         }
 
         // Cargar Seguidores
@@ -304,9 +304,21 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             new String [] {
                 "Nickname", "Nombre"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaSeguidores.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaSeguidores);
+        if (tablaSeguidores.getColumnModel().getColumnCount() > 0) {
+            tablaSeguidores.getColumnModel().getColumn(0).setResizable(false);
+            tablaSeguidores.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         javax.swing.GroupLayout panelSeguidoresLayout = new javax.swing.GroupLayout(panelSeguidores);
         panelSeguidores.setLayout(panelSeguidoresLayout);
@@ -332,7 +344,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -343,6 +355,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tablaSeguidos);
         if (tablaSeguidos.getColumnModel().getColumnCount() > 0) {
             tablaSeguidos.getColumnModel().getColumn(0).setResizable(false);
+            tablaSeguidos.getColumnModel().getColumn(1).setResizable(false);
             tablaSeguidos.getColumnModel().getColumn(2).setResizable(false);
         }
 
@@ -374,9 +387,21 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             new String [] {
                 "Nombre", "Cant. Temas"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaListasCreadas.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tablaListasCreadas);
+        if (tablaListasCreadas.getColumnModel().getColumnCount() > 0) {
+            tablaListasCreadas.getColumnModel().getColumn(0).setResizable(false);
+            tablaListasCreadas.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         javax.swing.GroupLayout panelListasCreadasLayout = new javax.swing.GroupLayout(panelListasCreadas);
         panelListasCreadas.setLayout(panelListasCreadasLayout);
@@ -400,9 +425,21 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             new String [] {
                 "Nombre", "Cant. Temas"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaListasFavs.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(tablaListasFavs);
+        if (tablaListasFavs.getColumnModel().getColumnCount() > 0) {
+            tablaListasFavs.getColumnModel().getColumn(0).setResizable(false);
+            tablaListasFavs.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         javax.swing.GroupLayout panelListasFavsLayout = new javax.swing.GroupLayout(panelListasFavs);
         panelListasFavs.setLayout(panelListasFavsLayout);
@@ -430,9 +467,22 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             new String [] {
                 "Artista", "Nombre", "Año"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaAlbumes.getTableHeader().setReorderingAllowed(false);
         jScrollPane5.setViewportView(tablaAlbumes);
+        if (tablaAlbumes.getColumnModel().getColumnCount() > 0) {
+            tablaAlbumes.getColumnModel().getColumn(0).setResizable(false);
+            tablaAlbumes.getColumnModel().getColumn(1).setResizable(false);
+            tablaAlbumes.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         javax.swing.GroupLayout panelAlbumesLayout = new javax.swing.GroupLayout(panelAlbumes);
         panelAlbumes.setLayout(panelAlbumesLayout);
@@ -456,9 +506,21 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             new String [] {
                 "Nombre", "Duracion"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaTemas.getTableHeader().setReorderingAllowed(false);
         jScrollPane6.setViewportView(tablaTemas);
+        if (tablaTemas.getColumnModel().getColumnCount() > 0) {
+            tablaTemas.getColumnModel().getColumn(0).setResizable(false);
+            tablaTemas.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         javax.swing.GroupLayout panelTemasLayout = new javax.swing.GroupLayout(panelTemas);
         panelTemas.setLayout(panelTemasLayout);

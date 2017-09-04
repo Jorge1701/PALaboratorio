@@ -9,7 +9,19 @@ import Logica.Fabrica;
 import Logica.IContenido;
 import Logica.IUsuario;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -19,25 +31,35 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
     IUsuario iUsuario;
     IContenido iContenido;
+    private final JFileChooser archivoImg;
+    String pathImage;
+    String nameImage;
+    PanelImagen pImg;
+    PropertyManager pm;
 
     public CrearListaReproduccion() {
         initComponents();
         this.iUsuario = Fabrica.getIControladorUsuario();
         this.iContenido = Fabrica.getIControladorContenido();
-
         btnListaDefecto.setSelected(true);
         btnListaDefectoActionPerformed(null);
+        archivoImg = new JFileChooser();
+        archivoImg.setFileFilter(new FileNameExtensionFilter("Images files", "jpg", "png", "gif", "jpeg"));
+        pathImage = null;
+        nameImage = null;
+        pm = PropertyManager.getInstance();
+        cargarImagen(pm.getProperty("pathImagenesLista") + "listaDefault.png");
     }
 
     private void mostrar() {
         if (btnListaDefecto.isSelected()) {
             generos.setEnabled(true);
             tablaClientes.setEnabled(false);
-            lblSelec.setText("Seleccione un genero y luego presione 'aceptar'");
+            lblSelec.setText("Seleccione un genero y luego indique un nombre");
         } else if (btnListaParticular.isSelected()) {
             generos.setEnabled(false);
             tablaClientes.setEnabled(true);
-            lblSelec.setText("Seleccione un cliente y luego presione 'aceptar'");
+            lblSelec.setText("Seleccione un cliente y luego indique un nombre");
         }
     }
 
@@ -68,6 +90,8 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         nombre = new javax.swing.JTextField();
+        imagePanel = new javax.swing.JPanel();
+        btnCargarImg = new java.awt.Button();
         jPanel4 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
@@ -116,7 +140,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
         jSplitPane2.setLeftComponent(jPanel1);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Artistas"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Clientes"));
 
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,7 +157,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,6 +172,32 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nombre:");
 
+        nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nombreKeyTyped(evt);
+            }
+        });
+
+        imagePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
+        imagePanel.setLayout(imagePanelLayout);
+        imagePanelLayout.setHorizontalGroup(
+            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 138, Short.MAX_VALUE)
+        );
+        imagePanelLayout.setVerticalGroup(
+            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 109, Short.MAX_VALUE)
+        );
+
+        btnCargarImg.setLabel("Cargar Imagen");
+        btnCargarImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarImgActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -155,17 +205,26 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 429, Short.MAX_VALUE))
+                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(59, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(jPanel3);
@@ -204,7 +263,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                     .addComponent(btnAceptar)))
         );
 
-        lblSelec.setText("Seleccione un y un album y luego presione 'aceptar'");
+        lblSelec.setText("Presione 'Aceptar' para confirmar los datos");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,7 +293,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                     .addComponent(btnListaParticular))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblSelec)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -275,62 +334,117 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nickCliente, nomGenero, nomLista;
+        String nickCliente = "", nomGenero = "", camposVacios = "";
         DtLista lista;
-        nomLista = nombre.getText();
-        nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString();
         if (btnListaDefecto.isSelected()) {
             if (generos.getSelectionPath() == null) {
-                JOptionPane.showMessageDialog(this, "Debe de seleccionar un Genero");
+                camposVacios += "Seleccione un genero \n";
+            }
+
+            if (nombre.getText().isEmpty()) {
+                camposVacios += "Ingrese un nombre \n";
+            }
+
+            if (!camposVacios.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Hay campos obligatorios vacios:\n" + camposVacios);
                 return;
-            } else if (nombre.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un nombre");
+            }
+
+            DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
+            nomGenero = selectedElement.getUserObject().toString();
+            lista = new DtListaDefecto(iContenido.selecGenero(nomGenero), nombre.getText(), new ArrayList<>(), nameImage);   // Agregar que se ingrese la imagen en el diseño.
+            if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
+                JOptionPane.showMessageDialog(this, "La lista que intenta ingresar ya existe", "Mensaje", JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
-                DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
-                nomGenero = selectedElement.getUserObject().toString();
-                lista = new DtListaDefecto(iContenido.selecGenero(nomGenero), nomLista, null, null);   // Agregar que se ingrese la imagen en el diseño.
-                if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
-                    JOptionPane.showMessageDialog(this, "Ocurrió un error al ingresar la lista", "Mensaje", JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else {
-                    JOptionPane.showMessageDialog(this, "La lista se ingresó correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-
+                JOptionPane.showMessageDialog(this, "La lista se ingresó correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
+
         } else {
 
             if (tablaClientes.getSelectionModel().isSelectionEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe de seleccionar un Cliente");
-                return;
-            } else if (nombre.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un nombre");
-                return;
+                camposVacios += "Seleccione un cliente \n";
+            }
 
+            if (nombre.getText().isEmpty()) {
+                camposVacios += "Ingrese un nombre \n";
+            }
+
+            if (!camposVacios.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Hay campos obligatorios vacios:\n" + camposVacios);
+                return;
+            }
+            nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString();
+            lista = new DtListaParticular(true, nombre.getText(), new ArrayList<>(), nameImage);  // Agregar que se ingrese la imagen en el diseño.
+            if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
+                JOptionPane.showMessageDialog(this, "La lista que intenta ingresar ya existe", "Mensaje", JOptionPane.ERROR_MESSAGE);
             } else {
-                lista = new DtListaParticular(true, nomLista, null, null);  // Agregar que se ingrese la imagen en el diseño.
-                if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
-                    JOptionPane.showMessageDialog(this, "Ocurrió un error al ingresar la lista", "Mensaje", JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else {
-                    JOptionPane.showMessageDialog(this, "La lista se ingresó correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
+                JOptionPane.showMessageDialog(this, "La lista se ingresó correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             }
 
         }
+        
+        pathImage = null;
+        nameImage = null;
+        cargarImagen(pm.getProperty("pathImagenesLista") + "listaDefault.png");
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    private void nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreKeyTyped
+
+    private void btnCargarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImgActionPerformed
+        try {
+            archivoImg.showOpenDialog(this);
+            File arch = archivoImg.getSelectedFile();
+            //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
+            nameImage = arch.getName();
+            pathImage = pm.getProperty("pathImagenesLista") + arch.getName();
+            //System.out.println(pm.getProperty("pathImagenes"));
+            if (arch != null) {
+                InputStream is = new FileInputStream(arch);
+                OutputStream outstream = new FileOutputStream(new File(pathImage));
+                byte[] buffer = new byte[4096];
+                int len;
+                while ((len = is.read(buffer)) > 0) {
+                    outstream.write(buffer, 0, len);
+                }
+                outstream.close();
+                JOptionPane.showMessageDialog(null, "El archivo se ha guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+
+            cargarImagen(pathImage);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No se pudo cargar la Imagen.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCargarImgActionPerformed
+
+    private void cargarImagen(String pathImage) {
+        try {
+            BufferedImage img;
+            img = ImageIO.read(new File(pathImage));
+            pImg = new PanelImagen(img);
+            imagePanel.add(pImg);
+            pImg.setBounds(0, 0, 140, 111);
+        } catch (IOException ex) {
+            Logger.getLogger(CrearListaReproduccion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
+    private java.awt.Button btnCargarImg;
     private javax.swing.JRadioButton btnListaDefecto;
     private javax.swing.JRadioButton btnListaParticular;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTree generos;
+    private javax.swing.JPanel imagePanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

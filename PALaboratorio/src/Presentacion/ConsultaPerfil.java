@@ -80,9 +80,24 @@ public class ConsultaPerfil extends javax.swing.JInternalFrame {
             new String [] {
                 "Nickname", "Nombre", "Apellido", "Email", "Fecha Nac."
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaClientes.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaClientes);
+        if (tablaClientes.getColumnModel().getColumnCount() > 0) {
+            tablaClientes.getColumnModel().getColumn(0).setResizable(false);
+            tablaClientes.getColumnModel().getColumn(1).setResizable(false);
+            tablaClientes.getColumnModel().getColumn(2).setResizable(false);
+            tablaClientes.getColumnModel().getColumn(3).setResizable(false);
+            tablaClientes.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         jLabel1.setText("Seleccione un usuario y presione 'Aceptar' para ver su perfil");
 

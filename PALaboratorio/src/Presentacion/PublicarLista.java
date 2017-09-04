@@ -141,7 +141,7 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
         );
 
         jSplitPane2.setTopComponent(jPanel2);
@@ -183,7 +183,7 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
                     .addComponent(botonAceptar)
                     .addComponent(botonCancelar)
                     .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jSplitPane2.setRightComponent(jPanel3);

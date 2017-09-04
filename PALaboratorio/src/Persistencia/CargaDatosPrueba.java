@@ -351,6 +351,7 @@ public class CargaDatosPrueba {
                 String correo = clientes.getString(4);
                 Date fecha = clientes.getDate(5);
                 String imagen = clientes.getString(6);
+                System.out.println(" Cargar Dia "+fecha.getDay()+" Mes "+fecha.getMonth()+" Anio "+fecha.getYear());
                 usuarios.add(new DtCliente(nickName, nombre, apellido, correo, new DtFecha(fecha.getDay(), fecha.getMonth(), fecha.getYear()), imagen));
             }
 
@@ -779,6 +780,7 @@ public class CargaDatosPrueba {
             String apellido = usuario[4];
             String correo = usuario[2];
             String imagen = "";
+
             DtFecha fecha = new DtFecha(Integer.parseInt(usuario[5]), Integer.parseInt(usuario[6]), Integer.parseInt(usuario[7]));
             if (usuario[8] == "A") {
 
@@ -800,7 +802,7 @@ public class CargaDatosPrueba {
                         imagen = info[1];
                     }
                 }
-
+                System.out.println("Levantar dia "+fecha.getDia()+" mes "+fecha.getMes()+" anio "+fecha.getAnio());
                 dtu = new DtCliente(nickName, nombre, apellido, correo, fecha, imagen);
             }
             res = bdu.ingresarUsuario(dtu);

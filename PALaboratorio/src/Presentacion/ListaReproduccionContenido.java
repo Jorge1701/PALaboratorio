@@ -65,7 +65,7 @@ public class ListaReproduccionContenido extends javax.swing.JInternalFrame imple
             String path = pm.getProperty("pathImagenesLista");
             BufferedImage img;
             if (imagen == null || imagen.isEmpty()) {
-                img = ImageIO.read(new File("Recursos/Imagenes/Albumes/albumDefault.png"));
+                img = ImageIO.read(new File("Recursos/Imagenes/Listas/listaDefault.png"));
             } else {
                 img = ImageIO.read(new File(path + imagen));
             }
