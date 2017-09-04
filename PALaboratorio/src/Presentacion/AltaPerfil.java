@@ -89,7 +89,6 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
         setTitle("Alta de Perfil ");
 
         jLabel1.setText("Nickname:");

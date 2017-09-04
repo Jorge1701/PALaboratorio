@@ -13,6 +13,7 @@ public class BDGenero {
 
     // ingresar generos a la BD
     public boolean ingresarGeneros(String nombre, String padre) {
+
         try {
             PreparedStatement insertar = conexion.prepareStatement("INSERT INTO genero(nombreGenero,Padre) VALUES(?,?)");
             insertar.setString(1, nombre);
