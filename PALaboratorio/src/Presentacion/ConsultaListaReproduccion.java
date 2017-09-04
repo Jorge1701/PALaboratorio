@@ -20,9 +20,9 @@ import javax.swing.tree.TreeSelectionModel;
 
 public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
-    public IUsuario iUsuario;
-    public IContenido iContenido;
-    public ArrayList<DtUsuario> clientes;
+    private final IUsuario iUsuario;
+    private final IContenido iContenido;
+    private final ArrayList<DtUsuario> clientes;
 
     public ConsultaListaReproduccion() {
         initComponents();
