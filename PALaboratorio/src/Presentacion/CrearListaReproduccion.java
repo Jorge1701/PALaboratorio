@@ -381,7 +381,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             }
 
         }
-        
+
         pathImage = null;
         nameImage = null;
         cargarImagen(pm.getProperty("pathImagenesLista") + "listaDefault.png");
@@ -409,8 +409,6 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                     outstream.write(buffer, 0, len);
                 }
                 outstream.close();
-                JOptionPane.showMessageDialog(null, "El archivo se ha guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-
             }
 
             cargarImagen(pathImage);
