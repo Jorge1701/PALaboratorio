@@ -101,13 +101,14 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Publicar lista");
         setPreferredSize(new java.awt.Dimension(555, 580));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         jSplitPane1.setDividerLocation(250);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        jSplitPane2.setDividerLocation(250);
+        jSplitPane2.setDividerLocation(230);
         jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Listas"));
@@ -141,7 +142,7 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
         );
 
         jSplitPane2.setTopComponent(jPanel2);
@@ -169,7 +170,7 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botonAceptar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonCancelar)
@@ -178,15 +179,15 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
                     .addComponent(botonAceptar)
-                    .addComponent(botonCancelar)
-                    .addComponent(jLabel1))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(botonCancelar))
+                .addContainerGap())
         );
 
-        jSplitPane2.setRightComponent(jPanel3);
+        jSplitPane2.setBottomComponent(jPanel3);
 
         jSplitPane1.setBottomComponent(jSplitPane2);
 
@@ -220,6 +221,10 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_botonCancelarActionPerformed
+
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         String tablasSinSeleccionar = "";
 
@@ -251,10 +256,6 @@ public class PublicarLista extends javax.swing.JInternalFrame implements ListSel
         DefaultTableModel dtm = (DefaultTableModel) tablaListas.getModel();
         dtm.setRowCount(0);
     }//GEN-LAST:event_botonAceptarActionPerformed
-
-    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
-        dispose();
-    }//GEN-LAST:event_botonCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

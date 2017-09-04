@@ -289,7 +289,7 @@ public class menu extends javax.swing.JFrame {
         Dimension jInternalFrameSize = cpc.getSize();
         int width = (desktopSize.width - jInternalFrameSize.width) / 2;
         int height = (desktopSize.height - jInternalFrameSize.height) / 2;
-        cpc.setLocation(width, height);
+        cpc.setLocation(width, height - 30);
     }
 
     private void consultaListaRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaListaRepActionPerformed
