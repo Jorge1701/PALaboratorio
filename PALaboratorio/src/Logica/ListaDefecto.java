@@ -1,8 +1,8 @@
 package Logica;
 
+import Persistencia.BDLista;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
+
 
 public class ListaDefecto extends Lista {
 
@@ -28,14 +28,17 @@ public class ListaDefecto extends Lista {
 
     public boolean quitarTema(String nombreT) {
 
-        Iterator i = this.temas.iterator();
-        while (i.hasNext()) {
-            Tema t = (Tema) ((Map.Entry) i.next()).getValue();
+       
+        for (int i = 0; i < temas.size(); i++) {
+            Tema t = (Tema) temas.get(i);
             if (t.getNombre().equals(nombreT)) {
+                BDLista bdLista = new BDLista();
+                bdLista.quitarTemaLista(null, this.getNombre(), nombreT);
                 this.temas.remove(t);
                 return true;
             }
-        }
+        }             
+       
         return false;
     }
 }

@@ -12,12 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class QuitarTemaLista extends javax.swing.JInternalFrame {
 
     private IUsuario iUsuario;
     private IContenido iContenido;
+    //private ArrayList<DtUsuario> clientes;
+    String nickCliente; 
 
     public QuitarTemaLista() {
         initComponents();
@@ -26,8 +30,103 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
         iContenido = Fabrica.getIControladorContenido();
         PestaniaMouseClicked(null);
 
+        
+        tablaClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                DefaultTableModel dtm = (DefaultTableModel) tablaListParticular.getModel();
+                dtm.setRowCount(0);
+                DefaultTableModel dtm2 = (DefaultTableModel) tablaTemas.getModel();
+                dtm2.setRowCount(0);
+                cargarDatosLPListas();
+            }
+        });
+
+        tablaListParticular.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (tablaListParticular.getSelectedRow() == -1) {
+                    return;
+                }
+                cargarTemasLPListas(tablaListParticular.getValueAt(tablaListParticular.getSelectedRow(), 0).toString());
+            }
+        });
+
+        tablaListDefecto.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (tablaListDefecto.getSelectedRow() == -1) {
+                    return;
+                }
+                cargarTemasListaDef(tablaListDefecto.getValueAt(tablaListDefecto.getSelectedRow(), 0).toString());
+            }
+        });
+
     }
 
+    private void cargarDatosLPListas() {
+
+        if (tablaClientes.getSelectedRow() == -1) {
+            return;
+        }
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaListParticular.getModel();
+        dtm.setRowCount(0);
+        nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
+        ArrayList<DtLista> dtListas = iUsuario.listarLisReproduccion(nickCliente);
+        for (DtLista dtLista : dtListas) {
+
+            Object[] data = {
+                dtLista.getNombre()
+            };
+            dtm.addRow(data);
+
+        }
+
+    }
+
+    private void cargarTemasLPListas(String nomLista) {
+
+        if (tablaListParticular.getSelectedRow() == -1) {
+            return;
+        }
+
+        DefaultTableModel dtm = (DefaultTableModel) tablaTemas.getModel();
+        dtm.setRowCount(0);
+        List<DtTema> dtTemas = iContenido.selecLista(nickCliente, nomLista);
+
+        for (DtTema dtTema : dtTemas) {
+
+            Object[] data = {
+                dtTema.getNombre(),
+                dtTema.getAlbum(),
+                dtTema.getArtista(),
+                dtTema.getDuracion().toString()
+            };
+            dtm.addRow(data);
+
+        }
+    
+    }
+    
+    private void cargarTemasListaDef(String nomListaD){
+        
+        List<DtTema> dtTemas = iContenido.selecListaDef(nomListaD);
+        
+        DefaultTableModel dtm = (DefaultTableModel) tablaTemas.getModel();
+        dtm.setRowCount(0);
+        
+        for (DtTema dtTema : dtTemas) {
+               
+                Object[] data = {
+                    dtTema.getNombre(),
+                    dtTema.getAlbum(),
+                    dtTema.getArtista(),
+                    dtTema.getDuracion().toString()
+                };
+                dtm.addRow(data);
+            
+        }
+    
+    }
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -112,6 +211,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaClientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(tablaClientes);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -215,7 +315,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre", "Album", "Artista"
+                "Nombre", "Album", "Artista", "Duracionl"
             }
         ));
         jScrollPane3.setViewportView(tablaTemas);
@@ -266,6 +366,53 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
+        if (tablaTemas.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un tema");
+            return;
+        }
+
+        if ((tablaClientes.getSelectedRow() == -1) && (Pestania.getSelectedIndex() == 0)) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente");
+            return;
+        }
+        if ((tablaListParticular.getSelectedRow() == -1) && (Pestania.getSelectedIndex() == 0)) {
+            JOptionPane.showMessageDialog(this, "Seleccione una Lista");
+            return;
+        }
+        if ((tablaListDefecto.getSelectedRow() == -1) && !(Pestania.getSelectedIndex() == 0)) {
+            JOptionPane.showMessageDialog(this, "Seleccione una Lista");
+            return;
+        }
+        String nomListaP = "";
+        String nomListaD = "";
+        String nickC = "";
+        
+        
+        String nomTema = tablaTemas.getValueAt(tablaTemas.getSelectedRow(), 0).toString();        
+        if (Pestania.getSelectedIndex() == 0) {
+            nickC = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
+            nomListaP = tablaListParticular.getValueAt(tablaListParticular.getSelectedRow(), 0).toString();
+        } else {
+            nomListaD = tablaListDefecto.getValueAt(tablaListDefecto.getSelectedRow(), 0).toString();
+        }
+        
+        
+        try {
+            
+            if(Pestania.getSelectedIndex() == 0){
+                iContenido.quitarTema(nomTema,nomListaP,nickC);
+                cargarTemasLPListas(nomListaP);
+            }else{
+                iContenido.quitarTema(nomTema, nomListaD, null);
+                cargarTemasListaDef(nomListaD);
+                
+            }
+            
+            JOptionPane.showMessageDialog(this, "Se elimino tema correctamente");
+        } catch (Exception e) {
+            System.out.println("errr");
+            JOptionPane.showMessageDialog(this, "Error : " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -304,6 +451,9 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
             ArrayList<DtLista> dtld = iContenido.listarLisReproduccionDef();
 
             DefaultTableModel dtm = (DefaultTableModel) tablaListDefecto.getModel();
+            dtm.setRowCount(0);
+            
+            DefaultTableModel dtm2 = (DefaultTableModel) tablaTemas.getModel();
             dtm.setRowCount(0);
 
             for (DtLista lista : dtld) {

@@ -23,7 +23,12 @@ public class TemaRemoto extends Tema {
     }
 
     public DtTemaRemoto getData() {
-        return new DtTemaRemoto(this.getUrl(), this.getNombre(), this.getDuracion(), this.getUbicacion());
+        DtTemaRemoto dtTemaR = new DtTemaRemoto(this.getUrl(), this.getNombre(), this.getDuracion(), this.getUbicacion());
+        dtTemaR.setAlbum(this.getAlbum().getNombre());;
+        dtTemaR.setArtista(this.getAlbum().getNickArtista());
+        return dtTemaR;
     }
+    
+    
 
 }
