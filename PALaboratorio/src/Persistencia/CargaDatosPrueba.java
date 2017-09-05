@@ -984,6 +984,7 @@ public class CargaDatosPrueba {
         for (String[] listaParticular : listasParticulares) {
             String refCliente = listaParticular[0];
             String nombreLista = listaParticular[2];
+            String publica = listaParticular[3];
             String imagen = listaParticular[4];
 
             String nickCliente = "";
@@ -993,7 +994,7 @@ public class CargaDatosPrueba {
                     nickCliente = cliente[1];
                 }
             }
-            DtLista lista = new DtListaParticular(false, nombreLista, null, imagen);
+            DtLista lista = new DtListaParticular("S".equals(publica) ? false : true, nombreLista, null, imagen);
             if (!bdl.altaLista(lista, nickCliente)) {
                 return false;
             }

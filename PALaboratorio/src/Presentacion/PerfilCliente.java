@@ -51,7 +51,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             String imagen = dtPerfilCliente.getInfo().getImagen();
             String path = pm.getProperty("pathImagenesUsuario");
             BufferedImage img;
-            
+
             if (imagen == null || imagen.isEmpty()) {
                 img = ImageIO.read(new File(path + "userDefaullt.png"));
             } else {
@@ -103,11 +103,9 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         ((TitledBorder) panelListasCreadas.getBorder()).setTitle("Listas Creadas (" + dtPerfilCliente.getListasCreadas().size() + "):");
 
         DefaultTableModel dtmListasCreadas = (DefaultTableModel) tablaListasCreadas.getModel();
+        dtmListasCreadas.setRowCount(0);
 
-        dtmListasCreadas.setRowCount(
-                0);
-        for (DtListaParticular dtlp
-                : dtPerfilCliente.getListasCreadas()) {
+        for (DtListaParticular dtlp : dtPerfilCliente.getListasCreadas()) {
             Object[] data = {
                 dtlp.getNombre(),
                 dtlp.getTemas().size()

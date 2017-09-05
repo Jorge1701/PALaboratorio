@@ -2,6 +2,7 @@ package Presentacion;
 
 import Logica.DtGenero;
 import Logica.DtLista;
+import Logica.DtListaParticular;
 import Logica.DtUsuario;
 import Logica.Fabrica;
 import Logica.IContenido;
@@ -312,7 +313,9 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
         lstListasRep.setModel(model);
 
         for (DtLista dta : dtl) {
-            model.addElement(dta.getNombre());
+            if (!((DtListaParticular) dta).isPrivada()) {
+                model.addElement(dta.getNombre());
+            }
         }
 
     }
