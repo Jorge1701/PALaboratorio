@@ -385,7 +385,7 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
 
     private void btnCargarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImgActionPerformed
         try {
-            archivoImg.showOpenDialog(this);
+            if(archivoImg.showOpenDialog(this) == 0){
             File arch = archivoImg.getSelectedFile();
             nameImage = arch.getName();
             pathImage = pm.getProperty("pathImagenesUsuario") + arch.getName();
@@ -400,7 +400,9 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
             }
             outstream.close();
             //}
-
+            }else{
+                return;
+            }
         } catch (NullPointerException n) {
             return;
         } catch (Exception ex) {

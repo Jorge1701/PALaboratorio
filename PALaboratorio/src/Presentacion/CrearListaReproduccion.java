@@ -427,7 +427,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
     private void btnCargarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImgActionPerformed
         try {
-            archivoImg.showOpenDialog(this);
+            if(archivoImg.showOpenDialog(this) == 0){
             File arch = archivoImg.getSelectedFile();
             nameImage = arch.getName();
             pathImage = pm.getProperty("pathImagenesLista") + arch.getName();
@@ -441,6 +441,9 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             }
             outstream.close();
             // }
+            }else{
+                return;
+            }
         } catch (NullPointerException n) {
             return;
         } catch (Exception ex) {
