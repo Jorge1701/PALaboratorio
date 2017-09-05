@@ -66,6 +66,7 @@ public class BDLista {
             ResultSet id = sql.executeQuery();
             id.next();
             int idLista = id.getInt(1);
+            sql.close();
             PreparedStatement sql2 = conexion.prepareStatement("UPDATE listaparticular SET Publica='S' WHERE idLista = '" + idLista + "'");
             sql2.executeUpdate();
             sql.close();
@@ -80,20 +81,51 @@ public class BDLista {
     public boolean quitarTemaLista(String NomUser, String NomLista, String NomTema) {
         try {
             if (NomUser == null) {
-                String sql = "DELETE INTO listapordefecto WHERE " + "WHERE nombre=? and nomTema=?";
-                PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-                statament.setString(1, NomUser);
-                statament.setString(2, NomTema);
-                statament.executeUpdate();
-                statament.close();
+                
+                PreparedStatement sql = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listapordefecto AS ld WHERE l.idLista = ld.idLista and l.nombre = '" + NomLista + "'");
+                ResultSet id = sql.executeQuery();
+                id.next();
+                int idLista = id.getInt(1);
+                sql.close(); 
+                
+                PreparedStatement query = conexion.prepareStatement("SELECT idTema FROM tema WHERE nombre = ?");
+                query.setString(1, NomTema);                
+                int idTema = 0;
+                ResultSet rs = query.executeQuery();
+                while (rs.next()) {
+                    idTema = rs.getInt(1);
+                }
+                rs.close();
+                query.close();                
+                               
+                String sql2 = "DELETE FROM listatienetemas WHERE idTema=? and idLista=? ";
+                PreparedStatement delete = conexion.prepareStatement(sql2);
+                delete.setInt(1,idTema);
+                delete.setInt(2, idLista);
+                delete.executeUpdate();
+                delete.close();
             } else {
-                String sql = "DELETE INTO listapordefecto WHERE " + "WHERE nombre=? and nomTema=? and nickname=?";
-                PreparedStatement statament = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-                statament.setString(1, NomLista);
-                statament.setString(2, NomTema);
-                statament.setString(2, NomUser);
-                statament.executeUpdate();
-                statament.close();
+                PreparedStatement sql = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista and l.nombre = '" + NomLista + "' and lp.nickname = '" + NomUser + "'");
+                ResultSet id = sql.executeQuery();
+                id.next();
+                int idLista = id.getInt(1);
+                sql.close();                
+                PreparedStatement query = conexion.prepareStatement("SELECT idTema FROM tema WHERE nombre = ?");
+                query.setString(1, NomTema);                
+                int idTema = 0;
+                ResultSet rs = query.executeQuery();
+                while (rs.next()) {
+                    idTema = rs.getInt(1);
+                }
+                rs.close();
+                query.close();                
+                                               
+                String sql2 = "DELETE FROM listatienetemas WHERE idTema=? and idLista=? ";
+                PreparedStatement delete = conexion.prepareStatement(sql2);
+                delete.setInt(1,idTema);
+                delete.setInt(2, idLista);
+                delete.executeUpdate();
+                delete.close();
             }
             return true;
         } catch (SQLException e) {

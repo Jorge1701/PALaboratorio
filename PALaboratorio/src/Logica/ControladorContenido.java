@@ -358,16 +358,16 @@ public class ControladorContenido implements IContenido {
 
             return lista.quitarTema(nombreT);
         } else {
-            if (nombreUser != null && !(u instanceof Cliente)) {
-                Lista lista = (ListaParticular) listasParticular.get(nombre);
 
-                if (lista == null) {
-                    throw new UnsupportedOperationException("No existe la lista");
-                }
-                if (u.getLista(nombre).quitarTema(nombreT) && this.quitarTema(nombreT, nombre, nombreUser)) {
-                    return true;
-                }
+            Lista lista = (ListaParticular) u.getListaParticular(nombre);
+
+            if (lista == null) {
+                throw new UnsupportedOperationException("No existe la lista");
             }
+            if (u.getLista(nombre).quitarTema(nombreT) && this.quitarTema(nombreT, nombre, nombreUser)) {
+                return true;
+            }
+
         }
 
         return false;
