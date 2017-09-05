@@ -797,6 +797,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
             BufferedImage img;
             img = ImageIO.read(new File(pathImage));
             pImg = new PanelImagen(img);
+            imagePanel.removeAll();
             imagePanel.add(pImg);
             pImg.setBounds(0, 0, 200, 182);
         } catch (IOException ex) {
