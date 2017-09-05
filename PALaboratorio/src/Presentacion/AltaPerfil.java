@@ -387,27 +387,28 @@ public class AltaPerfil extends javax.swing.JInternalFrame {
         try {
             archivoImg.showOpenDialog(this);
             File arch = archivoImg.getSelectedFile();
-            //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
             nameImage = arch.getName();
             pathImage = pm.getProperty("pathImagenesUsuario") + arch.getName();
-            //System.out.println(pm.getProperty("pathImagenes"));
-            if (arch != null) {
-                InputStream is = new FileInputStream(arch);
-                OutputStream outstream = new FileOutputStream(new File(pathImage));
-                byte[] buffer = new byte[4096];
-                int len;
-                while ((len = is.read(buffer)) > 0) {
-                    outstream.write(buffer, 0, len);
-                }
-                outstream.close();
+
+            //if (arch != null) {
+            InputStream is = new FileInputStream(arch);
+            OutputStream outstream = new FileOutputStream(new File(pathImage));
+            byte[] buffer = new byte[4096];
+            int len;
+            while ((len = is.read(buffer)) > 0) {
+                outstream.write(buffer, 0, len);
             }
+            outstream.close();
+            //}
 
-            cargarImagen(pathImage);
-
+        } catch (NullPointerException n) {
+            return;
         } catch (Exception ex) {
-            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se pudo cargar la Imagen.", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+
         }
+        cargarImagen(pathImage);
     }//GEN-LAST:event_btnCargarImgActionPerformed
     private void cargarImagen(String pathImage) {
         try {
