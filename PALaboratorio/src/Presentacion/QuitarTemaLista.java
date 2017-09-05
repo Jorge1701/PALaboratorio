@@ -454,7 +454,7 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
             dtm.setRowCount(0);
             
             DefaultTableModel dtm2 = (DefaultTableModel) tablaTemas.getModel();
-            dtm.setRowCount(0);
+            dtm2.setRowCount(0);
 
             for (DtLista lista : dtld) {
                 Object[] data = {
