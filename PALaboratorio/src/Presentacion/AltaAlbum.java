@@ -648,16 +648,15 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnQuitarGroActionPerformed
 
     private void btnSelecMp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecMp3ActionPerformed
-        // TODO add your handling code here:
 
         try {
-            int retorno = archivoTema.showOpenDialog(this);
-            File arch = archivoTema.getSelectedFile();
-            //pathMp3 = "src/Recursos/Musica/" + arch.getName();
-            pathMp3 = pm.getProperty("pathMusica") + arch.getName();
-            nameMp3 = arch.getName();
-            //System.out.println("Path: "+ pathMp3);
-            if (arch != null) {
+            if (archivoTema.showOpenDialog(this) == 0) {
+                File arch = archivoTema.getSelectedFile();
+                //pathMp3 = "src/Recursos/Musica/" + arch.getName();
+                pathMp3 = pm.getProperty("pathMusica") + arch.getName();
+                nameMp3 = arch.getName();
+                //System.out.println("Path: "+ pathMp3);
+                //if (arch != null) {
                 InputStream is = new FileInputStream(arch);
                 OutputStream outstream = new FileOutputStream(new File(pathMp3));
                 byte[] buffer = new byte[4096];
@@ -668,8 +667,9 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                 outstream.close();
                 JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 
+                // }
             }
-
+        } catch (NullPointerException n) {
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "El directorio o nombre de archivo incorrecto.", "Error", JOptionPane.WARNING_MESSAGE);
         } catch (IOException ex) {
@@ -768,13 +768,11 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
 
     private void btnCargarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImgActionPerformed
         try {
-            archivoImg.showOpenDialog(this);
-            File arch = archivoImg.getSelectedFile();
-            //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
-            nameImage = arch.getName();
-            pathImage = pm.getProperty("pathImagenesAlbum") + arch.getName();
-            //System.out.println(pm.getProperty("pathImagenes"));
-            if (arch != null) {
+            if (archivoImg.showOpenDialog(this) == 0) {
+                File arch = archivoImg.getSelectedFile();
+                nameImage = arch.getName();
+                pathImage = pm.getProperty("pathImagenesAlbum") + arch.getName();
+                //if (arch != null) {
                 InputStream is = new FileInputStream(arch);
                 OutputStream outstream = new FileOutputStream(new File(pathImage));
                 byte[] buffer = new byte[4096];
@@ -783,14 +781,18 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                     outstream.write(buffer, 0, len);
                 }
                 outstream.close();
+                // }
+            } else {
+                return;
             }
 
-            cargarImagen(pathImage);
-
+        } catch (NullPointerException n) {
+            return;
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se pudo cargar la Imagen.", "Error", JOptionPane.WARNING_MESSAGE);
         }
+        cargarImagen(pathImage);
     }//GEN-LAST:event_btnCargarImgActionPerformed
 
     private void cargarImagen(String pathImage) {
