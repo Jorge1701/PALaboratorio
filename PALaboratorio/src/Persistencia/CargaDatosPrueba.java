@@ -19,7 +19,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -853,6 +852,7 @@ public class CargaDatosPrueba {
         String padre = "";
         String pRef = "";
         BDGenero bdg = new BDGenero();
+
         bdg.ingresarGeneros("Géneros", null);
 
         for (String[] genero : generos) {

@@ -115,18 +115,28 @@ public class AltaGenero extends javax.swing.JInternalFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String nomGenero = "";
         String nomPadre = "";
-        if (generos.getSelectionPath() == null) {
+        /*if (generos.getSelectionPath() == null) {
             JOptionPane.showMessageDialog(this, "Debe de seleccionar un genero donde ingresar el nuevo");
             return;
-        }
+        }*/
 
         if ("".equals(txtNombre.getText())) {
             JOptionPane.showMessageDialog(this, "Debe de ingresar el nombre del genero");
             return;
         }
 
-        DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
-        nomPadre = selectedElement.getUserObject().toString();
+        if (generos.getSelectionPath() != null) {
+            DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
+            nomPadre = selectedElement.getUserObject().toString();
+        } else {
+            if (JOptionPane.showConfirmDialog(this, "Como no ha seleccionado ningun genero donde ingresar el nuevo, el mismo se ingresará en el género principal, ¿desea continuar?", "Confirmación", 0) == 0) {
+                nomPadre = "Géneros";
+            } else {
+                return;
+            }
+
+        }
+
         nomGenero = txtNombre.getText();
 
         try {
