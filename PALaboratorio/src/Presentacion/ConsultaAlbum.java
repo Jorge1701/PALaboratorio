@@ -1,7 +1,6 @@
 package Presentacion;
 
 import Logica.DtAlbum;
-import Logica.DtAlbumContenido;
 import Logica.DtGenero;
 import Logica.DtUsuario;
 import Logica.Fabrica;
@@ -288,22 +287,24 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
 
     private void generosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_generosValueChanged
         //Carga los albumes del genero seleccionado en la tabla
-        DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
-        String generoSeleccionado = selectedElement.getUserObject().toString();
 
-        ArrayList<DtAlbum> dta = iContenido.listarAlbumesGenero(generoSeleccionado);
+        if (generos.getSelectionPath() != null) {
+            DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
+            String generoSeleccionado = selectedElement.getUserObject().toString();
 
-        DefaultTableModel dtm = (DefaultTableModel) tablaAlbumes.getModel();
-        dtm.setRowCount(0);
+            ArrayList<DtAlbum> dta = iContenido.listarAlbumesGenero(generoSeleccionado);
 
-        for (DtAlbum dtAlbum : dta) {
-            Object[] data = {
-                dtAlbum.getNickArtista(),
-                ((DtAlbum) dtAlbum).getNombre()
-            };
-            dtm.addRow(data);
+            DefaultTableModel dtm = (DefaultTableModel) tablaAlbumes.getModel();
+            dtm.setRowCount(0);
+
+            for (DtAlbum dtAlbum : dta) {
+                Object[] data = {
+                    dtAlbum.getNickArtista(),
+                    ((DtAlbum) dtAlbum).getNombre()
+                };
+                dtm.addRow(data);
+            }
         }
-
 
     }//GEN-LAST:event_generosValueChanged
 

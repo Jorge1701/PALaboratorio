@@ -1,6 +1,7 @@
 package Logica;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public interface IContenido {
@@ -32,4 +33,10 @@ public interface IContenido {
     public Genero obtenerGenero(String nombre);
     public ArrayList<DtLista> listarLisReproduccionDef();
     public void cargarLista(ListaDefecto ld, String nombreGenero);
+    public void ingresarGenero(String nombre,String padre);
+    public HashMap<String,Tema> listarTemas(String NombreAlbum,String nombreArtista);
+    public ArrayList<DtTema> listarTemasLD(String nombreLista);
+    public ArrayList<DtTema> listarTemasP(String nombreLista);
+
+    
 }

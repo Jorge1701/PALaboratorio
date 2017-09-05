@@ -24,7 +24,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
     private ArrayList<DtUsuario> clientes;
     private ArrayList<DtUsuario> artistas;
 
-    public GuardarTLA() {
+    public GuardarTLA()     {
         initComponents();
 
         iUsuario = Fabrica.getIControladorUsuario();
@@ -35,14 +35,14 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
 
         cargarDatosClientes(clientes, "");
         cargarDatosAlbumesArtistas(artistas, "");
-        cargarDatosLPClietes(clientes, "");
+        cargarDatosLPClientes(clientes, "");
 
         DefaultTreeModel modelo = new DefaultTreeModel(getNodo(iContenido.listarGenero()));
         treeLDGeneros.setModel(modelo);
 
         tablaClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                cargarDatosLPClietes(clientes, txtLPCliente.getText());
+                cargarDatosLPClientes(clientes, txtLPCliente.getText());
             }
         });
 
@@ -157,7 +157,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
         }
     } 
 
-    private void cargarDatosLPClietes(ArrayList<DtUsuario> dtu, String filtro) {
+    private void cargarDatosLPClientes(ArrayList<DtUsuario> dtu, String filtro) {
         if (tablaClientes.getSelectedRow() == -1) {
             return;
         }
@@ -841,7 +841,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAceptarLDActionPerformed
 
     private void txtLPClienteCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtLPClienteCaretUpdate
-        cargarDatosLPClietes(clientes, txtLPCliente.getText());
+        cargarDatosLPClientes(clientes, txtLPCliente.getText());
     }//GEN-LAST:event_txtLPClienteCaretUpdate
 
     private void txtLPListaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtLPListaCaretUpdate

@@ -336,17 +336,11 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_altaAlbumActionPerformed
 
     private void altaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaGeneroActionPerformed
-        AltaGenero cpc;
-        try {
-            cpc = new AltaGenero();
+        AltaGenero cpc = new AltaGenero();
             PanelMenu.add(cpc);
             centrar(cpc);
             cpc.show();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(menu.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_altaGeneroActionPerformed
 
     private void crearListaRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearListaRepActionPerformed
@@ -373,7 +367,7 @@ public class menu extends javax.swing.JFrame {
     private void agregarTemaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarTemaListaActionPerformed
        AgregarTemaLista agr = new AgregarTemaLista();
        PanelMenu.add(agr);
-       centrar(agr);
+       agr.setLocation(450, 10);
        agr.show();
     }//GEN-LAST:event_agregarTemaListaActionPerformed
 

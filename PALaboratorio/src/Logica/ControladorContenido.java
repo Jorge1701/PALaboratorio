@@ -2,18 +2,16 @@ package Logica;
 
 //import Persistencia.BDUsuario;
 import Persistencia.BDCliente;
+import Persistencia.BDGenero;
 import Persistencia.BDLista;
 import java.util.HashMap;
 import java.util.Map;
-
 import java.util.ArrayList;
 import java.util.Iterator;
-import javax.swing.JOptionPane;
 
 public class ControladorContenido implements IContenido {
 
     private static ControladorContenido instancia;
-
 
     public static void cargarInstancia() {
         instancia = new ControladorContenido();
@@ -26,15 +24,15 @@ public class ControladorContenido implements IContenido {
         return instancia;
     }
 
-    private Map<String, ListaDefecto> listasDefecto;
-    private Map<String, ListaParticular> listasParticular;
+    private final Map<String, ListaDefecto> listasDefecto;
+    private final Map<String, ListaParticular> listasParticular;
     private Artista artista;
-    private Genero genero;
+    private final Genero genero;
     private Genero generoRecordado;
-
     private Cliente clienteFav;
-
     private IUsuario iUsuario;
+
+    
 
     @Override
     public void setIUsuario(IUsuario iUsuario) {
@@ -42,9 +40,9 @@ public class ControladorContenido implements IContenido {
     }
 
     private ControladorContenido() {
-        this.listasParticular = new HashMap<String, ListaParticular>();
-        this.listasDefecto = new HashMap<String, ListaDefecto>();
-        genero = new Genero("Generos");
+        this.listasParticular = new HashMap<>();
+        this.listasDefecto = new HashMap<>();
+        genero = new Genero("Géneros");
     }
 
     @Override
@@ -61,6 +59,7 @@ public class ControladorContenido implements IContenido {
 
         clienteFav = (Cliente) u;
     }
+
 
     @Override
     public void guardarTema(String nickArtista, String nomAlbum, String nomTema) {
@@ -403,7 +402,9 @@ public class ControladorContenido implements IContenido {
             Iterator i = this.listasParticular.entrySet().iterator();
             while (i.hasNext()) {
                 Lista l = (ListaParticular) ((Map.Entry) i.next()).getValue();
+ 
                 if (l.getNombre().equals(nombreT)) {
+                    
                     Tema tema = l.getTema(nombreT);
                     return lista.agregarTema(tema);
                 }
@@ -457,18 +458,23 @@ public class ControladorContenido implements IContenido {
         return this.genero.obtener(nomGenero).getData();
     }
 
+    @Override
     public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista) {
         return genero.obtener(nomGenero).obtenerAlbumContenido(nomAlbum, nickArtista);
     }
 
+    @Override
     public void cargarGenero(String nombre, String padre) {
-        this.genero.agregarGenero(padre.isEmpty() ? genero.getNombre() : padre, nombre);
+        // this.genero.agregarGenero(padre.isEmpty() ? genero.getNombre() : padre, nombre);
+        genero.agregarGenero(padre, nombre);
     }
 
+    @Override
     public boolean existeGenero(String nombre) {
         return genero.existe(nombre);
     }
 
+    @Override
     public Genero obtenerGenero(String nombre) {
         return genero.obtener(nombre);
     }
@@ -488,9 +494,43 @@ public class ControladorContenido implements IContenido {
 
     }
 
+
     @Override
     public void cargarLista(ListaDefecto ld, String nombreGenero) {
         genero.obtener(nombreGenero).cargarLista(ld);
         listasDefecto.put(ld.getNombre(), ld);
+    }
+
+    @Override
+    public void ingresarGenero(String nombre, String padre) {
+        if (existeGenero(nombre) == false) {
+            genero.agregarGenero(padre, nombre);
+            if (!new BDGenero().ingresarGeneros(nombre, padre)) {
+                throw new UnsupportedOperationException("No se pudo ingresar el genero a la BD");
+            }
+        } else {
+            throw new UnsupportedOperationException("El genero ya existe");
+        }
+    }
+ 
+    public HashMap<String,Tema> listarTemas(String NombreAlbum,String nombreArtista){
+        Album a = iUsuario.selectArtista(nombreArtista).getAlbum(NombreAlbum);
+        if(a==null){
+        throw new UnsupportedOperationException("El Album No Existe");
+        }
+        return a.getTemas();
+    }
+
+    public ArrayList<DtTema> listarTemasLD(String nombreLista){
+        Lista lista = (Lista) listasDefecto.get(nombreLista);
+                        
+        if(lista == null){throw new UnsupportedOperationException("La Lista No Existe");}
+        return lista.getTemas();
+    
+    }
+    public ArrayList<DtTema> listarTemasP(String nombreLista){
+     Lista l =  listasParticular.get(nombreLista);
+     if(l == null){throw new UnsupportedOperationException("La Lista No Existe");}
+     return l.getTemas();
     }
 }

@@ -25,7 +25,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -65,7 +64,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             String path = pm.getProperty("pathImagenesAlbum");
             BufferedImage img;
             if (imagen == null || imagen.isEmpty()) {
-                img = ImageIO.read(new File("Recursos/Imagenes/Albumes/albumDefault.png"));
+                img = ImageIO.read(new File(path + "albumDefault.png"));
             } else {
                 img = ImageIO.read(new File(path + imagen));
             }
@@ -75,7 +74,7 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen del usuario");
+            JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen del album");
         }
 
         //Cargar tabla de Temas
@@ -142,8 +141,6 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
         imagenPanel = new javax.swing.JPanel();
 
         setTitle("Informacion del album");
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel1.setText("Nombre:");

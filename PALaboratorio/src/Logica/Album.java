@@ -58,8 +58,9 @@ public class Album {
         return imagen;
     }
 
-    public HashMap<String, Tema> getTemas() {
+    public HashMap<String , Tema > getTemas() {
         return temas;
+        
     }
 
     public ArrayList<Genero> getGeneros() {
@@ -120,5 +121,6 @@ public class Album {
 
         return new DtAlbumContenido(this.getData(), nomGeneros, dtTemas);
     }
+
 
 }
