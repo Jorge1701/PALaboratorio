@@ -427,21 +427,21 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
     private void btnCargarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImgActionPerformed
         try {
-            if(archivoImg.showOpenDialog(this) == 0){
-            File arch = archivoImg.getSelectedFile();
-            nameImage = arch.getName();
-            pathImage = pm.getProperty("pathImagenesLista") + arch.getName();
-            //if (arch != null) {
-            InputStream is = new FileInputStream(arch);
-            OutputStream outstream = new FileOutputStream(new File(pathImage));
-            byte[] buffer = new byte[4096];
-            int len;
-            while ((len = is.read(buffer)) > 0) {
-                outstream.write(buffer, 0, len);
-            }
-            outstream.close();
-            // }
-            }else{
+            if (archivoImg.showOpenDialog(this) == 0) {
+                File arch = archivoImg.getSelectedFile();
+                nameImage = arch.getName();
+                pathImage = pm.getProperty("pathImagenesLista") + arch.getName();
+                //if (arch != null) {
+                InputStream is = new FileInputStream(arch);
+                OutputStream outstream = new FileOutputStream(new File(pathImage));
+                byte[] buffer = new byte[4096];
+                int len;
+                while ((len = is.read(buffer)) > 0) {
+                    outstream.write(buffer, 0, len);
+                }
+                outstream.close();
+                // }
+            } else {
                 return;
             }
         } catch (NullPointerException n) {
@@ -462,6 +462,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             BufferedImage img;
             img = ImageIO.read(new File(pathImage));
             pImg = new PanelImagen(img);
+            imagePanel.removeAll();
             imagePanel.add(pImg);
             pImg.setBounds(0, 0, 140, 111);
         } catch (IOException ex) {

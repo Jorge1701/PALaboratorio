@@ -73,7 +73,6 @@ public class AlbumContenido extends javax.swing.JInternalFrame implements ListSe
             pImg.setBounds(0, 0, 150, 150);
 
         } catch (IOException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen del album");
         }
 

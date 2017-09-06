@@ -220,9 +220,8 @@ public class Cliente extends Usuario {
         Iterator it = listasParticulares.entrySet().iterator();
         while (it.hasNext()) {
             ListaParticular lp = (ListaParticular) ((Map.Entry) it.next()).getValue();
-            if (lp.isPrivada()) {
-                res.add(new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(), lp.getImagen()));
-            }
+            res.add(new DtListaParticular(lp.isPrivada(), lp.getNombre(), lp.getTemas(), lp.getImagen()));
+
         }
         return res;
     }

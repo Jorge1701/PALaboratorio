@@ -2,6 +2,7 @@ package Persistencia;
 
 import Logica.DtLista;
 import Logica.DtListaDefecto;
+import Logica.DtListaParticular;
 import Logica.Lista;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,7 +47,11 @@ public class BDLista {
                 PreparedStatement statament3 = conexion.prepareStatement("INSERT INTO listaparticular(idLista,nickname,Publica) VALUES (?,?,?)");
                 statament3.setInt(1, idLista);
                 statament3.setString(2, nickCliente);
-                statament3.setString(3, "N");
+                if (((DtListaParticular) dtl).isPrivada()) {
+                    statament3.setString(3, "N");
+                } else {
+                    statament3.setString(3, "S");
+                }
                 statament3.executeUpdate();
                 statament3.close();
                 statament.close();
