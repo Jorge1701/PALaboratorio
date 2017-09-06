@@ -49,15 +49,11 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
         clientes = iUsuario.listarClientes();
         artistas = iUsuario.listarArtistas();
         listasPorDefecto = iContenido.listarLisReproduccionDef();
-        listaDeUsuarios = iUsuario.listarUsuarios();
+
         PestaniaMouseClicked(null);
-        DefaultTableModel model = (DefaultTableModel) nombresDeUsuarios.getModel();
-        for (DtUsuario dtuser : listaDeUsuarios) {
-            Object[] data = {dtuser.getNombre()};
-            model.addRow(data);
 
-        }
-
+        cargarDatosUsuarios(clientes, nombreUsuario.getText());
+        cargarDatosListaDefectoFinal(listasPorDefecto, nombreListaDefectoFinal.getText());
         tablaClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (tablaClientes.getSelectedRow() == -1) {
@@ -79,7 +75,6 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
                 if (tablaListaDeAlbumes.getSelectedRow() == -1) {
                     return;
                 }
-
                 cargarDatosTemaAlbum(iContenido.listarTemas(tablaListaDeAlbumes.getValueAt(tablaListaDeAlbumes.getSelectedRow(), 0).toString(), iUsuario.selectArtista(tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString()).getNickname()), nombreTema.getText());
             }
         });
@@ -89,16 +84,23 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
                 if (tablaListaPordefecto.getSelectedRow() == -1) {
                     return;
                 }
-                cargarDatosTemaL(iContenido.listarTemasLD(tablaListaPordefecto.getValueAt(tablaListaPordefecto.getSelectedRow(), 0).toString()), nombreListaD.getText());
+                cargarDatosTemaL(iContenido.listarTemasLD(tablaListaPordefecto.getValueAt(tablaListaPordefecto.getSelectedRow(), 0).toString()), nombreTema.getText());
             }
         });
-
+        nombresDeUsuarios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (nombresDeUsuarios.getSelectedRow() == -1) {
+                    return;
+                }
+                cargarDatosListaCliente(iUsuario.listarListaReproduccionCli(nombresDeUsuarios.getValueAt(nombresDeUsuarios.getSelectedRow(), 0).toString()), nombreDeListaFinal.getText());
+            }
+        });
         tablaListaParticular.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (tablaListaParticular.getSelectedRow() == -1) {
                     return;
                 }
-                cargarDatosTemaL(iContenido.listarTemasP(tablaListaParticular.getValueAt(tablaListaParticular.getSelectedRow(), 0).toString()), nombreListaP.getText());
+                cargarDatosTemaL(iContenido.listarTemasP(tablaListaParticular.getValueAt(tablaListaParticular.getSelectedRow(), 0).toString(), tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString()), nombreTema.getText());
             }
         });
 
@@ -112,16 +114,29 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane11 = new javax.swing.JScrollPane();
-        nombresDeUsuarios = new javax.swing.JTable();
-        agregar = new javax.swing.JToggleButton();
-        cancelar = new javax.swing.JToggleButton();
-        jLabel2 = new javax.swing.JLabel();
-        nombreTema = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        NombreDelUsuario = new javax.swing.JTextField();
+        jSplitPane2 = new javax.swing.JSplitPane();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane12 = new javax.swing.JScrollPane();
         tablaListaTema = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        nombreTema = new javax.swing.JTextField();
+        agregar = new javax.swing.JToggleButton();
+        cancelar = new javax.swing.JToggleButton();
+        Pestania2 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        nombresDeUsuarios = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
+        nombreUsuario = new javax.swing.JTextField();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        ListadeListasParticulares = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        nombreDeListaFinal = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        listaFinalPorDefecto = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
+        nombreListaDefectoFinal = new javax.swing.JTextField();
         Pestania = new javax.swing.JTabbedPane();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -168,45 +183,7 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
 
         jSplitPane1.setRightComponent(jPanel5);
 
-        nombresDeUsuarios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nombre "
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane11.setViewportView(nombresDeUsuarios);
-        if (nombresDeUsuarios.getColumnModel().getColumnCount() > 0) {
-            nombresDeUsuarios.getColumnModel().getColumn(0).setResizable(false);
-        }
-
-        agregar.setText("Agregar");
-
-        cancelar.setText("Cancelar");
-        cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Nombre De Tema");
-
-        nombreTema.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                nombreTemaCaretUpdate(evt);
-            }
-        });
-
-        jLabel4.setText("Nombre de Usuario");
+        jSplitPane2.setDividerLocation(280);
 
         tablaListaTema.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -229,48 +206,230 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
             tablaListaTema.getColumnModel().getColumn(0).setResizable(false);
         }
 
+        jLabel2.setText("Nombre Del Tema A Agregar");
+
+        nombreTema.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                nombreTemaCaretUpdate(evt);
+            }
+        });
+
+        agregar.setText("Agregar");
+        agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarActionPerformed(evt);
+            }
+        });
+
+        cancelar.setText("Cancelar");
+        cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(nombreTema, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                            .addComponent(jScrollPane12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(agregar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                        .addComponent(cancelar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel2)
+                .addGap(7, 7, 7)
+                .addComponent(nombreTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(agregar)
+                    .addComponent(cancelar))
+                .addContainerGap())
+        );
+
+        jSplitPane2.setLeftComponent(jPanel1);
+
+        nombresDeUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nick ", "Nombre"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(nombresDeUsuarios);
+        if (nombresDeUsuarios.getColumnModel().getColumnCount() > 0) {
+            nombresDeUsuarios.getColumnModel().getColumn(0).setResizable(false);
+            nombresDeUsuarios.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        jLabel8.setText("Nombre De Usuario");
+
+        nombreUsuario.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                nombreUsuarioCaretUpdate(evt);
+            }
+        });
+
+        ListadeListasParticulares.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre De Lista"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane7.setViewportView(ListadeListasParticulares);
+        if (ListadeListasParticulares.getColumnModel().getColumnCount() > 0) {
+            ListadeListasParticulares.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        jLabel4.setText("Nombre de Lista al cual se le agregara");
+
+        nombreDeListaFinal.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                nombreDeListaFinalCaretUpdate(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(nombreDeListaFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreDeListaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        Pestania2.addTab("Lista Particular", jPanel3);
+
+        listaFinalPorDefecto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(listaFinalPorDefecto);
+        if (listaFinalPorDefecto.getColumnModel().getColumnCount() > 0) {
+            listaFinalPorDefecto.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        jLabel9.setText("Nombre de Lista al cual se le agregara");
+
+        nombreListaDefectoFinal.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                nombreListaDefectoFinalCaretUpdate(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nombreListaDefectoFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(nombreListaDefectoFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        Pestania2.addTab("Lista Por Defecto", jPanel4);
+
+        jSplitPane2.setRightComponent(Pestania2);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(agregar)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                        .addComponent(nombreTema)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cancelar)
-                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(NombreDelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)))
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombreTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NombreDelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(agregar)
-                    .addComponent(cancelar))
-                .addContainerGap())
+            .addComponent(jSplitPane2)
         );
 
         jSplitPane1.setRightComponent(jPanel2);
@@ -302,7 +461,7 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
             tablaListaParticular.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        jLabel5.setText("Nombre De Cliente");
+        jLabel5.setText("Nombre Del Dueño De La Lista");
 
         nombreCliente.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
@@ -351,23 +510,19 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel7Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addGap(72, 72, 72)
-                                    .addComponent(nombreListaP, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel7Layout.createSequentialGroup()
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(nombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(0, 0, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 47, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(72, 72, 72)
+                        .addComponent(nombreListaP, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,13 +577,13 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addGap(36, 36, 36)
                 .addComponent(nombreListaD, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -496,7 +651,7 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -551,6 +706,7 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
             cargarDatosClientes(clientes, nombreCliente.getText());
         } else if (Pestania.getSelectedIndex() == 1) {
             cargarDatosListaD(listasPorDefecto, nombreListaD.getText());
+
         } else if (Pestania.getSelectedIndex() == 2) {
             cargarDatosArtistas(artistas, nombreArtistas.getText());
 
@@ -566,10 +722,6 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cancelarActionPerformed
 
-    private void nombreTemaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nombreTemaCaretUpdate
-        cargarDatosTemaAlbum(iContenido.listarTemas(tablaListaDeAlbumes.getValueAt(tablaListaDeAlbumes.getSelectedRow(), 0).toString(), iUsuario.selectArtista(tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString()).getNickname()), nombreTema.getText());
-    }//GEN-LAST:event_nombreTemaCaretUpdate
-
     private void nombreListaPCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nombreListaPCaretUpdate
         cargarDatosListaP(iUsuario.listarListaReproduccionCli(tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString()), nombreCliente.getText());
     }//GEN-LAST:event_nombreListaPCaretUpdate
@@ -582,10 +734,96 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_tablaClientesMouseClicked
 
+    private void nombreTemaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nombreTemaCaretUpdate
+        if (Pestania.getSelectedIndex() == 0) {
+            cargarDatosTemaL(iContenido.listarTemasP(tablaListaParticular.getValueAt(tablaListaParticular.getSelectedRow(), 0).toString(), tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString()), nombreTema.getText());
+        } else if (Pestania.getSelectedIndex() == 1) {
+            cargarDatosTemaL(iContenido.listarTemasLD(tablaListaPordefecto.getValueAt(tablaListaPordefecto.getSelectedRow(), 0).toString()), nombreTema.getText());
+        } else {
+            cargarDatosTemaAlbum(iContenido.listarTemas(tablaListaDeAlbumes.getValueAt(tablaListaDeAlbumes.getSelectedRow(), 0).toString(), iUsuario.selectArtista(tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString()).getNickname()), nombreTema.getText());
+        }
+
+    }//GEN-LAST:event_nombreTemaCaretUpdate
+
+    private void nombreUsuarioCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nombreUsuarioCaretUpdate
+        cargarDatosUsuarios(clientes, nombreUsuario.getText());
+
+    }//GEN-LAST:event_nombreUsuarioCaretUpdate
+
+    private void nombreDeListaFinalCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nombreDeListaFinalCaretUpdate
+        cargarDatosListaCliente(iUsuario.listarListaReproduccionCli(nombresDeUsuarios.getValueAt(nombresDeUsuarios.getSelectedRow(), 0).toString()), nombreDeListaFinal.getText());
+    }//GEN-LAST:event_nombreDeListaFinalCaretUpdate
+
+    private void nombreListaDefectoFinalCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nombreListaDefectoFinalCaretUpdate
+        cargarDatosListaDefectoFinal(listasPorDefecto, nombreListaDefectoFinal.getText());
+    }//GEN-LAST:event_nombreListaDefectoFinalCaretUpdate
+
+    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+        String nombreLista = "";
+        String nombreUsuario = "";
+        String nombreTema = tablaListaTema.getValueAt(tablaListaTema.getSelectedRow(), 0).toString();
+        if (Pestania2.getSelectedIndex() == 0) {
+                nombreUsuario = nombresDeUsuarios.getValueAt(nombresDeUsuarios.getSelectedRow(), 0).toString();
+                nombreLista = ListadeListasParticulares.getValueAt(ListadeListasParticulares.getSelectedRow(), 0).toString();
+            } else {
+                nombreLista = listaFinalPorDefecto.getValueAt(listaFinalPorDefecto.getSelectedRow(), 0).toString();
+            }
+        if (Pestania.getSelectedIndex() == 0) {
+            String duenio = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
+            String listadeDuenio = tablaListaParticular.getValueAt(tablaListaParticular.getSelectedRow(), 0).toString();
+
+            if(iContenido.agregarDeListasParticularesTema(nombreTema, nombreLista, nombreUsuario, duenio, listadeDuenio)==false){
+             JOptionPane.showMessageDialog(this, "No Se Pudo Agregar El Tema");}else{JOptionPane.showMessageDialog(this, "Se Pudo");}
+        } else if (Pestania.getSelectedIndex() == 1) {
+            String listaDefecto = tablaListaPordefecto.getValueAt(tablaListaPordefecto.getSelectedRow(), 0).toString();
+             if(iContenido.agregarDeListasDefectoTema(nombreTema, nombreLista, nombreUsuario, listaDefecto)==false){
+             JOptionPane.showMessageDialog(this, "No Se Pudo Agregar El Tema");}else{JOptionPane.showMessageDialog(this, "Se Pudo");}
+        } else {
+            String artista = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString();
+            String album = tablaListaDeAlbumes.getValueAt(tablaListaDeAlbumes.getSelectedRow(), 0).toString();
+            if(iContenido.agregarDeAlbumTema(nombreTema, nombreLista, nombreUsuario,artista,album)==false){
+             JOptionPane.showMessageDialog(this, "No Se Pudo Agregar El Tema");}else{JOptionPane.showMessageDialog(this, "Se Pudo");}
+        }
+            
+
+
+    }//GEN-LAST:event_agregarActionPerformed
+
+    private void cargarDatosListaDefectoFinal(ArrayList<DtLista> dtl, String filtro) {
+        if (dtl.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay ninguna lista registrado");
+        }
+
+        DefaultTableModel tabla = (DefaultTableModel) listaFinalPorDefecto.getModel();
+        tabla.setRowCount(0);
+        for (DtLista dtLista : dtl) {
+            if (dtLista.getNombre().contains(filtro)) {
+                Object[] data = {dtLista.getNombre()};
+                tabla.addRow(data);
+            }
+        }
+    }
+
+    private void cargarDatosUsuarios(ArrayList<DtUsuario> usuarios, String filtro) {
+        if (usuarios.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay ninguna usuario registrado");
+        }
+        DefaultTableModel model = (DefaultTableModel) nombresDeUsuarios.getModel();
+        model.setRowCount(0);
+        for (DtUsuario dtuser : usuarios) {
+            if (dtuser.getNombre().contains(filtro)) {
+                Object[] data = {dtuser.getNickname(), dtuser.getNombre()};
+                model.addRow(data);
+            }
+        }
+    }
+
     private void cargarDatosListaD(ArrayList<DtLista> dtl, String filtro) {
         if (dtl.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay ninguna lista registrado");
         }
+        DefaultTableModel model = (DefaultTableModel) tablaListaTema.getModel();
+        model.setRowCount(0);
         DefaultTableModel tabla = (DefaultTableModel) tablaListaPordefecto.getModel();
         tabla.setRowCount(0);
         for (DtLista dtLista : dtl) {
@@ -604,7 +842,7 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
         DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
         dtm.setRowCount(0);
         for (DtUsuario dtUsuario : dtu) {
-            if (dtUsuario.getNickname().contains(filtro)) {
+            if (dtUsuario.getNombre().contains(filtro)) {
                 Object[] data = {
                     dtUsuario.getNickname(),
                     dtUsuario.getNombre(),
@@ -632,10 +870,26 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
         }
     }
 
+    private void cargarDatosListaCliente(ArrayList<DtLista> listaP, String filtro) {
+        if (listaP.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay ninguna Lista Particular Registrada");
+        }
+        DefaultTableModel dtl = (DefaultTableModel) ListadeListasParticulares.getModel();
+        dtl.setRowCount(0);
+        for (DtLista dtLista : listaP) {
+            if (dtLista.getNombre().contains(filtro)) {
+                Object[] data = {dtLista.getNombre()};
+                dtl.addRow(data);
+            }
+        }
+    }
+
     private void cargarDatosListaP(ArrayList<DtLista> listaP, String filtro) {
         if (listaP.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay ninguna Lista Particular Registrada");
         }
+        DefaultTableModel model = (DefaultTableModel) tablaListaTema.getModel();
+        model.setRowCount(0);
         DefaultTableModel dtl = (DefaultTableModel) tablaListaParticular.getModel();
         dtl.setRowCount(0);
 
@@ -683,6 +937,7 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
         if (temas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay ningun tema registrado");
         }
+
         DefaultTableModel dtt = (DefaultTableModel) tablaListaTema.getModel();
         dtt.setRowCount(0);
         for (DtTema dtTemas : temas) {
@@ -695,8 +950,9 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField NombreDelUsuario;
+    private javax.swing.JTable ListadeListasParticulares;
     private javax.swing.JTabbedPane Pestania;
+    private javax.swing.JTabbedPane Pestania2;
     private javax.swing.JToggleButton agregar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JToggleButton cancelar;
@@ -707,25 +963,37 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
-    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTable listaFinalPorDefecto;
     private javax.swing.JTextField nombreArtistas;
     private javax.swing.JTextField nombreCliente;
+    private javax.swing.JTextField nombreDeListaFinal;
     private javax.swing.JTextField nombreListaD;
+    private javax.swing.JTextField nombreListaDefectoFinal;
     private javax.swing.JTextField nombreListaP;
     private javax.swing.JTextField nombreTema;
+    private javax.swing.JTextField nombreUsuario;
     private javax.swing.JTable nombresDeUsuarios;
     private javax.swing.JTable tablaArtistas;
     private javax.swing.JTable tablaClientes;

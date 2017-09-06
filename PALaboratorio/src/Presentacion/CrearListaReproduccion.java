@@ -31,6 +31,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
     IUsuario iUsuario;
     IContenido iContenido;
+    private final ArrayList<DtUsuario> clientes;
     private final JFileChooser archivoImg;
     String pathImage;
     String nameImage;
@@ -41,6 +42,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         initComponents();
         this.iUsuario = Fabrica.getIControladorUsuario();
         this.iContenido = Fabrica.getIControladorContenido();
+        this.clientes = iUsuario.listarClientes();
         btnListaDefecto.setSelected(true);
         btnListaDefectoActionPerformed(null);
         archivoImg = new JFileChooser();
@@ -87,14 +89,16 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        txtCliente = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         nombre = new javax.swing.JTextField();
         imagePanel = new javax.swing.JPanel();
         btnCargarImg = new java.awt.Button();
         jPanel4 = new javax.swing.JPanel();
-        btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         lblSelec = new javax.swing.JLabel();
 
         setClosable(true);
@@ -121,7 +125,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         jSplitPane1.setDividerLocation(180);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        jSplitPane2.setDividerLocation(300);
+        jSplitPane2.setDividerLocation(279);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Generos"));
 
@@ -131,7 +135,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,15 +157,34 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         tablaClientes.setDragEnabled(true);
         jScrollPane2.setViewportView(tablaClientes);
 
+        jLabel2.setText("Nickname:");
+
+        txtCliente.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtClienteCaretUpdate(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jSplitPane2.setRightComponent(jPanel2);
@@ -188,7 +211,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         );
         imagePanelLayout.setVerticalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 109, Short.MAX_VALUE)
+            .addGap(0, 115, Short.MAX_VALUE)
         );
 
         btnCargarImg.setLabel("Cargar Imagen");
@@ -203,38 +226,30 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(23, 23, 23)
                 .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(28, 28, 28))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(59, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                        .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(jPanel3);
-
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -243,24 +258,29 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             }
         });
 
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(86, Short.MAX_VALUE)
                 .addComponent(btnAceptar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCancelar)
-                .addGap(22, 22, 22))
+                .addGap(0, 0, 0))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnAceptar)))
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnCancelar)
+                .addComponent(btnAceptar))
         );
 
         lblSelec.setText("Presione 'Aceptar' para confirmar los datos");
@@ -278,9 +298,9 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                         .addGap(28, 28, 28)
                         .addComponent(btnListaParticular))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(25, 25, 25)
                         .addComponent(lblSelec)
-                        .addGap(48, 48, 48)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -293,11 +313,11 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                     .addComponent(btnListaParticular))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblSelec)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25))
+                .addGap(12, 12, 12))
         );
 
         pack();
@@ -315,18 +335,28 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
     private void btnListaParticularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaParticularActionPerformed
         mostrar();
-        //Carga  los artistas en la tabla(tablaArtistas)
-        ArrayList<DtUsuario> dta = iUsuario.listarClientes();
+        //Carga  los clientes en la tabla(tablaClientes)
+        cargarClientes(clientes, "");
+    }//GEN-LAST:event_btnListaParticularActionPerformed
+
+    private void cargarClientes(ArrayList<DtUsuario> dtcs, String filtro) {
+        // Obtiene el modelo de la tablaClientes y borra su contenido
         DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
         dtm.setRowCount(0);
 
-        for (DtUsuario dtCliente : dta) {
-            Object[] data = {
-                dtCliente.getNombre(),
-                dtCliente.getNickname(),};
-            dtm.addRow(data);
+        // Agrega los clientes a la tablaClientes
+        for (DtUsuario dtu : dtcs) {
+            if (dtu.getNickname().contains(filtro)) {
+                Object[] data = {
+                    dtu.getNickname(),
+                    dtu.getNombre(),
+                    dtu.getApellido(),
+                    dtu.getEmail()
+                };
+                dtm.addRow(data);
+            }
         }
-    }//GEN-LAST:event_btnListaParticularActionPerformed
+    }
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
@@ -384,7 +414,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             }
 
         }
-        
+
         pathImage = null;
         nameImage = null;
         cargarImagen(pm.getProperty("pathImagenesLista") + "listaDefault.png");
@@ -397,32 +427,35 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
     private void btnCargarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImgActionPerformed
         try {
-            archivoImg.showOpenDialog(this);
+            if(archivoImg.showOpenDialog(this) == 0){
             File arch = archivoImg.getSelectedFile();
-            //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
             nameImage = arch.getName();
             pathImage = pm.getProperty("pathImagenesLista") + arch.getName();
-            //System.out.println(pm.getProperty("pathImagenes"));
-            if (arch != null) {
-                InputStream is = new FileInputStream(arch);
-                OutputStream outstream = new FileOutputStream(new File(pathImage));
-                byte[] buffer = new byte[4096];
-                int len;
-                while ((len = is.read(buffer)) > 0) {
-                    outstream.write(buffer, 0, len);
-                }
-                outstream.close();
-                JOptionPane.showMessageDialog(null, "El archivo se ha guardado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-
+            //if (arch != null) {
+            InputStream is = new FileInputStream(arch);
+            OutputStream outstream = new FileOutputStream(new File(pathImage));
+            byte[] buffer = new byte[4096];
+            int len;
+            while ((len = is.read(buffer)) > 0) {
+                outstream.write(buffer, 0, len);
             }
-
-            cargarImagen(pathImage);
-
+            outstream.close();
+            // }
+            }else{
+                return;
+            }
+        } catch (NullPointerException n) {
+            return;
         } catch (Exception ex) {
-            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se pudo cargar la Imagen.", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+        cargarImagen(pathImage);
     }//GEN-LAST:event_btnCargarImgActionPerformed
+
+    private void txtClienteCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtClienteCaretUpdate
+        cargarClientes(clientes, txtCliente.getText());
+    }//GEN-LAST:event_txtClienteCaretUpdate
 
     private void cargarImagen(String pathImage) {
         try {
@@ -446,6 +479,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
     private javax.swing.JTree generos;
     private javax.swing.JPanel imagePanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -457,5 +491,6 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblSelec;
     private javax.swing.JTextField nombre;
     private javax.swing.JTable tablaClientes;
+    private javax.swing.JTextField txtCliente;
     // End of variables declaration//GEN-END:variables
 }

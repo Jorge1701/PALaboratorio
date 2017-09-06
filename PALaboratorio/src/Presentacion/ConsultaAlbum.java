@@ -21,6 +21,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
 
     IUsuario iUsuario;
     IContenido iContenido;
+    ArrayList<DtUsuario> artistas;
 
     public ConsultaAlbum() {
         initComponents();
@@ -29,7 +30,8 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
 
         this.iUsuario = Fabrica.getIControladorUsuario();
         this.iContenido = Fabrica.getIControladorContenido();
-
+        this.artistas = iUsuario.listarArtistas();
+        
         btnConsultaGenero.setSelected(true);
         btnConsultaGeneroActionPerformed(null);
     }
@@ -41,10 +43,16 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
         if (btnConsultaGenero.isSelected()) {
             generos.setEnabled(true);
             tablaArtistas.setEnabled(false);
+            txtBuscar.setVisible(false);
+            lblNickname.setVisible(false);
+           
             lblSelec.setText("Seleccione un genero y un album y luego presione 'aceptar'");
         } else if (btnConsultaArtista.isSelected()) {
             generos.setEnabled(false);
             tablaArtistas.setEnabled(true);
+            txtBuscar.setVisible(true);
+            lblNickname.setVisible(true);
+            
             lblSelec.setText("Seleccione un artista y un album y luego presione 'aceptar'");
         }
     }
@@ -73,6 +81,8 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaArtistas = new javax.swing.JTable();
+        txtBuscar = new javax.swing.JTextField();
+        lblNickname = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaAlbumes = new javax.swing.JTable();
@@ -81,6 +91,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
         btnAceptar = new javax.swing.JButton();
         lblSelec = new javax.swing.JLabel();
 
+        setClosable(true);
         setIconifiable(true);
         setTitle("Consulta de album");
 
@@ -103,7 +114,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
         jSplitPane1.setDividerLocation(180);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        jSplitPane2.setDividerLocation(300);
+        jSplitPane2.setDividerLocation(290);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Generos"));
 
@@ -118,7 +129,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,15 +160,32 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
         tablaArtistas.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaArtistas);
 
+        txtBuscar.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtBuscarCaretUpdate(evt);
+            }
+        });
+
+        lblNickname.setText("Nickname:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(lblNickname, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNickname))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
         );
 
         jSplitPane2.setRightComponent(jPanel2);
@@ -189,7 +217,7 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,9 +273,9 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSplitPane1)
             .addGroup(layout.createSequentialGroup()
-                .addGap(162, 162, 162)
+                .addGap(150, 150, 150)
                 .addComponent(btnConsultaGenero)
-                .addGap(28, 28, 28)
+                .addGap(29, 29, 29)
                 .addComponent(btnConsultaArtista)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -310,22 +338,27 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
 
     private void btnConsultaArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaArtistaActionPerformed
         mostrar();
+        cargarDatos(artistas, "");
+
+    }//GEN-LAST:event_btnConsultaArtistaActionPerformed
+
+    private void cargarDatos(ArrayList<DtUsuario> dta, String filtro) {
         //Carga  los artistas en la tabla(tablaArtistas)
-        ArrayList<DtUsuario> dta = iUsuario.listarArtistas();
+
         DefaultTableModel dtm = (DefaultTableModel) tablaArtistas.getModel();
         dtm.setRowCount(0);
 
         for (DtUsuario dtArtista : dta) {
-            Object[] data = {
-                dtArtista.getNombre() + " " + dtArtista.getApellido(),
-                dtArtista.getNickname(),};
-            dtm.addRow(data);
+            if (dtArtista.getNickname().contains(filtro)) {
+                Object[] data = {
+                    dtArtista.getNombre() + " " + dtArtista.getApellido(),
+                    dtArtista.getNickname(),};
+                dtm.addRow(data);
+            }
         }
         //Permite que al seleccionar una fila se obtenga el dato seleccionado(en este caso el nick)
         tablaArtistas.getSelectionModel().addListSelectionListener(this);
-
-
-    }//GEN-LAST:event_btnConsultaArtistaActionPerformed
+    }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -393,6 +426,10 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void txtBuscarCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtBuscarCaretUpdate
+        cargarDatos(artistas, txtBuscar.getText());
+    }//GEN-LAST:event_txtBuscarCaretUpdate
+
     private void artistaSeleccionado(String nickArtista) {
         //Carga la tabla de albumes del artista(nickArtista)
         ArrayList<DtAlbum> dta = iUsuario.listarAlbumesArtista(nickArtista);
@@ -434,8 +471,10 @@ public class ConsultaAlbum extends javax.swing.JInternalFrame implements ListSel
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
+    private javax.swing.JLabel lblNickname;
     private javax.swing.JLabel lblSelec;
     private javax.swing.JTable tablaAlbumes;
     private javax.swing.JTable tablaArtistas;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

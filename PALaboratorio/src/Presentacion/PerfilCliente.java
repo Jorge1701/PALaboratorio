@@ -59,7 +59,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
             }
             PanelImagen pImg = new PanelImagen(img);
             imagenPanel.add(pImg);
-            pImg.setBounds(0, 0, 150, 150);
+            pImg.setBounds(0, 0, 163, 163);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -209,7 +209,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         setTitle("Perfil del Cliente ");
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.Y_AXIS));
 
-        jSplitPane1.setDividerLocation(400);
+        jSplitPane1.setDividerLocation(450);
         jSplitPane1.setLastDividerLocation(400);
         jSplitPane1.setMaximumSize(new java.awt.Dimension(2147483647, 100));
         jSplitPane1.setMinimumSize(new java.awt.Dimension(214, 100));
@@ -226,17 +226,18 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Fecha Nac.:");
 
-        imagenPanel.setPreferredSize(new java.awt.Dimension(150, 150));
+        imagenPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        imagenPanel.setPreferredSize(new java.awt.Dimension(163, 163));
 
         javax.swing.GroupLayout imagenPanelLayout = new javax.swing.GroupLayout(imagenPanel);
         imagenPanel.setLayout(imagenPanelLayout);
         imagenPanelLayout.setHorizontalGroup(
             imagenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
+            .addGap(0, 161, Short.MAX_VALUE)
         );
         imagenPanelLayout.setVerticalGroup(
             imagenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout PanelInfoLayout = new javax.swing.GroupLayout(PanelInfo);
@@ -258,9 +259,9 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                     .addComponent(txtApellido)
                     .addComponent(txtEmail)
                     .addComponent(txtFechaNac))
-                .addGap(18, 18, 18)
-                .addComponent(imagenPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(imagenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
         PanelInfoLayout.setVerticalGroup(
             PanelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,9 +287,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
                     .addComponent(txtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addContainerGap(28, Short.MAX_VALUE))
-            .addGroup(PanelInfoLayout.createSequentialGroup()
-                .addComponent(imagenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(imagenPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jSplitPane1.setLeftComponent(PanelInfo);
@@ -363,7 +362,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         panelSeguidos.setLayout(panelSeguidosLayout);
         panelSeguidosLayout.setHorizontalGroup(
             panelSeguidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
         );
         panelSeguidosLayout.setVerticalGroup(
             panelSeguidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -376,7 +375,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
         getContentPane().add(jSplitPane1);
 
-        jSplitPane2.setDividerLocation(400);
+        jSplitPane2.setDividerLocation(450);
 
         panelListasCreadas.setBorder(javax.swing.BorderFactory.createTitledBorder("Listas Creadas"));
 
@@ -407,7 +406,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         panelListasCreadas.setLayout(panelListasCreadasLayout);
         panelListasCreadasLayout.setHorizontalGroup(
             panelListasCreadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
         );
         panelListasCreadasLayout.setVerticalGroup(
             panelListasCreadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,7 +444,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         panelListasFavs.setLayout(panelListasFavsLayout);
         panelListasFavsLayout.setHorizontalGroup(
             panelListasFavsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
         );
         panelListasFavsLayout.setVerticalGroup(
             panelListasFavsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -456,7 +455,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
 
         getContentPane().add(jSplitPane2);
 
-        jSplitPane3.setDividerLocation(400);
+        jSplitPane3.setDividerLocation(450);
 
         panelAlbumes.setBorder(javax.swing.BorderFactory.createTitledBorder("Albumes Favoritos"));
 
@@ -488,7 +487,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         panelAlbumes.setLayout(panelAlbumesLayout);
         panelAlbumesLayout.setHorizontalGroup(
             panelAlbumesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
         );
         panelAlbumesLayout.setVerticalGroup(
             panelAlbumesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -526,7 +525,7 @@ public class PerfilCliente extends javax.swing.JInternalFrame {
         panelTemas.setLayout(panelTemasLayout);
         panelTemasLayout.setHorizontalGroup(
             panelTemasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
         );
         panelTemasLayout.setVerticalGroup(
             panelTemasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

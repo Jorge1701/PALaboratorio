@@ -412,4 +412,15 @@ public class ControladorUsuario implements IUsuario {
 
         ((Cliente) usuarios.get(nickcliente)).cargarLista(lp);
     }
+    public Tema getTema(String nombreCliente,String nombreTema){
+        Cliente c = (Cliente) this.obtenerUsuario(nombreCliente);
+        Iterator i = c.getListasParticulares().entrySet().iterator();
+        while(i.hasNext()){
+        Tema tema = (Tema) ((Map.Entry) i.next()).getValue();
+        if(tema.getNombre().equals(nombreTema)){return tema;}
+        
+        }
+        return null;
+        
+    }
 }

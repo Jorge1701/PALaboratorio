@@ -1,12 +1,16 @@
 package Logica;
 
+
+
 public class Tema {
 
     private Album a;
-    private int id;
     private String nombre;
     private DtTime duracion;
     private int ubicacion;
+    private int id;
+
+
 
     public Tema(Album a, String nombre, DtTime duracion, int ubicacion) {
         this.a = a;
@@ -14,7 +18,7 @@ public class Tema {
         this.duracion = duracion;
         this.ubicacion = ubicacion;
     }
-
+    
     public Tema(String nombre, DtTime duracion, int ubicacion) {
         this(null, nombre, duracion, ubicacion);
     }
@@ -26,7 +30,6 @@ public class Tema {
     public void setAlbum(Album a) {
         this.a = a;
     }
-
     public int getId() {
         return id;
     }
@@ -34,7 +37,6 @@ public class Tema {
     public void setId(int id) {
         this.id = id;
     }
-
     public DtTema getData() {
         return new DtTema(nombre, duracion, ubicacion);
     }

@@ -14,7 +14,6 @@ public class Album {
     public HashMap<String, Tema> temas;
     public ArrayList<Genero> generos;
     public Artista artista;
-
     public Album(String nickArtista, String nombre, int anio, String imagen, HashMap<String, Tema> temas, ArrayList<Genero> generos) {
         this.nickArtista = nickArtista;
         this.nombre = nombre;
@@ -70,6 +69,7 @@ public class Album {
     public Artista getArtista() {
         return artista;
     }
+
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

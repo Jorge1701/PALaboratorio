@@ -34,9 +34,10 @@ public interface IContenido {
     public ArrayList<DtLista> listarLisReproduccionDef();
     public void cargarLista(ListaDefecto ld, String nombreGenero);
     public void ingresarGenero(String nombre,String padre);
-    public HashMap<String,Tema> listarTemas(String NombreAlbum,String nombreArtista);
+    public HashMap<String,Tema> listarTemas(String NombreAlbum,String nickArtista);
     public ArrayList<DtTema> listarTemasLD(String nombreLista);
-    public ArrayList<DtTema> listarTemasP(String nombreLista);
-
-    
+    public ArrayList<DtTema> listarTemasP(String nombreLista, String nickCliente);
+    public boolean agregarDeListasDefectoTema(String nombreT, String nombreLista, String nombreUser, String listaDefecto);
+    public boolean agregarDeListasParticularesTema(String nombreT, String nombreLista, String nombreUser, String duenio, String listaDelduenio);
+    public boolean agregarDeAlbumTema(String nombreT, String nombreLista, String nombreUser, String artista, String album);
 }

@@ -19,7 +19,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -56,7 +55,7 @@ public class CargaDatosPrueba {
     private String[][] infoArtistas = {
         {"VP", "vpeople.jpg", "Village People es una innovadora formación musical de estilo disco de finales de los años 70. Fue famosa tanto por sus peculiares disfraces, como por sus canciones pegadizas, con letras sugerentes y llenas de dobles sentidos.", "www.officialvillagepeople.com"},
         {"DM", "dmode.jpg", "", "www.depechemode.com"},
-        {"CL", "clauper.png", "Cynthia Ann Stephanie Lauper, conocida simplemente como Cyndi Lauper, es una cantautora, actriz y empresaria estadounidense. Después de participaren el grupo musical, Blue Angel, en 1983 firmó con Portrait Records (filial de Epic Records) y lanzó su exitoso álbum debutShe&#39;s So Unusual a finales de ese mismo año. Siguió lanzando una serie de álbumes en los que encontró una inmensa popularidad, superando los límites de contenido de las letras de sus canciones.", "cyndilauper.com"},
+        {"CL", "clauper.png", "Cynthia Ann Stephanie Lauper, conocida simplemente como Cyndi Lauper, es una cantautora, actriz y empresaria estadounidense. Después de participaren el grupo musical, Blue Angel, en 1983 firmó con Portrait Records (filial de Epic Records) y lanzó su exitoso álbum debut \"She's So Unusual\" a finales de ese mismo año. Siguió lanzando una serie de álbumes en los que encontró una inmensa popularidad, superando los límites de contenido de las letras de sus canciones.", "cyndilauper.com"},
         {"BS", "bruceTheBoss.jpg", "", "brucespringsteen.net"},
         {"TJ", "", "Sir Thomas John, conocido por su nombre artístico de Tom Jones, es un cantante británico. Ha vendido más de 100 millones de discos en todo el mundo.1", "www.tomjones.com"},
         {"TN", "tripleNelson.jpg", "La Triple Nelson es un grupo de rock uruguayo formado en enero de 1998 e integrado inicialmente por Christian Cary (guitarra y voz), Fernando &quot;Paco&quot; Pintos (bajo y coros) y Rubén Otonello (actualmente su nuevo baterista es Rafael Ugo).", ""},
@@ -645,7 +644,7 @@ public class CargaDatosPrueba {
     }
 
     // Obtener Id de cosas
-    private int obtenerIdAlbum(String nickArtista, String nombreAlbum) {
+    public int obtenerIdAlbum(String nickArtista, String nombreAlbum) {
         try {
             PreparedStatement query = conexion.prepareStatement("SELECT idAlbum FROM album WHERE nombre = ? AND nicknameArtista = ?");
             query.setString(1, nombreAlbum);
@@ -668,7 +667,7 @@ public class CargaDatosPrueba {
         }
     }
 
-    private int obtenerIdListaParticular(String nickCliente, String nombreLista) {
+    public int obtenerIdListaParticular(String nickCliente, String nombreLista) {
         try {
             PreparedStatement query = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listaparticular AS lp WHERE l.idLista = lp.idLista AND lp.nickname = ? AND l.nombre = ?");
             query.setString(1, nickCliente);
@@ -691,7 +690,7 @@ public class CargaDatosPrueba {
         }
     }
 
-    private int obtenerIdListaDefecto(String nombreGenero, String nombreLista) {
+    public int obtenerIdListaDefecto(String nombreGenero, String nombreLista) {
         try {
             PreparedStatement query = conexion.prepareStatement("SELECT l.idLista FROM lista AS l, listapordefecto AS ld WHERE l.idLista = ld.idLista AND nombreGenero = ? AND nombre = ?;");
             query.setString(1, nombreGenero);
@@ -714,7 +713,7 @@ public class CargaDatosPrueba {
         }
     }
 
-    private int obtenerIdTema(String nickArtista, int idAlbum, String nombreTema) {
+    public int obtenerIdTema(String nickArtista, int idAlbum, String nombreTema) {
         try {
             PreparedStatement query = conexion.prepareStatement("SELECT idTema FROM tema WHERE nicknameArtista = ? AND idAlbum = ? AND nombre = ?");
             query.setString(1, nickArtista);
@@ -854,6 +853,7 @@ public class CargaDatosPrueba {
         String padre = "";
         String pRef = "";
         BDGenero bdg = new BDGenero();
+
         bdg.ingresarGeneros("Géneros", null);
 
         for (String[] genero : generos) {

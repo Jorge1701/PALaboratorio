@@ -4,6 +4,7 @@ package Logica;
 import Persistencia.BDCliente;
 import Persistencia.BDGenero;
 import Persistencia.BDLista;
+import Persistencia.CargaDatosPrueba;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -32,8 +33,6 @@ public class ControladorContenido implements IContenido {
     private Cliente clienteFav;
     private IUsuario iUsuario;
 
-    
-
     @Override
     public void setIUsuario(IUsuario iUsuario) {
         this.iUsuario = iUsuario;
@@ -59,7 +58,6 @@ public class ControladorContenido implements IContenido {
 
         clienteFav = (Cliente) u;
     }
-
 
     @Override
     public void guardarTema(String nickArtista, String nomAlbum, String nomTema) {
@@ -370,49 +368,114 @@ public class ControladorContenido implements IContenido {
                 if (u.getLista(nombre).quitarTema(nombreT) && this.quitarTema(nombreT, nombre, nombreUser)) {
                     return true;
                 }
-            }
-        }
 
-        return false;
+            }
+
+            return false;
+        }
     }
 
-    public boolean agregarTema(String nombreT, String nombre, String nombreUser) {
+    public boolean agregarDeListasDefectoTema(String nombreT, String nombreLista, String nombreUser, String listaDefecto) {
         Cliente u = (Cliente) iUsuario.obtenerUsuario(nombreUser);
-        if (nombreUser == null) {
-            Lista lista = (ListaDefecto) listasDefecto.get(nombre);
-
+        Tema tema = (Tema) listasDefecto.get(listaDefecto).getTema(nombreT);
+        BDLista bd = new BDLista();
+        CargaDatosPrueba obtenerId = new CargaDatosPrueba();
+        int idAlbum = obtenerId.obtenerIdAlbum(tema.getAlbum().getNickArtista(), tema.getAlbum().getNombre());
+        int idTema = obtenerId.obtenerIdTema(tema.getAlbum().getNickArtista(), idAlbum, tema.getNombre());
+        if (nombreUser.equals("")) {
+            ListaDefecto lista = (ListaDefecto) listasDefecto.get(nombreLista);
+            int idLista = obtenerId.obtenerIdListaDefecto(lista.getGenero().getNombre(),lista.getNombre());
             if (lista == null) {
                 throw new UnsupportedOperationException("No existe la lista");
             }
-            Iterator i = this.listasDefecto.entrySet().iterator();
-            while (i.hasNext()) {
-                Lista l = (ListaDefecto) ((Map.Entry) i.next()).getValue();
-                if (l.getNombre().equals(nombreT)) {
-                    Tema tema = l.getTema(nombreT);
-                    return lista.agregarTema(tema);
-                }
-
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+                return true;
+            } else {
+                return false;
             }
 
         } else {
-            Lista lista = (ListaParticular) u.getListaParticular(nombre);
+            ListaParticular lista = (ListaParticular) u.getListaParticular(nombreLista);
+            int idLista  = obtenerId.obtenerIdListaParticular(u.getNickname(), lista.getNombre() );
             if (lista == null) {
                 throw new UnsupportedOperationException("No existe la lista");
             }
-            Iterator i = this.listasParticular.entrySet().iterator();
-            while (i.hasNext()) {
-                Lista l = (ListaParticular) ((Map.Entry) i.next()).getValue();
- 
-                if (l.getNombre().equals(nombreT)) {
-                    
-                    Tema tema = l.getTema(nombreT);
-                    return lista.agregarTema(tema);
-                }
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
+    }
+
+    public boolean agregarDeListasParticularesTema(String nombreT, String nombreLista, String nombreUser, String duenio, String listaDelduenio) {
+        Cliente u = (Cliente) iUsuario.obtenerUsuario(nombreUser);
+        Tema tema = (Tema) ((ListaParticular) ((Cliente) iUsuario.obtenerUsuario(duenio)).getListaParticular(listaDelduenio)).getTema(nombreT);
+        BDLista bd = new BDLista();
+        CargaDatosPrueba obtenerId = new CargaDatosPrueba();
+        int idAlbum = obtenerId.obtenerIdAlbum(tema.getAlbum().getNickArtista(),tema.getAlbum().getNombre());
+        int idTema = obtenerId.obtenerIdTema(tema.getAlbum().getNickArtista(), idAlbum, tema.getNombre());
+        if (nombreUser.equals("")) {
+            ListaDefecto lista = (ListaDefecto) listasDefecto.get(nombreLista);
+            int idLista = obtenerId.obtenerIdListaDefecto(lista.getGenero().getNombre(),lista.getNombre());
+            if (lista == null) {
+                throw new UnsupportedOperationException("No existe la lista");
+            }
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+                return true;
+            } else {
+                return false;
             }
 
+        } else {
+            Lista lista = (ListaParticular) u.getListaParticular(nombreLista);
+            int idLista = obtenerId.obtenerIdListaParticular(u.getNickname(),lista.getNombre());
+            if (lista == null) {
+                throw new UnsupportedOperationException("No existe la lista");
+            }
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+                return true;
+            } else {
+                return false;
+            }
         }
-        return false;
+
+    }
+
+    public boolean agregarDeAlbumTema(String nombreT, String nombreLista, String nombreUser, String artista, String album) {
+        Cliente u = (Cliente) iUsuario.obtenerUsuario(nombreUser);
+        Tema tema = (Tema) ((Album) ((Artista) iUsuario.obtenerUsuario(artista)).getAlbum(album)).getTema(nombreT);
+        BDLista bd = new BDLista();
+        CargaDatosPrueba obtenerId = new CargaDatosPrueba();
+        
+        int idAlbum = obtenerId.obtenerIdAlbum(tema.getAlbum().getNickArtista(), tema.getAlbum().getNombre());
+        int idTema = obtenerId.obtenerIdTema(tema.getAlbum().getNickArtista(), idAlbum, tema.getNombre());
+        if (nombreUser.equals("")) {
+            ListaDefecto lista = (ListaDefecto) listasDefecto.get(nombreLista);
+            int idLista = obtenerId.obtenerIdListaDefecto(lista.getGenero().getNombre(),lista.getNombre());
+            if (lista == null) {
+                throw new UnsupportedOperationException("No existe la lista");
+            }
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } else {
+            Lista lista = (ListaParticular) u.getListaParticular(nombreLista);
+            int idLista = obtenerId.obtenerIdListaParticular(u.getNickname(),lista.getNombre());
+            if (lista == null) {
+                throw new UnsupportedOperationException("No existe la lista");
+            }
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
     }
 
     @Override
@@ -494,7 +557,6 @@ public class ControladorContenido implements IContenido {
 
     }
 
-
     @Override
     public void cargarLista(ListaDefecto ld, String nombreGenero) {
         genero.obtener(nombreGenero).cargarLista(ld);
@@ -512,25 +574,31 @@ public class ControladorContenido implements IContenido {
             throw new UnsupportedOperationException("El genero ya existe");
         }
     }
- 
-    public HashMap<String,Tema> listarTemas(String NombreAlbum,String nombreArtista){
-        Album a = iUsuario.selectArtista(nombreArtista).getAlbum(NombreAlbum);
-        if(a==null){
-        throw new UnsupportedOperationException("El Album No Existe");
+
+    public HashMap<String, Tema> listarTemas(String NombreAlbum, String nickArtista) {
+        Album a = iUsuario.selectArtista(nickArtista).getAlbum(NombreAlbum);
+        if (a == null) {
+            throw new UnsupportedOperationException("El Album No Existe");
         }
         return a.getTemas();
     }
 
-    public ArrayList<DtTema> listarTemasLD(String nombreLista){
+    public ArrayList<DtTema> listarTemasLD(String nombreLista) {
         Lista lista = (Lista) listasDefecto.get(nombreLista);
-                        
-        if(lista == null){throw new UnsupportedOperationException("La Lista No Existe");}
+
+        if (lista == null) {
+            throw new UnsupportedOperationException("La Lista No Existe");
+        }
         return lista.getTemas();
-    
+
     }
-    public ArrayList<DtTema> listarTemasP(String nombreLista){
-     Lista l =  listasParticular.get(nombreLista);
-     if(l == null){throw new UnsupportedOperationException("La Lista No Existe");}
-     return l.getTemas();
+
+    public ArrayList<DtTema> listarTemasP(String nombreLista, String nickCliente) {
+        Cliente c = (Cliente) iUsuario.obtenerUsuario(nickCliente);
+        Lista l = c.getListaParticular(nombreLista);
+        if (l == null) {
+            throw new UnsupportedOperationException("La Lista No Existe");
+        }
+        return l.getTemas();
     }
 }

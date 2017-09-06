@@ -25,18 +25,17 @@ public abstract class Lista {
     public String getNombre() {
         return nombre;
     }
-    
-    
-    public Tema getTema(String nombreT){
-        Iterator i = this.temas.iterator();
-       while(i.hasNext()){
-       Tema tema = (Tema)((Map.Entry) i.next()).getValue();
-       if(tema.getNombre().equals(nombreT)){
-       return tema;
-       }
-       }
-       return null;
+
+    public Tema getTema(String nombreT) {
+        for (int i = 0; i < temas.size(); i++) {
+        if (temas.get(i).getNombre().equals(nombreT)) {
+                Tema tema = (Tema) temas.get(i);
+                return tema;
+            }
+        }
+        return null;
     }
+
     public ArrayList<DtTema> getTemas() {
         ArrayList<DtTema> temas = new ArrayList<>();
 
@@ -50,6 +49,7 @@ public abstract class Lista {
 
         return temas;
     }
+
 
     public ArrayList<Tema> obtenerTemas() {
         ArrayList<Tema> temas = new ArrayList<>();
@@ -78,5 +78,6 @@ public abstract class Lista {
     }
 
     public abstract boolean quitarTema(String nombreT);
+
     public abstract boolean agregarTema(Tema tema);
 }

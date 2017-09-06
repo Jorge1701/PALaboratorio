@@ -298,7 +298,7 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tenas"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Temas"));
 
         jLabel1.setText("Nombre:");
 
@@ -501,40 +501,38 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
             layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(51, 51, 51)
+                    .addContainerGap()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(txtNick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(NombreTx)
                             .addComponent(txtNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(AlbumTx)))
+                    .addGap(18, 18, 18)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(44, 44, 44)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(comboAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(101, 101, 101)
-                            .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
+                                    .addGap(38, 38, 38)
+                                    .addComponent(btnCargarImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
                                     .addGap(18, 18, 18)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(31, 31, 31)))
+                                    .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(22, 22, 22)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton1)
-                                .addComponent(jButton2))
-                            .addGap(25, 25, 25))))
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2))
+                    .addContainerGap())
             );
 
             jPanel2.getAccessibleContext().setAccessibleName("Temas");
@@ -650,16 +648,15 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnQuitarGroActionPerformed
 
     private void btnSelecMp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecMp3ActionPerformed
-        // TODO add your handling code here:
 
         try {
-            int retorno = archivoTema.showOpenDialog(this);
-            File arch = archivoTema.getSelectedFile();
-            //pathMp3 = "src/Recursos/Musica/" + arch.getName();
-            pathMp3 = pm.getProperty("pathMusica") + arch.getName();
-            nameMp3 = arch.getName();
-            //System.out.println("Path: "+ pathMp3);
-            if (arch != null) {
+            if (archivoTema.showOpenDialog(this) == 0) {
+                File arch = archivoTema.getSelectedFile();
+                //pathMp3 = "src/Recursos/Musica/" + arch.getName();
+                pathMp3 = pm.getProperty("pathMusica") + arch.getName();
+                nameMp3 = arch.getName();
+                //System.out.println("Path: "+ pathMp3);
+                //if (arch != null) {
                 InputStream is = new FileInputStream(arch);
                 OutputStream outstream = new FileOutputStream(new File(pathMp3));
                 byte[] buffer = new byte[4096];
@@ -670,8 +667,9 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                 outstream.close();
                 JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 
+                // }
             }
-
+        } catch (NullPointerException n) {
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "El directorio o nombre de archivo incorrecto.", "Error", JOptionPane.WARNING_MESSAGE);
         } catch (IOException ex) {
@@ -770,13 +768,11 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
 
     private void btnCargarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImgActionPerformed
         try {
-            archivoImg.showOpenDialog(this);
-            File arch = archivoImg.getSelectedFile();
-            //pathImage = "src/Recursos/Imagenes/Albumes/" + arch.getName();
-            nameImage = arch.getName();
-            pathImage = pm.getProperty("pathImagenesAlbum") + arch.getName();
-            //System.out.println(pm.getProperty("pathImagenes"));
-            if (arch != null) {
+            if (archivoImg.showOpenDialog(this) == 0) {
+                File arch = archivoImg.getSelectedFile();
+                nameImage = arch.getName();
+                pathImage = pm.getProperty("pathImagenesAlbum") + arch.getName();
+                //if (arch != null) {
                 InputStream is = new FileInputStream(arch);
                 OutputStream outstream = new FileOutputStream(new File(pathImage));
                 byte[] buffer = new byte[4096];
@@ -785,16 +781,18 @@ public class AltaAlbum extends javax.swing.JInternalFrame {
                     outstream.write(buffer, 0, len);
                 }
                 outstream.close();
-                JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-
+                // }
+            } else {
+                return;
             }
 
-            cargarImagen(pathImage);
-
+        } catch (NullPointerException n) {
+            return;
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "No se pudo cargar la Imagen.", "Error", JOptionPane.WARNING_MESSAGE);
         }
+        cargarImagen(pathImage);
     }//GEN-LAST:event_btnCargarImgActionPerformed
 
     private void cargarImagen(String pathImage) {
