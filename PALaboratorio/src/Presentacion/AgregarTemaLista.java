@@ -723,7 +723,9 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void nombreListaPCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nombreListaPCaretUpdate
-        cargarDatosListaP(iUsuario.listarListaReproduccionCli(tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString()), nombreCliente.getText());
+        if (tablaClientes.getSelectedRow() != -1){
+            cargarDatosListaP(iUsuario.listarListaReproduccionCli(tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString()), nombreCliente.getText());
+        }
     }//GEN-LAST:event_nombreListaPCaretUpdate
 
     private void nombreListaDCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nombreListaDCaretUpdate
@@ -736,11 +738,17 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
 
     private void nombreTemaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nombreTemaCaretUpdate
         if (Pestania.getSelectedIndex() == 0) {
-            cargarDatosTemaL(iContenido.listarTemasP(tablaListaParticular.getValueAt(tablaListaParticular.getSelectedRow(), 0).toString(), tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString()), nombreTema.getText());
+            if (tablaListaParticular.getSelectedRow() != -1) {
+                cargarDatosTemaL(iContenido.listarTemasP(tablaListaParticular.getValueAt(tablaListaParticular.getSelectedRow(), 0).toString(), tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString()), nombreTema.getText());
+            }
         } else if (Pestania.getSelectedIndex() == 1) {
-            cargarDatosTemaL(iContenido.listarTemasLD(tablaListaPordefecto.getValueAt(tablaListaPordefecto.getSelectedRow(), 0).toString()), nombreTema.getText());
+            if (tablaListaPordefecto.getSelectedRow() != -1) {
+                cargarDatosTemaL(iContenido.listarTemasLD(tablaListaPordefecto.getValueAt(tablaListaPordefecto.getSelectedRow(), 0).toString()), nombreTema.getText());
+            }
         } else {
-            cargarDatosTemaAlbum(iContenido.listarTemas(tablaListaDeAlbumes.getValueAt(tablaListaDeAlbumes.getSelectedRow(), 0).toString(), iUsuario.selectArtista(tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString()).getNickname()), nombreTema.getText());
+            if (tablaListaDeAlbumes.getSelectedRow() != -1) {
+                cargarDatosTemaAlbum(iContenido.listarTemas(tablaListaDeAlbumes.getValueAt(tablaListaDeAlbumes.getSelectedRow(), 0).toString(), iUsuario.selectArtista(tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString()).getNickname()), nombreTema.getText());
+            }
         }
 
     }//GEN-LAST:event_nombreTemaCaretUpdate
@@ -751,7 +759,9 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_nombreUsuarioCaretUpdate
 
     private void nombreDeListaFinalCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nombreDeListaFinalCaretUpdate
-        cargarDatosListaCliente(iUsuario.listarListaReproduccionCli(nombresDeUsuarios.getValueAt(nombresDeUsuarios.getSelectedRow(), 0).toString()), nombreDeListaFinal.getText());
+        if (nombresDeUsuarios.getSelectedRow() != -1) {
+            cargarDatosListaCliente(iUsuario.listarListaReproduccionCli(nombresDeUsuarios.getValueAt(nombresDeUsuarios.getSelectedRow(), 0).toString()), nombreDeListaFinal.getText());
+        }
     }//GEN-LAST:event_nombreDeListaFinalCaretUpdate
 
     private void nombreListaDefectoFinalCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nombreListaDefectoFinalCaretUpdate
