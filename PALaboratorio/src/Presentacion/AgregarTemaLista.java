@@ -773,16 +773,16 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
             String listadeDuenio = tablaListaParticular.getValueAt(tablaListaParticular.getSelectedRow(), 0).toString();
 
             if(iContenido.agregarDeListasParticularesTema(nombreTema, nombreLista, nombreUsuario, duenio, listadeDuenio)==false){
-             JOptionPane.showMessageDialog(this, "No Se Pudo Agregar El Tema");}else{JOptionPane.showMessageDialog(this, "Se Pudo");}
+             JOptionPane.showMessageDialog(this, "El Tema Ya Existe En Esta Lista");}else{JOptionPane.showMessageDialog(this, "Tema Agregado Con Exito");}
         } else if (Pestania.getSelectedIndex() == 1) {
             String listaDefecto = tablaListaPordefecto.getValueAt(tablaListaPordefecto.getSelectedRow(), 0).toString();
              if(iContenido.agregarDeListasDefectoTema(nombreTema, nombreLista, nombreUsuario, listaDefecto)==false){
-             JOptionPane.showMessageDialog(this, "No Se Pudo Agregar El Tema");}else{JOptionPane.showMessageDialog(this, "Se Pudo");}
+             JOptionPane.showMessageDialog(this, "El Tema Ya Existe En Esta Lista");}else{JOptionPane.showMessageDialog(this, "Tema Agregado Con Exito");}
         } else {
             String artista = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString();
             String album = tablaListaDeAlbumes.getValueAt(tablaListaDeAlbumes.getSelectedRow(), 0).toString();
             if(iContenido.agregarDeAlbumTema(nombreTema, nombreLista, nombreUsuario,artista,album)==false){
-             JOptionPane.showMessageDialog(this, "No Se Pudo Agregar El Tema");}else{JOptionPane.showMessageDialog(this, "Se Pudo");}
+             JOptionPane.showMessageDialog(this, "El Tema Ya Existe En Esta Lista");}else{JOptionPane.showMessageDialog(this, "Tema Agregado Con Exito");}
         }
             
 

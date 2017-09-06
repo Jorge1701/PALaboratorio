@@ -151,11 +151,23 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nombre", "Nick"
+                "Nick", "Nombre"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaClientes.setDragEnabled(true);
         jScrollPane2.setViewportView(tablaClientes);
+        if (tablaClientes.getColumnModel().getColumnCount() > 0) {
+            tablaClientes.getColumnModel().getColumn(0).setResizable(false);
+            tablaClientes.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         jLabel2.setText("Nickname:");
 
@@ -405,7 +417,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Hay campos obligatorios vacios:\n" + camposVacios);
                 return;
             }
-            nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString();
+            nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
             lista = new DtListaParticular(true, nombre.getText(), new ArrayList<>(), nameImage);  // Agregar que se ingrese la imagen en el diseño.
             if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
                 JOptionPane.showMessageDialog(this, "La lista que intenta ingresar ya existe", "Mensaje", JOptionPane.ERROR_MESSAGE);
