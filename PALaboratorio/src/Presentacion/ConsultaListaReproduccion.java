@@ -277,6 +277,10 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_consultaGeneroActionPerformed
 
     private void cargarDatos(ArrayList<DtUsuario> dtc, String filtro) {
+        DefaultListModel<String> model = new DefaultListModel<>();
+        lstListasRep.setModel(model);
+        // model.removeAllElements();
+
         DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
         dtm.setRowCount(0);
 
@@ -314,7 +318,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
         for (DtLista dta : dtl) {
             //if (!((DtListaParticular) dta).isPrivada()) {                         // Descomentar para mostrar solo las listas publicas
-            //model.addElement(dta.getNombre() + (((DtListaParticular) dta).isPrivada() ? " (Privada)" : ""));
+            // model.addElement(dta.getNombre() + (((DtListaParticular) dta).isPrivada() ? " (Privada)" : ""));
             model.addElement(dta.getNombre());
             //} esto toque por el consultar
         }
@@ -371,6 +375,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
                 return;
             } else {
                 nomLista = lstListasRep.getSelectedValue();
+
                 if (nomLista == null) {
                     JOptionPane.showMessageDialog(this, "Debe de seleccionar una Lista");
                     return;

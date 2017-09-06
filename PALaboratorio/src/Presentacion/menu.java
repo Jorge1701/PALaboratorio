@@ -1,6 +1,7 @@
 package Presentacion;
 
 import Logica.Fabrica;
+import Persistencia.CargaDatosPrueba;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.SQLException;
@@ -341,9 +342,9 @@ public class menu extends javax.swing.JFrame {
 
     private void altaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaGeneroActionPerformed
         AltaGenero cpc = new AltaGenero();
-            PanelMenu.add(cpc);
-            centrar(cpc);
-            cpc.show();
+        PanelMenu.add(cpc);
+        centrar(cpc);
+        cpc.show();
 
     }//GEN-LAST:event_altaGeneroActionPerformed
 
@@ -369,10 +370,10 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_eliminarTLAActionPerformed
 
     private void agregarTemaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarTemaListaActionPerformed
-       AgregarTemaLista agr = new AgregarTemaLista();
-       PanelMenu.add(agr);
-       agr.setLocation(450, 10);
-       agr.show();
+        AgregarTemaLista agr = new AgregarTemaLista();
+        PanelMenu.add(agr);
+        agr.setLocation(450, 10);
+        agr.show();
     }//GEN-LAST:event_agregarTemaListaActionPerformed
 
     public static void main(String args[]) {

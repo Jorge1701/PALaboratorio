@@ -317,7 +317,9 @@ public class DejarSeguirUsuario extends javax.swing.JInternalFrame implements Li
     }//GEN-LAST:event_txtClienteCaretUpdate
 
     private void txtSeguidoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSeguidoCaretUpdate
-        cargarSeguidos(dtss, txtSeguido.getText());
+        if (dtss != null) {
+            cargarSeguidos(dtss, txtSeguido.getText());
+        }
     }//GEN-LAST:event_txtSeguidoCaretUpdate
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

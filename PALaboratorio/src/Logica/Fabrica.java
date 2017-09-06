@@ -35,6 +35,7 @@ public class Fabrica {
 
         // Cargar Usuarios (Clientes y Artistas)
         ArrayList<DtUsuario> usuarios = cdp.cargarUsuarios();
+
         if (usuarios == null) {
             throw new Exception("Error : Los usuarios no puedieron ser cargados");
 

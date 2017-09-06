@@ -323,7 +323,9 @@ public class SeguirUsuario extends javax.swing.JInternalFrame implements ListSel
     }//GEN-LAST:event_txtClienteCaretUpdate
 
     private void txtUsuarioCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtUsuarioCaretUpdate
-        cargarUsuarios(dtus, nickCliente, txtUsuario.getText());
+        if (dtus != null) {
+            cargarUsuarios(dtus, nickCliente, txtUsuario.getText());
+        }
     }//GEN-LAST:event_txtUsuarioCaretUpdate
 
 

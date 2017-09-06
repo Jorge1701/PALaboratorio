@@ -24,7 +24,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
     private ArrayList<DtUsuario> clientes;
     private ArrayList<DtUsuario> artistas;
 
-    public GuardarTLA()     {
+    public GuardarTLA() {
         initComponents();
 
         iUsuario = Fabrica.getIControladorUsuario();
@@ -98,6 +98,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
     private void cargarDatosAlbumesArtistas(ArrayList<DtUsuario> artistas, String filtro) {
         if (artistas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay ningun cliente registrado");
+            return;
         }
 
         DefaultTableModel dtm = (DefaultTableModel) tablaAlbumesArtistas.getModel();
@@ -155,7 +156,7 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
                 dtm.addRow(data);
             }
         }
-    } 
+    }
 
     private void cargarDatosLPClientes(ArrayList<DtUsuario> dtu, String filtro) {
         if (tablaClientes.getSelectedRow() == -1) {
@@ -727,11 +728,15 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtAlbumesArtistaCaretUpdate
 
     private void txtAlbumAlbumCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtAlbumAlbumCaretUpdate
-        cargarDatosAlbumesAlbumes(iUsuario.listarAlbumesArtista(tablaAlbumesArtistas.getValueAt(tablaAlbumesArtistas.getSelectedRow(), 0).toString()), txtAlbumAlbum.getText());
+        if (tablaAlbumesArtistas.getSelectedRow() != -1) {
+            cargarDatosAlbumesAlbumes(iUsuario.listarAlbumesArtista(tablaAlbumesArtistas.getValueAt(tablaAlbumesArtistas.getSelectedRow(), 0).toString()), txtAlbumAlbum.getText());
+        }
     }//GEN-LAST:event_txtAlbumAlbumCaretUpdate
 
     private void txtAlbumTemaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtAlbumTemaCaretUpdate
-        cargarDatosAlbumesTemas(iUsuario.obtenerAlbumContenido(tablaAlbumesArtistas.getValueAt(tablaAlbumesArtistas.getSelectedRow(), 0).toString(), tablaAlbumesAlbumes.getValueAt(tablaAlbumesAlbumes.getSelectedRow(), 0).toString()), txtAlbumTema.getText());
+        if (tablaAlbumesArtistas.getSelectedRow() != -1 && tablaAlbumesAlbumes.getSelectedRow() != -1) {
+            cargarDatosAlbumesTemas(iUsuario.obtenerAlbumContenido(tablaAlbumesArtistas.getValueAt(tablaAlbumesArtistas.getSelectedRow(), 0).toString(), tablaAlbumesAlbumes.getValueAt(tablaAlbumesAlbumes.getSelectedRow(), 0).toString()), txtAlbumTema.getText());
+        }
     }//GEN-LAST:event_txtAlbumTemaCaretUpdate
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -796,6 +801,10 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgregarTemaActionPerformed
 
     private void treeLDGenerosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_treeLDGenerosValueChanged
+        if (treeLDGeneros.getSelectionPath() == null) {
+            return;
+        }
+
         DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) treeLDGeneros.getSelectionPath().getLastPathComponent();
         String generoSeleccionado = selectedElement.getUserObject().toString();
 
@@ -803,6 +812,10 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_treeLDGenerosValueChanged
 
     private void txtLDListaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtLDListaCaretUpdate
+        if (treeLDGeneros.getSelectionPath() == null) {
+            return;
+        }
+
         DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) treeLDGeneros.getSelectionPath().getLastPathComponent();
         String generoSeleccionado = selectedElement.getUserObject().toString();
 
@@ -845,7 +858,9 @@ public class GuardarTLA extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtLPClienteCaretUpdate
 
     private void txtLPListaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtLPListaCaretUpdate
-        cargarDatosLPListas(iUsuario.listarLisReproduccion(tablaLPClientes.getValueAt(tablaLPClientes.getSelectedRow(), 0).toString()), txtLPLista.getText());
+        if (tablaLPClientes.getSelectedRow() != -1) {
+            cargarDatosLPListas(iUsuario.listarLisReproduccion(tablaLPClientes.getValueAt(tablaLPClientes.getSelectedRow(), 0).toString()), txtLPLista.getText());
+        }
     }//GEN-LAST:event_txtLPListaCaretUpdate
 
     private void btnCancelar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar3ActionPerformed
