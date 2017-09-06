@@ -342,9 +342,9 @@ public class ControladorContenido implements IContenido {
 
         ArrayList<DtTema> res = aux.getTemas();
 
-        if (res.isEmpty()) {
-            throw new UnsupportedOperationException("No hay temas en esta lista");
-        }
+        //if (res.isEmpty()) {
+          //  throw new UnsupportedOperationException("No hay temas en esta lista");
+        //} sino cuando borras un tema de una lista que solo tiene un tema crashea
         return res;
     }
 
@@ -359,21 +359,19 @@ public class ControladorContenido implements IContenido {
             return lista.quitarTema(nombreT);
         } else {
             Lista lista = (ListaParticular) u.getListaParticular(nombre);
-           
+
             if (lista == null) {
                 throw new UnsupportedOperationException("No existe la lista");
             }
-            if (u.getLista(nombre).quitarTema(nombreT) && this.quitarTema(nombreT, nombre, nombreUser)) {
+            if (u.getLista(nombre).quitarTema(nombreT) /*&& this.quitarTema(nombreT, nombre, nombreUser)*/) {
                 return true;
             }
-
+            return false;
         }
 
-        return false;
     }
 
-
-public boolean agregarDeListasDefectoTema(String nombreT, String nombreLista, String nombreUser, String listaDefecto) {
+    public boolean agregarDeListasDefectoTema(String nombreT, String nombreLista, String nombreUser, String listaDefecto) {
         Cliente u = (Cliente) iUsuario.obtenerUsuario(nombreUser);
         Tema tema = (Tema) listasDefecto.get(listaDefecto).getTema(nombreT);
         BDLista bd = new BDLista();
@@ -477,7 +475,7 @@ public boolean agregarDeListasDefectoTema(String nombreT, String nombreLista, St
     }
 
     @Override
-        public ArrayList<DtTema> selecLista(String nick, String nomL) {
+    public ArrayList<DtTema> selecLista(String nick, String nomL) {
         Cliente us = (Cliente) iUsuario.obtenerUsuario(nick);
 
         if (us == null) {
@@ -496,7 +494,7 @@ public boolean agregarDeListasDefectoTema(String nombreT, String nombreLista, St
     }
 
     @Override
-        public boolean publicarLista(String nick, String nomL) {
+    public boolean publicarLista(String nick, String nomL) {
         Cliente us = (Cliente) iUsuario.obtenerUsuario(nick);
         BDLista bdLista = new BDLista();
         if (us == null) {
@@ -515,33 +513,33 @@ public boolean agregarDeListasDefectoTema(String nombreT, String nombreLista, St
     }
 
     @Override
-        public DtGenero selecGenero(String nomGenero) {
+    public DtGenero selecGenero(String nomGenero) {
         return this.genero.obtener(nomGenero).getData();
     }
 
     @Override
-        public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista) {
+    public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista) {
         return genero.obtener(nomGenero).obtenerAlbumContenido(nomAlbum, nickArtista);
     }
 
     @Override
-        public void cargarGenero(String nombre, String padre) {
+    public void cargarGenero(String nombre, String padre) {
         // this.genero.agregarGenero(padre.isEmpty() ? genero.getNombre() : padre, nombre);
         genero.agregarGenero(padre, nombre);
     }
 
     @Override
-        public boolean existeGenero(String nombre) {
+    public boolean existeGenero(String nombre) {
         return genero.existe(nombre);
     }
 
     @Override
-        public Genero obtenerGenero(String nombre) {
+    public Genero obtenerGenero(String nombre) {
         return genero.obtener(nombre);
     }
 
     @Override
-        public ArrayList<DtLista> listarLisReproduccionDef() {
+    public ArrayList<DtLista> listarLisReproduccionDef() {
         ArrayList<DtLista> res = new ArrayList<>();
 
         Iterator i = listasDefecto.entrySet().iterator();
@@ -556,13 +554,13 @@ public boolean agregarDeListasDefectoTema(String nombreT, String nombreLista, St
     }
 
     @Override
-        public void cargarLista(ListaDefecto ld, String nombreGenero) {
+    public void cargarLista(ListaDefecto ld, String nombreGenero) {
         genero.obtener(nombreGenero).cargarLista(ld);
         listasDefecto.put(ld.getNombre(), ld);
     }
 
     @Override
-        public void ingresarGenero(String nombre, String padre) {
+    public void ingresarGenero(String nombre, String padre) {
         if (existeGenero(nombre) == false) {
             genero.agregarGenero(padre, nombre);
             if (!new BDGenero().ingresarGeneros(nombre, padre)) {

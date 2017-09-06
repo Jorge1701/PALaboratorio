@@ -3,7 +3,6 @@ package Logica;
 import Persistencia.BDLista;
 import java.util.ArrayList;
 
-
 public class ListaParticular extends Lista {
 
     private String nickDuenio;
@@ -40,28 +39,28 @@ public class ListaParticular extends Lista {
 
     public boolean quitarTema(String nombreT) {
 
-        
         for (int i = 0; i < temas.size(); i++) {
             Tema t = (Tema) temas.get(i);
             if (t.getNombre().equals(nombreT)) {
                 BDLista bdLista = new BDLista();
                 bdLista.quitarTemaLista(nickDuenio, this.getNombre(), nombreT);
-                
-                return temas.remove(t);
+                temas.remove(t);
+                return true;
+                //return temas.remove(t);
             }
-        }             
-       
+        }
         return false;
 
     }
-    public boolean agregarTema(Tema tema){
-        
+
+    public boolean agregarTema(Tema tema) {
+
         for (int i = 0; i < temas.size(); i++) {
-         if(temas.get(i).getNombre().equals(tema.getNombre())){
-             return false;
-         }
+            if (temas.get(i).getNombre().equals(tema.getNombre())) {
+                return false;
+            }
         }
-      this.temas.add(tema);
-      return true;
+        this.temas.add(tema);
+        return true;
     }
 }
