@@ -761,30 +761,164 @@ public class AgregarTemaLista extends javax.swing.JInternalFrame {
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
         String nombreLista = "";
         String nombreUsuario = "";
+
+        if (Pestania.getSelectedIndex() == 0 && Pestania2.getSelectedIndex() == 0) {
+            if (tablaClientes.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un cliente");
+                return;
+            }
+            if (tablaListaParticular.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una Lista");
+                return;
+            }
+            if (tablaListaTema.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un tema");
+                return;
+            }
+            if (nombresDeUsuarios.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una cliente");
+                return;
+            }
+            if (ListadeListasParticulares.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una Lista");
+                return;
+            }
+
+        }
+
+        if (Pestania.getSelectedIndex() == 0 && Pestania2.getSelectedIndex() == 1) {
+            if (tablaClientes.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un cliente");
+                return;
+            }
+            if (tablaListaParticular.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una Lista");
+                return;
+            }
+            if (tablaListaTema.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un tema");
+                return;
+            }
+            if (listaFinalPorDefecto.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una Lista");
+                return;
+            }
+        }
+
+        if (Pestania.getSelectedIndex() == 1 && Pestania2.getSelectedIndex() == 0) {
+            if (tablaListaPordefecto.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una Lista");
+                return;
+            }
+            if (tablaListaTema.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un tema");
+                return;
+            }
+            if (nombresDeUsuarios.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una cliente");
+                return;
+            }
+            if (ListadeListasParticulares.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una Lista");
+                return;
+            }
+
+        }
+
+        if (Pestania.getSelectedIndex() == 1 && Pestania2.getSelectedIndex() == 1) {
+            if (tablaListaPordefecto.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una Lista");
+                return;
+            }
+            if (tablaListaTema.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un tema");
+                return;
+            }
+
+            if (listaFinalPorDefecto.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una Lista");
+                return;
+            }
+
+        }
+
+        if (Pestania.getSelectedIndex() == 2 && Pestania2.getSelectedIndex() == 0) {
+            if (tablaArtistas.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un artista");
+                return;
+            }
+
+            if (tablaListaDeAlbumes.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un álbum");
+                return;
+            }
+            if (tablaListaTema.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un tema");
+                return;
+            }
+
+            if (nombresDeUsuarios.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un cliente");
+                return;
+            }
+            if (ListadeListasParticulares.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una lista");
+                return;
+            }
+        }
+
+        if (Pestania.getSelectedIndex() == 2 && Pestania2.getSelectedIndex() == 1) {
+            if (tablaArtistas.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un artista");
+                return;
+            }
+
+            if (tablaListaDeAlbumes.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un álbum");
+                return;
+            }
+            if (tablaListaTema.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un tema");
+                return;
+            }
+            if (listaFinalPorDefecto.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una Lista");
+                return;
+            }
+        }
+
         String nombreTema = tablaListaTema.getValueAt(tablaListaTema.getSelectedRow(), 0).toString();
         if (Pestania2.getSelectedIndex() == 0) {
-                nombreUsuario = nombresDeUsuarios.getValueAt(nombresDeUsuarios.getSelectedRow(), 0).toString();
-                nombreLista = ListadeListasParticulares.getValueAt(ListadeListasParticulares.getSelectedRow(), 0).toString();
-            } else {
-                nombreLista = listaFinalPorDefecto.getValueAt(listaFinalPorDefecto.getSelectedRow(), 0).toString();
-            }
+            nombreUsuario = nombresDeUsuarios.getValueAt(nombresDeUsuarios.getSelectedRow(), 0).toString();
+            nombreLista = ListadeListasParticulares.getValueAt(ListadeListasParticulares.getSelectedRow(), 0).toString();
+        } else {
+            nombreLista = listaFinalPorDefecto.getValueAt(listaFinalPorDefecto.getSelectedRow(), 0).toString();
+        }
         if (Pestania.getSelectedIndex() == 0) {
             String duenio = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
             String listadeDuenio = tablaListaParticular.getValueAt(tablaListaParticular.getSelectedRow(), 0).toString();
 
-            if(iContenido.agregarDeListasParticularesTema(nombreTema, nombreLista, nombreUsuario, duenio, listadeDuenio)==false){
-             JOptionPane.showMessageDialog(this, "El Tema Ya Existe En Esta Lista");}else{JOptionPane.showMessageDialog(this, "Tema Agregado Con Exito");}
+            if (iContenido.agregarDeListasParticularesTema(nombreTema, nombreLista, nombreUsuario, duenio, listadeDuenio) == false) {
+                JOptionPane.showMessageDialog(this, "El Tema Ya Existe En Esta Lista");
+            } else {
+                JOptionPane.showMessageDialog(this, "Tema Agregado Con Exito");
+            }
         } else if (Pestania.getSelectedIndex() == 1) {
             String listaDefecto = tablaListaPordefecto.getValueAt(tablaListaPordefecto.getSelectedRow(), 0).toString();
-             if(iContenido.agregarDeListasDefectoTema(nombreTema, nombreLista, nombreUsuario, listaDefecto)==false){
-             JOptionPane.showMessageDialog(this, "El Tema Ya Existe En Esta Lista");}else{JOptionPane.showMessageDialog(this, "Tema Agregado Con Exito");}
+            if (iContenido.agregarDeListasDefectoTema(nombreTema, nombreLista, nombreUsuario, listaDefecto) == false) {
+                JOptionPane.showMessageDialog(this, "El Tema Ya Existe En Esta Lista");
+            } else {
+                JOptionPane.showMessageDialog(this, "Tema Agregado Con Exito");
+            }
         } else {
             String artista = tablaArtistas.getValueAt(tablaArtistas.getSelectedRow(), 0).toString();
             String album = tablaListaDeAlbumes.getValueAt(tablaListaDeAlbumes.getSelectedRow(), 0).toString();
-            if(iContenido.agregarDeAlbumTema(nombreTema, nombreLista, nombreUsuario,artista,album)==false){
-             JOptionPane.showMessageDialog(this, "El Tema Ya Existe En Esta Lista");}else{JOptionPane.showMessageDialog(this, "Tema Agregado Con Exito");}
+            if (iContenido.agregarDeAlbumTema(nombreTema, nombreLista, nombreUsuario, artista, album) == false) {
+                JOptionPane.showMessageDialog(this, "El Tema Ya Existe En Esta Lista");
+            } else {
+                JOptionPane.showMessageDialog(this, "Tema Agregado Con Exito");
+            }
         }
-            
 
 
     }//GEN-LAST:event_agregarActionPerformed
