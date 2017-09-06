@@ -314,8 +314,9 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
         for (DtLista dta : dtl) {
             //if (!((DtListaParticular) dta).isPrivada()) {                         // Descomentar para mostrar solo las listas publicas
-            model.addElement(dta.getNombre() + (((DtListaParticular) dta).isPrivada() ? " (Privada)" : ""));
-            //}
+            //model.addElement(dta.getNombre() + (((DtListaParticular) dta).isPrivada() ? " (Privada)" : ""));
+            model.addElement(dta.getNombre());
+            //} esto toque por el consultar
         }
 
     }
@@ -376,9 +377,7 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
                 } else {
                     nomCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString() + " (" + tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString() + ")";
                     try {
-                        System.out.println(nomLista);
                         lista = iUsuario.selectListaCli(nomLista);
-                        System.out.println(lista.getNombre());
                         ListaReproduccionContenido l = new ListaReproduccionContenido(lista, nomCliente);
                         this.getParent().add(l);
                         centrar(l);

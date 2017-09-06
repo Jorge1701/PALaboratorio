@@ -72,7 +72,7 @@ public class ControladorUsuario implements IUsuario {
         }
 
         Usuario usr;
-        
+
         if (this.bdUsuario.ingresarUsuario(dtu)) {
 
             if (dtu instanceof DtCliente) {
@@ -85,7 +85,7 @@ public class ControladorUsuario implements IUsuario {
         } else {
             return false;
         }
-   }
+    }
 
     @Override
     public void levantarUsuario(DtUsuario dtu) {
@@ -412,15 +412,18 @@ public class ControladorUsuario implements IUsuario {
 
         ((Cliente) usuarios.get(nickcliente)).cargarLista(lp);
     }
-    public Tema getTema(String nombreCliente,String nombreTema){
+
+    public Tema getTema(String nombreCliente, String nombreTema) {
         Cliente c = (Cliente) this.obtenerUsuario(nombreCliente);
         Iterator i = c.getListasParticulares().entrySet().iterator();
-        while(i.hasNext()){
-        Tema tema = (Tema) ((Map.Entry) i.next()).getValue();
-        if(tema.getNombre().equals(nombreTema)){return tema;}
-        
+        while (i.hasNext()) {
+            Tema tema = (Tema) ((Map.Entry) i.next()).getValue();
+            if (tema.getNombre().equals(nombreTema)) {
+                return tema;
+            }
+
         }
         return null;
-        
+
     }
 }

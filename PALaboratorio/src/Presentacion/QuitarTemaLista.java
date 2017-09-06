@@ -400,15 +400,18 @@ public class QuitarTemaLista extends javax.swing.JInternalFrame {
         try {
             
             if(Pestania.getSelectedIndex() == 0){
-                iContenido.quitarTema(nomTema,nomListaP,nickC);
+               if(iContenido.quitarTema(nomTema,nomListaP,nickC)==false){
+                    JOptionPane.showMessageDialog(this,"Error Al quitar Tema");
+               }else{JOptionPane.showMessageDialog(this, "Se elimino tema correctamente");}
                 cargarTemasLPListas(nomListaP);
             }else{
-                iContenido.quitarTema(nomTema, nomListaD, null);
+                if(iContenido.quitarTema(nomTema, nomListaD, null)==false){JOptionPane.showMessageDialog(this,"Error Al quitar Tema");
+                }else{JOptionPane.showMessageDialog(this, "Se elimino tema correctamente");}
                 cargarTemasListaDef(nomListaD);
                 
             }
             
-            JOptionPane.showMessageDialog(this, "Se elimino tema correctamente");
+            
         } catch (Exception e) {
             System.out.println("errr");
             JOptionPane.showMessageDialog(this, "Error : " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

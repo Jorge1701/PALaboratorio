@@ -428,7 +428,9 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             }
 
         }
-
+        this.txtCliente.setText("");
+        this.nombre.setText("");
+        this.btnListaDefecto.setSelected(true);
         pathImage = null;
         nameImage = null;
         cargarImagen(pm.getProperty("pathImagenesLista") + "listaDefault.png");

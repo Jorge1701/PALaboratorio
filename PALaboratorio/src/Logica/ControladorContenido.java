@@ -353,30 +353,27 @@ public class ControladorContenido implements IContenido {
         Cliente u = (Cliente) iUsuario.obtenerUsuario(nombreUser);
         if (nombreUser == null) {
             Lista lista = (ListaDefecto) listasDefecto.get(nombre);
-
             if (lista == null) {
                 throw new UnsupportedOperationException("No existe la lista");
             }
-
             return lista.quitarTema(nombreT);
         } else {
-            if (nombreUser != null && !(u instanceof Cliente)) {
-                Lista lista = (ListaParticular) u.getListaParticular(nombre);
-
-                if (lista == null) {
-                    throw new UnsupportedOperationException("No existe la lista");
-                }
-                if (u.getLista(nombre).quitarTema(nombreT) && this.quitarTema(nombreT, nombre, nombreUser)) {
-                    return true;
-                }
-
+            Lista lista = (ListaParticular) u.getListaParticular(nombre);
+           
+            if (lista == null) {
+                throw new UnsupportedOperationException("No existe la lista");
+            }
+            if (u.getLista(nombre).quitarTema(nombreT) && this.quitarTema(nombreT, nombre, nombreUser)) {
+                return true;
             }
 
-            return false;
         }
+
+        return false;
     }
 
-    public boolean agregarDeListasDefectoTema(String nombreT, String nombreLista, String nombreUser, String listaDefecto) {
+
+public boolean agregarDeListasDefectoTema(String nombreT, String nombreLista, String nombreUser, String listaDefecto) {
         Cliente u = (Cliente) iUsuario.obtenerUsuario(nombreUser);
         Tema tema = (Tema) listasDefecto.get(listaDefecto).getTema(nombreT);
         BDLista bd = new BDLista();
@@ -385,11 +382,11 @@ public class ControladorContenido implements IContenido {
         int idTema = obtenerId.obtenerIdTema(tema.getAlbum().getNickArtista(), idAlbum, tema.getNombre());
         if (nombreUser.equals("")) {
             ListaDefecto lista = (ListaDefecto) listasDefecto.get(nombreLista);
-            int idLista = obtenerId.obtenerIdListaDefecto(lista.getGenero().getNombre(),lista.getNombre());
+            int idLista = obtenerId.obtenerIdListaDefecto(lista.getGenero().getNombre(), lista.getNombre());
             if (lista == null) {
                 throw new UnsupportedOperationException("No existe la lista");
             }
-            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(), idAlbum, idTema, idLista)) {
                 return true;
             } else {
                 return false;
@@ -397,11 +394,11 @@ public class ControladorContenido implements IContenido {
 
         } else {
             ListaParticular lista = (ListaParticular) u.getListaParticular(nombreLista);
-            int idLista  = obtenerId.obtenerIdListaParticular(u.getNickname(), lista.getNombre() );
+            int idLista = obtenerId.obtenerIdListaParticular(u.getNickname(), lista.getNombre());
             if (lista == null) {
                 throw new UnsupportedOperationException("No existe la lista");
             }
-            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(), idAlbum, idTema, idLista)) {
                 return true;
             } else {
                 return false;
@@ -415,15 +412,15 @@ public class ControladorContenido implements IContenido {
         Tema tema = (Tema) ((ListaParticular) ((Cliente) iUsuario.obtenerUsuario(duenio)).getListaParticular(listaDelduenio)).getTema(nombreT);
         BDLista bd = new BDLista();
         CargaDatosPrueba obtenerId = new CargaDatosPrueba();
-        int idAlbum = obtenerId.obtenerIdAlbum(tema.getAlbum().getNickArtista(),tema.getAlbum().getNombre());
+        int idAlbum = obtenerId.obtenerIdAlbum(tema.getAlbum().getNickArtista(), tema.getAlbum().getNombre());
         int idTema = obtenerId.obtenerIdTema(tema.getAlbum().getNickArtista(), idAlbum, tema.getNombre());
         if (nombreUser.equals("")) {
             ListaDefecto lista = (ListaDefecto) listasDefecto.get(nombreLista);
-            int idLista = obtenerId.obtenerIdListaDefecto(lista.getGenero().getNombre(),lista.getNombre());
+            int idLista = obtenerId.obtenerIdListaDefecto(lista.getGenero().getNombre(), lista.getNombre());
             if (lista == null) {
                 throw new UnsupportedOperationException("No existe la lista");
             }
-            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(), idAlbum, idTema, idLista)) {
                 return true;
             } else {
                 return false;
@@ -431,11 +428,11 @@ public class ControladorContenido implements IContenido {
 
         } else {
             Lista lista = (ListaParticular) u.getListaParticular(nombreLista);
-            int idLista = obtenerId.obtenerIdListaParticular(u.getNickname(),lista.getNombre());
+            int idLista = obtenerId.obtenerIdListaParticular(u.getNickname(), lista.getNombre());
             if (lista == null) {
                 throw new UnsupportedOperationException("No existe la lista");
             }
-            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(), idAlbum, idTema, idLista)) {
                 return true;
             } else {
                 return false;
@@ -449,16 +446,16 @@ public class ControladorContenido implements IContenido {
         Tema tema = (Tema) ((Album) ((Artista) iUsuario.obtenerUsuario(artista)).getAlbum(album)).getTema(nombreT);
         BDLista bd = new BDLista();
         CargaDatosPrueba obtenerId = new CargaDatosPrueba();
-        
+
         int idAlbum = obtenerId.obtenerIdAlbum(tema.getAlbum().getNickArtista(), tema.getAlbum().getNombre());
         int idTema = obtenerId.obtenerIdTema(tema.getAlbum().getNickArtista(), idAlbum, tema.getNombre());
         if (nombreUser.equals("")) {
             ListaDefecto lista = (ListaDefecto) listasDefecto.get(nombreLista);
-            int idLista = obtenerId.obtenerIdListaDefecto(lista.getGenero().getNombre(),lista.getNombre());
+            int idLista = obtenerId.obtenerIdListaDefecto(lista.getGenero().getNombre(), lista.getNombre());
             if (lista == null) {
                 throw new UnsupportedOperationException("No existe la lista");
             }
-            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(), idAlbum, idTema, idLista)) {
                 return true;
             } else {
                 return false;
@@ -466,11 +463,11 @@ public class ControladorContenido implements IContenido {
 
         } else {
             Lista lista = (ListaParticular) u.getListaParticular(nombreLista);
-            int idLista = obtenerId.obtenerIdListaParticular(u.getNickname(),lista.getNombre());
+            int idLista = obtenerId.obtenerIdListaParticular(u.getNickname(), lista.getNombre());
             if (lista == null) {
                 throw new UnsupportedOperationException("No existe la lista");
             }
-            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(),idAlbum,idTema,idLista)) {
+            if (lista.agregarTema(tema) && bd.insertarTemaALista(tema.getAlbum().getNickArtista(), idAlbum, idTema, idLista)) {
                 return true;
             } else {
                 return false;
@@ -480,7 +477,7 @@ public class ControladorContenido implements IContenido {
     }
 
     @Override
-    public ArrayList<DtTema> selecLista(String nick, String nomL) {
+        public ArrayList<DtTema> selecLista(String nick, String nomL) {
         Cliente us = (Cliente) iUsuario.obtenerUsuario(nick);
 
         if (us == null) {
@@ -499,7 +496,7 @@ public class ControladorContenido implements IContenido {
     }
 
     @Override
-    public boolean publicarLista(String nick, String nomL) {
+        public boolean publicarLista(String nick, String nomL) {
         Cliente us = (Cliente) iUsuario.obtenerUsuario(nick);
         BDLista bdLista = new BDLista();
         if (us == null) {
@@ -518,33 +515,33 @@ public class ControladorContenido implements IContenido {
     }
 
     @Override
-    public DtGenero selecGenero(String nomGenero) {
+        public DtGenero selecGenero(String nomGenero) {
         return this.genero.obtener(nomGenero).getData();
     }
 
     @Override
-    public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista) {
+        public DtAlbumContenido obtenerAlbumContenido(String nomGenero, String nomAlbum, String nickArtista) {
         return genero.obtener(nomGenero).obtenerAlbumContenido(nomAlbum, nickArtista);
     }
 
     @Override
-    public void cargarGenero(String nombre, String padre) {
+        public void cargarGenero(String nombre, String padre) {
         // this.genero.agregarGenero(padre.isEmpty() ? genero.getNombre() : padre, nombre);
         genero.agregarGenero(padre, nombre);
     }
 
     @Override
-    public boolean existeGenero(String nombre) {
+        public boolean existeGenero(String nombre) {
         return genero.existe(nombre);
     }
 
     @Override
-    public Genero obtenerGenero(String nombre) {
+        public Genero obtenerGenero(String nombre) {
         return genero.obtener(nombre);
     }
 
     @Override
-    public ArrayList<DtLista> listarLisReproduccionDef() {
+        public ArrayList<DtLista> listarLisReproduccionDef() {
         ArrayList<DtLista> res = new ArrayList<>();
 
         Iterator i = listasDefecto.entrySet().iterator();
@@ -559,13 +556,13 @@ public class ControladorContenido implements IContenido {
     }
 
     @Override
-    public void cargarLista(ListaDefecto ld, String nombreGenero) {
+        public void cargarLista(ListaDefecto ld, String nombreGenero) {
         genero.obtener(nombreGenero).cargarLista(ld);
         listasDefecto.put(ld.getNombre(), ld);
     }
 
     @Override
-    public void ingresarGenero(String nombre, String padre) {
+        public void ingresarGenero(String nombre, String padre) {
         if (existeGenero(nombre) == false) {
             genero.agregarGenero(padre, nombre);
             if (!new BDGenero().ingresarGeneros(nombre, padre)) {

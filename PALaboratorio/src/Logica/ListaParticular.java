@@ -46,8 +46,8 @@ public class ListaParticular extends Lista {
             if (t.getNombre().equals(nombreT)) {
                 BDLista bdLista = new BDLista();
                 bdLista.quitarTemaLista(nickDuenio, this.getNombre(), nombreT);
-                this.temas.remove(t);
-                return true;
+                
+                return temas.remove(t);
             }
         }             
        
