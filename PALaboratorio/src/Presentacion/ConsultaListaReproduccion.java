@@ -314,8 +314,9 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
 
         for (DtLista dta : dtl) {
             //if (!((DtListaParticular) dta).isPrivada()) {                         // Descomentar para mostrar solo las listas publicas
-            model.addElement(dta.getNombre() + (((DtListaParticular) dta).isPrivada() ? " (Privada)" : ""));
-            //}
+            //model.addElement(dta.getNombre() + (((DtListaParticular) dta).isPrivada() ? " (Privada)" : ""));
+            model.addElement (dta.getNombre());
+            //} esto toque por el consultar
         }
 
     }
