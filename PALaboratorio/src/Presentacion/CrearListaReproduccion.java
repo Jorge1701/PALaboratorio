@@ -395,6 +395,7 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
             DefaultMutableTreeNode selectedElement = (DefaultMutableTreeNode) generos.getSelectionPath().getLastPathComponent();
             nomGenero = selectedElement.getUserObject().toString();
             lista = new DtListaDefecto(iContenido.selecGenero(nomGenero), nombre.getText(), new ArrayList<>(), nameImage);   // Agregar que se ingrese la imagen en el diseño.
+            System.out.println("Presentacion.CrearListaReproduccion.btnAceptarActionPerformed()"+lista.getNombre());
             if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
                 JOptionPane.showMessageDialog(this, "La lista que intenta ingresar ya existe", "Mensaje", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -418,7 +419,8 @@ public class CrearListaReproduccion extends javax.swing.JInternalFrame {
                 return;
             }
             nickCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString();
-            lista = new DtListaParticular(true, nombre.getText(), new ArrayList<>(), nameImage);  // Agregar que se ingrese la imagen en el diseño.
+            lista = new DtListaParticular(true, nombre.getText(), new ArrayList<>(), nameImage);
+            System.out.println(lista.getNombre());// Agregar que se ingrese la imagen en el diseño.
             if (!iContenido.crearListaReproduccion(lista, nickCliente)) {
                 JOptionPane.showMessageDialog(this, "La lista que intenta ingresar ya existe", "Mensaje", JOptionPane.ERROR_MESSAGE);
             } else {

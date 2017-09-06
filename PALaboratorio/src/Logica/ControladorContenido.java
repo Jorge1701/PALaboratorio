@@ -263,9 +263,7 @@ public class ControladorContenido implements IContenido {
             }
 
         } else {
-            System.out.println("A");
-            System.out.println(nickCliente);
-            System.out.println(dtl.getNombre());
+
             if (((Cliente) iUsuario.obtenerUsuario(nickCliente)).getListaParticular(dtl.getNombre()) != null) {
                 return false;
             }

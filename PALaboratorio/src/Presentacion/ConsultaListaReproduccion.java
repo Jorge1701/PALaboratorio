@@ -376,7 +376,9 @@ public class ConsultaListaReproduccion extends javax.swing.JInternalFrame {
                 } else {
                     nomCliente = tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0).toString() + " (" + tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 1).toString() + ")";
                     try {
+                        System.out.println(nomLista);
                         lista = iUsuario.selectListaCli(nomLista);
+                        System.out.println(lista.getNombre());
                         ListaReproduccionContenido l = new ListaReproduccionContenido(lista, nomCliente);
                         this.getParent().add(l);
                         centrar(l);
