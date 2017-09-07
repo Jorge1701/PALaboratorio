@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 public class ListaReproduccionContenido extends javax.swing.JInternalFrame implements ListSelectionListener {
 
     PropertyManager pm;
+
     public ListaReproduccionContenido(DtLista lista, String gna) {
         initComponents();
         pm = PropertyManager.getInstance();
@@ -41,7 +42,18 @@ public class ListaReproduccionContenido extends javax.swing.JInternalFrame imple
         txtNombre.setText(lista.getNombre());
         txtGenOnick.setText(gna);
 
-        lblGenOnick.setText(lista instanceof DtListaParticular ? "Propietario" : "Genero");
+        if (lista instanceof DtListaParticular) {
+            setTitle("Información de la lista particular");
+            lblGenOnick.setText("Propietario: ");
+            lblVisibilidad.setVisible(true);
+            txtVisibilidad.setVisible(true);
+            txtVisibilidad.setText(((DtListaParticular) lista).isPrivada() ? "privada" : "pública");
+        } else {
+            setTitle("Información de la lista por defecto");
+            lblGenOnick.setText(("Género: "));
+            lblVisibilidad.setVisible(false);
+            txtVisibilidad.setVisible(false);
+        }
 
         //Obtiene el modelo de la tabla y la vacia
         DefaultTableModel dtm = (DefaultTableModel) tablaTemas.getModel();
@@ -96,6 +108,8 @@ public class ListaReproduccionContenido extends javax.swing.JInternalFrame imple
         imagenPanel = new javax.swing.JPanel();
         btnDescargar = new javax.swing.JButton();
         btnAbrirNavegador = new javax.swing.JButton();
+        lblVisibilidad = new javax.swing.JLabel();
+        txtVisibilidad = new javax.swing.JTextField();
 
         setTitle("Informacion de la lista");
 
@@ -162,6 +176,12 @@ public class ListaReproduccionContenido extends javax.swing.JInternalFrame imple
             }
         });
 
+        lblVisibilidad.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblVisibilidad.setText("Visibilidad:");
+
+        txtVisibilidad.setEditable(false);
+        txtVisibilidad.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,15 +203,17 @@ public class ListaReproduccionContenido extends javax.swing.JInternalFrame imple
                                 .addGap(8, 8, 8)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblGenOnick)
-                                    .addComponent(jLabel1))
+                                    .addComponent(jLabel1)
+                                    .addComponent(lblVisibilidad))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombre)
-                                    .addComponent(txtGenOnick))
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(txtGenOnick)
+                                    .addComponent(txtVisibilidad))
                                 .addGap(33, 33, 33)
                                 .addComponent(imagenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(11, 11, 11))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,11 +228,14 @@ public class ListaReproduccionContenido extends javax.swing.JInternalFrame imple
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblGenOnick)
                             .addComponent(txtGenOnick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblVisibilidad)
+                            .addComponent(txtVisibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(imagenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(imagenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -241,7 +266,7 @@ public class ListaReproduccionContenido extends javax.swing.JInternalFrame imple
             JFileChooser seleccionarRuta = new JFileChooser();
             seleccionarRuta.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int o = seleccionarRuta.showOpenDialog(this);
-            
+
             if (o == JFileChooser.APPROVE_OPTION) {
                 try {
                     File carpetaSeleccionada = seleccionarRuta.getSelectedFile();
@@ -318,8 +343,10 @@ public class ListaReproduccionContenido extends javax.swing.JInternalFrame imple
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblGenOnick;
+    private javax.swing.JLabel lblVisibilidad;
     private javax.swing.JTable tablaTemas;
     private javax.swing.JTextField txtGenOnick;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtVisibilidad;
     // End of variables declaration//GEN-END:variables
 }
