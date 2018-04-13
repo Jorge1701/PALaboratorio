@@ -3,23 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Logica.Clases;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Nicolas
  */
-public class TareaDeUnReclamo {
+@Entity
+public class TareaDeUnReclamo implements Serializable {
     
+    @Id
+    private Integer id;
     private Boolean terminado;
     private Date fecha;
     private String nota;
     private Double tiempo;
     
+    @ManyToOne
     private TipoDeArticulo tipodearticulo;
-    private Tecnico tecnico;
+    //private Tecnico tecnico;
 
     public TareaDeUnReclamo() {
     }
@@ -64,13 +72,13 @@ public class TareaDeUnReclamo {
         this.tipodearticulo = tipodearticulo;
     }
 
-    public Tecnico getTecnico() {
+    /*public Tecnico getTecnico() {
         return tecnico;
     }
 
     public void setTecnico(Tecnico tecnico) {
         this.tecnico = tecnico;
-    }
+    }*/
     
     
     

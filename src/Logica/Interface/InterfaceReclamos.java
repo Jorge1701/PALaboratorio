@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Logica.Interface;
 
 /**
  *
  * @author Nicolas
  */
-public enum TipoReclamo {
-    ADomicilio,
-    Empresa
+public interface InterfaceReclamos {
+    
 }

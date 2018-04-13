@@ -3,19 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Logica.Clases;
 
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author Nicolas
  */
+@Entity
 public class Tecnico extends Persona{
     
     private String contrasena;
     
-    private List<TareaDeUnReclamo> tareas_a_realizar;
+    //private List<TareaDeUnReclamo> tareas_a_realizar;
+    @ManyToMany
     private List<TipoDeArticulo> tipoarticulo_capacitado;
 
     public Tecnico() {
@@ -30,13 +34,13 @@ public class Tecnico extends Persona{
         this.contrasena = contrasena;
     }
 
-    public List<TareaDeUnReclamo> getTareas_a_realizar() {
+    /*public List<TareaDeUnReclamo> getTareas_a_realizar() {
         return tareas_a_realizar;
     }
 
     public void setTareas_a_realizar(List<TareaDeUnReclamo> tareas_a_realizar) {
         this.tareas_a_realizar = tareas_a_realizar;
-    }
+    }*/
 
     public List<TipoDeArticulo> getTipoarticulo_capacitado() {
         return tipoarticulo_capacitado;

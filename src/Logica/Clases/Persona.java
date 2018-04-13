@@ -3,16 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Logica.Clases;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
  * @author Nicolas
  */
-public class Persona {
+@Entity
+public class Persona implements Serializable {
     
+    @Id
     private String ci;
     private String nombre;
     private String apellido;

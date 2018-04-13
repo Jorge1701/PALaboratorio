@@ -3,14 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Logica.Clases;
+
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
  * @author Nicolas
  */
-public class Tarea {
+@Entity
+public class Tarea implements Serializable{
     
+    @Id
     private Integer id;
     private String nombre;
     private String descripcion;

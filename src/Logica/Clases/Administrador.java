@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Logica.Clases;
+
+import javax.persistence.Entity;
+
 
 /**
  *
  * @author Nicolas
  */
-public class Administrador extends Persona {
+@Entity
+public class Administrador extends Persona{
     
     private String contrasena;
 

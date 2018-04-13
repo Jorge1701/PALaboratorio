@@ -3,17 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Logica.Clases;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Persistence;
 
 /**
  *
  * @author Nicolas
  */
-public class Reclamo {
+@Entity
+public class Reclamo implements Serializable {
     
+    @Id
     private Integer id;
     private String descripcion;
     private String nombre;
@@ -22,8 +32,11 @@ public class Reclamo {
     private TipoReclamo tipo;
     private Date fecha_visita;
     
+    @ManyToOne
     private TipoDeArticulo tipodearticulo;
+    @ManyToOne
     private Cliente cliente;
+    @OneToMany
     private List<TareaDeUnReclamo> tarea_reclamo;
     
     
@@ -110,9 +123,16 @@ public class Reclamo {
     public void setTarea_reclamo(List<TareaDeUnReclamo> tarea_reclamo) {
         this.tarea_reclamo = tarea_reclamo;
     }
+
     
     
     
     
-    
+}
+
+class main {
+    public static void main(String[] args){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("SistemaReclamosPU");
+        EntityManager em = emf.createEntityManager();
+    }
 }
