@@ -28,5 +28,6 @@ public class ControladorTareas implements Logica.Interface.InterfaceTareas{
     private static class ControladorTareasHolder {
 
         private static final ControladorTareas INSTANCE = new ControladorTareas();
-    }
+    }    
+    
 }

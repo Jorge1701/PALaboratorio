@@ -6,6 +6,7 @@
 package Logica.Clases;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 
 /**
@@ -17,6 +18,8 @@ public class Cliente extends Persona{
 
     public Cliente() {
     }
+    
+    
     
     
 }

@@ -8,6 +8,8 @@ package Logica.Clases;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -19,6 +21,7 @@ import javax.persistence.ManyToOne;
 public class TareaDeUnReclamo implements Serializable {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Boolean terminado;
     private Date fecha;
@@ -26,12 +29,29 @@ public class TareaDeUnReclamo implements Serializable {
     private Double tiempo;
     
     @ManyToOne
-    private TipoDeArticulo tipodearticulo;
-    //private Tecnico tecnico;
+    private Tarea tarea;
+    @ManyToOne
+    private Tecnico tecnico;
 
     public TareaDeUnReclamo() {
     }
 
+    public TareaDeUnReclamo(Tecnico tecnico,Tarea tarea) {
+        this.tarea = tarea;
+        this.tecnico = tecnico;
+        tecnico.nuevoTareaDeUnReclamo(this);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    
+    
     public Boolean getTerminado() {
         return terminado;
     }
@@ -64,21 +84,21 @@ public class TareaDeUnReclamo implements Serializable {
         this.tiempo = tiempo;
     }
 
-    public TipoDeArticulo getTipodearticulo() {
-        return tipodearticulo;
+    public Tarea getTarea() {
+        return tarea;
     }
 
-    public void setTipodearticulo(TipoDeArticulo tipodearticulo) {
-        this.tipodearticulo = tipodearticulo;
+    public void setTarea(Tarea tarea) {
+        this.tarea = tarea;
     }
 
-    /*public Tecnico getTecnico() {
+    public Tecnico getTecnico() {
         return tecnico;
     }
 
     public void setTecnico(Tecnico tecnico) {
         this.tecnico = tecnico;
-    }*/
+    }
     
     
     

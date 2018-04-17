@@ -5,12 +5,17 @@
  */
 package Logica.Clases;
 
+import Logica.Controladores.ControladorPrincipal;
+import Logica.Controladores.ControladorReclamos;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -24,6 +29,7 @@ import javax.persistence.Persistence;
 public class Reclamo implements Serializable {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String descripcion;
     private String nombre;
@@ -37,12 +43,22 @@ public class Reclamo implements Serializable {
     @ManyToOne
     private Cliente cliente;
     @OneToMany
-    private List<TareaDeUnReclamo> tarea_reclamo;
+    private List<TareaDeUnReclamo> tarea_reclamo = new ArrayList<>();
     
     
 
     public Reclamo() {
     }
+
+    public Reclamo(String descripcion, String nombre, TipoReclamo tipo, TipoDeArticulo tipodearticulo, Cliente cliente) {
+        this.descripcion = descripcion;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.tipodearticulo = tipodearticulo;
+        this.cliente = cliente;
+    }
+    
+    
 
     public Integer getId() {
         return id;
@@ -124,7 +140,11 @@ public class Reclamo implements Serializable {
         this.tarea_reclamo = tarea_reclamo;
     }
 
-    
+    public void nuevaTareaTecnico(Tecnico te, Tarea ta){
+        TareaDeUnReclamo tr = new TareaDeUnReclamo(te,ta);
+        this.tarea_reclamo.add(tr);
+        ControladorPrincipal.getInstance().getEntity().persist(tr);
+    }
     
     
     
@@ -132,7 +152,11 @@ public class Reclamo implements Serializable {
 
 class main {
     public static void main(String[] args){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("SistemaReclamosPU");
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = ControladorPrincipal.getInstance().getEntity();
+        
+        Integer[] ciTec = {50475087};
+        Integer[] idTar = {1};
+        ControladorReclamos.getInstance().AltaReclamo("Descripcion reclamo", "Reclamo Averia Aire", TipoReclamo.Empresa, 1, ciTec, idTar, 12345678);
+        
     }
 }

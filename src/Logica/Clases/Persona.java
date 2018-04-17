@@ -18,7 +18,7 @@ import javax.persistence.Id;
 public class Persona implements Serializable {
     
     @Id
-    private String ci;
+    private Integer ci;
     private String nombre;
     private String apellido;
     private String domicilio;
@@ -27,12 +27,13 @@ public class Persona implements Serializable {
 
     public Persona() {
     }
+    
 
-    public String getCi() {
+    public Integer getCi() {
         return ci;
     }
 
-    public void setCi(String ci) {
+    public void setCi(Integer ci) {
         this.ci = ci;
     }
 
