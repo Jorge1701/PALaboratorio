@@ -54,8 +54,20 @@ public class Tecnico extends Persona{
         this.tipoarticulo_capacitado = tipoarticulo_capacitado;
     }
     
+    public void nuevoTipoArticulo(TipoDeArticulo tart){
+        tipoarticulo_capacitado.add(tart);
+    }
+    
     public void nuevoTareaDeUnReclamo(TareaDeUnReclamo r){
         tareas_a_realizar.add(r);
+    }
+    
+    public Boolean estaCapacitadoEnCodTA(Integer codTA){
+        for (TipoDeArticulo tipoDeArticulo : tipoarticulo_capacitado) {
+            if(tipoDeArticulo.getId().equals(codTA))
+                return true;
+        }
+        return false;
     }
     
     

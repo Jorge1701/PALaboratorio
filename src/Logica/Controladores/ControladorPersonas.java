@@ -75,4 +75,26 @@ public class ControladorPersonas implements Logica.Interface.InterfacePersonas{
            em.getTransaction().commit();
            em.close();
     }
+    
+    public List<DataTecnico> darTecnicosNoCapacitadosEnCodTA(Integer codTA){
+        List<DataTecnico> tecnicosADevolver = new ArrayList<>();
+        EntityManager em = ControladorPrincipal.getInstance().getEntity();
+        Query query = em.createQuery("SELECT i FROM Tecnico i");
+        List<Tecnico> tecnicos = query.getResultList();
+        for (Tecnico tec : tecnicos) {
+            if(!tec.estaCapacitadoEnCodTA(codTA))
+                tecnicosADevolver.add(new DataTecnico(tec.getCi(), tec.getNombre(), tec.getApellido(), tec.getDomicilio(), tec.getTelefono(), tec.getFecha_nacimiento()));
+        }
+        return tecnicosADevolver;
+    }
+    
+    public void capacitarTecnicoEnTA(Integer idTec, Integer idTA){
+        EntityManager em = ControladorPrincipal.getInstance().getEntity();
+        em.getTransaction().begin();
+        Tecnico te = em.find(Tecnico.class, idTec);
+        TipoDeArticulo tart = em.find(TipoDeArticulo.class, idTA);
+        te.nuevoTipoArticulo(tart);
+        em.getTransaction().commit();
+        em.close();
+    }
 }

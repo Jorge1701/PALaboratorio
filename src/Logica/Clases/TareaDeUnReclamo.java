@@ -37,6 +37,7 @@ public class TareaDeUnReclamo implements Serializable {
     }
 
     public TareaDeUnReclamo(Tecnico tecnico,Tarea tarea) {
+        this.terminado = false;
         this.tarea = tarea;
         this.tecnico = tecnico;
         tecnico.nuevoTareaDeUnReclamo(this);

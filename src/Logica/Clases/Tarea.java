@@ -5,8 +5,11 @@
  */
 package Logica.Clases;
 
+import Logica.DataTypes.DataTarea;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -17,11 +20,18 @@ import javax.persistence.Id;
 public class Tarea implements Serializable{
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String nombre;
     private String descripcion;
 
     public Tarea() {
+    }
+    
+    public Tarea(DataTarea tarea){
+        //this.id = tarea.getId(); ya que es generado automaticamente
+        this.nombre = tarea.getNombre();
+        this.descripcion = tarea.getDescripcion();
     }
 
     public Integer getId() {

@@ -14,6 +14,7 @@ import Logica.Clases.TipoDeArticulo;
 import Logica.DataTypes.DataReclamo;
 import Logica.DataTypes.DataTarea;
 import Logica.DataTypes.DataTecnico;
+import Logica.DataTypes.DataTipoArticulo;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -70,5 +71,9 @@ public class ControladorReclamos implements Logica.Interface.InterfaceReclamos{
     
     public List<DataTecnico> darTecnicos(Integer codTA){
         return ControladorPersonas.getInstance().darTecnicosCodTA(codTA);
+    }
+    
+    public List<DataTipoArticulo> darTipoArticulos(){
+        return ControladorTareas.getInstance().darTipoArticulos();
     }
 }
