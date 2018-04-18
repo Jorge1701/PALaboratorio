@@ -11,7 +11,9 @@ import Logica.Clases.Tarea;
 import Logica.Clases.TareaDeUnReclamo;
 import Logica.Clases.Tecnico;
 import Logica.Clases.TipoDeArticulo;
-import Logica.Clases.TipoReclamo;
+import Logica.DataTypes.DataReclamo;
+import Logica.DataTypes.DataTarea;
+import Logica.DataTypes.DataTecnico;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -36,12 +38,21 @@ public class ControladorReclamos implements Logica.Interface.InterfaceReclamos{
         private static final ControladorReclamos INSTANCE = new ControladorReclamos();
     }
     
-    public void AltaReclamo(String desc, String nombre, TipoReclamo tipo, Integer tipoArt, Integer[] ciTec, Integer[] idTar, Integer ciCliente){
+    public void AltaReclamo(DataReclamo rec, Integer tipoArt, Integer[] ciTec, Integer[] idTar, Integer ciCliente){
         EntityManager em = ControladorPrincipal.getInstance().getEntity();
         TipoDeArticulo tipodearticulo = em.find(TipoDeArticulo.class, tipoArt);
         Cliente cliente = em.find(Cliente.class,ciCliente);
         em.getTransaction().begin();
-        Reclamo r = new Reclamo(desc,nombre,tipo,tipodearticulo,cliente);
+        
+        Reclamo r = new Reclamo();
+        r.setNombre(rec.getNombre());
+        r.setDescripcion(rec.getDescripcion());
+        r.setFecha_ingreso(rec.getFecha_ingreso());
+        r.setCerrado(rec.getCerrado());
+        r.setTipo(rec.getTipo());
+        r.setCliente(cliente);
+        r.setTipodearticulo(tipodearticulo);
+        
         for (int i = 0; i < ciTec.length; i++) {
             Tecnico te = em.find(Tecnico.class, ciTec[i]);
             Tarea ta = em.find(Tarea.class, idTar[i]);
@@ -51,5 +62,13 @@ public class ControladorReclamos implements Logica.Interface.InterfaceReclamos{
         em.getTransaction().commit();
         em.close();
         
+    }
+    
+    public List<DataTarea> darTareas(Integer codTA){
+        return ControladorTareas.getInstance().darTareasCodTA(codTA);
+    }
+    
+    public List<DataTecnico> darTecnicos(Integer codTA){
+        return ControladorPersonas.getInstance().darTecnicosCodTA(codTA);
     }
 }

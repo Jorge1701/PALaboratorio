@@ -5,8 +5,12 @@
  */
 package Logica.Clases;
 
+import Logica.Controladores.ControladorPersonas;
 import Logica.Controladores.ControladorPrincipal;
 import Logica.Controladores.ControladorReclamos;
+import Logica.DataTypes.DataCliente;
+import Logica.DataTypes.DataPersona;
+import Logica.DataTypes.DataReclamo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,14 +52,6 @@ public class Reclamo implements Serializable {
     
 
     public Reclamo() {
-    }
-
-    public Reclamo(String descripcion, String nombre, TipoReclamo tipo, TipoDeArticulo tipodearticulo, Cliente cliente) {
-        this.descripcion = descripcion;
-        this.nombre = nombre;
-        this.tipo = tipo;
-        this.tipodearticulo = tipodearticulo;
-        this.cliente = cliente;
     }
     
     
@@ -154,9 +150,6 @@ class main {
     public static void main(String[] args){
         EntityManager em = ControladorPrincipal.getInstance().getEntity();
         
-        Integer[] ciTec = {50475087};
-        Integer[] idTar = {1};
-        ControladorReclamos.getInstance().AltaReclamo("Descripcion reclamo", "Reclamo Averia Aire", TipoReclamo.Empresa, 1, ciTec, idTar, 12345678);
         
     }
 }
