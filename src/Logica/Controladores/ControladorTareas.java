@@ -38,15 +38,19 @@ public class ControladorTareas implements Logica.Interface.InterfaceTareas{
         TipoDeArticulo tart = em.find(TipoDeArticulo.class, codTA);
         List<Tarea> tareas_tart = tart.getTareas();
         for (Tarea tarea : tareas_tart) {
-           tareas.add(new DataTarea(tarea.getId(), tarea.getNombre(), tarea.getDescripcion()));
+           tareas.add(new DataTarea(tarea.getId(), tarea.getNombre(), tarea.getDescripcion(),tarea.getTiempoEstimado()));
         }
         return tareas;  
     }
     
-    public void AltaTarea(DataTarea tar){
+    public void AltaTarea(DataTarea tar,Integer codTA){
         EntityManager em = ControladorPrincipal.getInstance().getEntity();
         em.getTransaction().begin();
         Tarea tarea = new Tarea(tar);
+        if(codTA!=null){
+            TipoDeArticulo tipoarticulo = em.find(TipoDeArticulo.class, codTA);
+            tipoarticulo.nuevaTarea(tarea);
+        }
         em.persist(tarea);
         em.getTransaction().commit();
         em.close();

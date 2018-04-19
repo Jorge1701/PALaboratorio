@@ -24,6 +24,7 @@ public class Tarea implements Serializable{
     private Integer id;
     private String nombre;
     private String descripcion;
+    private Double tiempoEstimado;
 
     public Tarea() {
     }
@@ -32,6 +33,7 @@ public class Tarea implements Serializable{
         //this.id = tarea.getId(); ya que es generado automaticamente
         this.nombre = tarea.getNombre();
         this.descripcion = tarea.getDescripcion();
+        this.tiempoEstimado = tarea.getTiempoEstimado();
     }
 
     public Integer getId() {
@@ -56,6 +58,14 @@ public class Tarea implements Serializable{
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Double getTiempoEstimado() {
+        return tiempoEstimado;
+    }
+
+    public void setTiempoEstimado(Double tiempoEstimado) {
+        this.tiempoEstimado = tiempoEstimado;
     }
     
     

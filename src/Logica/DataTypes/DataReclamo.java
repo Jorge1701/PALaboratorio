@@ -27,7 +27,6 @@ public class DataReclamo {
     private Date fecha_ingreso;
     private Boolean cerrado;
     private TipoReclamo tipo;
-    private Date fecha_visita;
     //las asociaciones las veo despues
 
     public DataReclamo() {
@@ -40,7 +39,6 @@ public class DataReclamo {
         this.fecha_ingreso = fecha_ingreso;
         this.cerrado = cerrado;
         this.tipo = tipo;
-        this.fecha_visita = fecha_visita;
     }
 
     public Integer getId() {
@@ -65,10 +63,6 @@ public class DataReclamo {
 
     public TipoReclamo getTipo() {
         return tipo;
-    }
-
-    public Date getFecha_visita() {
-        return fecha_visita;
     }
     
     

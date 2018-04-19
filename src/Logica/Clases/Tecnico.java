@@ -5,7 +5,7 @@
  */
 package Logica.Clases;
 
-import Logica.DataTypes.DataTecnico;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -24,7 +24,7 @@ public class Tecnico extends Persona{
     @OneToMany(mappedBy = "tecnico")
     private List<TareaDeUnReclamo> tareas_a_realizar = new ArrayList<>();
     @ManyToMany
-    private List<TipoDeArticulo> tipoarticulo_capacitado;
+    private List<TipoDeArticulo> tipoarticulo_capacitado = new ArrayList<>();
 
     public Tecnico() {
         

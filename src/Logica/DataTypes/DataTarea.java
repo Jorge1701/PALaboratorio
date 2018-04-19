@@ -14,11 +14,13 @@ public class DataTarea {
     private Integer id;
     private String nombre;
     private String descripcion;
+    private Double tiempoEstimado;
 
-    public DataTarea(Integer id, String nombre, String descripcion) {
+    public DataTarea(Integer id, String nombre, String descripcion, Double tiempoEstimado) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.tiempoEstimado = tiempoEstimado;
     }
 
     public Integer getId() {
@@ -31,6 +33,10 @@ public class DataTarea {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public Double getTiempoEstimado() {
+        return tiempoEstimado;
     }
     
     

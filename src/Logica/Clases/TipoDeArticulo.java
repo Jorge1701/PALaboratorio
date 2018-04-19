@@ -61,6 +61,10 @@ public class TipoDeArticulo implements Serializable{
         this.tareas = tareas;
     }
     
+    public void nuevaTarea(Tarea t){
+        tareas.add(t);
+    }
+    
     
     
 }

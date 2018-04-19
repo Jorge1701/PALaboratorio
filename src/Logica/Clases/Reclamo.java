@@ -40,7 +40,6 @@ public class Reclamo implements Serializable {
     private Date fecha_ingreso;
     private Boolean cerrado;
     private TipoReclamo tipo;
-    private Date fecha_visita;
     
     @ManyToOne
     private TipoDeArticulo tipodearticulo;
@@ -102,14 +101,6 @@ public class Reclamo implements Serializable {
 
     public void setTipo(TipoReclamo tipo) {
         this.tipo = tipo;
-    }
-
-    public Date getFecha_visita() {
-        return fecha_visita;
-    }
-
-    public void setFecha_visita(Date fecha_visita) {
-        this.fecha_visita = fecha_visita;
     }
 
     public TipoDeArticulo getTipodearticulo() {

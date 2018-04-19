@@ -12,10 +12,15 @@ import java.util.Date;
  * @author Nicolás
  */
 public class DataTecnico extends DataPersona{
+    
+    private String contrasena;
 
-    public DataTecnico(Integer ci, String nombre, String apellido, String domicilio, Integer telefono, Date fecha_nacimiento) {
+    public DataTecnico(String contrasena, Integer ci, String nombre, String apellido, String domicilio, Integer telefono, Date fecha_nacimiento) {
         super(ci, nombre, apellido, domicilio, telefono, fecha_nacimiento);
+        this.contrasena = contrasena;
     }
+
+    
        
     
 }

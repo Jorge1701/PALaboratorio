@@ -41,7 +41,7 @@ public class ControladorPersonas implements Logica.Interface.InterfacePersonas{
         for (Tecnico tec : tecnicos) {
             for (TipoDeArticulo tipoDeArticulo : tec.getTipoarticulo_capacitado()) {
                 if(tipoDeArticulo.getId().equals(codTA)){
-                    tecnicosADevolver.add(new DataTecnico(tec.getCi(),tec.getNombre(),tec.getApellido(),tec.getDomicilio()
+                    tecnicosADevolver.add(new DataTecnico(tec.getContrasena(),tec.getCi(),tec.getNombre(),tec.getApellido(),tec.getDomicilio()
                     ,tec.getTelefono(),tec.getFecha_nacimiento()));
                 }
             }
@@ -49,10 +49,10 @@ public class ControladorPersonas implements Logica.Interface.InterfacePersonas{
         return tecnicosADevolver;
     }
     
-    public void AltaPersona(DataPersona persona){
+    public void AltaPersona(DataPersona persona, Integer codTA){
         EntityManager em = ControladorPrincipal.getInstance().getEntity();
         em.getTransaction().begin();
-           if(persona instanceof DataTecnico){
+           if(persona instanceof DataTecnico){          
                Tecnico te = new Tecnico();
                te.setCi(persona.getCi());
                te.setNombre(persona.getNombre());
@@ -60,6 +60,10 @@ public class ControladorPersonas implements Logica.Interface.InterfacePersonas{
                te.setDomicilio(persona.getDomicilio());
                te.setTelefono(persona.getTelefono());
                te.setFecha_nacimiento(persona.getFecha_nacimiento());
+               if(codTA != null){
+                    TipoDeArticulo tart = em.find(TipoDeArticulo.class, codTA);
+                    te.nuevoTipoArticulo(tart);
+               }
                em.persist(te);
            }
            else{
@@ -83,7 +87,7 @@ public class ControladorPersonas implements Logica.Interface.InterfacePersonas{
         List<Tecnico> tecnicos = query.getResultList();
         for (Tecnico tec : tecnicos) {
             if(!tec.estaCapacitadoEnCodTA(codTA))
-                tecnicosADevolver.add(new DataTecnico(tec.getCi(), tec.getNombre(), tec.getApellido(), tec.getDomicilio(), tec.getTelefono(), tec.getFecha_nacimiento()));
+                tecnicosADevolver.add(new DataTecnico(tec.getContrasena(),tec.getCi(), tec.getNombre(), tec.getApellido(), tec.getDomicilio(), tec.getTelefono(), tec.getFecha_nacimiento()));
         }
         return tecnicosADevolver;
     }
@@ -97,4 +101,6 @@ public class ControladorPersonas implements Logica.Interface.InterfacePersonas{
         em.getTransaction().commit();
         em.close();
     }
+    
+    
 }
