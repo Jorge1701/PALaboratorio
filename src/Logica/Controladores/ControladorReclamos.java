@@ -61,7 +61,7 @@ public class ControladorReclamos implements Logica.Interface.InterfaceReclamos{
         }
         em.persist(r);
         em.getTransaction().commit();
-        em.close();
+        //em.close();
         
     }
     

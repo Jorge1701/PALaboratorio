@@ -51,6 +51,11 @@ public class DataPersona {
     public Date getFecha_nacimiento() {
         return fecha_nacimiento;
     }
+
+    @Override
+    public String toString() {
+        return "DataPersona{" + "nombre=" + nombre + '}';
+    }
     
     
 }

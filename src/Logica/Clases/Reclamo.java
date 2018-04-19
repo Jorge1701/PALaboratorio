@@ -136,11 +136,11 @@ public class Reclamo implements Serializable {
     
     
 }
-
+/*
 class main {
     public static void main(String[] args){
         EntityManager em = ControladorPrincipal.getInstance().getEntity();
         
         ControladorPersonas.getInstance().capacitarTecnicoEnTA(50475087, 1);
     }
-}
+}*/

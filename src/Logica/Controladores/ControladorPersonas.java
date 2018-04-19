@@ -77,7 +77,7 @@ public class ControladorPersonas implements Logica.Interface.InterfacePersonas{
                em.persist(cli);
            }
            em.getTransaction().commit();
-           em.close();
+           //em.close();
     }
     
     public List<DataTecnico> darTecnicosNoCapacitadosEnCodTA(Integer codTA){
@@ -99,7 +99,7 @@ public class ControladorPersonas implements Logica.Interface.InterfacePersonas{
         TipoDeArticulo tart = em.find(TipoDeArticulo.class, idTA);
         te.nuevoTipoArticulo(tart);
         em.getTransaction().commit();
-        em.close();
+        //em.close();
     }
     
     

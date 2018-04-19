@@ -53,7 +53,7 @@ public class ControladorTareas implements Logica.Interface.InterfaceTareas{
         }
         em.persist(tarea);
         em.getTransaction().commit();
-        em.close();
+        //em.close();
     }
     
     public void AltaTipoArticulo(DataTipoArticulo tart){
@@ -62,7 +62,7 @@ public class ControladorTareas implements Logica.Interface.InterfaceTareas{
         TipoDeArticulo tipoarticulo = new TipoDeArticulo(tart);
         em.persist(tipoarticulo);
         em.getTransaction().commit();
-        em.close();
+        //em.close();
     }
     
     public List<DataTipoArticulo> darTipoArticulos(){
