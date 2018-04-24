@@ -70,7 +70,14 @@ public class Tecnico extends Persona{
         return false;
     }
     
-    
+    public Double getHorasATrabajar() {
+        // getHorasATrabajar(Date a) para saber en un determinado dia
+        Double horasATrabajar = new Double(0);
+        for (TareaDeUnReclamo tareaDeUnReclamo : tareas_a_realizar) {
+            horasATrabajar = horasATrabajar + tareaDeUnReclamo.getTiempoEstimado();
+        }
+        return horasATrabajar;
+    }
     
     
 }

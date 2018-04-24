@@ -101,7 +101,9 @@ public class TareaDeUnReclamo implements Serializable {
         this.tecnico = tecnico;
     }
     
-    
+    public Double getTiempoEstimado(){
+        return tarea.getTiempoEstimado();
+    }
     
     
 }

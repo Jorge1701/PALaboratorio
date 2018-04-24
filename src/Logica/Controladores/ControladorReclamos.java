@@ -15,6 +15,7 @@ import Logica.DataTypes.DataReclamo;
 import Logica.DataTypes.DataTarea;
 import Logica.DataTypes.DataTecnico;
 import Logica.DataTypes.DataTipoArticulo;
+import Logica.Excepciones.ExcesoHorasTecnico;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -39,7 +40,7 @@ public class ControladorReclamos implements Logica.Interface.InterfaceReclamos{
         private static final ControladorReclamos INSTANCE = new ControladorReclamos();
     }
     
-    public void AltaReclamo(DataReclamo rec, Integer tipoArt, Integer[] ciTec, Integer[] idTar, Integer ciCliente){
+    public void AltaReclamo(DataReclamo rec, Integer tipoArt, Integer[] ciTec, Integer[] idTar, Integer ciCliente) throws ExcesoHorasTecnico{
         EntityManager em = ControladorPrincipal.getInstance().getEntity();
         TipoDeArticulo tipodearticulo = em.find(TipoDeArticulo.class, tipoArt);
         Cliente cliente = em.find(Cliente.class,ciCliente);
@@ -57,6 +58,9 @@ public class ControladorReclamos implements Logica.Interface.InterfaceReclamos{
         for (int i = 0; i < ciTec.length; i++) {
             Tecnico te = em.find(Tecnico.class, ciTec[i]);
             Tarea ta = em.find(Tarea.class, idTar[i]);
+            if(te.getHorasATrabajar()>8 || (te.getHorasATrabajar() + ta.getTiempoEstimado())>8){
+                throw new ExcesoHorasTecnico(te.getCi(), te.getNombre(), te.getApellido(), te.getHorasATrabajar());
+            }
             r.nuevaTareaTecnico(te, ta);
         }
         em.persist(r);
