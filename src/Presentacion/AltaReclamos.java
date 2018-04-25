@@ -5,6 +5,14 @@
  */
 package Presentacion;
 
+import Logica.Controladores.ControladorPersonas;
+import Logica.Controladores.ControladorReclamos;
+import Logica.DataTypes.DataCliente;
+import Logica.DataTypes.DataTecnico;
+import Logica.DataTypes.DataTipoArticulo;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Diego
@@ -14,9 +22,54 @@ public class AltaReclamos extends javax.swing.JInternalFrame {
     /**
      * Creates new form AltaReclamos
      */
+    private final ArrayList<DataTipoArticulo> tipoArticulos;
+    private final ArrayList<DataCliente> lstClientes;
+    private ControladorReclamos CR = ControladorReclamos.getInstance();
+    private ControladorPersonas CP = ControladorPersonas.getInstance();
+    private DataTipoArticulo tArtSeleccionado = null;
+    private DataCliente clienteSeleccionado = null;
     public AltaReclamos() {
         initComponents();
+        tipoArticulos = (ArrayList<DataTipoArticulo>) CR.darTipoArticulos();
+        cargarTipoArticulos(tipoArticulos, "");
+        lstClientes = (ArrayList<DataCliente>) CP.darClientes();
+        cargarClientes(lstClientes, "");
+        
     }
+    
+    private void cargarTipoArticulos(ArrayList<DataTipoArticulo> dtcs, String filtro) {
+        // Obtiene el modelo de la tablaClientes y borra su contenido
+        DefaultTableModel dtm = (DefaultTableModel) tablaTArticulos.getModel();
+        dtm.setRowCount(0);
+
+        // Agrega los clientes a la tablaClientes
+        for (DataTipoArticulo dtA : dtcs) {
+            if (dtA.getNombre().contains(filtro)) {
+                Object[] data = {
+                    dtA
+                };
+                dtm.addRow(data);
+            }
+        }
+    }
+    
+    
+    private void cargarClientes(ArrayList<DataCliente> dtcs, String filtro) {
+        // Obtiene el modelo de la tablaClientes y borra su contenido
+        DefaultTableModel dtm = (DefaultTableModel) tablaClientes.getModel();
+        dtm.setRowCount(0);
+
+        // Agrega los clientes a la tablaClientes
+        for (DataCliente dtc : dtcs) {
+            if (dtc.getNombre().contains(filtro)) {
+                Object[] data = {
+                    dtc, dtc.getApellido(), dtc.getTelefono() ,dtc.getCi()
+                };
+                dtm.addRow(data);
+            }
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,15 +80,142 @@ public class AltaReclamos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelClientes = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaClientes = new javax.swing.JTable();
+        jPanelTArt = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaTArticulos = new javax.swing.JTable();
+        lblNombre = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        lblDescripcion = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtDescripcion = new javax.swing.JTextArea();
+        btnAgregarT = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+
+        jPanelClientes.setBorder(javax.swing.BorderFactory.createTitledBorder("Clientes"));
+
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre","Apellido", "Tel", "CI"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaClientes);
+
+        javax.swing.GroupLayout jPanelClientesLayout = new javax.swing.GroupLayout(jPanelClientes);
+        jPanelClientes.setLayout(jPanelClientesLayout);
+        jPanelClientesLayout.setHorizontalGroup(
+            jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClientesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanelClientesLayout.setVerticalGroup(
+            jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelClientesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanelTArt.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo de Articulo"));
+
+        tablaTArticulos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaTArticulos);
+
+        javax.swing.GroupLayout jPanelTArtLayout = new javax.swing.GroupLayout(jPanelTArt);
+        jPanelTArt.setLayout(jPanelTArtLayout);
+        jPanelTArtLayout.setHorizontalGroup(
+            jPanelTArtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTArtLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelTArtLayout.setVerticalGroup(
+            jPanelTArtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTArtLayout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        lblNombre.setText("Nombre");
+
+        lblDescripcion.setText("Descripcion: ");
+
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setRows(5);
+        jScrollPane3.setViewportView(txtDescripcion);
+
+        btnAgregarT.setText("AgregarTareas");
+
+        btnCancelar.setText("Cancelar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(14, Short.MAX_VALUE)
+                        .addComponent(jPanelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(lblNombre)
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAgregarT)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblDescripcion)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanelTArt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(btnCancelar))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanelTArt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblNombre)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDescripcion))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarT)
+                    .addComponent(btnCancelar))
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -43,5 +223,18 @@ public class AltaReclamos extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarT;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JPanel jPanelClientes;
+    private javax.swing.JPanel jPanelTArt;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblDescripcion;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JTable tablaClientes;
+    private javax.swing.JTable tablaTArticulos;
+    private javax.swing.JTextArea txtDescripcion;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

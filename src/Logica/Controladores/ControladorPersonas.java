@@ -8,6 +8,7 @@ package Logica.Controladores;
 import Logica.Clases.Cliente;
 import Logica.Clases.Tecnico;
 import Logica.Clases.TipoDeArticulo;
+import Logica.DataTypes.DataCliente;
 import Logica.DataTypes.DataPersona;
 import Logica.DataTypes.DataTecnico;
 import java.util.ArrayList;
@@ -38,12 +39,23 @@ public class ControladorPersonas implements Logica.Interface.InterfacePersonas{
         EntityManager em = ControladorPrincipal.getInstance().getEntity();
         Query query = em.createQuery("SELECT i FROM Tecnico i");
         List<Tecnico> tecnicos = query.getResultList();
+        Boolean capacitado = false;
         for (Tecnico tec : tecnicos) {
             for (TipoDeArticulo tipoDeArticulo : tec.getTipoarticulo_capacitado()) {
+                //System.out.println("Nunca entra");
                 if(tipoDeArticulo.getId().equals(codTA)){
-                    tecnicosADevolver.add(new DataTecnico(tec.getContrasena(),tec.getCi(),tec.getNombre(),tec.getApellido(),tec.getDomicilio()
-                    ,tec.getTelefono(),tec.getFecha_nacimiento()));
+                    capacitado = true;
+                    break;
+                   
                 }
+            }
+            if (!capacitado) {
+                tecnicosADevolver.add(new DataTecnico(tec.getContrasena(),tec.getCi(),tec.getNombre(),tec.getApellido(),tec.getDomicilio()
+                    ,tec.getTelefono(),tec.getFecha_nacimiento()));
+               
+            }else {
+                capacitado = false;
+            
             }
         }
         return tecnicosADevolver;
@@ -90,6 +102,18 @@ public class ControladorPersonas implements Logica.Interface.InterfacePersonas{
                 tecnicosADevolver.add(new DataTecnico(tec.getContrasena(),tec.getCi(), tec.getNombre(), tec.getApellido(), tec.getDomicilio(), tec.getTelefono(), tec.getFecha_nacimiento()));
         }
         return tecnicosADevolver;
+    }
+    
+    public List<DataCliente> darClientes(){
+        List<DataCliente> clientesADevolver = new ArrayList<>();
+        EntityManager em = ControladorPrincipal.getInstance().getEntity();
+        Query query = em.createQuery("SELECT c FROM Cliente c");
+        List<Cliente> clientes = query.getResultList();
+        for (Cliente c : clientes) {
+            clientesADevolver.add(new DataCliente(c.getCi(), c.getNombre(), c.getApellido(), c.getDomicilio(), c.getTelefono(), c.getFecha_nacimiento()));
+            
+        }
+        return clientesADevolver;
     }
     
     public void capacitarTecnicoEnTA(Integer idTec, Integer idTA){

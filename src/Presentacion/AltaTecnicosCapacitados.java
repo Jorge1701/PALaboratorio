@@ -30,13 +30,13 @@ public class AltaTecnicosCapacitados extends javax.swing.JInternalFrame implemen
     private ControladorReclamos CR = ControladorReclamos.getInstance();
     private ControladorPersonas CP = ControladorPersonas.getInstance();
     private DataTipoArticulo tArtSeleccionado = null;
-    private DataTecnico tecSeleccionado;
+    private DataTecnico tecSeleccionado = null;
     
     public AltaTecnicosCapacitados() {
         initComponents();
         tipoArticulos = (ArrayList<DataTipoArticulo>) CR.darTipoArticulos();
         cargarTipoArticulos(tipoArticulos, "");
-        tablaTipoArticulos.getSelectionModel().addListSelectionListener(this);
+        tablaTipoArticulos.getSelectionModel().addListSelectionListener(this);        
     }
     
     
@@ -174,8 +174,9 @@ public class AltaTecnicosCapacitados extends javax.swing.JInternalFrame implemen
             return;
         }
         
-        //tArtSeleccionado.getListaTecnicos().add(tecSeleccionado);
-        CP.capacitarTecnicoEnTA(tecSeleccionado.getCi(), tArtSeleccionado.getId());
+       tecSeleccionado = (DataTecnico) tablaTecnicos.getValueAt(tablaTecnicos.getSelectedRow(), 0);
+       tArtSeleccionado = (DataTipoArticulo) tablaTipoArticulos.getValueAt(tablaTipoArticulos.getSelectedRow(), 0);
+       CP.capacitarTecnicoEnTA(tecSeleccionado.getCi(), tArtSeleccionado.getId());
         
        javax.swing.JOptionPane.showMessageDialog(null, "Se ingreso Tecnico como capacitado en: " + tArtSeleccionado.getNombre(), "Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
         
@@ -200,12 +201,8 @@ public class AltaTecnicosCapacitados extends javax.swing.JInternalFrame implemen
     public void valueChanged(ListSelectionEvent e) {
         if (tablaTipoArticulos.getSelectedRow() != -1){
             tipoArticuloSelecionado((DataTipoArticulo) tablaTipoArticulos.getValueAt(tablaTipoArticulos.getSelectedRow(), 0), "");
-        }
+        }        
         
-        if (tablaTecnicos.getSelectedRow() != -1){
-        
-            tecSeleccionado = (DataTecnico) tablaTecnicos.getValueAt(tablaTecnicos.getSelectedRow(), 0);
-        }
     }
     
     

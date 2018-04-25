@@ -47,6 +47,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         AgregarTarea = new javax.swing.JMenuItem();
         Relaciones = new javax.swing.JMenu();
         jRelacionesItem1 = new javax.swing.JMenuItem();
+        jMenuItemAltaRec = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,6 +100,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         Relaciones.add(jRelacionesItem1);
 
+        jMenuItemAltaRec.setText("AltaReclamos");
+        jMenuItemAltaRec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAltaRecActionPerformed(evt);
+            }
+        });
+        Relaciones.add(jMenuItemAltaRec);
+
         jMenuBar1.add(Relaciones);
 
         setJMenuBar(jMenuBar1);
@@ -150,6 +159,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         altaTecCap.show();
     }//GEN-LAST:event_jRelacionesItem1ActionPerformed
 
+    private void jMenuItemAltaRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAltaRecActionPerformed
+        // TODO add your handling code here:
+        AltaReclamos altaRec = new AltaReclamos();
+        PanelMenu.add(altaRec);
+        centrar(altaRec);
+        altaRec.show();
+    }//GEN-LAST:event_jMenuItemAltaRecActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -194,6 +211,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItemAltaRec;
     private javax.swing.JMenuItem jRelacionesItem1;
     // End of variables declaration//GEN-END:variables
 }

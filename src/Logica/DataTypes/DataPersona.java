@@ -54,7 +54,7 @@ public class DataPersona {
 
     @Override
     public String toString() {
-        return "DataPersona{" + "nombre=" + nombre + '}';
+        return nombre;
     }
     
     
